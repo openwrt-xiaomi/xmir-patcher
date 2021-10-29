@@ -160,6 +160,16 @@ class DevInfo():
         lst.append(p)
     return lst
 
+  def get_part_by_addr(self, addr):
+    if not self.partlist:
+      return None
+    for i, part in enumerate(self.partlist):
+      if part['addr'] == 0 and part['size'] > 0x00800000:
+        continue  # skip "ALL" part
+      if part['addr'] == addr:
+        return part
+    return None
+
   def get_rootfs(self, verbose = None):
     verbose = verbose if verbose is not None else self.verbose
     self.rootfs = RootFS()

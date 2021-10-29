@@ -11,47 +11,9 @@ import read_info
 from envbuffer import EnvBuffer
 
 
-gw = gateway.Gateway()
-
-dev = read_info.DevInfo(verbose = 0, infolevel = 1)
-dev.get_bootloader()
-if not dev.bl.img:
-  die("Can't dump current bootloader!")
-
-for i, part in enumerate(dev.partlist):
-  print('  %2d > addr: 0x%08X  size: 0x%08X  name: "%s"' % (i, part['addr'], part['size'], part['name']))
-
-if len(sys.argv) > 1:
-  fw_name = sys.argv[1] 
-else:
-  if dev.bl.type == 'breed':
-    print("The device has an Breed bootloader installed.")
-    print("It is possible to specify a specific kernel boot address (HEX-number).")
-    print("It is also possible to specify the kernel number or the name of its partition.")
-    fw_name = input("Enter kernel (number, address or name): ")
-  else:
-    fw_name = input("Enter kernel number (0 or 1): ")
-
-fw_name = fw_name.strip()
-if fw_name == "":
-  die("Boot partition not specified!")
-
-fw_num = None
-fw_addr = None
-if len(fw_name) >= 6 and fw_name.lower().startswith('0x'):
-  fw_addr = int(fw_name, 16)
-else:
-  try:
-    fw_num = int(fw_name)
-    if fw_num != 0 and fw_num != 1:
-      die("Boot partition number not correct! Must be 0 or 1!")
-  except Exception:
-    pass
-
-#if dev.bl.type == 'pandora':
-#  die('Pandora bootloader not supported!')
-
-if dev.bl.type == 'breed':
+def breed_boot_change(gw, dev, fw_num, fw_addr, fw_name):
+  if dev is None:
+    dev = read_info.DevInfo(verbose = 0, infolevel = 1)
   if fw_num is not None:
     pname = 'kernel%d' % fw_num
     p = dev.get_part_num(pname)
@@ -66,7 +28,8 @@ if dev.bl.type == 'breed':
       die('Partition "{}" not found!)'.format(fw_name))
     fw_addr = dev.partlist[p]['addr']
   #dev.verbose = 2
-  dev.get_env_list()
+  if dev.env.breed.data is None:
+    dev.get_env_list()
   env = dev.env.breed
   if env.data is None or env.max_size is None:
     die("Can't found breed env address!")
@@ -95,36 +58,85 @@ if dev.bl.type == 'breed':
   gw.run_cmd(cmd)
   print('Breed ENV changed! Boot from {} activated.'.format("0x%08X" % fw_addr))
   gw.run_cmd("rm -f " + fn_remote)
-  if fw_name != '0' and fw_name != '1':
-    sys.exit(0)
-  fw_addr = None  
+  return fw_addr
 
-fw_num = None
-try:
-  fw_num = int(fw_name)
-except Exception:
-  pass
 
-if fw_addr:
-  die('Required Breed bootloader for set custom boot address!')
+def uboot_boot_change(gw, fw_num):
+  if fw_num != 0 and fw_num != 1:
+    die("Boot partition number not correct! Must be 0 or 1!")
+  cmd = []
+  cmd.append("nvram set flag_ota_reboot=0")
+  cmd.append("nvram set flag_boot_success=1")
+  cmd.append("nvram set flag_last_success={}".format(fw_num))
+  cmd.append("nvram set flag_try_sys1_failed=0")
+  cmd.append("nvram set flag_try_sys2_failed=0")
+  cmd.append("nvram set flag_boot_rootfs={}".format(fw_num))
+  cmd.append("nvram commit")
+  gw.run_cmd(cmd)
+  return True
 
-if fw_num is None:
-  die("Boot partition not specified!")
 
-if fw_num != 0 and fw_num != 1:
-  die("Boot partition number not correct! Must be 0 or 1!")
+if __name__ == "__main__":
+  gw = gateway.Gateway()
+  dev = read_info.DevInfo(verbose = 0, infolevel = 1)
+  dev.get_bootloader()
+  if not dev.bl.img:
+    die("Can't dump current bootloader!")
 
-print("Run scripts...")
-cmd = []
-cmd.append("nvram set flag_ota_reboot=0")
-cmd.append("nvram set flag_boot_success=1")
-cmd.append("nvram set flag_last_success={}".format(fw_num))
-cmd.append("nvram set flag_try_sys1_failed=0")
-cmd.append("nvram set flag_try_sys2_failed=0")
-cmd.append("nvram set flag_boot_rootfs={}".format(fw_num))
-cmd.append("nvram commit")
-gw.run_cmd(cmd)
-print('Ready! Boot from partition "kernel{}" activated.'.format(fw_num))
+  for i, part in enumerate(dev.partlist):
+    print('  %2d > addr: 0x%08X  size: 0x%08X  name: "%s"' % (i, part['addr'], part['size'], part['name']))
+
+  if len(sys.argv) > 1:
+    fw_name = sys.argv[1] 
+  else:
+    if dev.bl.type == 'breed':
+      print("The device has an Breed bootloader installed.")
+      print("It is possible to specify a specific kernel boot address (HEX-number).")
+      print("It is also possible to specify the kernel number or the name of its partition.")
+      fw_name = input("Enter kernel (number, address or name): ")
+    else:
+      fw_name = input("Enter kernel number (0 or 1): ")
+
+  fw_name = fw_name.strip()
+  if fw_name == "":
+    die("Boot partition not specified!")
+
+  fw_num = None
+  fw_addr = None
+  if len(fw_name) >= 6 and fw_name.lower().startswith('0x'):
+    fw_addr = int(fw_name, 16)
+  else:
+    try:
+      fw_num = int(fw_name)
+      if fw_num != 0 and fw_num != 1:
+        die("Boot partition number not correct! Must be 0 or 1!")
+    except Exception:
+      pass
+
+  #if dev.bl.type == 'pandora':
+  #  die('Pandora bootloader not supported!')
+
+  if dev.bl.type == 'breed':
+    fw_addr = breed_boot_change(gw, dev, fw_num, fw_addr, fw_name)
+    if fw_name != '0' and fw_name != '1':
+      sys.exit(0)
+    fw_addr = None  
+
+  fw_num = None
+  try:
+    fw_num = int(fw_name)
+  except Exception:
+    pass
+
+  if fw_addr:
+    die('Required Breed bootloader for set custom boot address!')
+
+  if fw_num is None:
+    die("Boot partition not specified!")
+
+  print("Run scripts for change NVRAM params...")
+  uboot_boot_change(gw, fw_num)
+  print('Ready! Boot from partition "kernel{}" activated.'.format(fw_num))
 
 
 '''
