@@ -16,7 +16,7 @@ fi
 
 cd /tmp
 rm -f busybox_tiny
-cat busybox_01 busybox_02 > busybox_tiny 
+cat busybox_01 busybox_02 busybox_03 > busybox_tiny
 chmod +x busybox_tiny
 
 # start telnet

