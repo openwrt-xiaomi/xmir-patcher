@@ -24,16 +24,15 @@ class EnvBuffer():
     self.delim = delim
     self.crc_prefix = crc_prefix
     self.var = {}
-    if data is None:
-      return
-    prefix_len = 4 if crc_prefix else 0
-    if isinstance(data, str):
-      self.var = self.parse_env(data, delim)
-    else:
-      end = data.find((delim + delim).encode(encoding), prefix_len)
-      if (end > prefix_len):        
-        data = data[prefix_len:end+1]
-        self.var = self.parse_env_b(data, delim, encoding)
+    if data is not None:
+      prefix_len = 4 if crc_prefix else 0
+      if isinstance(data, str):
+        self.var = self.parse_env(data, delim)
+      else:
+        end = data.find((delim + delim).encode(encoding), prefix_len)
+        if (end > prefix_len):        
+          data = data[prefix_len:end+1]
+          self.var = self.parse_env_b(data, delim, encoding)
   
   def parse_env_b(self, data, delim, encoding = 'ascii'):
     dict = {}
@@ -67,9 +66,9 @@ class EnvBuffer():
       if x == 0:
         continue
       if x >= 1:
-        key = s[0:x]
-        val = s[x+1:]
-        dict[key.strip()] = val.strip()
+        key = (s[0:x]).strip()
+        if key:
+          dict[key] = (s[x+1:]).strip()
       else:
         dict[s.strip()] = None
     return dict  
