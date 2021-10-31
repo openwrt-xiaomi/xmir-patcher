@@ -5,14 +5,24 @@ import os
 import sys
 import json
 import time
+import datetime
 import random
 import hashlib
 import subprocess
 import re
 import requests
+import atexit
+
+import socket
+import ssh2
+from ssh2.error_codes import LIBSSH2_ERROR_EAGAIN
+from ssh2.utils import wait_socket
+
 import telnetlib
 import ftplib
-import atexit
+
+
+EXPLOIT_VIA_DROPBEAR = True
 
 
 def die(*args):
@@ -41,6 +51,7 @@ def get_http_headers():
 
 
 class Gateway():
+  use_ssh = EXPLOIT_VIA_DROPBEAR
   verbose = 2
   timeout = 4
   config = {}
@@ -48,6 +59,9 @@ class Gateway():
   webpassword = None
   status = -2
   ftp = None
+  socket = None  # TCP socket for SSH 
+  ssh = None     # SSH session
+  ssh_port = 122
   
   def __init__(self, timeout = 4, verbose = 2, detect_device = True):
     self.verbose = verbose
@@ -57,7 +71,7 @@ class Gateway():
     self.device_name = None
     self.webpassword = None
     self.status = -2
-    atexit.register(self.cleanup)
+    atexit.register(self.shutdown)
     os.makedirs('outdir', exist_ok = True)
     os.makedirs('tmp', exist_ok = True)
     if detect_device:
@@ -106,17 +120,29 @@ class Gateway():
     self.status = 1
     return self.status
 
-  def cleanup(self):
-    try:
-      self.ftp.quit()
-    except Exception:
-      pass
-    try:
-      self.ftp.close()
-    except Exception:
-      pass
+  def shutdown(self):
+    if self.use_ssh:
+      try:
+        self.ssh.disconnect()
+      except Exception:
+        pass
+      try:
+        self.socket.close()
+      except Exception:
+        pass
+    else:  
+      try:
+        self.ftp.quit()
+      except Exception:
+        pass
+      try:
+        self.ftp.close()
+      except Exception:
+        pass
     self.ftp = None
-
+    self.ssh = None
+    self.socket = None
+    
   @property
   def ip_addr(self):
     return self.config['device_ip_addr']
@@ -139,7 +165,31 @@ class Gateway():
     self.config[key] = value
     self.save_config()
 
-  def create_telnet(self, verbose = 0):
+  def get_ssh(self, verbose = 0):
+    if self.ssh:
+      try:
+        self.ssh.keepalive_send()
+        return self.ssh
+      except Exception:
+        pass
+    self.shutdown()
+    try:
+      self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+      self.socket.connect((self.ip_addr, self.ssh_port))
+      self.ssh = ssh2.session.Session()
+      self.ssh.handshake(self.socket)
+      self.ssh.userauth_password('root', 'root')
+      self.ssh.set_blocking(True)
+      self.ssh.set_timeout(self.timeout * 1000);
+      return self.ssh
+    except Exception as e:
+      #print(e)
+      if verbose:
+        die("SSH server not responding (IP: {})".format(self.ip_addr))
+      self.shutdown()
+    return None
+
+  def get_telnet(self, verbose = 0):
     try:
       tn = telnetlib.Telnet(self.ip_addr)
       tn.read_until(b"login: ")
@@ -151,40 +201,47 @@ class Gateway():
     except Exception as e:
       #print(e)
       if verbose:
-        die("telnet not responding (IP: {})".format(self.ip_addr))
-      return None
-    return tn
+        die("TELNET not responding (IP: {})".format(self.ip_addr))
+    return None
 
-  def create_ftp(self, verbose = 0):
+  def get_ftp(self, verbose = 0):
     if self.ftp and self.ftp.sock:
       try:
         self.ftp.voidcmd("NOOP")
         return self.ftp  #Already connected
       except Exception:
         pass
-    self.ftp = None
+    self.shutdown()
     try:
       #timeout = 10 if self.timeout < 10 else self.timeout
       self.ftp = ftplib.FTP(self.ip_addr, user='root', passwd='root', timeout=self.timeout)
       self.ftp.voidcmd("NOOP")
+      return self.ftp
     except Exception:
-      self.ftp = None
       if verbose:
         die("ftp not responding (IP: {})".format(self.ip_addr))
-      return None
-    return self.ftp
+      self.shutdown()
+    return None
 
   def ping(self, verbose = 2):
-    tn = self.create_telnet(verbose)
-    if not tn:
-      return False
-    ftp = self.create_ftp(verbose)
-    if not ftp:
-      return False
+    if self.use_ssh:
+      ssh = self.get_ssh(verbose)
+      if not ssh:
+        return False
+    else:
+      tn = self.get_telnet(verbose)
+      if not tn:
+        return False
+      ftp = self.get_ftp(verbose)
+      if not ftp:
+        return False
     return True
 
   def run_cmd(self, cmd, msg = None):
-    tn = self.create_telnet(self.verbose)
+    if self.use_ssh:
+      ssh = self.get_ssh(self.verbose)
+    else:
+      tn = self.get_telnet(self.verbose)
     if (msg):
       print(msg)
     cmdlist = []
@@ -193,19 +250,51 @@ class Gateway():
     else:
       cmdlist = cmd
     for idx, cmd in enumerate(cmdlist):
-      cmd = (cmd + '\n').encode('ascii')
-      tn.write(cmd)
-      tn.read_until(b"root@XiaoQiang:~#")
-    tn.write(b"exit\n")
+      if self.use_ssh:
+        channel = ssh.open_session()
+        #channel.pty('xterm')
+        #print("exec = '{}'".format(cmd))
+        channel.execute(cmd)
+        try:
+          channel.wait_eof()
+        except ssh2.exceptions.Timeout:
+          die("SSH execute command timedout! CMD: \"{}\"".format(cmd))
+        try:
+          channel.close()
+          channel.wait_closed()
+        except Exception:
+          pass
+        #status = channel.get_exit_status()
+      else:
+        cmd = (cmd + '\n').encode('ascii')
+        tn.write(cmd)
+        tn.read_until(b"root@XiaoQiang:~#")
+    if not self.use_ssh:
+      tn.write(b"exit\n")
     return True
 
   def download(self, fn_remote, fn_local, verbose = 1):
-    self.create_ftp(self.verbose)
-    file = open(fn_local, 'wb')
-    if verbose and self.verbose:
-      print('Download file: "{}" ....'.format(fn_remote))
-    self.ftp.retrbinary('RETR ' + fn_remote, file.write)
-    file.close()
+    if self.use_ssh:
+      ssh = self.get_ssh(self.verbose)
+      channel, fileinfo = ssh.scp_recv2(fn_remote)
+      total_size = fileinfo.st_size
+      read_size = 0
+      with open(fn_local, 'wb') as file:
+        while read_size < total_size:
+          size, data = channel.read()
+          if size > 0:
+            if read_size + len(data) > total_size:
+              file.write(data[:total_size - read_size])
+            else:
+              file.write(data)
+            read_size += size
+    else:
+      ftp = self.get_ftp(self.verbose)
+      file = open(fn_local, 'wb')
+      if verbose and self.verbose:
+        print('Download file: "{}" ....'.format(fn_remote))
+      ftp.retrbinary('RETR ' + fn_remote, file.write)
+      file.close()
     return True
 
   def upload(self, fn_local, fn_remote, verbose = 1):
@@ -213,10 +302,20 @@ class Gateway():
       file = open(fn_local, 'rb')
     except Exception:
       die('File "{}" not found.'.format(fn_local))
-    self.create_ftp(self.verbose)
-    if verbose and self.verbose:
-      print('Upload file: "{}" ....'.format(fn_local))
-    self.ftp.storbinary('STOR ' + fn_remote, file)
+    if self.use_ssh:
+      ssh = self.get_ssh(self.verbose)
+      finfo = os.stat(fn_local)
+      channel = ssh.scp_send64(fn_remote, finfo.st_mode & 0o777, finfo.st_size, finfo.st_mtime, finfo.st_atime)
+      size = 0
+      for data in file:
+        channel.write(data)
+        size = size + len(data)
+      #except ssh2.exceptions.SCPProtocolError as e:
+    else:
+      ftp = self.get_ftp(self.verbose)
+      if verbose and self.verbose:
+        print('Upload file: "{}" ....'.format(fn_local))
+      ftp.storbinary('STOR ' + fn_remote, file)
     file.close()
     return True
 
