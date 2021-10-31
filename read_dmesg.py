@@ -45,8 +45,8 @@ if os.path.exists(fn_local):
   if os.path.exists(fn_old):
     os.remove(fn_old)
   os.rename(fn_local, fn_old)
-gw.run_cmd("cat /data/usr/log/messages > " + fn_remote)
-#gw.run_cmd("cat /proc/xiaoqiang/xq_syslog > " + fn_remote)
+#gw.run_cmd("cat /data/usr/log/messages > " + fn_remote)
+gw.run_cmd("cat /proc/xiaoqiang/xq_syslog > " + fn_remote)
 gw.download(fn_remote, fn_local)
 gw.run_cmd("rm -f " + fn_remote)
 with open(fn_local, "r") as file:
