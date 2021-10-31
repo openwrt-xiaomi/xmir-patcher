@@ -263,7 +263,10 @@ class DevInfo():
       print(" ", data)
     if not retdict:
       return data
+    data = data.strip()
     data = data.replace("\n", ' ')
+    data = data.replace("\x00", ' ')
+    data = data.strip()
     env = EnvBuffer(data, ' ', crc_prefix = False, encoding = 'ascii')
     self.kcmdline = env.var
     #self.kcmdline = type("Names", [object], self.kcmdline)
