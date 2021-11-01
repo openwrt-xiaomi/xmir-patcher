@@ -41,7 +41,7 @@ def menu1_process(id):
   if id == 3: return "read_info.py"
   if id == 4: return "create_backup.py"
   if id == 5: return "install_lang.py"
-  if id == 6: return "install_breed.py"
+  if id == 6: return [ "install_bl.py", "breed" ]
   if id == 7: return "install_fw.py"
   if id == 8: return "__menu2"
   if id == 9: return "reboot.py"
