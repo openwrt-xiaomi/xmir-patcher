@@ -93,7 +93,11 @@ else:
         os.rename(fn_local, fn_old)
     gw.run_cmd("dd if=/dev/mtd{id} of={o}".format(id=p, o=fn_remote))
     print('Download dump to file "./{}"...'.format(fn_local))
-    gw.download(fn_remote, fn_local, verbose = 0)
+    try:
+      gw.download(fn_remote, fn_local, verbose = 0)
+    except Exception:
+      print('Remote file "{}" not found!'.format(fn_remote))
+      continue
     gw.run_cmd("rm -f " + fn_remote)
     print('Backup of "{}" saved to file "./{}"'.format(name, fn_local))
   print(" ")
