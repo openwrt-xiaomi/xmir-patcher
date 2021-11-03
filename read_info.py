@@ -6,6 +6,9 @@ import sys
 import re
 import types
 import binascii
+import tarfile
+import io
+import requests
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 import gateway
@@ -44,6 +47,7 @@ class Version():
 class DevInfo():
   gw = None        # Gateway()
   verbose = 0
+  syslog = []      # list of FileObject()
   dmesg = None     # text
   info = BaseInfo()
   partlist = []    # list of {addr, size, name}
@@ -598,6 +602,52 @@ class DevInfo():
     if verbose:
       print("") 
     return self.env.fw
+
+  def download_syslog(self, timeout = 4):
+    self.syslog = []
+    if self.gw is not None:
+      gw = self.gw
+      if gw.status < 1:
+        gw.detect_device()
+    else:  
+      gw = gateway.Gateway(timeout = timeout)
+    if gw.status < 1:
+      die("Xiaomi Mi Wi-Fi device not found (IP: {})".format(gw.ip_addr))
+    stok = gw.web_login()
+    print("Start generating syslog...")
+    r2 = requests.get(gw.apiurl + "misystem/sys_log")
+    if r2.text.find('"code":0') < 0:
+      die("SysLog not generated!")
+    try:
+      path = re.search(r'"path":"(.*?)"', r2.text)
+      path = path.group(1).strip()
+    except Exception:
+      die("SysLog not generated! (2)")
+    #fn_local = 'syslog.tar.gz'
+    url = "http://" + path
+    print('Downloading SysLog from file "{}" ...'.format(url))
+    zip = b''
+    with requests.get(url, stream=True) as r3:
+      r3.raise_for_status()
+      for chunk in r3.iter_content(chunk_size=8192): 
+        zip += chunk
+    file = io.BytesIO(zip)
+    tar = tarfile.open(fileobj = file, mode='r:gz')
+    for member in tar.getmembers():
+      if not member.isfile() or not member.name:
+        continue 
+      if member.name.find('usr/log/') >= 0:  # skip syslog files
+        continue
+      file = types.SimpleNamespace()
+      file.name = member.name
+      file.size = member.size
+      file.data = tar.extractfile(member).read()
+      self.syslog.append(file)
+      #print('name = "{}", size = {} ({})'.format(file.name, file.size, len(file.data)))
+      #if len(file.data) < 200:
+      #  print(file.data)
+    tar.close()  
+    return self.syslog
 
 
 if __name__ == "__main__":
