@@ -58,6 +58,8 @@ class Gateway():
   device_name = None
   rom_version = None
   rom_channel = None
+  mac_address = None
+  nonce_key = None
   webpassword = None
   status = -2
   ftp = None
@@ -83,6 +85,8 @@ class Gateway():
     self.device_name = None
     self.rom_version = None
     self.rom_channel = None
+    self.mac_address = None
+    self.nonce_key = None
     self.status = -2
     try:
       r0 = requests.get("http://{ip_addr}/cgi-bin/luci/web".format(ip_addr = self.ip_addr), timeout = self.timeout)
@@ -101,6 +105,10 @@ class Gateway():
       self.rom_version = romver.group(1).strip() if romver else None
       romchan = re.search(r'romChannel: \'(.*?)\'', r0.text)
       self.rom_channel = romchan.group(1).strip().lower() if romchan else None
+      mac_address = re.search(r'var deviceId = \'(.*?)\'', r0.text)
+      self.mac_address = mac_address.group(1) if mac_address else None
+      nonce_key = re.search(r'key: \'(.*)\',', r0.text)
+      self.nonce_key = nonce_key.group(1) if nonce_key else None
     except requests.exceptions.HTTPError as e:
       print("Http Error:", e)
     except requests.exceptions.ConnectionError as e:

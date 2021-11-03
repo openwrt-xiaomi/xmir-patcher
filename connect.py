@@ -39,24 +39,17 @@ if gw.status < 1:
 dname = gw.device_name
 print("device_name =", gw.device_name)
 print("rom_version = {} {}".format(gw.rom_version, gw.rom_channel))
+print("mac = {}".format(gw.mac_address))
 
 if gw.ping(verbose = 0) is True:
   die(0, "Exploit already installed and running")
 
-try: 
-  r0 = requests.get("http://{ip_addr}/cgi-bin/luci/web".format(ip_addr = ip_addr), timeout = 4)
-except Exception:
-  die("Xiaomi Mi Wi-Fi device not found! (ip: {})".format(ip_addr))
-
-try:
-  mac = re.findall(r'deviceId = \'(.*?)\'', r0.text)[0]
-except Exception:
+if not gw.nonce_key or not gw.mac_address:
   die("Xiaomi Mi Wi-Fi device is wrong model or not the stock firmware in it.")
 
-key = re.findall(r'key: \'(.*)\',', r0.text)[0]
-nonce = "0_" + mac + "_" + str(int(time.time())) + "_" + str(random.randint(1000, 10000))
+nonce = "0_" + gw.mac_address + "_" + str(int(time.time())) + "_" + str(random.randint(1000, 10000))
 password = input("Enter device WEB password: ")
-account_str = (password + key).encode('utf-8')
+account_str = (password + gw.nonce_key).encode('utf-8')
 account_str = hashlib.sha1(account_str).hexdigest()
 password = (nonce + account_str).encode('utf-8')
 password = hashlib.sha1(password).hexdigest()
