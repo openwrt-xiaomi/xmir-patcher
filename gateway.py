@@ -61,6 +61,7 @@ class Gateway():
   mac_address = None
   nonce_key = None
   webpassword = None
+  stok = None
   status = -2
   ftp = None
   socket = None  # TCP socket for SSH 
@@ -135,6 +136,32 @@ class Gateway():
       die("You need to make the initial configuration in the WEB of the device!")
     self.status = 1
     return self.status
+
+  def web_login(self):
+    self.stok = None
+    if not self.nonce_key or not self.mac_address:
+      die("Xiaomi Mi Wi-Fi device is wrong model or not the stock firmware in it.")
+    nonce = "0_" + self.mac_address + "_" + str(int(time.time())) + "_" + str(random.randint(1000, 10000))
+    if not self.webpassword:
+      self.webpassword = input("Enter device WEB password: ")
+    password = self.webpassword
+    account_str = (password + self.nonce_key).encode('utf-8')
+    account_str = hashlib.sha1(account_str).hexdigest()
+    password = (nonce + account_str).encode('utf-8')
+    password = hashlib.sha1(password).hexdigest()
+    username = 'admin'
+    data = "username={username}&password={password}&logtype=2&nonce={nonce}".format(username = username, password = password, nonce = nonce)
+    requrl = "http://{ip_addr}/cgi-bin/luci/api/xqsystem/login".format(ip_addr = self.ip_addr)
+    r1 = requests.post(requrl, data = data, headers = get_http_headers())
+    try:
+      stok = re.findall(r'"token":"(.*?)"',r1.text)[0]
+    except Exception:
+      die("WEB password is not correct!")
+    self.stok = stok
+
+  @property
+  def apiurl(self):
+    return "http://{ip_addr}/cgi-bin/luci/;stok={stok}/api/".format(ip_addr = self.ip_addr, stok = self.stok)
 
   def shutdown(self):
     if self.use_ssh:

