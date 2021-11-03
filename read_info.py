@@ -13,8 +13,6 @@ from gateway import die
 from envbuffer import EnvBuffer
 
 
-gw = gateway.Gateway()
-
 class RootFS():
   num = None       # 0 / 1
   dev = None       # "/dev/mtd10"
@@ -44,6 +42,7 @@ class Version():
   uboot2 = None
 
 class DevInfo():
+  gw = None        # Gateway()
   verbose = 0
   dmesg = None     # text
   info = BaseInfo()
@@ -62,7 +61,8 @@ class DevInfo():
   env.breed = EnvBuffer() 
   env.bdata = EnvBuffer()
 
-  def __init__(self, verbose = 0, infolevel = 1):
+  def __init__(self, gw = None, verbose = 0, infolevel = 1):
+    self.gw = gateway.Gateway() if gw is None else gw
     self.verbose = verbose
     os.makedirs('outdir', exist_ok = True)
     os.makedirs('tmp', exist_ok = True)
@@ -95,9 +95,9 @@ class DevInfo():
     fn_local  = 'outdir/dmesg.log'
     fn_remote = '/tmp/dmesg.log'
     try:
-      gw.run_cmd("dmesg > " + fn_remote)
-      gw.download(fn_remote, fn_local)
-      gw.run_cmd("rm -f " + fn_remote)
+      self.gw.run_cmd("dmesg > " + fn_remote)
+      self.gw.download(fn_remote, fn_local)
+      self.gw.run_cmd("rm -f " + fn_remote)
     except Exception:
       return self.kcmdline
     if not os.path.exists(fn_local):
@@ -247,9 +247,9 @@ class DevInfo():
     fn_local  = 'outdir/kcmdline.log'
     fn_remote = '/tmp/kcmdline.log'
     try:
-      gw.run_cmd("cat /proc/cmdline > " + fn_remote)
-      gw.download(fn_remote, fn_local)
-      gw.run_cmd("rm -f " + fn_remote)
+      self.gw.run_cmd("cat /proc/cmdline > " + fn_remote)
+      self.gw.download(fn_remote, fn_local)
+      self.gw.run_cmd("rm -f " + fn_remote)
     except Exception:
       return self.kcmdline
     if not os.path.exists(fn_local):
@@ -278,9 +278,9 @@ class DevInfo():
     fn_local  = 'outdir/nvram.txt'
     fn_remote = '/tmp/nvram.txt'
     try:
-      gw.run_cmd("nvram show > " + fn_remote)
-      gw.download(fn_remote, fn_local)
-      gw.run_cmd("rm -f " + fn_remote)
+      self.gw.run_cmd("nvram show > " + fn_remote)
+      self.gw.download(fn_remote, fn_local)
+      self.gw.run_cmd("rm -f " + fn_remote)
     except Exception:
       return self.nvram
     if not os.path.exists(fn_local):
@@ -310,7 +310,7 @@ class DevInfo():
     self.board_name = None
     fn_local  = 'outdir/board_name.txt'
     fn_remote = '/tmp/sysinfo/board_name'
-    gw.download(fn_remote, fn_local)
+    self.gw.download(fn_remote, fn_local)
     if os.path.getsize(fn_local) <= 0:
       return None
     with open(fn_local, "r") as file:
@@ -326,7 +326,7 @@ class DevInfo():
     self.model = None
     fn_local  = 'outdir/model.txt'
     fn_remote = '/tmp/sysinfo/model'
-    gw.download(fn_remote, fn_local)
+    self.gw.download(fn_remote, fn_local)
     if os.path.getsize(fn_local) <= 0:
       return None
     with open(fn_local, "r") as file:
@@ -345,7 +345,7 @@ class DevInfo():
     fn_local  = 'outdir/uboot_version.txt'
     fn_remote = '/etc/uboot_version'
     try:
-      gw.download(fn_remote, fn_local, verbose = 0)
+      self.gw.download(fn_remote, fn_local, verbose = 0)
       with open(fn_local, "r") as file:
         self.ver.uboot1 = file.read().strip()
     except Exception:
@@ -355,7 +355,7 @@ class DevInfo():
     fn_local  = 'outdir/openwrt_version.txt'
     fn_remote = '/etc/openwrt_version'
     try:
-      gw.download(fn_remote, fn_local, verbose = 0)
+      self.gw.download(fn_remote, fn_local, verbose = 0)
       with open(fn_local, "r") as file:
         self.ver.openwrt = file.read().strip()
     except Exception:
@@ -365,13 +365,13 @@ class DevInfo():
     fn_local  = 'outdir/fw_ver.txt'
     fn_remote = '/etc/xiaoqiang_version'
     try:
-      gw.download(fn_remote, fn_local, verbose = 0)
+      self.gw.download(fn_remote, fn_local, verbose = 0)
     except Exception:
       fn_remote = None
     if not fn_remote:
       fn_remote = '/usr/share/xiaoqiang/xiaoqiang_version'
       try:
-        gw.download(fn_remote, fn_local, verbose = 0)
+        self.gw.download(fn_remote, fn_local, verbose = 0)
       except Exception:
         fn_remote = None
     if fn_remote and os.path.getsize(fn_local) > 0:
@@ -417,9 +417,9 @@ class DevInfo():
       bs = 128*1024
       cnt = size // bs
       try:
-        gw.run_cmd("dd if=/dev/mtd{i} of={o} bs={bs} count={cnt}".format(i=p, o=fn_remote, bs=bs, cnt=cnt))
-        gw.download(fn_remote, fn_local)
-        gw.run_cmd("rm -f " + fn_remote)
+        self.gw.run_cmd("dd if=/dev/mtd{i} of={o} bs={bs} count={cnt}".format(i=p, o=fn_remote, bs=bs, cnt=cnt))
+        self.gw.download(fn_remote, fn_local)
+        self.gw.run_cmd("rm -f " + fn_remote)
       except Exception:
         continue
       if verbose:
@@ -515,9 +515,9 @@ class DevInfo():
         bs = 128*1024
         cnt = part['size'] // bs
       try:
-        gw.run_cmd("dd if=/dev/mtd{i} of={o} bs={bs} count={cnt}".format(i=p, o=fn_remote, bs=bs, cnt=cnt))
-        gw.download(fn_remote, fn_local)
-        gw.run_cmd("rm -f " + fn_remote)
+        self.gw.run_cmd("dd if=/dev/mtd{i} of={o} bs={bs} count={cnt}".format(i=p, o=fn_remote, bs=bs, cnt=cnt))
+        self.gw.download(fn_remote, fn_local)
+        self.gw.run_cmd("rm -f " + fn_remote)
       except Exception:
         continue
       if verbose:
