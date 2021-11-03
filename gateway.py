@@ -56,6 +56,8 @@ class Gateway():
   timeout = 4
   config = {}
   device_name = None
+  rom_version = None
+  rom_channel = None
   webpassword = None
   status = -2
   ftp = None
@@ -79,6 +81,8 @@ class Gateway():
 
   def detect_device(self):
     self.device_name = None
+    self.rom_version = None
+    self.rom_channel = None
     self.status = -2
     try:
       r0 = requests.get("http://{ip_addr}/cgi-bin/luci/web".format(ip_addr = self.ip_addr), timeout = self.timeout)
@@ -93,6 +97,10 @@ class Gateway():
         if hardware and len(hardware) > 0:
           self.device_name = hardware[0]
       self.device_name = self.device_name.lower()
+      romver = re.search(r'romVersion: \'(.*?)\'', r0.text)
+      self.rom_version = romver.group(1).strip() if romver else None
+      romchan = re.search(r'romChannel: \'(.*?)\'', r0.text)
+      self.rom_channel = romchan.group(1).strip().lower() if romchan else None
     except requests.exceptions.HTTPError as e:
       print("Http Error:", e)
     except requests.exceptions.ConnectionError as e:
