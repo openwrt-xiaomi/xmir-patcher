@@ -39,6 +39,7 @@ print("device_name =", gw.device_name)
 print("rom_version = {} {}".format(gw.rom_version, gw.rom_channel))
 print("mac = {}".format(gw.mac_address))
 
+gw.ssh_port = 122
 if gw.ping(verbose = 0) is True:
   die(0, "Exploit already installed and running")
 
@@ -140,7 +141,7 @@ if (fn_payload3):
 time.sleep(1)
 
 if gw.use_ssh:
-  print("Running SSH server on port 122...")
+  print("Running SSH server on port {}...".format(gw.ssh_port))
 else:
   print("Running TELNET and FTP servers...")
 

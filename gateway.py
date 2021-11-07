@@ -66,13 +66,14 @@ class Gateway():
   ftp = None
   socket = None  # TCP socket for SSH 
   ssh = None     # SSH session
-  ssh_port = 122
   
   def __init__(self, timeout = 4, verbose = 2, detect_device = True):
     self.verbose = verbose
     self.timeout = timeout
     self.config['device_ip_addr'] = None
     self.load_config()
+    if not 'ssh_port' in self.config:
+      self.config['ssh_port'] = 22   # SSH default port
     self.device_name = None
     self.webpassword = None
     self.status = -2
@@ -193,6 +194,15 @@ class Gateway():
   @ip_addr.setter
   def ip_addr(self, value):
     self.config['device_ip_addr'] = value
+
+  @property
+  def ssh_port(self):
+    return self.config['ssh_port']
+
+  @ssh_port.setter
+  def ssh_port(self, value):
+    self.config['ssh_port'] = value
+    self.save_config()
 
   def load_config(self):
     self.config = {}
