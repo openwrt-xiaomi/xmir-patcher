@@ -30,8 +30,13 @@ gw = gateway.Gateway(timeout = 4)
 if gw.status < 1:
   die("Xiaomi Mi Wi-Fi device not found (IP: {})".format(ip_addr))
 
-dname = gw.device_name
-if dname == 'r3600' or dname == 'rb03':
+dn = gw.device_name
+
+if dn == 'rm2100':
+  import connect2
+  sys.exit(0)
+
+if dn == 'r3600' or dn == 'rb03':
   import connect3
   sys.exit(0)
 
@@ -65,9 +70,9 @@ fn_pf2 = dn_tmp + fn_pfname + '_02'
 fn_pf3 = dn_tmp + fn_pfname + '_03'
 
 fn_suffix = '_mips'
-if dname == 'r3d':
+if dn == 'r3d':
   fn_suffix = '_armv7a'
-if dname == "rb03":
+if dn == "rb03":
   fn_suffix = '_arm64'
 
 fn_pf = dn_dir + fn_pfname + fn_suffix
