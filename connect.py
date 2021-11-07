@@ -13,7 +13,7 @@ import tarfile
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 import gateway
-from gateway import die
+from gateway import *
 
 
 gw = gateway.Gateway(detect_device = False)
@@ -26,17 +26,15 @@ else:
   gw.ip_addr(ip_addr)
   gw.save_config()
 
-def get_http_headers():
-  headers = {}
-  headers["Content-Type"] = "application/x-www-form-urlencoded; charset=UTF-8"
-  headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:65.0) Gecko/20100101 Firefox/65.0"
-  return headers
-
 gw = gateway.Gateway(timeout = 4)
 if gw.status < 1:
   die("Xiaomi Mi Wi-Fi device not found (IP: {})".format(ip_addr))
 
 dname = gw.device_name
+if dname == 'r3600' or dname == 'rb03':
+  import connect3
+  sys.exit(0)
+
 print("device_name =", gw.device_name)
 print("rom_version = {} {}".format(gw.rom_version, gw.rom_channel))
 print("mac = {}".format(gw.mac_address))
