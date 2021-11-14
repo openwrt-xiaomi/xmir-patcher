@@ -327,6 +327,8 @@ class Gateway():
     return True
 
   def download(self, fn_remote, fn_local, verbose = 1):
+    if verbose and self.verbose:
+      print('Download file: "{}" ....'.format(fn_remote))
     if self.use_ssh:
       ssh = self.get_ssh(self.verbose)
       channel, fileinfo = ssh.scp_recv2(fn_remote)
@@ -344,8 +346,6 @@ class Gateway():
     else:
       ftp = self.get_ftp(self.verbose)
       file = open(fn_local, 'wb')
-      if verbose and self.verbose:
-        print('Download file: "{}" ....'.format(fn_remote))
       ftp.retrbinary('RETR ' + fn_remote, file.write)
       file.close()
     return True
@@ -355,6 +355,8 @@ class Gateway():
       file = open(fn_local, 'rb')
     except Exception:
       die('File "{}" not found.'.format(fn_local))
+    if verbose and self.verbose:
+      print('Upload file: "{}" ....'.format(fn_local))
     if self.use_ssh:
       ssh = self.get_ssh(self.verbose)
       finfo = os.stat(fn_local)
@@ -366,8 +368,6 @@ class Gateway():
       #except ssh2.exceptions.SCPProtocolError as e:
     else:
       ftp = self.get_ftp(self.verbose)
-      if verbose and self.verbose:
-        print('Upload file: "{}" ....'.format(fn_local))
       ftp.storbinary('STOR ' + fn_remote, file)
     file.close()
     return True
