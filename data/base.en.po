@@ -1,5 +1,13 @@
+
+#: /usr/lib/lua/luci/view/web/inc/store.htm
 msgid "开启后，路由器USB接口将工作在3.0模式下。（USB3.0使用时会对2.4G Wi-Fi有些影响）"
-msgstr "After turning it on, the router's USB interface will work in 3.0 mode. (USB3.0 will have some impact on 2.4G Wi-Fi)"
+msgstr ""
+"After turning it on, the router's USB interface will work in 3.0 mode."
+" (USB3.0 will have some impact on 2.4G Wi-Fi)"
+
+# ========================================================================= #
+#     Data from Xiaomi LMO files                                            #
+# ========================================================================= #
 
 msgkey 0x0005B8BE
 msgstr "Repeater mode is on, repeat quality: "

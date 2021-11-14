@@ -122,6 +122,8 @@ class Lmo:
 
   def print_msg(self):
     msg = self.msg
+    if not msg.id and not msg.val[0]:
+      return msg
     if msg.key is not None:
       val = msg.val[msg.plural_num]
       self.add_entry(msg.key, msg.plural_num + 1, val)
@@ -175,18 +177,23 @@ class Lmo:
     line = line.replace('\x02', '\\')
     return line
 
-  def process_line(self, line, eof = False):
+  def process_line(self, line):
     msg = self.msg
     if line.startswith('msgctxt "'):
-      if msg.id or msg.val[0]:
-        msg = self.print_msg()
+      msg = self.print_msg()
       msg.ctxt = ""
       msg.cur = MSG_CTXT
-    elif eof or line.startswith('msgid "'):
-      if msg.id or msg.val[0]:
-        msg = self.print_msg()
+    elif line.startswith('msgid "'):
+      msg = self.print_msg()
       msg.id = ""
       msg.cur = MSG_ID
+    elif line.startswith('msgid 0x') or line.startswith('msgkey 0x'):
+      msg = self.print_msg()
+      msg.id = '\x01'
+      msg.plural_num = 0
+      x = line.find('0x')
+      msg.key = int(line[x:], 16)
+      msg.cur = MSG_UNSPEC  # without text data
     elif line.startswith('msgid_plural "'):
       msg.id_plural = ""
       msg.cur = MSG_ID_PLURAL
@@ -204,16 +211,7 @@ class Lmo:
           msg.val.append(None)
       msg.val[msg.plural_num] = b''
       msg.cur = MSG_STR
-    elif line.startswith('msgkey 0x'):
-      if msg.id or msg.val[0]:
-        msg = self.print_msg()
-      msg.id = '\x01'
-      msg.plural_num = 0
-      x = line.find('0x')
-      msg.key = int(line[x:], 16)
-      return
-    if eof:
-      return 
+    # read text data
     if msg.cur != MSG_UNSPEC:
       tmp = self.extract_string(line)
       if tmp is not None and len(tmp) > 0:
@@ -236,8 +234,8 @@ class Lmo:
     with open(filename, "r", encoding='UTF-8') as file:
       for line in file:
         self.process_line(line.rstrip())
-      else:
-        self.process_line("", eof=True)
+      else:      
+        self.print_msg()  # EOF
 
   def load_from_list(self, entries):
     self.entries = entries
