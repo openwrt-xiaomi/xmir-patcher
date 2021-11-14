@@ -31,8 +31,15 @@ if action == 'install':
 gw.upload(fn_local_u, fn_remote_u)
 
 if action == 'install':
-  for filename in [fn for fn in os.listdir(fn_dir) if fn.split(".")[-1] in ['lmo']]:
-    gw.upload(fn_dir + filename, '/tmp/' + filename)
+  import po2lmo
+  for filename in [fn for fn in os.listdir(fn_dir) if fn.split(".")[-1] in ['po']]:
+    fname = fn_dir + filename
+    print('Convert file "{}" to LMO ...'.format(fname))
+    lmo = po2lmo.Lmo()
+    lmo.load_from_text(fname)
+    lmo_fname = os.path.splitext(filename)[0] + '.lmo'
+    lmo.save_to_bin(fn_dir + lmo_fname)
+    gw.upload(fn_dir + lmo_fname, '/tmp/' + lmo_fname)
 
 print("All files uploaded!")
 
