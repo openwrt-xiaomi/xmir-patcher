@@ -102,10 +102,15 @@ class Lmo:
 
   def __init__(self, verbose = 0):
     self.verbose = verbose
+    self.skip_dup = False
     self.entries = []
     self.msg = Msg()
 
   def add_entry(self, key_id, val_id, val):
+    if self.skip_dup:
+      ent = next((ent for ent in self.entries if ent.key_id == key_id), None)
+      if ent:
+        return False  # skip duplicate
     entry = LmoEntry()
     entry.key_id = key_id
     entry.val_id = val_id
@@ -113,6 +118,7 @@ class Lmo:
     entry.length = len(val)
     entry.val = val
     self.entries.append(entry)
+    return True
 
   def print_msg(self):
     msg = self.msg

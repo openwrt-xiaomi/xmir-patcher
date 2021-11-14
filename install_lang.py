@@ -36,6 +36,7 @@ if action == 'install':
     fname = fn_dir + filename
     print('Convert file "{}" to LMO ...'.format(fname))
     lmo = po2lmo.Lmo()
+    lmo.skip_dup = True
     lmo.load_from_text(fname)
     lmo_fname = os.path.splitext(filename)[0] + '.lmo'
     lmo.save_to_bin(fn_dir + lmo_fname)
