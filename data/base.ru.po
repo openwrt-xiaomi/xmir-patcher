@@ -9,1217 +9,1217 @@ msgstr ""
 #     Data from Xiaomi LMO files                                            #
 # ========================================================================= #
 
-msgkey 0x0005B8BE
+msgid 0x0005B8BE
 msgstr "Включен режим репитера. Качество: "
 
-msgkey 0x00122454
+msgid 0x00122454
 msgstr "Сон диска"
 
-msgkey 0x0018014D
+msgid 0x0018014D
 msgstr "Скорость определена неверно?"
 
-msgkey 0x005021D9
+msgid 0x005021D9
 msgstr "Режим порта Ethernet"
 
-msgkey 0x005AE384
+msgid 0x005AE384
 msgstr "Неизвестно"
 
-msgkey 0x0062ACF2
+msgid 0x0062ACF2
 msgstr "Атикокан, Канкун, Кайман, Ямайка, Панама"
 
-msgkey 0x00767AFA
+msgid 0x00767AFA
 msgstr "Удалить это правило?"
 
 # DUP
-msgkey 0x00772F59
+msgid 0x00772F59
 msgstr "Стандартное время Маркизских островов"
 
 # DUP
-msgkey 0x00772F59
+msgid 0x00772F59
 msgstr "Стандартное время Маркизских островов"
 
-msgkey 0x007C371D
+msgid 0x007C371D
 msgstr "Плохой"
 
-msgkey 0x007CA84F
+msgid 0x007CA84F
 msgstr "Не найден пригодный для использования узел Mesh-сети"
 
-msgkey 0x0080FE49
+msgid 0x0080FE49
 msgstr "Ошибка конфигурации"
 
-msgkey 0x008C7438
+msgid 0x008C7438
 msgstr "Параметры клонирования MAC-адреса"
 
-msgkey 0x00A49E33
+msgid 0x00A49E33
 msgstr "Обнаружен конфликт IP-адресов, попробуйте переключиться на"
 
-msgkey 0x00AE42E1
+msgid 0x00AE42E1
 msgstr "IP-адрес локальной сети"
 
-msgkey 0x00B1BF32
+msgid 0x00B1BF32
 msgstr ""
 "По техническим причинам функция Mesh-сети в настоящее время не"
 " поддерживается."
 
-msgkey 0x00B86953
+msgid 0x00B86953
 msgstr "MTU must be between 576...1492 bytes"
 
-msgkey 0x00BD620D
+msgid 0x00BD620D
 msgstr "Не удается подключиться"
 
-msgkey 0x00C2A2ED
+msgid 0x00C2A2ED
 msgstr "Используется"
 
-msgkey 0x00DBF314
+msgid 0x00DBF314
 msgstr "Данные настройки можно изменить в разделе «Настройки роутера»"
 
-msgkey 0x011884C2
+msgid 0x011884C2
 msgstr "Официальный сайт"
 
-msgkey 0x0129E6AE
+msgid 0x0129E6AE
 msgstr ""
 "Выберите существующую беспроводную сеть для расширения или введите SSID и"
 " пароль"
 
-msgkey 0x01614E39
+msgid 0x01614E39
 msgstr "Загрузка ЦП: "
 
-msgkey 0x0163EAB1
+msgid 0x0163EAB1
 msgstr ""
 "Это действие перезагрузит роутер. Все устройства в этой сети будут времени"
 " отключены."
 
-msgkey 0x017BF61B
+msgid 0x017BF61B
 msgstr "Настройки широкополосного подключения импортированы."
 
-msgkey 0x018BECDD
+msgid 0x018BECDD
 msgstr "Не удалось найти файл"
 
-msgkey 0x01996956
+msgid 0x01996956
 msgstr "Частота ядра"
 
-msgkey 0x01A4B87F
+msgid 0x01A4B87F
 msgstr "Проверьте введенный адрес эл. почты"
 
-msgkey 0x01B645FA
+msgid 0x01B645FA
 msgstr "Настройка завершена"
 
-msgkey 0x01C62527
+msgid 0x01C62527
 msgstr "Скорость"
 
-msgkey 0x01CBB607
+msgid 0x01CBB607
 msgstr ""
 "IP-адрес состоит из 4 чисел в промежутке от 0 до 255, разделенных точкой"
 " (например, 120.134.33.9)"
 
-msgkey 0x01D8A3BE
+msgid 0x01D8A3BE
 msgstr "Вы ввели недопустимое имя роутера"
 
-msgkey 0x01DC3CC7
+msgid 0x01DC3CC7
 msgstr "Windows"
 
-msgkey 0x01DD0857
+msgid 0x01DD0857
 msgstr "Вы можете изменить регион, выполнив сброс настроек роутера"
 
-msgkey 0x01F04B43
+msgid 0x01F04B43
 msgstr "Автоматическая настройка скорости"
 
-msgkey 0x01F8071E
+msgid 0x01F8071E
 msgstr "месяц"
 
-msgkey 0x01FF65AE
+msgid 0x01FF65AE
 msgstr ""
 "Можно выбрать службы или устройства, которые будут использовать трафик через"
 " VPN"
 
-msgkey 0x0244183B
+msgid 0x0244183B
 msgstr "Адрес WAN IPv6"
 
-msgkey 0x024BB945
+msgid 0x024BB945
 msgstr "Тип подключения"
 
-msgkey 0x024F73C6
+msgid 0x024F73C6
 msgstr "Гуам, Сайпан"
 
-msgkey 0x0257C5C1
+msgid 0x0257C5C1
 msgstr "Жесткий диск в идеальном состоянии!"
 
-msgkey 0x026CDDE7
+msgid 0x026CDDE7
 msgstr "{$day}/{$month}/{$year} {$hour}:{$min}:{$sec}"
 
-msgkey 0x028B3881
+msgid 0x028B3881
 msgstr "Банги, Браззавиль, Дуала, Киншаса, Лагос"
 
-msgkey 0x029A30B5
+msgid 0x029A30B5
 msgstr "Имя"
 
-msgkey 0x02AA05D5
+msgid 0x02AA05D5
 msgstr ""
 "2. При необходимости воспользуйтесь автоматическим выбором типа протокола"
 " VPN."
 
-msgkey 0x02C877BB
+msgid 0x02C877BB
 msgstr "(UTC+2) Каир"
 
-msgkey 0x02F12573
+msgid 0x02F12573
 msgstr "Проверьте настройки подключения роутера"
 
-msgkey 0x02FB386D
+msgid 0x02FB386D
 msgstr "Киритимати"
 
-msgkey 0x030711A8
+msgid 0x030711A8
 msgstr "Официальный Sina Weibo"
 
-msgkey 0x030E4839
+msgid 0x030E4839
 msgstr "Вы ввели неверный пароль"
 
-msgkey 0x032134B0
+msgid 0x032134B0
 msgstr "Префикс"
 
-msgkey 0x032A45CC
+msgid 0x032A45CC
 msgstr "Ошибка аккаунта или пароля широкополосного дайлера"
 
-msgkey 0x032CC900
+msgid 0x032CC900
 msgstr "Mi Router не поддерживает Internet Explorer 6"
 
-msgkey 0x0343328C
+msgid 0x0343328C
 msgstr "Пусто"
 
 # DUP
-msgkey 0x0367704B
+msgid 0x0367704B
 msgstr "Амман"
 
 # DUP
-msgkey 0x0367704B
+msgid 0x0367704B
 msgstr "Амман"
 
-msgkey 0x036FEF73
+msgid 0x036FEF73
 msgstr "Обратитесь в службу поддержки"
 
-msgkey 0x03751186
+msgid 0x03751186
 msgstr "Восстановить"
 
-msgkey 0x03760D05
+msgid 0x03760D05
 msgstr "Подключите Ethernet-кабель"
 
-msgkey 0x03797855
+msgid 0x03797855
 msgstr "DHCP"
 
-msgkey 0x0382C98E
+msgid 0x0382C98E
 msgstr "Выполняется обновление роутера"
 
-msgkey 0x03920B47
+msgid 0x03920B47
 msgstr "Последняя скорость"
 
-msgkey 0x03AE48DB
+msgid 0x03AE48DB
 msgstr "Не удалось получить сведения о пользователе"
 
-msgkey 0x03BFD843
+msgid 0x03BFD843
 msgstr ", ожидание перезагрузки Wi-Fi, ({$time} секунд)"
 
-msgkey 0x03CEC94A
+msgid 0x03CEC94A
 msgstr "Начальный порт"
 
-msgkey 0x03DF6E8A
+msgid 0x03DF6E8A
 msgstr "Не удалось получить сведения об администраторе"
 
-msgkey 0x04028365
+msgid 0x04028365
 msgstr ""
 "Адрес IPv6 отображается в форме восьми групп из четырех цифр"
 " шестнадцатеричной системы исчисления, где каждая группа разделена"
 " двоеточием (:)"
 
 # DUP
-msgkey 0x040A68AD
+msgid 0x040A68AD
 msgstr "Корея"
 
 # DUP
-msgkey 0x040A68AD
+msgid 0x040A68AD
 msgstr "Южная Корея"
 
-msgkey 0x041571C4
+msgid 0x041571C4
 msgstr "Актобе, Душанбе, Самарканд, Ташкент, Екатеринбург"
 
-msgkey 0x041E8D51
+msgid 0x041E8D51
 msgstr "Обновить роутер"
 
-msgkey 0x04281D43
+msgid 0x04281D43
 msgstr "Стабильно"
 
-msgkey 0x04416A0C
+msgid 0x04416A0C
 msgstr "Првоерьте введенный почтовый индекс"
 
-msgkey 0x04BB46B2
+msgid 0x04BB46B2
 msgstr "Нур-Султан"
 
-msgkey 0x04BE2EE7
+msgid 0x04BE2EE7
 msgstr "Пароль репитера"
 
-msgkey 0x04C6DF73
+msgid 0x04C6DF73
 msgstr "Выберите устройство"
 
-msgkey 0x04D13D81
+msgid 0x04D13D81
 msgstr "Перезагрузка"
 
-msgkey 0x04DD4931
+msgid 0x04DD4931
 msgstr "Словакия"
 
-msgkey 0x05204083
+msgid 0x05204083
 msgstr "Сильное (WPA2-personal)"
 
-msgkey 0x0539AB56
+msgid 0x0539AB56
 msgstr ""
 "По окончании сеанса {$pname} соответствующие функции перестанут работать."
 " Для повторного использования начните выполнение задачи на этой странице."
 " Завершить {$pname}?"
 
-msgkey 0x054B2F9F
+msgid 0x054B2F9F
 msgstr ""
 "3. Включите узел и дождитесь, когда индикатор системы роутера загорится"
 " белым/синим."
 
-msgkey 0x055D5A5C
+msgid 0x055D5A5C
 msgstr ""
 "2. После отключения сети Wi-Fi 5 ГГц добавление узлов Mesh-сети будет"
 " невозможно."
 
-msgkey 0x05C98611
+msgid 0x05C98611
 msgstr "Авто"
 
-msgkey 0x05CBDDB1
+msgid 0x05CBDDB1
 msgstr "Не удалось отключить плагин"
 
-msgkey 0x06930A23
+msgid 0x06930A23
 msgstr "Выберите файлы для резервирования"
 
-msgkey 0x06B0943B
+msgid 0x06B0943B
 msgstr "Секунду…"
 
-msgkey 0x06C46C91
+msgid 0x06C46C91
 msgstr "Не удалось загрузить файл"
 
-msgkey 0x06C5C573
+msgid 0x06C5C573
 msgstr ""
 "2. Во время проверки файловой системы произошла ошибка. Попробуйте решить"
 " проблему при помощи проверки жесткого диска."
 
-msgkey 0x06D35FF8
+msgid 0x06D35FF8
 msgstr "Ближневосточный часовой пояс A"
 
-msgkey 0x06FBBB00
+msgid 0x06FBBB00
 msgstr "Выберите режим"
 
-msgkey 0x0706A106
+msgid 0x0706A106
 msgstr ""
 "Служба поддержки клиентов оператора доступа к Интернету Broad Netcom"
 
-msgkey 0x070FEA3D
+msgid 0x070FEA3D
 msgstr "Всемирное координированное время +12"
 
-msgkey 0x0717ACE7
+msgid 0x0717ACE7
 msgstr "Нестабильные секотры"
 
-msgkey 0x073D729B
+msgid 0x073D729B
 msgstr "Шаг 3: подключите к Mi Router кабель Ethernet."
 
-msgkey 0x076AC0D9
+msgid 0x076AC0D9
 msgstr "Роутеры могут обмениваться данными при подключении к одной сети"
 
-msgkey 0x076E2F6B
+msgid 0x076E2F6B
 msgstr "Недопустимое значение"
 
-msgkey 0x076F66D6
+msgid 0x076F66D6
 msgstr ""
 "Неправильный пароль был введен несколько раз подряд. Последующие попытки"
 " введения пароля будут заблокированы."
 
-msgkey 0x07832829
+msgid 0x07832829
 msgstr "Исключения (разрешить этим устройствам доступ к сети)"
 
-msgkey 0x07866260
+msgid 0x07866260
 msgstr ""
 "Использование порта USB 3.0 в роутере повлияет на работу сети Wi-Fi с"
 " частотой 2,4 ГГц. При необходимости вы можете отключить порт USB 3.0. После"
 " отключения система автоматически переключит порт в режим USB 2.0. (USB 2.0"
 " не влияет на работу сети Wi-Fi с частотой 2,4 ГГц)."
 
-msgkey 0x0790DEB2
+msgid 0x0790DEB2
 msgstr "Не удалось проверить имя пользователя или пароль"
 
-msgkey 0x07C33BFA
+msgid 0x07C33BFA
 msgstr "Сохранено"
 
-msgkey 0x07D56027
+msgid 0x07D56027
 msgstr "Режим специального провайдера"
 
-msgkey 0x081554B7
+msgid 0x081554B7
 msgstr "Далее"
 
-msgkey 0x0842C74F
+msgid 0x0842C74F
 msgstr "Вы ввели недопустимый диапазон"
 
-msgkey 0x08801C60
+msgid 0x08801C60
 msgstr "Адак"
 
-msgkey 0x08839A2B
+msgid 0x08839A2B
 msgstr "Не удалось обновить. Произошла ошибка или память роутера заполнена."
 
-msgkey 0x0887CE16
+msgid 0x0887CE16
 msgstr "Фунафути, Кваджалейн, Маджуро, Науру"
 
-msgkey 0x089BEBB9
+msgid 0x089BEBB9
 msgstr "Статический IPv6"
 
-msgkey 0x08A09434
+msgid 0x08A09434
 msgstr "Не удалось распаковать файл, так как он поврежден"
 
-msgkey 0x08A83598
+msgid 0x08A83598
 msgstr "Не закрывайте браузер и убедитесь, что роутер подключен"
 
-msgkey 0x08AE9E98
+msgid 0x08AE9E98
 msgstr "Выберите добавляемый узел Mesh-сети"
 
-msgkey 0x08B837A1
+msgid 0x08B837A1
 msgstr "Калининград"
 
-msgkey 0x08BC2D3C
+msgid 0x08BC2D3C
 msgstr "Якутск"
 
-msgkey 0x08DB1F70
+msgid 0x08DB1F70
 msgstr "Проблемы не обнаружены"
 
-msgkey 0x08F3449B
+msgid 0x08F3449B
 msgstr "Регион и время"
 
-msgkey 0x09055EA5
+msgid 0x09055EA5
 msgstr "Коммутатор Ethernet"
 
-msgkey 0x090F357D
+msgid 0x090F357D
 msgstr "Сменить"
 
-msgkey 0x09354384
+msgid 0x09354384
 msgstr "Выбор порта WAN"
 
-msgkey 0x093C7614
+msgid 0x093C7614
 msgstr "Применение настроек…"
 
-msgkey 0x095A411B
+msgid 0x095A411B
 msgstr "Беспроводной канал"
 
-msgkey 0x0972CBC1
+msgid 0x0972CBC1
 msgstr "Нет подключенных устройств"
 
-msgkey 0x099A5AF0
+msgid 0x099A5AF0
 msgstr "Нет добавленных устройств"
 
-msgkey 0x09A57645
+msgid 0x09A57645
 msgstr "Параметры интернета"
 
-msgkey 0x09DBF84C
+msgid 0x09DBF84C
 msgstr "(UTC+6) Дакка"
 
-msgkey 0x09EBF763
+msgid 0x09EBF763
 msgstr "Пхеньян, Сеул"
 
-msgkey 0x0A12CD0F
+msgid 0x0A12CD0F
 msgstr "Пароль"
 
-msgkey 0x0A2F5FE6
+msgid 0x0A2F5FE6
 msgstr "Не удалось извлечь диск"
 
-msgkey 0x0A307AD6
+msgid 0x0A307AD6
 msgstr "Введите пароль"
 
 # DUP
-msgkey 0x0A3F1076
+msgid 0x0A3F1076
 msgstr "Дамаск"
 
 # DUP
-msgkey 0x0A3F1076
+msgid 0x0A3F1076
 msgstr "Дамаск"
 
-msgkey 0x0A56693E
+msgid 0x0A56693E
 msgstr "Режим совместимости с Wi-Fi 5 (802.11ac)"
 
-msgkey 0x0A683187
+msgid 0x0A683187
 msgstr "Эта сеть может не поддерживать DHCP."
 
-msgkey 0x0A6F6E0B
+msgid 0x0A6F6E0B
 msgstr "Выберите устройство"
 
-msgkey 0x0AAB2AA4
+msgid 0x0AAB2AA4
 msgstr "Кухня"
 
-msgkey 0x0AB49B54
+msgid 0x0AB49B54
 msgstr "Mi Router создал 2 беспроводные сети"
 
-msgkey 0x0B2F67A5
+msgid 0x0B2F67A5
 msgstr "Приоритет"
 
-msgkey 0x0B898339
+msgid 0x0B898339
 msgstr "Префиксы LAN IPv6 должны оканчиваться на ::"
 
-msgkey 0x0BA43397
+msgid 0x0BA43397
 msgstr "Сбой проверки"
 
-msgkey 0x0BD77355
+msgid 0x0BD77355
 msgstr "(UTC+6:30) Янгон"
 
-msgkey 0x0BF3C734
+msgid 0x0BF3C734
 msgstr "Выберите сеть"
 
-msgkey 0x0C666FEA
+msgid 0x0C666FEA
 msgstr "устройства"
 
-msgkey 0x0C77449E
+msgid 0x0C77449E
 msgstr "Абуджа, Алжир, Тунис"
 
-msgkey 0x0CC5EC18
+msgid 0x0CC5EC18
 msgstr ""
 "2.Восстановите заводские настройки узла Mesh-сети и повторите попытку."
 
-msgkey 0x0D283DBD
+msgid 0x0D283DBD
 msgstr "Сети полностью независимы друг от друга."
 
-msgkey 0x0D4C45E5
+msgid 0x0D4C45E5
 msgstr "Автосогласование 2500 Мбит/1000 Мбит/100 Мбит (рекомендуется)"
 
 # DUP
-msgkey 0x0D502411
+msgid 0x0D502411
 msgstr "Фиджи"
 
 # DUP
-msgkey 0x0D502411
+msgid 0x0D502411
 msgstr "Фиджи"
 
-msgkey 0x0D7D2CE7
+msgid 0x0D7D2CE7
 msgstr "Проверьте введенный код региона"
 
-msgkey 0x0D953C3E
+msgid 0x0D953C3E
 msgstr "Смена репитера"
 
-msgkey 0x0DEBCC5B
+msgid 0x0DEBCC5B
 msgstr "Сеул"
 
-msgkey 0x0E35517C
+msgid 0x0E35517C
 msgstr "Отключить роутер"
 
-msgkey 0x0E4126A0
+msgid 0x0E4126A0
 msgstr "USB-накопитель"
 
-msgkey 0x0E4B8E6B
+msgid 0x0E4B8E6B
 msgstr "Восток, Алматы, Дакка, Омск, Тимфу"
 
-msgkey 0x0E4F1798
+msgid 0x0E4F1798
 msgstr "Свяжитесь с провайдером"
 
-msgkey 0x0E689CDB
+msgid 0x0E689CDB
 msgstr "Автоматический режим"
 
-msgkey 0x0E835E32
+msgid 0x0E835E32
 msgstr "Абу-Даби, Маскат"
 
-msgkey 0x0EC0197B
+msgid 0x0EC0197B
 msgstr "Введите пароль администратора"
 
-msgkey 0x0EE23F07
+msgid 0x0EE23F07
 msgstr "Улан-Батор"
 
-msgkey 0x0EE9B191
+msgid 0x0EE9B191
 msgstr "Конфликт IP-адресов"
 
-msgkey 0x0F2365EA
+msgid 0x0F2365EA
 msgstr "(UTC+2) Афины, Бухарест"
 
-msgkey 0x0F345344
+msgid 0x0F345344
 msgstr "Выберите обновление:"
 
-msgkey 0x0F49156F
+msgid 0x0F49156F
 msgstr "Не удается подключиться к интернету"
 
-msgkey 0x0F568CE9
+msgid 0x0F568CE9
 msgstr "Импорт настроек провайдера завершен"
 
-msgkey 0x0FB96A45
+msgid 0x0FB96A45
 msgstr "Слабый"
 
-msgkey 0x1001537C
+msgid 0x1001537C
 msgstr "Подключенные устройства"
 
-msgkey 0x1043FAED
+msgid 0x1043FAED
 msgstr "Филипины"
 
-msgkey 0x1050D9C5
+msgid 0x1050D9C5
 msgstr "Амстердам, Берлин, Берн, Рим, Стокгольм, Вена"
 
-msgkey 0x1095F0F3
+msgid 0x1095F0F3
 msgstr "Красноярск"
 
-msgkey 0x10B62C77
+msgid 0x10B62C77
 msgstr "Стандартное время Афганистана"
 
-msgkey 0x10C52CCE
+msgid 0x10C52CCE
 msgstr ""
 "Интеллектуальный автоматический поиск AIoT позволяет в автоматическом режиме"
 " обнаруживать смарт-устройства Mi, которые не были инициализированы, и"
 " быстро подключать их через приложение Mi Home."
 
-msgkey 0x10CF065D
+msgid 0x10CF065D
 msgstr "Джакарта, Понтианак"
 
-msgkey 0x10F03C02
+msgid 0x10F03C02
 msgstr "Имя"
 
-msgkey 0x10F6D6B6
+msgid 0x10F6D6B6
 msgstr "Настройки ограничения пропускной способности"
 
-msgkey 0x111062D2
+msgid 0x111062D2
 msgstr "Дюмон-Дюрвиль, Усть-Нера, Владивосток, Чуук, Порт-Морсби"
 
-msgkey 0x111F1688
+msgid 0x111F1688
 msgstr "Из-за"
 
-msgkey 0x1147341F
+msgid 0x1147341F
 msgstr ""
 "QoS позволяет ограничивать пропускную способность конкретных устройств,"
 " подключенных к сети"
 
-msgkey 0x114A4626
+msgid 0x114A4626
 msgstr "Упорядочение файлов…"
 
-msgkey 0x1150F787
+msgid 0x1150F787
 msgstr "Восстановить заводские настройки"
 
-msgkey 0x1159D655
+msgid 0x1159D655
 msgstr "Часовой пояс Бразилиа"
 
-msgkey 0x115ED580
+msgid 0x115ED580
 msgstr "Интерфейс виртуальной локальной сети"
 
-msgkey 0x116A537D
+msgid 0x116A537D
 msgstr ""
 "Для изменения часового пояса необходимо переключиться на основной"
 " Mesh-роутер Любые изменения основного роутера будут синхронизированы с"
 " другими связанными роутерами."
 
-msgkey 0x116B7CA8
+msgid 0x116B7CA8
 msgstr "Mi Router 3C"
 
-msgkey 0x11F2ED3A
+msgid 0x11F2ED3A
 msgstr "Брисбен, Линдеман"
 
-msgkey 0x11FF007E
+msgid 0x11FF007E
 msgstr "Усилитель сигнала Mi Wi-Fi"
 
-msgkey 0x12074F95
+msgid 0x12074F95
 msgstr "Запуск проверки скорости"
 
-msgkey 0x120C8904
+msgid 0x120C8904
 msgstr "США"
 
-msgkey 0x120F6144
+msgid 0x120F6144
 msgstr "Подключенные устройства"
 
-msgkey 0x122DF1F7
+msgid 0x122DF1F7
 msgstr "Объединенные Арабские Эмираты "
 
-msgkey 0x128F648A
+msgid 0x128F648A
 msgstr "Исправление не требуется"
 
-msgkey 0x12AFAB80
+msgid 0x12AFAB80
 msgstr "Ошибка подключения"
 
-msgkey 0x12E826E8
+msgid 0x12E826E8
 msgstr "Кампо-Гранде, Каракас, Гайана, Ла-Пас, Порто-Велью"
 
-msgkey 0x12FAE82D
+msgid 0x12FAE82D
 msgstr "Проблема диска была исправлена"
 
-msgkey 0x12FCBE3B
+msgid 0x12FCBE3B
 msgstr "Скорость загрузки: "
 
-msgkey 0x1318FB46
+msgid 0x1318FB46
 msgstr "Техническая поддержка приложения Mi WiFi"
 
-msgkey 0x1324B781
+msgid 0x1324B781
 msgstr "(UTC+11) Соломоновы Острова, Новая Каледония"
 
-msgkey 0x1327CCCE
+msgid 0x1327CCCE
 msgstr "(UTC-4:30) Каракас"
 
-msgkey 0x13308CCE
+msgid 0x13308CCE
 msgstr "Доступно обновление"
 
-msgkey 0x13495001
+msgid 0x13495001
 msgstr "Восстановить роутер при помощи обновления по воздуху"
 
-msgkey 0x136A1A16
+msgid 0x136A1A16
 msgstr "Подключаться автоматически, когда устройство включено"
 
-msgkey 0x1374FD9B
+msgid 0x1374FD9B
 msgstr "Скрыть сеть"
 
-msgkey 0x13E69F6A
+msgid 0x13E69F6A
 msgstr "Богота, Эйрунепе, Гуаякиль, Лима, Рио-Бранко"
 
-msgkey 0x13F236ED
+msgid 0x13F236ED
 msgstr "Диск успешно извлечен"
 
-msgkey 0x13FC2BA0
+msgid 0x13FC2BA0
 msgstr "Окно сообщения"
 
-msgkey 0x1407F884
+msgid 0x1407F884
 msgstr "Неизвестная ошибка"
 
-msgkey 0x1430B053
+msgid 0x1430B053
 msgstr "Не удалось использовать неизвестный жесткий диск"
 
-msgkey 0x145A2311
+msgid 0x145A2311
 msgstr "Целевой IP-адрес"
 
-msgkey 0x14636B01
+msgid 0x14636B01
 msgstr "MAC-адрес является многоадресным, повторите попытку"
 
-msgkey 0x14EA85D8
+msgid 0x14EA85D8
 msgstr "Используется: "
 
-msgkey 0x14F35CE4
+msgid 0x14F35CE4
 msgstr "(UTC+1) Западная часть Центральной Африки"
 
-msgkey 0x15015B00
+msgid 0x15015B00
 msgstr "1. Убедитесь, что добавляемый роутер поддерживает функции Mesh;"
 
-msgkey 0x151FDC1C
+msgid 0x151FDC1C
 msgstr "Пропускная способность скачивания"
 
-msgkey 0x1528C1F8
+msgid 0x1528C1F8
 msgstr "(UTC-3) Бразилия"
 
-msgkey 0x15313428
+msgid 0x15313428
 msgstr "Создайте резервную копию роутера"
 
-msgkey 0x154A6FC0
+msgid 0x154A6FC0
 msgstr "Тайбэй"
 
-msgkey 0x159CC2DE
+msgid 0x159CC2DE
 msgstr "Недействительный параметр"
 
-msgkey 0x15AB9BAD
+msgid 0x15AB9BAD
 msgstr "Отсканируйте QR-код для загрузки приложения Mi Home/Xiaomi Home"
 
-msgkey 0x15C35EDA
+msgid 0x15C35EDA
 msgstr "Mi аккаунт: "
 
-msgkey 0x15D9AB24
+msgid 0x15D9AB24
 msgstr "Не удалось создать резервную копию настроек роутера"
 
-msgkey 0x160983FD
+msgid 0x160983FD
 msgstr "DNS: "
 
-msgkey 0x16193337
+msgid 0x16193337
 msgstr "Эту функцию можно использовать, когда включено VPN-подключение"
 
-msgkey 0x1626D90C
+msgid 0x1626D90C
 msgstr "Нельзя использовать DMZ, когда включено перенаправление портов"
 
-msgkey 0x164D1956
+msgid 0x164D1956
 msgstr "Нажмите, чтобы проверить скорость"
 
-msgkey 0x164DBA0F
+msgid 0x164DBA0F
 msgstr "Создать резервную копию"
 
-msgkey 0x16908A4F
+msgid 0x16908A4F
 msgstr "Войти"
 
-msgkey 0x1769F5C8
+msgid 0x1769F5C8
 msgstr "Время подключения"
 
-msgkey 0x176B94B7
+msgid 0x176B94B7
 msgstr "Частота 2,4 ГГц"
 
-msgkey 0x177D9D52
+msgid 0x177D9D52
 msgstr "Тихоокеанское (западное побережье) стандартная время D"
 
-msgkey 0x17AB0E40
+msgid 0x17AB0E40
 msgstr "Загрузка файлов"
 
-msgkey 0x17D4DA12
+msgid 0x17D4DA12
 msgstr "(UTC+1) Сараево, Скопье, Варшава, Загреб"
 
-msgkey 0x17FC0C48
+msgid 0x17FC0C48
 msgstr "Изменить параметры сети Wi-Fi"
 
-msgkey 0x1804BE4A
+msgid 0x1804BE4A
 msgstr "Выберите устройство, которое необходимо добавить"
 
-msgkey 0x1826B4E0
+msgid 0x1826B4E0
 msgstr "Версия системы"
 
-msgkey 0x188A765E
+msgid 0x188A765E
 msgstr ""
 "Чтобы включить эту настройку, Wi-Fi роутер перезагрузится, а все устройства,"
 " подключенные в данный момент к нему, будут отключены. Отключении текущей"
 " частоты повлияет на работу Mesh-сети. Удалить текущую частоту?"
 
-msgkey 0x18B22385
+msgid 0x18B22385
 msgstr "Не удалось установить пароль администратора"
 
-msgkey 0x18B229DA
+msgid 0x18B229DA
 msgstr "Исключения"
 
-msgkey 0x18E48063
+msgid 0x18E48063
 msgstr ""
 "Обнаружено, что текущий метод шифрования для диапазона 2,4 ГГц —"
 " WPA3-Personal. Измените метод шифрования и добавьте еще раз."
 
-msgkey 0x191E5757
+msgid 0x191E5757
 msgstr "Название приложения"
 
-msgkey 0x199120B1
+msgid 0x199120B1
 msgstr "Каир"
 
-msgkey 0x19C81794
+msgid 0x19C81794
 msgstr "Проверка пропускной способности"
 
-msgkey 0x1A1CD6A1
+msgid 0x1A1CD6A1
 msgstr "день"
 
-msgkey 0x1A1F9884
+msgid 0x1A1F9884
 msgstr "Ограничение скорости загрузки"
 
-msgkey 0x1A2A5111
+msgid 0x1A2A5111
 msgstr "Виндхук"
 
-msgkey 0x1A2B890D
+msgid 0x1A2B890D
 msgstr ""
 "1. Поместите добавляемый узел Mesh-сети рядом с основным Mesh-роутером."
 
-msgkey 0x1A798D08
+msgid 0x1A798D08
 msgstr "Скорость сети"
 
-msgkey 0x1AD52528
+msgid 0x1AD52528
 msgstr "3. Сначала сделайте резервную копию данных"
 
-msgkey 0x1AE25A6F
+msgid 0x1AE25A6F
 msgstr ""
 "2. После восстановления заводских настроек дочерние узлы Mesh-сети будут"
 " отключены, а Mesh-сеть будет недоступна."
 
-msgkey 0x1B14D956
+msgid 0x1B14D956
 msgstr "Не удалось сохранить имя роутера"
 
-msgkey 0x1B1C99F7
+msgid 0x1B1C99F7
 msgstr ""
 "Решение №2: Подключитесь с помощью ПК или старого роутера, затем выберите"
 " «Отключить». Затем попробуйте подключиться с помощью Mi WiFi."
 
-msgkey 0x1B700BFB
+msgid 0x1B700BFB
 msgstr "Ограничение скорости скачивания"
 
-msgkey 0x1B7B9A8B
+msgid 0x1B7B9A8B
 msgstr "Проверьте настройки сети Wi-Fi-репитера"
 
-msgkey 0x1B87D0F7
+msgid 0x1B87D0F7
 msgstr "Монтевидео"
 
-msgkey 0x1B92EEB8
+msgid 0x1B92EEB8
 msgstr "Конечный порт должен быть больше, чем начальный порт"
 
-msgkey 0x1B9D7E64
+msgid 0x1B9D7E64
 msgstr "Управление настройками роутера"
 
-msgkey 0x1BBCFAF7
+msgid 0x1BBCFAF7
 msgstr "Автонастройка"
 
-msgkey 0x1BFB0BD5
+msgid 0x1BFB0BD5
 msgstr "Малазийское стандартное время"
 
-msgkey 0x1C160174
+msgid 0x1C160174
 msgstr "Обновить имя домена и IP-адрес"
 
-msgkey 0x1C53434E
+msgid 0x1C53434E
 msgstr "Удалить этот объект?"
 
-msgkey 0x1CC61C59
+msgid 0x1CC61C59
 msgstr ""
 "Рекомендуется использовать автоматическую полосу пропускания (80 МГц) для"
 " лучшего покрытия и помехоустойчивости"
 
-msgkey 0x1D19CC08
+msgid 0x1D19CC08
 msgstr "Запуск"
 
-msgkey 0x1D1D11B4
+msgid 0x1D1D11B4
 msgstr "Репитер"
 
-msgkey 0x1D4399C5
+msgid 0x1D4399C5
 msgstr ""
 "Обратитесь к оператору, чтобы проверить, нет ли проблем в работе"
 " широкополосного подключения"
 
-msgkey 0x1D585427
+msgid 0x1D585427
 msgstr "Не удалось подтвердить аккаунт."
 
-msgkey 0x1D64D2C3
+msgid 0x1D64D2C3
 msgstr "Удалить"
 
-msgkey 0x1D9B4BD9
+msgid 0x1D9B4BD9
 msgstr "Форматирование завершено"
 
-msgkey 0x1D9EBC48
+msgid 0x1D9EBC48
 msgstr "Секунду…"
 
-msgkey 0x1DA31630
+msgid 0x1DA31630
 msgstr "1. Проверка диска может занять несколько минут"
 
-msgkey 0x1DA65158
+msgid 0x1DA65158
 msgstr "(UTC+8) Улан-Батор"
 
-msgkey 0x1DA7D7D4
+msgid 0x1DA7D7D4
 msgstr "5G Wi-Fi быстрее и стабильнее"
 
-msgkey 0x1DA7DDCE
+msgid 0x1DA7DDCE
 msgstr "Емкость"
 
-msgkey 0x1DB500BF
+msgid 0x1DB500BF
 msgstr "Обновить роутер"
 
-msgkey 0x1DE71E99
+msgid 0x1DE71E99
 msgstr "Выберите имя сети и пароль"
 
-msgkey 0x1DFF300A
+msgid 0x1DFF300A
 msgstr "Не удалось получить сведения о разрешениях"
 
-msgkey 0x1E01F702
+msgid 0x1E01F702
 msgstr "Аккаунт"
 
-msgkey 0x1E04D3FC
+msgid 0x1E04D3FC
 msgstr "Проверка…"
 
-msgkey 0x1E0B695D
+msgid 0x1E0B695D
 msgstr "ЦП"
 
-msgkey 0x1E0EEEBD
+msgid 0x1E0EEEBD
 msgstr "Сетевой порт 2,5 Гбит/с (рекомендуется)"
 
-msgkey 0x1E4C8E3F
+msgid 0x1E4C8E3F
 msgstr "Не удалось проверить значение файла MD5"
 
-msgkey 0x1EA0CA23
+msgid 0x1EA0CA23
 msgstr "Добавить"
 
-msgkey 0x1EB727E0
+msgid 0x1EB727E0
 msgstr "Сбой запроса"
 
-msgkey 0x1ECFCACD
+msgid 0x1ECFCACD
 msgstr "Не удалось проверить файл"
 
-msgkey 0x1EDAE9B4
+msgid 0x1EDAE9B4
 msgstr ""
 "Уведомление: Если основной роутер не является роутером Mi WiFi, IP-адрес"
 " может быть изменен роутером более высокого ранга. В данном случае"
 " необходимо установить приложение Mi WiFi для управления устройством"
 
-msgkey 0x1EFC6CCA
+msgid 0x1EFC6CCA
 msgstr "Питкэрн"
 
 # DUP
-msgkey 0x1F16CA2E
+msgid 0x1F16CA2E
 msgstr "Мексика"
 
 # DUP
-msgkey 0x1F16CA2E
+msgid 0x1F16CA2E
 msgstr "Мексика"
 
-msgkey 0x1F426224
+msgid 0x1F426224
 msgstr "Центральная Америка"
 
-msgkey 0x1FAF492E
+msgid 0x1FAF492E
 msgstr "Проверьте номер аккаунта"
 
-msgkey 0x1FB62BFD
+msgid 0x1FB62BFD
 msgstr "Ванная комната"
 
-msgkey 0x1FCCA2F3
+msgid 0x1FCCA2F3
 msgstr "Проводной репитер"
 
-msgkey 0x1FD8FAEC
+msgid 0x1FD8FAEC
 msgstr "Как настроить DDNS?"
 
-msgkey 0x1FF3A8D9
+msgid 0x1FF3A8D9
 msgstr "Настройка…"
 
-msgkey 0x200511E0
+msgid 0x200511E0
 msgstr "Высокий"
 
-msgkey 0x2035A41B
+msgid 0x2035A41B
 msgstr ""
 "Функция расширения Mesh-сети будет недоступна, если Wi-Fi 2,4 ГГц выключен."
 " Продолжить?"
 
-msgkey 0x203EE00A
+msgid 0x203EE00A
 msgstr "Роутер Mi Router 4A Giga Version"
 
-msgkey 0x20D1029E
+msgid 0x20D1029E
 msgstr "Доступ к файлам и их отправка"
 
-msgkey 0x20F2DD39
+msgid 0x20F2DD39
 msgstr "Кишинев"
 
-msgkey 0x214E8672
+msgid 0x214E8672
 msgstr "ч"
 
-msgkey 0x215D8B6A
+msgid 0x215D8B6A
 msgstr ""
 "2. Внимание: сделайте резервную копию жесткого диска при помощи Mi WiFi,"
 " чтобы избежать потери данных."
 
-msgkey 0x21684118
+msgid 0x21684118
 msgstr ""
 "Во время оптимизации все функции жесткого диска будут времени отключены "
 
-msgkey 0x218CAC06
+msgid 0x218CAC06
 msgstr "Рекомендуется DHCP (автоматически получать IP-адрес)"
 
-msgkey 0x218EB9F9
+msgid 0x218EB9F9
 msgstr "Выполнено переключение на широкополосный доступ"
 
-msgkey 0x21938C25
+msgid 0x21938C25
 msgstr ""
 "Обратитесь к провайдеру, чтобы узнать, есть ли какие-либо проблемы с"
 " локальной сетью"
 
-msgkey 0x219578CC
+msgid 0x219578CC
 msgstr ""
 "Не удалось установить пользовательский DNS. Отключите DNS или измените"
 " параметры."
 
-msgkey 0x21C28353
+msgid 0x21C28353
 msgstr "PubYun.com (3322.org)"
 
-msgkey 0x2220DFAB
+msgid 0x2220DFAB
 msgstr ""
 "дн. без проверки диска. Запускайте проверку диска хотя бы раз в месяц для"
 " улучшения производительности"
 
-msgkey 0x224FE427
+msgid 0x224FE427
 msgstr "Пароль сети Wi-Fi должен содержать от 5 до 13 символов"
 
-msgkey 0x22760CBB
+msgid 0x22760CBB
 msgstr "Столовая"
 
-msgkey 0x2290339C
+msgid 0x2290339C
 msgstr ""
 "Создание белого списка запретит доступ другим устройствам. При каждом"
 " включении текущее устройство будет добавлено в белый список."
 
-msgkey 0x2291D7F1
+msgid 0x2291D7F1
 msgstr "Чердак"
 
-msgkey 0x2297A4DF
+msgid 0x2297A4DF
 msgstr "Создать правила перенаправления портов"
 
-msgkey 0x229E09EC
+msgid 0x229E09EC
 msgstr "ЦП"
 
-msgkey 0x22A41FD4
+msgid 0x22A41FD4
 msgstr "КНР"
 
-msgkey 0x22BF8DD5
+msgid 0x22BF8DD5
 msgstr "Правила перенаправления портов: "
 
-msgkey 0x22C3D4F1
+msgid 0x22C3D4F1
 msgstr "Вы можете вручную изменить MAC-адреса этих устройств"
 
-msgkey 0x238F8820
+msgid 0x238F8820
 msgstr "Подключено"
 
-msgkey 0x2398C025
+msgid 0x2398C025
 msgstr "Шлюз по-умолчанию"
 
-msgkey 0x23A2D122
+msgid 0x23A2D122
 msgstr ""
 "Свяжитесь с интернет-провайдером для сброса имени пользователя и пароля"
 
-msgkey 0x240C760E
+msgid 0x240C760E
 msgstr "Недостаточно прав для этого действия."
 
-msgkey 0x243CA28F
+msgid 0x243CA28F
 msgstr "Вы ввели недопустимое значение"
 
 # DUP
-msgkey 0x2444C657
+msgid 0x2444C657
 msgstr "Mi Router"
 
 # DUP
-msgkey 0x2444C657
+msgid 0x2444C657
 msgstr "Роутер Mi Wi-Fi Router"
 
-msgkey 0x24E6AE53
+msgid 0x24E6AE53
 msgstr "Сервер"
 
-msgkey 0x24F826ED
+msgid 0x24F826ED
 msgstr "Не удалось определить эту сеть Wi-Fi"
 
-msgkey 0x25022E49
+msgid 0x25022E49
 msgstr "Роутер Mi Wi-Fi 4"
 
-msgkey 0x25139CCA
+msgid 0x25139CCA
 msgstr "Имя пользователя и пароль, предоставленные интернет-провайдером"
 
-msgkey 0x2533CD70
+msgid 0x2533CD70
 msgstr "Якутск"
 
-msgkey 0x25579C3F
+msgid 0x25579C3F
 msgstr "(UTC+8) Перт"
 
-msgkey 0x255CFC05
+msgid 0x255CFC05
 msgstr "(UTC-8) Тихоокеанское время (США и Канада)"
 
-msgkey 0x25728368
+msgid 0x25728368
 msgstr "Тайвань"
 
-msgkey 0x2575A610
+msgid 0x2575A610
 msgstr "Используйте приложение Mi WiFi для управления"
 
-msgkey 0x2576CFCF
+msgid 0x2576CFCF
 msgstr ""
 "Используйте встроенный DDNS, чтобы получить логин и пароль от"
 " интернет-провайдера."
 
-msgkey 0x25809EDD
+msgid 0x25809EDD
 msgstr "Обнаружены проблемы с сетью"
 
-msgkey 0x259769CE
+msgid 0x259769CE
 msgstr "*Неверный формат резервного DNS-сервера"
 
-msgkey 0x25BA95CA
+msgid 0x25BA95CA
 msgstr "Язык системы"
 
-msgkey 0x25C4190A
+msgid 0x25C4190A
 msgstr "Канберра, Мельбурн, Сидней"
 
-msgkey 0x25E66659
+msgid 0x25E66659
 msgstr "Протокол"
 
-msgkey 0x2610406E
+msgid 0x2610406E
 msgstr "Размер загружаемого файла не может превышать 128 МБ"
 
 # DUP
-msgkey 0x2613A81C
+msgid 0x2613A81C
 msgstr "Иерусалим"
 
 # DUP
-msgkey 0x2613A81C
+msgid 0x2613A81C
 msgstr "Иерусалим"
 
-msgkey 0x261C7AC3
+msgid 0x261C7AC3
 msgstr "3. Убедитесь, что WAN-порт роутера не поврежден"
 
-msgkey 0x263F10F8
+msgid 0x263F10F8
 msgstr "Требуется перезагрузка"
 
-msgkey 0x2684C9B1
+msgid 0x2684C9B1
 msgstr "Секунду…"
 
-msgkey 0x26A7F1E2
+msgid 0x26A7F1E2
 msgstr "Продолжить?"
 
-msgkey 0x26B64FAC
+msgid 0x26B64FAC
 msgstr "Сначала включите QoS"
 
-msgkey 0x26C6ADEB
+msgid 0x26C6ADEB
 msgstr "Имя устройства"
 
-msgkey 0x271CE623
+msgid 0x271CE623
 msgstr "Mi Router HD"
 
-msgkey 0x2758117C
+msgid 0x2758117C
 msgstr "Недопустимый код страны, повторите попытку"
 
-msgkey 0x277B5D4E
+msgid 0x277B5D4E
 msgstr "Не удалось включить роутер. Попробуйте выполнить сброс настроек."
 
-msgkey 0x27B094BD
+msgid 0x27B094BD
 msgstr "Брисбен"
 
-msgkey 0x27BB6830
+msgid 0x27BB6830
 msgstr "Обратитесь в службу поддержки"
 
-msgkey 0x27C7F00A
+msgid 0x27C7F00A
 msgstr "Сеть роутера"
 
-msgkey 0x27E037A8
+msgid 0x27E037A8
 msgstr "Поздравляем, покрытие Wi-Fi расширено!"
 
-msgkey 0x27F3C200
+msgid 0x27F3C200
 msgstr "Берн, Берлин, Копенгаген, Мадрид, Париж, Рим"
 
-msgkey 0x2820EE21
+msgid 0x2820EE21
 msgstr "5G сеть Wi-Fi больше не активна"
 
-msgkey 0x28228FCD
+msgid 0x28228FCD
 msgstr ""
 "Введите имя пользователя и пароль, предоставленные интернет-провайдером"
 
-msgkey 0x28335253
+msgid 0x28335253
 msgstr "Не удалось получить сведения об администраторе"
 
-msgkey 0x284445CD
+msgid 0x284445CD
 msgstr "Изменить вручную"
 
-msgkey 0x28D3B364
+msgid 0x28D3B364
 msgstr "Доступ к интернету"
 
-msgkey 0x29075228
+msgid 0x29075228
 msgstr "Вкл/откл"
 
-msgkey 0x2928C25D
+msgid 0x2928C25D
 msgstr "(UTC-4) Сантьяго"
 
 # DUP
-msgkey 0x29489009
+msgid 0x29489009
 msgstr "Дарвин"
 
 # DUP
-msgkey 0x29489009
+msgid 0x29489009
 msgstr "Дарвин"
 
-msgkey 0x295C7AE5
+msgid 0x295C7AE5
 msgstr "(UTC-6) Саскчерн"
 
-msgkey 0x29E55111
+msgid 0x29E55111
 msgstr "Этот разъем запрещает доступ к WAN"
 
 # DUP
-msgkey 0x2A5065C8
+msgid 0x2A5065C8
 msgstr "Бейрут"
 
 # DUP
-msgkey 0x2A5065C8
+msgid 0x2A5065C8
 msgstr "Бейрут"
 
 # DUP
-msgkey 0x2AAAB213
+msgid 0x2AAAB213
 msgstr ""
 "Скорость соединения выше 50 Мбит/с. Включение менеджера трафика QoS не"
 " требуется."
 
 # DUP
-msgkey 0x2AAAB213
+msgid 0x2AAAB213
 msgstr ""
 "Скорость интернет-соединения превышает 50 Мбит/с. Нет необходимости включать"
 " диспетчер трафика QoS."
 
-msgkey 0x2AC4E60F
+msgid 0x2AC4E60F
 msgstr "Разъемы роутера работают неправильно."
 
-msgkey 0x2AD271D0
+msgid 0x2AD271D0
 msgstr "Добавить сервис"
 
-msgkey 0x2AD77EBB
+msgid 0x2AD77EBB
 msgstr "Не удалось отключить служебный плагин или жесткий диск"
 
-msgkey 0x2AE2A910
+msgid 0x2AE2A910
 msgstr ""
 "Некоторые старые устройства не поддерживают Wi-Fi 6 (802.11ax) должным"
 " образом и могут не сканировать сигнал или не подключаться и т.д. После"
@@ -1229,1945 +1229,1945 @@ msgstr ""
 " ортогональным частотным разделением (OFDMA), раскраска BSS и т.д."
 
 # DUP
-msgkey 0x2AF5B267
+msgid 0x2AF5B267
 msgstr "Пароль"
 
 # DUP
-msgkey 0x2AF5B267
+msgid 0x2AF5B267
 msgstr "Пароль сети Wi-Fi"
 
-msgkey 0x2B175998
+msgid 0x2B175998
 msgstr "Расширение Mesh-сети (приблизительно 1 минута)"
 
-msgkey 0x2B270898
+msgid 0x2B270898
 msgstr "ОК"
 
-msgkey 0x2B46B53D
+msgid 0x2B46B53D
 msgstr "Доступно обновление ({$size})"
 
-msgkey 0x2B70F9D0
+msgid 0x2B70F9D0
 msgstr "(UTC+9) Иркутск"
 
-msgkey 0x2BB3C137
+msgid 0x2BB3C137
 msgstr ""
 "Проверьте введенный ID (поддерживаются только 15-значные и 18-значные"
 " форматы)"
 
-msgkey 0x2BD53AF7
+msgid 0x2BD53AF7
 msgstr "Проверьте введенное имя"
 
-msgkey 0x2C258A5B
+msgid 0x2C258A5B
 msgstr "Код ошибки: "
 
-msgkey 0x2C29177C
+msgid 0x2C29177C
 msgstr "Сбой получения данных"
 
-msgkey 0x2CD07C92
+msgid 0x2CD07C92
 msgstr "Файлы не выбраны"
 
-msgkey 0x2D2ED539
+msgid 0x2D2ED539
 msgstr ""
 "Пороговое значение неограниченной скорости, сначала установите ограничение"
 " скорости"
 
-msgkey 0x2D3253E3
+msgid 0x2D3253E3
 msgstr "Приоритет на скорости игр"
 
-msgkey 0x2D365599
+msgid 0x2D365599
 msgstr "Подробнее"
 
-msgkey 0x2D56CDAC
+msgid 0x2D56CDAC
 msgstr "Отчет о проверке"
 
-msgkey 0x2D8746AE
+msgid 0x2D8746AE
 msgstr "Измените настройки реле сети"
 
-msgkey 0x2DBA0D84
+msgid 0x2DBA0D84
 msgstr "Текущий MAC-адрес"
 
 # DUP
-msgkey 0x2DFE24B7
+msgid 0x2DFE24B7
 msgstr "Тайланд"
 
 # DUP
-msgkey 0x2DFE24B7
+msgid 0x2DFE24B7
 msgstr "Таиланд"
 
-msgkey 0x2E1F5E18
+msgid 0x2E1F5E18
 msgstr "Роутер не подключен к интернету."
 
-msgkey 0x2E3DAEBE
+msgid 0x2E3DAEBE
 msgstr "(UTC+6) Екатеринбург"
 
-msgkey 0x2E4CCD9D
+msgid 0x2E4CCD9D
 msgstr "Конфликт IP-адресов. Выберите другой IP-адрес."
 
-msgkey 0x2E607F0F
+msgid 0x2E607F0F
 msgstr "Условия использования"
 
-msgkey 0x2E77E79B
+msgid 0x2E77E79B
 msgstr "Отключить выбранные устройства?"
 
-msgkey 0x2EA341FF
+msgid 0x2EA341FF
 msgstr "Хельсинки, Киев, Рига, София, Таллин, Вильнюс"
 
-msgkey 0x2ECA7EC8
+msgid 0x2ECA7EC8
 msgstr "Текущее время системы"
 
-msgkey 0x2ECC42D3
+msgid 0x2ECC42D3
 msgstr "Кабо-Верде"
 
-msgkey 0x2ED72127
+msgid 0x2ED72127
 msgstr "Новосибирск"
 
-msgkey 0x2ED79D65
+msgid 0x2ED79D65
 msgstr "Международная линия перемены даты"
 
-msgkey 0x2F7189BA
+msgid 0x2F7189BA
 msgstr "Швеция"
 
-msgkey 0x2F7932AE
+msgid 0x2F7932AE
 msgstr "Трафик по устройству"
 
-msgkey 0x2F8C0603
+msgid 0x2F8C0603
 msgstr "Протокол туннелирования "
 
-msgkey 0x2F8D1267
+msgid 0x2F8D1267
 msgstr "Джаяпура"
 
-msgkey 0x2F95FDBF
+msgid 0x2F95FDBF
 msgstr "Готхоб"
 
-msgkey 0x2FA38979
+msgid 0x2FA38979
 msgstr "Сначала подключение к сети Wi-Fi"
 
-msgkey 0x2FC9F859
+msgid 0x2FC9F859
 msgstr "Максимальная скорость скачивания"
 
-msgkey 0x302198A4
+msgid 0x302198A4
 msgstr "Сараево, Скопье, Варшава, Загреб"
 
-msgkey 0x303CB0F5
+msgid 0x303CB0F5
 msgstr "Уже подключено, продолжить"
 
-msgkey 0x30639E6A
+msgid 0x30639E6A
 msgstr "Скачать приложение"
 
-msgkey 0x30939932
+msgid 0x30939932
 msgstr "Неполная информация"
 
-msgkey 0x30A6BD29
+msgid 0x30A6BD29
 msgstr "(UTC-2) Центральная Атлантика"
 
-msgkey 0x30AE554B
+msgid 0x30AE554B
 msgstr "Не удалось применить параметры"
 
-msgkey 0x30AE71F8
+msgid 0x30AE71F8
 msgstr "Каракас"
 
-msgkey 0x30C5E79B
+msgid 0x30C5E79B
 msgstr "Изменить"
 
-msgkey 0x30C9B4D6
+msgid 0x30C9B4D6
 msgstr "Слишком большой файл"
 
-msgkey 0x30D030F1
+msgid 0x30D030F1
 msgstr "Резервное копирование файлов"
 
-msgkey 0x31439F2B
+msgid 0x31439F2B
 msgstr "Приложению Mi WiFi не удалось подключиться к сети"
 
-msgkey 0x314941A4
+msgid 0x314941A4
 msgstr "Подключение к сети завершено."
 
-msgkey 0x315C27D8
+msgid 0x315C27D8
 msgstr "Неправильный формат ввода"
 
-msgkey 0x315D0137
+msgid 0x315D0137
 msgstr "Сбой загрузки"
 
-msgkey 0x31629095
+msgid 0x31629095
 msgstr "Недопустимый IP/MAC-адрес"
 
-msgkey 0x318950A1
+msgid 0x318950A1
 msgstr "Восстановить"
 
-msgkey 0x31949EFF
+msgid 0x31949EFF
 msgstr "Обновить"
 
-msgkey 0x31B2AE50
+msgid 0x31B2AE50
 msgstr "Пароль сети Wi-Fi должен содержать не менее 8 символов"
 
-msgkey 0x31DDFCBB
+msgid 0x31DDFCBB
 msgstr "Скорость"
 
-msgkey 0x31ED795D
+msgid 0x31ED795D
 msgstr "Отмена"
 
-msgkey 0x3211FCB2
+msgid 0x3211FCB2
 msgstr "Mi Router D01"
 
-msgkey 0x32150992
+msgid 0x32150992
 msgstr ""
 "3. Некоторые функции и плагины могут быть недоступны в режиме репитера"
 
-msgkey 0x3264FB51
+msgid 0x3264FB51
 msgstr "Не удалось загрузить файл на сервер"
 
-msgkey 0x328B3045
+msgid 0x328B3045
 msgstr "Длина префикса"
 
-msgkey 0x32C88E8B
+msgid 0x32C88E8B
 msgstr "Не удалось подключиться к этой сети"
 
-msgkey 0x32F3B0B8
+msgid 0x32F3B0B8
 msgstr ""
 "Сделайте резервную копию данных, сохраненных на роутере, и восстановите"
 " заводские настройки."
 
-msgkey 0x32F77B21
+msgid 0x32F77B21
 msgstr "Изменить правила перенаправления диапазонов"
 
-msgkey 0x334EB54D
+msgid 0x334EB54D
 msgstr "(UTC+6) Астана"
 
-msgkey 0x33C018CB
+msgid 0x33C018CB
 msgstr "Набор выполнен"
 
-msgkey 0x33E7EB3E
+msgid 0x33E7EB3E
 msgstr "Расширение Mesh-сети"
 
-msgkey 0x342907A1
+msgid 0x342907A1
 msgstr "Скачать"
 
-msgkey 0x3498DCAA
+msgid 0x3498DCAA
 msgstr "IP и MAC"
 
-msgkey 0x34A1EC3E
+msgid 0x34A1EC3E
 msgstr "Проверка"
 
-msgkey 0x34BB2F56
+msgid 0x34BB2F56
 msgstr "Баку"
 
-msgkey 0x34D85C00
+msgid 0x34D85C00
 msgstr "Чили"
 
-msgkey 0x351D1949
+msgid 0x351D1949
 msgstr "(UTC+5:30) Срига"
 
-msgkey 0x3520293A
+msgid 0x3520293A
 msgstr "Что такое VPN"
 
-msgkey 0x35225CAD
+msgid 0x35225CAD
 msgstr "(UTC+3) Багдад"
 
-msgkey 0x3561E7D7
+msgid 0x3561E7D7
 msgstr ""
 "Выбор этой опции сильно улучшит стабильность и качество соединения для"
 " устройств, которые поддерживают Wi-Fi 6. Однако возможны проблемы"
 " совместимости с некоторыми старыми устройствам, например проблемы с поиском"
 " и подключением к сети Wi-Fi."
 
-msgkey 0x356C25C5
+msgid 0x356C25C5
 msgstr "Задача не выполняется"
 
-msgkey 0x358F7D50
+msgid 0x358F7D50
 msgstr "Параметры DHCP-сервера и локального IP-адреса"
 
-msgkey 0x35D53655
+msgid 0x35D53655
 msgstr "Изменить время"
 
-msgkey 0x35D726CA
+msgid 0x35D726CA
 msgstr "Очистить параметры QoS для устройств?"
 
-msgkey 0x36099F64
+msgid 0x36099F64
 msgstr ""
 "Перезагрузите роутер, чтобы применить настройки. Это может занять примерно"
 " 30 с."
 
-msgkey 0x36135170
+msgid 0x36135170
 msgstr "Сент-Джонс"
 
-msgkey 0x361B681F
+msgid 0x361B681F
 msgstr "Не отвечает"
 
-msgkey 0x362CB653
+msgid 0x362CB653
 msgstr ""
 "1. Эта операция приведет к перезапуску Wi-Fi и отключению всех устройств,"
 " подключенных к этой сети."
 
-msgkey 0x362E53F0
+msgid 0x362E53F0
 msgstr "Хороший"
 
-msgkey 0x3652C5D8
+msgid 0x3652C5D8
 msgstr "OK"
 
-msgkey 0x369462EA
+msgid 0x369462EA
 msgstr "Ручная настройка"
 
-msgkey 0x36BE5CCA
+msgid 0x36BE5CCA
 msgstr "Чтение"
 
-msgkey 0x36C8AD32
+msgid 0x36C8AD32
 msgstr "Скачать приложение"
 
-msgkey 0x36F421B1
+msgid 0x36F421B1
 msgstr ""
 "После включения этой функции необходимо будет совершить повторное"
 " подключение к VPN. Функция QoS будет отключена. Отключите эту функцию, если"
 " приложение работает неправильно."
 
-msgkey 0x36F816F3
+msgid 0x36F816F3
 msgstr "(UTC+3) Найроби"
 
-msgkey 0x3707FB83
+msgid 0x3707FB83
 msgstr ""
 "Улучшенное качество работы, особенно для находящихся поблизости устройств"
 
-msgkey 0x373B130B
+msgid 0x373B130B
 msgstr "Память"
 
-msgkey 0x37451B77
+msgid 0x37451B77
 msgstr "Секунду…"
 
-msgkey 0x37694907
+msgid 0x37694907
 msgstr "Нет подключенных устройств"
 
-msgkey 0x37720F6D
+msgid 0x37720F6D
 msgstr "Применение настроек…"
 
-msgkey 0x37726A09
+msgid 0x37726A09
 msgstr "Вернуться на первую страницу"
 
-msgkey 0x3799F438
+msgid 0x3799F438
 msgstr "Перт"
 
-msgkey 0x37AFABDF
+msgid 0x37AFABDF
 msgstr "Обновление"
 
-msgkey 0x37E39B7E
+msgid 0x37E39B7E
 msgstr "Ограничение пропускной способности"
 
-msgkey 0x3801A0D3
+msgid 0x3801A0D3
 msgstr ""
 "1.Разместите добавляемый узел Mesh-сети рядом с центральной точкой доступа."
 
-msgkey 0x3814A72F
+msgid 0x3814A72F
 msgstr "Подтвердите данные"
 
-msgkey 0x38487BA4
+msgid 0x38487BA4
 msgstr "Блан-Саблон, Гренада, Порт-Оф-Спейн, Пуэрто-Рико, Санто-Доминго"
 
-msgkey 0x38540F3B
+msgid 0x38540F3B
 msgstr ""
 "При подключении к роутеру некоторых старых устройств через выбранный канал"
 " могут возникать проблемы"
 
-msgkey 0x3870C4A3
+msgid 0x3870C4A3
 msgstr "Нет добавленных устройств"
 
-msgkey 0x3872A3E1
+msgid 0x3872A3E1
 msgstr "Настройка полосы пропускания"
 
-msgkey 0x387F13E4
+msgid 0x387F13E4
 msgstr "Хобарт"
 
-msgkey 0x38971372
+msgid 0x38971372
 msgstr "Буэнос-Айрес"
 
-msgkey 0x38D943BF
+msgid 0x38D943BF
 msgstr "Введите более {$0} символов"
 
-msgkey 0x38FBD40F
+msgid 0x38FBD40F
 msgstr ""
 "Процесс обновления занимает от 5 до 8 минут. Как только индикатор на роутере"
 " загорится белым, вы можете посетить сайт miwifi.com, чтобы получить доступ"
 " к веб-настройкам"
 
-msgkey 0x391933D1
+msgid 0x391933D1
 msgstr "Не удалось подключиться к серверу"
 
-msgkey 0x3923416D
+msgid 0x3923416D
 msgstr "(UTC+8:30) КНДР"
 
-msgkey 0x392AABE7
+msgid 0x392AABE7
 msgstr "Требуется зарегистрированное динамическое доменное имя."
 
-msgkey 0x392BE2D4
+msgid 0x392BE2D4
 msgstr "Латвия"
 
-msgkey 0x3961CD2B
+msgid 0x3961CD2B
 msgstr "Рабочий кабинет"
 
-msgkey 0x3A173E33
+msgid 0x3A173E33
 msgstr "Произошла ошибка. Перезагрузите страницу и повторите попытку."
 
-msgkey 0x3A2B197C
+msgid 0x3A2B197C
 msgstr "Статический IP-адрес"
 
-msgkey 0x3A7FE5C4
+msgid 0x3A7FE5C4
 msgstr "Обновление не требуется."
 
-msgkey 0x3AB86895
+msgid 0x3AB86895
 msgstr ""
 "Это изменит частоту Wi-Fi-сигнала роутера. Изменения вступят в силу после"
 " перезагрузки роутера."
 
-msgkey 0x3AE172EF
+msgid 0x3AE172EF
 msgstr "Удалить этот объект?"
 
-msgkey 0x3AF04851
+msgid 0x3AF04851
 msgstr "Настройки подключения к интернету"
 
-msgkey 0x3AFF975D
+msgid 0x3AFF975D
 msgstr ""
 "Для превосходного качества работы Mesh-сети одна сеть может поддерживать до"
 " 10 Mesh-роутеров. Для дополнительных роутеров мы рекомендуем создать"
 " отдельную новую Mesh-сеть."
 
-msgkey 0x3B00C5F6
+msgid 0x3B00C5F6
 msgstr "Подключиться снова"
 
-msgkey 0x3B21BA23
+msgid 0x3B21BA23
 msgstr "Конфликты IP-адресов не обнаружены"
 
-msgkey 0x3B4D2CBB
+msgid 0x3B4D2CBB
 msgstr "Исправить"
 
-msgkey 0x3B605D7A
+msgid 0x3B605D7A
 msgstr "Настройки применены. Подождите одну-две минуты и обновите"
 
-msgkey 0x3B743EF3
+msgid 0x3B743EF3
 msgstr "Для улучшения работы Wi-Fi требуется поддержка терминала."
 
-msgkey 0x3B8D47C7
+msgid 0x3B8D47C7
 msgstr ""
 "Отсканируйте QR-код со смартфона, чтобы скачать приложение Mi Home/Xiaomi"
 " Home"
 
-msgkey 0x3BBB4FDA
+msgid 0x3BBB4FDA
 msgstr "Шлюз WAN IPv6"
 
-msgkey 0x3BCD3E80
+msgid 0x3BCD3E80
 msgstr "Загрузка журналов завершена"
 
-msgkey 0x3BE39093
+msgid 0x3BE39093
 msgstr "Подключите хранилище"
 
-msgkey 0x3C0CF497
+msgid 0x3C0CF497
 msgstr "Гернси, Остров Мэн, Джерси, Лондон"
 
-msgkey 0x3C1AE8ED
+msgid 0x3C1AE8ED
 msgstr "Параметры Wi-Fi-репитера"
 
-msgkey 0x3C29D0A2
+msgid 0x3C29D0A2
 msgstr ""
 "Ошибка DNS-сервера. Попробуйте установить следующее значение DNS: 8.8.8.8"
 " 8.8.4.4."
 
-msgkey 0x3C39D363
+msgid 0x3C39D363
 msgstr "Подключение к сети"
 
-msgkey 0x3C43C9C7
+msgid 0x3C43C9C7
 msgstr ""
 "You will be able to connect to the Internet as soon as router configuration"
 " is completed."
 
-msgkey 0x3C6F59D3
+msgid 0x3C6F59D3
 msgstr "SSID гостевой сети должен отличаться от SSID сети 2.4G"
 
-msgkey 0x3C8379BE
+msgid 0x3C8379BE
 msgstr "Великобритания"
 
-msgkey 0x3C956CCD
+msgid 0x3C956CCD
 msgstr "Настройки восстановлены. Перезагрузите роутер, чтобы применить их."
 
-msgkey 0x3CB09981
+msgid 0x3CB09981
 msgstr "Доусон, Лос-Анджелес, Тихуана, Ванкувер, Уайтхорс"
 
-msgkey 0x3CC114DD
+msgid 0x3CC114DD
 msgstr "Кения"
 
-msgkey 0x3D047249
+msgid 0x3D047249
 msgstr "Имя"
 
-msgkey 0x3D4AE2C8
+msgid 0x3D4AE2C8
 msgstr "Роутер работает в режиме проводного репитера."
 
-msgkey 0x3D4E2EF7
+msgid 0x3D4E2EF7
 msgstr "Устройства"
 
-msgkey 0x3D6BBB65
+msgid 0x3D6BBB65
 msgstr "Этот режим позволяет переводить диски в режим сна для его защиты"
 
-msgkey 0x3D79367C
+msgid 0x3D79367C
 msgstr "Полоса пропускания гостевой сети Wi-Fi"
 
-msgkey 0x3D877291
+msgid 0x3D877291
 msgstr "Чтение/запись диска "
 
-msgkey 0x3DA63C06
+msgid 0x3DA63C06
 msgstr "(UTC+4:30) Кабул"
 
-msgkey 0x3DAF0E83
+msgid 0x3DAF0E83
 msgstr "Выключение переключателя Wi-Fi не поддерживается в режиме Mesh-сети"
 
-msgkey 0x3DBF06B0
+msgid 0x3DBF06B0
 msgstr "Не удалось сохранить имя"
 
-msgkey 0x3DDBBA24
+msgid 0x3DDBBA24
 msgstr "Couldn't unzip, the file is corrupt"
 
-msgkey 0x3DF594B0
+msgid 0x3DF594B0
 msgstr "Текущий часовой пояс"
 
-msgkey 0x3E31D334
+msgid 0x3E31D334
 msgstr "(UTC+9:30) Дарвин"
 
-msgkey 0x3E492C35
+msgid 0x3E492C35
 msgstr "Недействительный идентификатор пользователя"
 
-msgkey 0x3E7EE185
+msgid 0x3E7EE185
 msgstr "(UTC+1) Виндхук"
 
-msgkey 0x3E825DCD
+msgid 0x3E825DCD
 msgstr "В одном из разделов произошла ошибка"
 
-msgkey 0x3E870AD4
+msgid 0x3E870AD4
 msgstr "Mi Router Mini"
 
-msgkey 0x3E98A607
+msgid 0x3E98A607
 msgstr ""
 "При включении этой функции роутер Mi Router включит функцию IPv6-подключения"
 " к Интернету (обратитесь к поставщику услуг Интернета и убедитесь в"
 " поддержке IPv6 перед использованием)"
 
-msgkey 0x3EA48055
+msgid 0x3EA48055
 msgstr "Слишком много попыток, повторите вход через 30 минут"
 
-msgkey 0x3F066C9D
+msgid 0x3F066C9D
 msgstr "Среднее время по Гринвичу"
 
-msgkey 0x3F5C0E1A
+msgid 0x3F5C0E1A
 msgstr "(UTC-7) Чиуауа, Ла-Пас, Масатлан"
 
-msgkey 0x3F9697E1
+msgid 0x3F9697E1
 msgstr "Не удалось применить параметры сети Wi-Fi"
 
-msgkey 0x3FA0FDB5
+msgid 0x3FA0FDB5
 msgstr "Состояние ограничения скорости для приложений"
 
-msgkey 0x3FE362DF
+msgid 0x3FE362DF
 msgstr "Полоса пропускания устройства"
 
-msgkey 0x3FF45F42
+msgid 0x3FF45F42
 msgstr "Апиа"
 
-msgkey 0x40061445
+msgid 0x40061445
 msgstr "Не удалось обновить принудительно"
 
-msgkey 0x400B214B
+msgid 0x400B214B
 msgstr "(UTC+10:30) Австралия"
 
-msgkey 0x4013ED43
+msgid 0x4013ED43
 msgstr "Вы ввели недопустимое имя пользователя или пароль"
 
-msgkey 0x403FCA44
+msgid 0x403FCA44
 msgstr "Смена режимов"
 
-msgkey 0x404BA981
+msgid 0x404BA981
 msgstr "Xunlei"
 
-msgkey 0x405462D4
+msgid 0x405462D4
 msgstr "PPPoE-соединение отключено (ошибка 250)"
 
-msgkey 0x40716A1F
+msgid 0x40716A1F
 msgstr "Авто"
 
-msgkey 0x40916FDE
+msgid 0x40916FDE
 msgstr "Не удалось настроить роутер"
 
-msgkey 0x40D0B8A6
+msgid 0x40D0B8A6
 msgstr "Состояние диска: "
 
-msgkey 0x411B9BB1
+msgid 0x411B9BB1
 msgstr "Хороший"
 
-msgkey 0x41499288
+msgid 0x41499288
 msgstr ""
 "3. Разместите добавляемый узел Mesh-сети рядом с центральной точкой доступа;"
 
-msgkey 0x415B735C
+msgid 0x415B735C
 msgstr "Минск"
 
-msgkey 0x41A72EC1
+msgid 0x41A72EC1
 msgstr "Откл"
 
-msgkey 0x41B90674
+msgid 0x41B90674
 msgstr "Уровень сигнала"
 
-msgkey 0x41C3B3B5
+msgid 0x41C3B3B5
 msgstr "Не удалось включить сеть Wi-Fi на частоте 5 ГГц"
 
-msgkey 0x41E96330
+msgid 0x41E96330
 msgstr "2. Обновите узел Mesh-сети до последней версии;"
 
-msgkey 0x421A1EA5
+msgid 0x421A1EA5
 msgstr "Бета"
 
 # DUP
-msgkey 0x42258E20
+msgid 0x42258E20
 msgstr "Настройте приоритет интернет-трафика для приложений"
 
 # DUP
-msgkey 0x42258E20
+msgid 0x42258E20
 msgstr "Распределить скорость по приоритету"
 
-msgkey 0x422D768B
+msgid 0x422D768B
 msgstr "Свяжитесь с интернет-провайдером"
 
-msgkey 0x4232204E
+msgid 0x4232204E
 msgstr ""
 "Похоже, что вы ввели дополнительный \"0\" в начале введенного вами значения."
 
-msgkey 0x426CD50D
+msgid 0x426CD50D
 msgstr "Гонконг"
 
-msgkey 0x42784AB1
+msgid 0x42784AB1
 msgstr "Ручная установка плагина"
 
-msgkey 0x42872C42
+msgid 0x42872C42
 msgstr "Иллоккортоормиут, Азорские Острова"
 
-msgkey 0x4303918A
+msgid 0x4303918A
 msgstr "Новый пароль"
 
-msgkey 0x4308759F
+msgid 0x4308759F
 msgstr ""
 "4. Ошибки жесткого диска не повлияют на функции роутера, связанные с Wi-Fi"
 
-msgkey 0x43116277
+msgid 0x43116277
 msgstr "Бразилиа"
 
-msgkey 0x4315BBFA
+msgid 0x4315BBFA
 msgstr "Настроить"
 
-msgkey 0x43C978E7
+msgid 0x43C978E7
 msgstr ""
 "WPA3 – это новое поколение технологии шифрования, которое сильно улучшает"
 " безопасность передачи данных, однако некоторые старые устройства могут быть"
 " несовместимы и не могут быть подключены, если выбран протокол шифрования"
 " WPA3."
 
-msgkey 0x442A7E8F
+msgid 0x442A7E8F
 msgstr "Местоположение"
 
-msgkey 0x4449BF5D
+msgid 0x4449BF5D
 msgstr "Обновление завершено"
 
-msgkey 0x444B2FED
+msgid 0x444B2FED
 msgstr "Выйти"
 
-msgkey 0x446353B6
+msgid 0x446353B6
 msgstr "Внимание"
 
-msgkey 0x446F1E72
+msgid 0x446F1E72
 msgstr ""
 "Вы можете добавлять файлы для скачивания с помощью мобильного приложения или"
 " клиента, установленного на компьютере, в любое время и в любом месте"
 
-msgkey 0x448BB755
+msgid 0x448BB755
 msgstr "Онлайн"
 
-msgkey 0x4499F267
+msgid 0x4499F267
 msgstr "Важное обновление"
 
-msgkey 0x44DA2B49
+msgid 0x44DA2B49
 msgstr "Больше контактной информации"
 
-msgkey 0x44DCF27E
+msgid 0x44DCF27E
 msgstr "Нет ответа от сервера"
 
-msgkey 0x45141F97
+msgid 0x45141F97
 msgstr "Текущее время"
 
-msgkey 0x455440A7
+msgid 0x455440A7
 msgstr ""
 "Внимание: во время обновления роутера все устройства будут отключены от"
 " сети. Убедитесь, что во время обновления роутер подключен к источнику"
 " питания."
 
-msgkey 0x456CF26A
+msgid 0x456CF26A
 msgstr "Устройства"
 
-msgkey 0x457395F4
+msgid 0x457395F4
 msgstr "Фильтровать беспроводные MAC-адреса"
 
 # DUP
-msgkey 0x4580D3B7
+msgid 0x4580D3B7
 msgstr "Тегеран"
 
 # DUP
-msgkey 0x4580D3B7
+msgid 0x4580D3B7
 msgstr "Тегеран"
 
-msgkey 0x458E5417
+msgid 0x458E5417
 msgstr "(UTC-4) Асунсьон"
 
-msgkey 0x45FAFDD4
+msgid 0x45FAFDD4
 msgstr "Выберите сеть для расширения"
 
-msgkey 0x461AEA03
+msgid 0x461AEA03
 msgstr "Куяба"
 
-msgkey 0x465011E4
+msgid 0x465011E4
 msgstr "Среда разработки плагинов"
 
-msgkey 0x46B18DA4
+msgid 0x46B18DA4
 msgstr "Процесс"
 
-msgkey 0x46DA5F19
+msgid 0x46DA5F19
 msgstr "Обновить вручную"
 
-msgkey 0x46FCEC97
+msgid 0x46FCEC97
 msgstr "Каир, Триполи, Калининград"
 
-msgkey 0x4741F6D7
+msgid 0x4741F6D7
 msgstr "Широкополосный доступ в интернет Fangzheng"
 
-msgkey 0x47542B27
+msgid 0x47542B27
 msgstr ", специальный режим набора…"
 
-msgkey 0x47549B85
+msgid 0x47549B85
 msgstr "Дальневосточное стандартное время"
 
-msgkey 0x479BB0E5
+msgid 0x479BB0E5
 msgstr "Белый список MAC-адресов"
 
-msgkey 0x47F6E632
+msgid 0x47F6E632
 msgstr "Порт 1 GbE"
 
-msgkey 0x48088E5B
+msgid 0x48088E5B
 msgstr "Израиль"
 
 # DUP
-msgkey 0x4815EFDD
+msgid 0x4815EFDD
 msgstr "Всемирное координированное время"
 
 # DUP
-msgkey 0x4815EFDD
+msgid 0x4815EFDD
 msgstr "Всемирное координированное время"
 
-msgkey 0x482A209D
+msgid 0x482A209D
 msgstr "Роутер может быть переключен только в режим основной станции."
 
-msgkey 0x486D21DF
+msgid 0x486D21DF
 msgstr "Oray DDNS (oray.com)"
 
-msgkey 0x487A5AC8
+msgid 0x487A5AC8
 msgstr "Гвадалахара, Мехико, Монтеррей"
 
-msgkey 0x48808FF2
+msgid 0x48808FF2
 msgstr "Набор номера…"
 
-msgkey 0x48A1B9EB
+msgid 0x48A1B9EB
 msgstr "Отключить"
 
 # DUP
-msgkey 0x48A792BA
+msgid 0x48A792BA
 msgstr "Индонезия"
 
 # DUP
-msgkey 0x48A792BA
+msgid 0x48A792BA
 msgstr "Индонезия"
 
-msgkey 0x48BC661A
+msgid 0x48BC661A
 msgstr "Режим проводного усилителя сигнала"
 
-msgkey 0x4912729E
+msgid 0x4912729E
 msgstr "IP-адрес: "
 
-msgkey 0x4939FAD7
+msgid 0x4939FAD7
 msgstr "(UTC-3) Гренландия"
 
-msgkey 0x49481EF3
+msgid 0x49481EF3
 msgstr "(UTC-3:30) Ньюфаундленд"
 
-msgkey 0x4948DFCA
+msgid 0x4948DFCA
 msgstr "(UTC+1) Амстердам, Берлин, Берн, Рим, Сдерогормо, Вена"
 
-msgkey 0x499BFE43
+msgid 0x499BFE43
 msgstr "1. Получите имя домена и пароль при помощи DDNS-провайдера;"
 
-msgkey 0x499CCEEF
+msgid 0x499CCEEF
 msgstr "Украина"
 
-msgkey 0x49F6E2C9
+msgid 0x49F6E2C9
 msgstr "(UTC-3) Кай, Фортареса"
 
-msgkey 0x49F9E8EC
+msgid 0x49F9E8EC
 msgstr "Нет подключенных дисков"
 
-msgkey 0x4A133872
+msgid 0x4A133872
 msgstr "1000 Мбит"
 
-msgkey 0x4A2A665D
+msgid 0x4A2A665D
 msgstr "(UTC+12) Окленд, Веллингтон"
 
-msgkey 0x4A2BCD86
+msgid 0x4A2BCD86
 msgstr ""
 "Решение №4: Измените скорость WAN-порта и выполните повторное подключение"
 
-msgkey 0x4A41304C
+msgid 0x4A41304C
 msgstr ""
 "После применения этих настроек доступ к интернету для этого устройства будет"
 " ограничен."
 
-msgkey 0x4A6777AA
+msgid 0x4A6777AA
 msgstr "Интеллектуальный автоматический поиск AIoT"
 
-msgkey 0x4A9307C6
+msgid 0x4A9307C6
 msgstr "Официальный WeChat"
 
-msgkey 0x4A9BDCAC
+msgid 0x4A9BDCAC
 msgstr ""
 "Включите DMZ для ретрансляции IP-адресов подключенных устройств на WAN."
 
-msgkey 0x4AB78532
+msgid 0x4AB78532
 msgstr "Настройки скорости WAN-порта"
 
-msgkey 0x4AD4EA0C
+msgid 0x4AD4EA0C
 msgstr "Введите MAC-адрес устройства"
 
-msgkey 0x4AEBDCFD
+msgid 0x4AEBDCFD
 msgstr "Режим беспроводного репитера (расширение существующей сети)"
 
 # DUP
-msgkey 0x4AF2D28E
+msgid 0x4AF2D28E
 msgstr "мин"
 
 # DUP
-msgkey 0x4AF2D28E
+msgid 0x4AF2D28E
 msgstr "мин."
 
-msgkey 0x4B56EC8C
+msgid 0x4B56EC8C
 msgstr "(UTC+10) Гуам, Порт-Морсби"
 
-msgkey 0x4B989B15
+msgid 0x4B989B15
 msgstr "Роутер обновляется в фоновом режиме."
 
-msgkey 0x4BA34D8A
+msgid 0x4BA34D8A
 msgstr "Подключить"
 
-msgkey 0x4BA7183B
+msgid 0x4BA7183B
 msgstr ""
 "2. Во время проверки все функции жесткого диска будут временно отключены"
 
-msgkey 0x4BAE1E06
+msgid 0x4BAE1E06
 msgstr "Горит"
 
-msgkey 0x4BBDB140
+msgid 0x4BBDB140
 msgstr "Надежное гибридное шифрование (WPA3/WPA2 Personal)"
 
-msgkey 0x4BC3B589
+msgid 0x4BC3B589
 msgstr "Подключение к сети Wi-Fi"
 
-msgkey 0x4BE650EE
+msgid 0x4BE650EE
 msgstr "Нажмите для проверки сети"
 
-msgkey 0x4C01A2B3
+msgid 0x4C01A2B3
 msgstr "Лаос"
 
-msgkey 0x4C11A70A
+msgid 0x4C11A70A
 msgstr "Бойсе, Кембридж-Бей, Денвер, Эдмонтон, Охинага"
 
-msgkey 0x4C384F5E
+msgid 0x4C384F5E
 msgstr "Частота 5 ГГц для игровой сети"
 
-msgkey 0x4C5456E7
+msgid 0x4C5456E7
 msgstr "Префикс LAN IPv6"
 
-msgkey 0x4C7D0D48
+msgid 0x4C7D0D48
 msgstr "Настройки Wi-Fi (имя сети и пароль)"
 
-msgkey 0x4C91D58E
+msgid 0x4C91D58E
 msgstr "Отправка"
 
-msgkey 0x4C931D71
+msgid 0x4C931D71
 msgstr "Управление хранилищем Mi WiFi"
 
-msgkey 0x4CA444EA
+msgid 0x4CA444EA
 msgstr "Параметры репитера"
 
-msgkey 0x4CDB6400
+msgid 0x4CDB6400
 msgstr "Широкополосное"
 
-msgkey 0x4CF8FA67
+msgid 0x4CF8FA67
 msgstr "Не удалось отформатировать диск"
 
-msgkey 0x4D0B652D
+msgid 0x4D0B652D
 msgstr ""
 "1.Поместите новый узел Mesh-сети в нужное место, где требуется покрытие"
 " Wi-Fi. "
 
-msgkey 0x4D1D0D12
+msgid 0x4D1D0D12
 msgstr "Включите в Настройках"
 
-msgkey 0x4D5C9456
+msgid 0x4D5C9456
 msgstr "Произошла ошибка"
 
-msgkey 0x4E0CDCF5
+msgid 0x4E0CDCF5
 msgstr "Mi Router AX1800"
 
-msgkey 0x4E2014BE
+msgid 0x4E2014BE
 msgstr "Не удалось настроить резервирование"
 
-msgkey 0x4E4BD9E1
+msgid 0x4E4BD9E1
 msgstr "Имя, предоставленное ISP"
 
-msgkey 0x4E790B90
+msgid 0x4E790B90
 msgstr "Литва"
 
-msgkey 0x4E838BA9
+msgid 0x4E838BA9
 msgstr "Браузер"
 
-msgkey 0x4E912D85
+msgid 0x4E912D85
 msgstr "Автоматически настраивать DNS"
 
-msgkey 0x4EABD1AD
+msgid 0x4EABD1AD
 msgstr "Убедитесь, что к WAN-порту не подключена другая сеть"
 
-msgkey 0x4EB2D149
+msgid 0x4EB2D149
 msgstr ""
 "Более высокая пропускная способность для устройств с высоким приоритетом"
 
-msgkey 0x4EC1FC03
+msgid 0x4EC1FC03
 msgstr "Тип подключения IPv6"
 
-msgkey 0x4EDF89F7
+msgid 0x4EDF89F7
 msgstr "Получение обновления…"
 
-msgkey 0x4EF8DF66
+msgid 0x4EF8DF66
 msgstr "(UTC-9) Аляска"
 
-msgkey 0x4F039D2F
+msgid 0x4F039D2F
 msgstr "Трехдиапазонная сеть Wi-Fi"
 
-msgkey 0x4F20F8EA
+msgid 0x4F20F8EA
 msgstr "Проверка сети…"
 
-msgkey 0x4F528EA6
+msgid 0x4F528EA6
 msgstr "IP-адрес клиента"
 
-msgkey 0x4F708F87
+msgid 0x4F708F87
 msgstr "Не удалось проверить беспроводной репитер"
 
-msgkey 0x4F709635
+msgid 0x4F709635
 msgstr "Гамбье"
 
-msgkey 0x4F7E0A6B
+msgid 0x4F7E0A6B
 msgstr "Сменить"
 
-msgkey 0x4F88BE52
+msgid 0x4F88BE52
 msgstr "Сведения о сети"
 
-msgkey 0x4FF0400E
+msgid 0x4FF0400E
 msgstr "Количество миграций данных раздела"
 
-msgkey 0x503A51B0
+msgid 0x503A51B0
 msgstr "QoS отключен"
 
-msgkey 0x509FF153
+msgid 0x509FF153
 msgstr "(UTC-5) Богота, Лима, Кито"
 
-msgkey 0x50ABD482
+msgid 0x50ABD482
 msgstr "Венгрия"
 
-msgkey 0x50DAC0BE
+msgid 0x50DAC0BE
 msgstr "Сведения о состоянии диска"
 
-msgkey 0x50E2FA72
+msgid 0x50E2FA72
 msgstr "Повторить"
 
-msgkey 0x50E5788A
+msgid 0x50E5788A
 msgstr "Улучшен сервер "
 
-msgkey 0x50FC7656
+msgid 0x50FC7656
 msgstr "(UTC+11) Владивосток"
 
-msgkey 0x51093DB1
+msgid 0x51093DB1
 msgstr "Произошла ошибка сервера"
 
-msgkey 0x5134BEE2
+msgid 0x5134BEE2
 msgstr "Проверьте введенный код подтверждения"
 
-msgkey 0x51384800
+msgid 0x51384800
 msgstr "Пропускная способность отправки"
 
-msgkey 0x517187EA
+msgid 0x517187EA
 msgstr "(UTC-6) Центральная Америка"
 
-msgkey 0x51A7990F
+msgid 0x51A7990F
 msgstr "Настройки роутера"
 
-msgkey 0x51C9F802
+msgid 0x51C9F802
 msgstr "Секунду…"
 
-msgkey 0x520350C8
+msgid 0x520350C8
 msgstr "Внимание"
 
-msgkey 0x520F6D27
+msgid 0x520F6D27
 msgstr "Интервал"
 
-msgkey 0x521DCB4F
+msgid 0x521DCB4F
 msgstr "Не применено"
 
-msgkey 0x5220483F
+msgid 0x5220483F
 msgstr "Добавить с помощью MAC-адреса"
 
-msgkey 0x5240D212
+msgid 0x5240D212
 msgstr "Ошибка системы. Подождите немного и повторите попытку."
 
-msgkey 0x5267F82B
+msgid 0x5267F82B
 msgstr "Отключение…"
 
-msgkey 0x52B9D1B0
+msgid 0x52B9D1B0
 msgstr "Свяжитесь с провайдером"
 
-msgkey 0x52DB0180
+msgid 0x52DB0180
 msgstr "Глас Бэй, Гуз Бэй, Галифакс, Бермуды"
 
-msgkey 0x52E8C633
+msgid 0x52E8C633
 msgstr "Провайдер"
 
-msgkey 0x532C4CB4
+msgid 0x532C4CB4
 msgstr "Сведения и меры"
 
-msgkey 0x53581477
+msgid 0x53581477
 msgstr "Австралийское восточное стандартное время"
 
-msgkey 0x53AD3F9A
+msgid 0x53AD3F9A
 msgstr "Выключить"
 
-msgkey 0x53DE3951
+msgid 0x53DE3951
 msgstr "Не удалось получить плагины"
 
-msgkey 0x54498999
+msgid 0x54498999
 msgstr "Гонконг"
 
-msgkey 0x545C22A1
+msgid 0x545C22A1
 msgstr "Автосогласование 1000 Мбит/100 Мбит (рекомендуется)"
 
-msgkey 0x545FAAE4
+msgid 0x545FAAE4
 msgstr "Дата окончания не может быть раньше даты начала"
 
-msgkey 0x546562B1
+msgid 0x546562B1
 msgstr "Выберите устройство для добавления"
 
-msgkey 0x5476B297
+msgid 0x5476B297
 msgstr "Роутер Mi Router 4A"
 
-msgkey 0x54A6F461
+msgid 0x54A6F461
 msgstr "Безопасное извлечение жесткого диска"
 
-msgkey 0x54C4A0FE
+msgid 0x54C4A0FE
 msgstr "Сначала видео"
 
-msgkey 0x54CF1FEA
+msgid 0x54CF1FEA
 msgstr "Закройте это окно вручную."
 
 # DUP
-msgkey 0x54EFA73D
+msgid 0x54EFA73D
 msgstr ""
 "2. Узел должен находиться на расстоянии не более 3 метров от центральной"
 " точки доступа."
 
 # DUP
-msgkey 0x54EFA73D
+msgid 0x54EFA73D
 msgstr ""
 "2. Узел должен располагаться на расстоянии не более трех метров от"
 " центральной точки доступа."
 
 # DUP
-msgkey 0x5521AE59
+msgid 0x5521AE59
 msgstr "Россия"
 
 # DUP
-msgkey 0x5521AE59
+msgid 0x5521AE59
 msgstr "Россия"
 
-msgkey 0x5543E2C2
+msgid 0x5543E2C2
 msgstr "Выберите устройство"
 
-msgkey 0x5592F040
+msgid 0x5592F040
 msgstr "Ошибка проверки nonce"
 
-msgkey 0x55E9C91C
+msgid 0x55E9C91C
 msgstr "Внутренняя ошибка сервера"
 
-msgkey 0x55F988B6
+msgid 0x55F988B6
 msgstr "Не может превышать {$0} дн."
 
-msgkey 0x561FF993
+msgid 0x561FF993
 msgstr "Время работы"
 
-msgkey 0x562C5B11
+msgid 0x562C5B11
 msgstr "Длина префикса LAN IPv6"
 
-msgkey 0x5641FEDC
+msgid 0x5641FEDC
 msgstr "(UTC+8) Красноярск"
 
-msgkey 0x5671F2BC
+msgid 0x5671F2BC
 msgstr "Код ошибки: 691"
 
-msgkey 0x56782D73
+msgid 0x56782D73
 msgstr "Не удалось проверить пользователя (неверный пароль)"
 
-msgkey 0x5684DEC9
+msgid 0x5684DEC9
 msgstr "Количество ошибок в разделе"
 
-msgkey 0x56C7F26B
+msgid 0x56C7F26B
 msgstr "Не удалось восстановить жесткий диск"
 
-msgkey 0x56D54653
+msgid 0x56D54653
 msgstr "Веллингтон, МакМердо, Окленд"
 
-msgkey 0x57171BFA
+msgid 0x57171BFA
 msgstr "Недопустимый формат даты."
 
-msgkey 0x57176DCF
+msgid 0x57176DCF
 msgstr "Выбрать расположение"
 
-msgkey 0x5720AAFF
+msgid 0x5720AAFF
 msgstr "Кабель Ethernet не обнаружен"
 
-msgkey 0x57563F36
+msgid 0x57563F36
 msgstr "установить"
 
-msgkey 0x5762E694
+msgid 0x5762E694
 msgstr "Сведения Wi-Fi-репитера"
 
-msgkey 0x5796A9FB
+msgid 0x5796A9FB
 msgstr "Не отключайте роутер от источника питания."
 
-msgkey 0x57998320
+msgid 0x57998320
 msgstr "Подключение…"
 
-msgkey 0x57A0E22D
+msgid 0x57A0E22D
 msgstr "Удалить"
 
-msgkey 0x57E47044
+msgid 0x57E47044
 msgstr "Основная станция (настроить сеть Wi-Fi)"
 
-msgkey 0x57F04243
+msgid 0x57F04243
 msgstr "(UTC) Мировое время"
 
-msgkey 0x581A01BB
+msgid 0x581A01BB
 msgstr "Не удалось обнаружить сеть Wi-Fi. Убедитесь в наличии сигнала"
 
-msgkey 0x581C6C25
+msgid 0x581C6C25
 msgstr "Недопустимый идентификатор приложения"
 
-msgkey 0x5853E682
+msgid 0x5853E682
 msgstr "Язык"
 
-msgkey 0x588C44E5
+msgid 0x588C44E5
 msgstr "Диспетчер задач"
 
-msgkey 0x58B952EC
+msgid 0x58B952EC
 msgstr "Чешская Республика"
 
-msgkey 0x58C59257
+msgid 0x58C59257
 msgstr "У этого аккаунта нет прав администратора для этого роутера."
 
-msgkey 0x58CD6F68
+msgid 0x58CD6F68
 msgstr ""
 "Если для подключения к Интернету требуется VPN, включите эту функцию, чтобы"
 " убедиться, что приложение Mi WiFi может подключиться к роутеру. В других"
 " случаях отключите эту функцию."
 
-msgkey 0x58F89278
+msgid 0x58F89278
 msgstr ""
 "На некоторых устройствах могут не поддерживаться китайские или другие"
 " специальные символы"
 
-msgkey 0x590AFFEC
+msgid 0x590AFFEC
 msgstr "Интернет"
 
-msgkey 0x5918ECF8
+msgid 0x5918ECF8
 msgstr "Секунду…"
 
-msgkey 0x596A7949
+msgid 0x596A7949
 msgstr "Результат проверки диска"
 
-msgkey 0x59802770
+msgid 0x59802770
 msgstr "(UTC-5) Восточное время (США и Канада)"
 
-msgkey 0x59A28AFC
+msgid 0x59A28AFC
 msgstr "Музыка"
 
-msgkey 0x5A7874EC
+msgid 0x5A7874EC
 msgstr "Нельзя настроить перенаправление портов, когда включен DMZ"
 
-msgkey 0x5A9D65D3
+msgid 0x5A9D65D3
 msgstr "Полоса пропускания"
 
-msgkey 0x5AA072B7
+msgid 0x5AA072B7
 msgstr "Гавайско-Алеутский часовой пояс"
 
-msgkey 0x5AC590A8
+msgid 0x5AC590A8
 msgstr "Имя сети Wi-Fi"
 
-msgkey 0x5ACC1C42
+msgid 0x5ACC1C42
 msgstr "Гонолулу"
 
-msgkey 0x5AEC1009
+msgid 0x5AEC1009
 msgstr "Тип"
 
-msgkey 0x5B576E57
+msgid 0x5B576E57
 msgstr "3. Для просмотра настроек роутера перейдите по адресу miwifi.com"
 
-msgkey 0x5B7D018C
+msgid 0x5B7D018C
 msgstr "Удалить все данные? Это действие является необратимым, продолжить?"
 
-msgkey 0x5C40885F
+msgid 0x5C40885F
 msgstr "Не удалось отменить. Обновление уже установлено."
 
-msgkey 0x5C6A1CA1
+msgid 0x5C6A1CA1
 msgstr "(UTC-11) Самоа"
 
-msgkey 0x5CAB5538
+msgid 0x5CAB5538
 msgstr ""
 "Если эта функция включена, роутер Mi автоматически синхронизирует настройки"
 " Wi-Fi с домашним шлюзом интернет-провайдера"
 
-msgkey 0x5CB2F1EB
+msgid 0x5CB2F1EB
 msgstr "Недостаточно памяти"
 
-msgkey 0x5CC57524
+msgid 0x5CC57524
 msgstr "Предупреждение системы безопасности"
 
-msgkey 0x5D200E44
+msgid 0x5D200E44
 msgstr "Проверьте тип подключения"
 
-msgkey 0x5D390B44
+msgid 0x5D390B44
 msgstr "(UTC+3:30) Тегеран"
 
-msgkey 0x5D7AB352
+msgid 0x5D7AB352
 msgstr "Настройки Wi-Fi (имя сети и пароль)"
 
-msgkey 0x5D856F58
+msgid 0x5D856F58
 msgstr "Швейцария"
 
-msgkey 0x5DA40E8E
+msgid 0x5DA40E8E
 msgstr "Черный список"
 
-msgkey 0x5DBABE8A
+msgid 0x5DBABE8A
 msgstr "Сбой доступа к шлюзу. Проверьте настройки сети."
 
-msgkey 0x5E0E05EF
+msgid 0x5E0E05EF
 msgstr "Не удалось включить роутер"
 
-msgkey 0x5E22CACC
+msgid 0x5E22CACC
 msgstr "Выбрать тип ограничения скорости вручную"
 
-msgkey 0x5EB34D43
+msgid 0x5EB34D43
 msgstr "Обратитесь в службу поддержки клиентов Xiaomi"
 
-msgkey 0x5EC7C3C0
+msgid 0x5EC7C3C0
 msgstr "Система кабельного модема"
 
-msgkey 0x5EC97AD1
+msgid 0x5EC97AD1
 msgstr "(UTC+12) Магадан"
 
-msgkey 0x5EED2BBB
+msgid 0x5EED2BBB
 msgstr "Скорость соединения"
 
-msgkey 0x5F1106B1
+msgid 0x5F1106B1
 msgstr "Права доступа"
 
-msgkey 0x5F280FFE
+msgid 0x5F280FFE
 msgstr "Импорт"
 
-msgkey 0x5F576F53
+msgid 0x5F576F53
 msgstr "Адрес шлюза"
 
-msgkey 0x5FD8353F
+msgid 0x5FD8353F
 msgstr "Подключено"
 
-msgkey 0x5FFD2243
+msgid 0x5FFD2243
 msgstr "Не удалось расширить сеть."
 
-msgkey 0x5FFFA0B4
+msgid 0x5FFFA0B4
 msgstr "Не удалось установить PPPoE-соединение (ошибка 678)"
 
-msgkey 0x600D43CB
+msgid 0x600D43CB
 msgstr "Нидерланды"
 
-msgkey 0x60D73076
+msgid 0x60D73076
 msgstr "Не удалось добавить устройство"
 
-msgkey 0x60DF8AF3
+msgid 0x60DF8AF3
 msgstr "Настроить DNS вручную"
 
-msgkey 0x6124A047
+msgid 0x6124A047
 msgstr "Секунду…"
 
-msgkey 0x612BB91D
+msgid 0x612BB91D
 msgstr ""
 "Этот параметр будет применен после повторного подключения. VPN для сервисов"
 " Mi будет отключен"
 
-msgkey 0x614BB86C
+msgid 0x614BB86C
 msgstr "Ньюфаундлендское стандартное время"
 
-msgkey 0x6162B49E
+msgid 0x6162B49E
 msgstr "Купите устройство с поддержкой частоты 5 ГГц на веб-сайте mi.com"
 
-msgkey 0x618F6878
+msgid 0x618F6878
 msgstr "Индиана (Восток)"
 
-msgkey 0x61AE1E2D
+msgid 0x61AE1E2D
 msgstr "Шлюз по-умолчанию: "
 
-msgkey 0x6202BF19
+msgid 0x6202BF19
 msgstr "Дата не может быть позже, чем {$0}"
 
-msgkey 0x621D4427
+msgid 0x621D4427
 msgstr "Скорость загрузки"
 
-msgkey 0x62433604
+msgid 0x62433604
 msgstr "Включить"
 
-msgkey 0x624D782E
+msgid 0x624D782E
 msgstr "Версия"
 
-msgkey 0x6251E63A
+msgid 0x6251E63A
 msgstr "Ручная установка"
 
-msgkey 0x62B51BA1
+msgid 0x62B51BA1
 msgstr "Внутренний порт"
 
-msgkey 0x62C9EDE3
+msgid 0x62C9EDE3
 msgstr ""
 "Включение функции автоматической синхронизации настроек Wi-Fi со шлюзом"
 " Smart"
 
-msgkey 0x63791938
+msgid 0x63791938
 msgstr "Mi Router должен быть подключен к внешнему накопителю."
 
-msgkey 0x637C4FAD
+msgid 0x637C4FAD
 msgstr "Кольката"
 
-msgkey 0x63CBBA89
+msgid 0x63CBBA89
 msgstr "Исправление ошибок"
 
-msgkey 0x64207D7E
+msgid 0x64207D7E
 msgstr ""
 "Убедитесь, что сеть Wi-Fi включена как на основном роутере, так и на"
 " усилителе сигнала Wi-Fi."
 
-msgkey 0x644BFAB7
+msgid 0x644BFAB7
 msgstr "Гостиная"
 
-msgkey 0x64DBA080
+msgid 0x64DBA080
 msgstr "Сведения об устройстве"
 
-msgkey 0x64E596CE
+msgid 0x64E596CE
 msgstr "Подключенные через кабель Ethernet устройства"
 
-msgkey 0x651BBF08
+msgid 0x651BBF08
 msgstr "Польша"
 
-msgkey 0x65257C1E
+msgid 0x65257C1E
 msgstr "Попытка восстановить данные на диске"
 
-msgkey 0x653D8A77
+msgid 0x653D8A77
 msgstr "Байт (не рекомендуется изменять, если сеть функционирует нормально)"
 
-msgkey 0x65544C7A
+msgid 0x65544C7A
 msgstr "Mi Router 3G"
 
-msgkey 0x65943A40
+msgid 0x65943A40
 msgstr "Невозможно добавить более 32 устройств"
 
-msgkey 0x65E00BDD
+msgid 0x65E00BDD
 msgstr "Другое устройство в сети использует IP-адрес роутера"
 
-msgkey 0x65F1543A
+msgid 0x65F1543A
 msgstr "Стандартное время острова Норфолк"
 
-msgkey 0x663354DB
+msgid 0x663354DB
 msgstr "Выберите провайдера"
 
-msgkey 0x66352AB1
+msgid 0x66352AB1
 msgstr "Доступ к странице администратора"
 
-msgkey 0x6676907E
+msgid 0x6676907E
 msgstr "Владивосток"
 
-msgkey 0x6692AED9
+msgid 0x6692AED9
 msgstr ""
 "Время ожидания запроса истекло, слишком много запросов или не удалось"
 " выполнить проверку."
 
-msgkey 0x66996C25
+msgid 0x66996C25
 msgstr "Руководство по настройке"
 
-msgkey 0x669A8D84
+msgid 0x669A8D84
 msgstr "Подойдите к главному маршрутизатору"
 
-msgkey 0x669FBA01
+msgid 0x669FBA01
 msgstr "Не удалось найти изображение"
 
-msgkey 0x66AED0F4
+msgid 0x66AED0F4
 msgstr "Обновить"
 
-msgkey 0x66B367BC
+msgid 0x66B367BC
 msgstr "Исламабад, Карачи"
 
-msgkey 0x66D0CFEF
+msgid 0x66D0CFEF
 msgstr "Гостевая сеть"
 
-msgkey 0x66F2621F
+msgid 0x66F2621F
 msgstr "Канарские о-ва, Фарерские о-ва, Мадейра, Лиссабон"
 
-msgkey 0x673EF5DC
+msgid 0x673EF5DC
 msgstr "Понятно"
 
-msgkey 0x674A1D9E
+msgid 0x674A1D9E
 msgstr "Сбой обновления"
 
-msgkey 0x675AB75D
+msgid 0x675AB75D
 msgstr "Память"
 
-msgkey 0x677DBC95
+msgid 0x677DBC95
 msgstr "Не удалось подключиться к серверу"
 
-msgkey 0x6802B628
+msgid 0x6802B628
 msgstr ""
 "Если гостевая сеть Wi-Fi включена, то после переключения в режим Расширения"
 " сети через Wi-Fi гостевая сеть Wi-Fi будет закрыта"
 
-msgkey 0x6819EBD5
+msgid 0x6819EBD5
 msgstr "Улучшенная конфигурация для новых моделей роутеров"
 
-msgkey 0x68BA9320
+msgid 0x68BA9320
 msgstr "Попробуйте переключиться в режим проводного усилителя сигнала"
 
-msgkey 0x68BE7AFD
+msgid 0x68BE7AFD
 msgstr "Количество переназначений разделов"
 
-msgkey 0x690221B0
+msgid 0x690221B0
 msgstr "Основной роутер"
 
-msgkey 0x69363CFE
+msgid 0x69363CFE
 msgstr "Не удалось установить пароль"
 
-msgkey 0x69463A0B
+msgid 0x69463A0B
 msgstr "(UTC+12) Фиджи"
 
-msgkey 0x694840EC
+msgid 0x694840EC
 msgstr "Центральноевропейское время"
 
-msgkey 0x69840874
+msgid 0x69840874
 msgstr ""
 "Гостевая сеть будет отключена, когда вы включите режим беспроводного"
 " репитера"
 
-msgkey 0x6986CAC5
+msgid 0x6986CAC5
 msgstr "Состояние"
 
-msgkey 0x69F066E5
+msgid 0x69F066E5
 msgstr ""
 
-msgkey 0x69FA9B54
+msgid 0x69FA9B54
 msgstr "Норонья, Южная Джорджия"
 
-msgkey 0x6A7117EF
+msgid 0x6A7117EF
 msgstr "Чиуауа, Ла-Пас, Масатлан"
 
-msgkey 0x6A9C4710
+msgid 0x6A9C4710
 msgstr "Значения IP-адреса должны быть в пределах от 2 до 254"
 
-msgkey 0x6AB4B55B
+msgid 0x6AB4B55B
 msgstr "(UTC+8) Пекин, Чунцин, Гонконг, Урумчи"
 
-msgkey 0x6AE17BA7
+msgid 0x6AE17BA7
 msgstr "Багдад"
 
-msgkey 0x6AEDDD7C
+msgid 0x6AEDDD7C
 msgstr "OK"
 
-msgkey 0x6B03124B
+msgid 0x6B03124B
 msgstr "Сбой импорта настроек провайдера из существующего роутера"
 
-msgkey 0x6B1EEC8B
+msgid 0x6B1EEC8B
 msgstr "Высокий"
 
-msgkey 0x6B56FD95
+msgid 0x6B56FD95
 msgstr "Североамериканский восточный часовой пояс"
 
-msgkey 0x6B595A04
+msgid 0x6B595A04
 msgstr "Авто (рекомендуется)"
 
 # DUP
-msgkey 0x6B6A458D
+msgid 0x6B6A458D
 msgstr "Италия"
 
 # DUP
-msgkey 0x6B6A458D
+msgid 0x6B6A458D
 msgstr "Италия"
 
-msgkey 0x6B83DF3B
+msgid 0x6B83DF3B
 msgstr ""
 "Полоса пропускания 160 МГц применима только к каналам 36-64, и система"
 " автоматически переключит канал"
 
-msgkey 0x6B847C05
+msgid 0x6B847C05
 msgstr "Этот разъем может быть использован только удаленно"
 
-msgkey 0x6B94C9F5
+msgid 0x6B94C9F5
 msgstr "Не выбрано"
 
-msgkey 0x6B9D9C2D
+msgid 0x6B9D9C2D
 msgstr "Нельзя использовать китайские иероглифы"
 
-msgkey 0x6B9E2867
+msgid 0x6B9E2867
 msgstr "(UTC+2) Минск"
 
-msgkey 0x6B9E58FA
+msgid 0x6B9E58FA
 msgstr "Удалить этот объект?"
 
-msgkey 0x6BA518B7
+msgid 0x6BA518B7
 msgstr "Клон MAC-адреса"
 
 # DUP
-msgkey 0x6BA9520D
+msgid 0x6BA9520D
 msgstr "Устранение неполадок"
 
 # DUP
-msgkey 0x6BA9520D
+msgid 0x6BA9520D
 msgstr "Устранение неполадок"
 
-msgkey 0x6BB06B62
+msgid 0x6BB06B62
 msgstr "Ошибка репитера"
 
-msgkey 0x6BB87223
+msgid 0x6BB87223
 msgstr "Настройки"
 
-msgkey 0x6BBCF421
+msgid 0x6BBCF421
 msgstr "Куала-Лумпур, Сингапур"
 
-msgkey 0x6BDC62EC
+msgid 0x6BDC62EC
 msgstr "Для выполнения этого действия IP-адрес будет изменен на"
 
-msgkey 0x6C124340
+msgid 0x6C124340
 msgstr ""
 "Время аренды DHCP должно составлять от 2 до 2880 минут (или от 1 до 48"
 " часов)"
 
-msgkey 0x6CCB70DC
+msgid 0x6CCB70DC
 msgstr "Импорт настроек провайдера из существующего роутера"
 
-msgkey 0x6CE288C8
+msgid 0x6CE288C8
 msgstr "Изменить настройки DNS"
 
-msgkey 0x6CE847B3
+msgid 0x6CE847B3
 msgstr "Повторить проверку"
 
-msgkey 0x6CEEB378
+msgid 0x6CEEB378
 msgstr "Не удалось определить тип подключения"
 
-msgkey 0x6CF20361
+msgid 0x6CF20361
 msgstr "Одновременно можно использовать только один DDNS"
 
-msgkey 0x6CF62FF2
+msgid 0x6CF62FF2
 msgstr "Инициализация роутера не завершена"
 
-msgkey 0x6CFD720F
+msgid 0x6CFD720F
 msgstr "Пароль администратора"
 
-msgkey 0x6E006FC2
+msgid 0x6E006FC2
 msgstr "Всего загружено"
 
-msgkey 0x6E791823
+msgid 0x6E791823
 msgstr "DNS-сервер не отвечает"
 
-msgkey 0x6E89FABC
+msgid 0x6E89FABC
 msgstr "Некоторые устройства не поддерживают этот SSID"
 
-msgkey 0x6EC8390B
+msgid 0x6EC8390B
 msgstr "Балкон"
 
-msgkey 0x6ECCD67D
+msgid 0x6ECCD67D
 msgstr "Проверка…"
 
-msgkey 0x6ECCF6F1
+msgid 0x6ECCF6F1
 msgstr "Недостаточно разрешений"
 
-msgkey 0x6EE1773A
+msgid 0x6EE1773A
 msgstr "Введите имя пользователя и пароль"
 
-msgkey 0x6F2789E3
+msgid 0x6F2789E3
 msgstr "Гуам, Порт-Морсби"
 
-msgkey 0x6F2B51B7
+msgid 0x6F2B51B7
 msgstr "Недопустимый шлюз по-умолчанию"
 
-msgkey 0x6F2C54E5
+msgid 0x6F2C54E5
 msgstr "Финляндия"
 
-msgkey 0x6F602E57
+msgid 0x6F602E57
 msgstr "Продолжить в любом случае"
 
-msgkey 0x6F83358C
+msgid 0x6F83358C
 msgstr "Используйте следующий формат: \"{$0}\""
 
-msgkey 0x6FA0613C
+msgid 0x6FA0613C
 msgstr "Полоса пропускания роутера"
 
-msgkey 0x6FA63B21
+msgid 0x6FA63B21
 msgstr "Соломоновы о-ва, Новая Каледония"
 
-msgkey 0x6FDE197C
+msgid 0x6FDE197C
 msgstr "Выключение"
 
-msgkey 0x70402CDD
+msgid 0x70402CDD
 msgstr "Джорджтаун, Ла-Пас, Манаус, Сан-Хуан"
 
-msgkey 0x7044DD76
+msgid 0x7044DD76
 msgstr "Настройки локальной сети"
 
-msgkey 0x704F7BD1
+msgid 0x704F7BD1
 msgstr "Отмена"
 
-msgkey 0x70778E00
+msgid 0x70778E00
 msgstr "Соединить с устройствами поблизости (например, Mi Box, Mi Router)"
 
 # DUP
-msgkey 0x7089C1EA
+msgid 0x7089C1EA
 msgstr "Скачать журнал"
 
 # DUP
-msgkey 0x7089C1EA
+msgid 0x7089C1EA
 msgstr "Скачать журнал"
 
-msgkey 0x708C7515
+msgid 0x708C7515
 msgstr "Сетевые устройства Mesh-сети"
 
-msgkey 0x70AAC5DF
+msgid 0x70AAC5DF
 msgstr "Шлюз"
 
-msgkey 0x70C8BB1E
+msgid 0x70C8BB1E
 msgstr "(UTC+5) Ташкент"
 
-msgkey 0x711FC92E
+msgid 0x711FC92E
 msgstr "Дополнительно"
 
-msgkey 0x7153448A
+msgid 0x7153448A
 msgstr "Вы посещаете "
 
-msgkey 0x71B6F625
+msgid 0x71B6F625
 msgstr "Провайдер"
 
-msgkey 0x71E96256
+msgid 0x71E96256
 msgstr "Офлайн"
 
 # DUP
-msgkey 0x71F94738
+msgid 0x71F94738
 msgstr "Сантьяго"
 
 # DUP
-msgkey 0x71F94738
+msgid 0x71F94738
 msgstr "Сантьяго"
 
-msgkey 0x723F4CEE
+msgid 0x723F4CEE
 msgstr "Керри, Хобарт, Мельбурн, Сидней"
 
-msgkey 0x7250E115
+msgid 0x7250E115
 msgstr "Состояние"
 
-msgkey 0x725E7325
+msgid 0x725E7325
 msgstr "Доступ и включение"
 
-msgkey 0x72B0C266
+msgid 0x72B0C266
 msgstr "Скорость скачивания в реальном времени"
 
-msgkey 0x72C3421E
+msgid 0x72C3421E
 msgstr ""
 "При возврате к более ранней версии рекомендуется одновременно очистить"
 " пользовательские конфигурации, чтобы предотвратить ошибки, вызванные"
 " обратной совместимостью версий."
 
-msgkey 0x72DD0FF9
+msgid 0x72DD0FF9
 msgstr "(UTC+4) Москва, Санкт-Петербург, Волгоград"
 
-msgkey 0x72DEA5FA
+msgid 0x72DEA5FA
 msgstr "Режим совместимости Wi-Fi 5 (802.11ac)"
 
-msgkey 0x72F8EF0B
+msgid 0x72F8EF0B
 msgstr "Имя пользователя"
 
-msgkey 0x73108AE7
+msgid 0x73108AE7
 msgstr "1. Убедитесь, что сетевой кабель подключен должным образом"
 
-msgkey 0x73650985
+msgid 0x73650985
 msgstr ""
 "1. Подключите Mi Router при помощи Ethernet-кабеля к существующему роутеру"
 " через разъем WAN"
 
-msgkey 0x737663A9
+msgid 0x737663A9
 msgstr "Набор номера…"
 
-msgkey 0x7386F0FA
+msgid 0x7386F0FA
 msgstr "Дакка"
 
-msgkey 0x73A47D29
+msgid 0x73A47D29
 msgstr "Невозможно добавить более 5 элементов"
 
-msgkey 0x73C94F2E
+msgid 0x73C94F2E
 msgstr "Истек срок авторизации. Выполните вход заново."
 
-msgkey 0x73F046F4
+msgid 0x73F046F4
 msgstr "Будут восстановлены старые настройки роутера."
 
-msgkey 0x744471CB
+msgid 0x744471CB
 msgstr "Текущий часовой пояс системы"
 
-msgkey 0x744BCF7D
+msgid 0x744BCF7D
 msgstr "Янгон"
 
-msgkey 0x745B87AC
+msgid 0x745B87AC
 msgstr ""
 "Функция автоматического сканирования смарт-антенны сочетания технологии"
 " Интернета вещей с ИИ (AIoT) может автоматически обнаруживать"
 " неинициализированные смарт-устройства Mi и быстро получать доступ к сети"
 " через приложение Mi Home."
 
-msgkey 0x74CABD47
+msgid 0x74CABD47
 msgstr "Клиент"
 
-msgkey 0x74E833B4
+msgid 0x74E833B4
 msgstr "Доступно обновление: {$version}"
 
-msgkey 0x74E96A75
+msgid 0x74E96A75
 msgstr "(UTC+10) Брисбен"
 
-msgkey 0x74EBCA4F
+msgid 0x74EBCA4F
 msgstr "Сменить цели репитера"
 
-msgkey 0x74EEADAA
+msgid 0x74EEADAA
 msgstr "Выделенная гостевая сеть для безопасности внутренней сети"
 
-msgkey 0x7541F5D6
+msgid 0x7541F5D6
 msgstr "Не удалось обнаружить данные"
 
-msgkey 0x76052A5D
+msgid 0x76052A5D
 msgstr "Выберите устройства для подключения к VPN"
 
-msgkey 0x76082B93
+msgid 0x76082B93
 msgstr "Страна/регион"
 
-msgkey 0x761B2AAB
+msgid 0x761B2AAB
 msgstr ""
 "2. Процесс инициализации занимает 2–3 минуты. Перезагрузите роутер и"
 " выполните вход в систему, когда индикатор уведомления загорится синим."
 
-msgkey 0x7651D664
+msgid 0x7651D664
 msgstr "Не удалось применить параметры разрешений"
 
-msgkey 0x765F7F95
+msgid 0x765F7F95
 msgstr "Стандартное время Мьянмы"
 
-msgkey 0x7686A980
+msgid 0x7686A980
 msgstr "Настройки сети (тип подключения, сетевая учетная запись и пароль)"
 
-msgkey 0x76BFA0D7
+msgid 0x76BFA0D7
 msgstr "Конец IP-адреса"
 
-msgkey 0x76CD09F0
+msgid 0x76CD09F0
 msgstr "Замените кабель Ethernet и повторите попытку."
 
-msgkey 0x76CFA265
+msgid 0x76CFA265
 msgstr "Международная линия перемены даты (западная сторона)"
 
-msgkey 0x76E58226
+msgid 0x76E58226
 msgstr ""
 "3. DNS-адрес содержит доменное имя или IP-адрес. Он будет предоставлен"
 " поставщиком услуг."
 
-msgkey 0x76EF2A87
+msgid 0x76EF2A87
 msgstr "Локальное хранилище"
 
-msgkey 0x76F0A787
+msgid 0x76F0A787
 msgstr "Североамериканский центральный часовой пояс"
 
 # DUP
-msgkey 0x770F1813
+msgid 0x770F1813
 msgstr "Подключенные устройства(2.4G)"
 
 # DUP
-msgkey 0x770F1813
+msgid 0x770F1813
 msgstr "Подключенные устройства (на частоте 2,4 ГГц)"
 
-msgkey 0x772BE619
+msgid 0x772BE619
 msgstr "Предупреждение конфликтов IP-адресов"
 
-msgkey 0x7749A66F
+msgid 0x7749A66F
 msgstr "(UTC-11)"
 
-msgkey 0x77724F08
+msgid 0x77724F08
 msgstr ""
 "1. Данные об имени пользователя VPN, пароле, DNS-адресе и типе протокола"
 " необходимо получить у поставщика услуг VPN."
 
-msgkey 0x777393AC
+msgid 0x777393AC
 msgstr "Эстония"
 
-msgkey 0x777764BF
+msgid 0x777764BF
 msgstr "Состояние пропускной способности"
 
-msgkey 0x7792F3B4
+msgid 0x7792F3B4
 msgstr "Версия {$romVersion}, {$ret}"
 
-msgkey 0x77B93183
+msgid 0x77B93183
 msgstr "Не удалось восстановить жесткий диск. Попробуйте"
 
-msgkey 0x77EA9DE2
+msgid 0x77EA9DE2
 msgstr ""
 "При использовании приложения Mi WiFi исчезает необходимость запоминать"
 " пароль"
 
-msgkey 0x781CC230
+msgid 0x781CC230
 msgstr "Мидуэй, Паго-Паго"
 
-msgkey 0x78213955
+msgid 0x78213955
 msgstr "год"
 
-msgkey 0x78253D7C
+msgid 0x78253D7C
 msgstr "(UTC-6) Гвадалахара, Мехико, Монтеррей"
 
-msgkey 0x78638178
+msgid 0x78638178
 msgstr "Не включайте эту функцию для пользователей SSH"
 
-msgkey 0x7873C513
+msgid 0x7873C513
 msgstr "Начать проверку диска"
 
-msgkey 0x788F6D6D
+msgid 0x788F6D6D
 msgstr "Обновить вручную"
 
-msgkey 0x78A29B02
+msgid 0x78A29B02
 msgstr "Западноевропейское время"
 
-msgkey 0x78DD1970
+msgid 0x78DD1970
 msgstr "Не удалось проверить скорость сети"
 
-msgkey 0x79193443
+msgid 0x79193443
 msgstr "Все настройки будут удалены."
 
-msgkey 0x791F5318
+msgid 0x791F5318
 msgstr "Подключенные устройства(5G)"
 
-msgkey 0x794D22EF
+msgid 0x794D22EF
 msgstr "Карачи"
 
-msgkey 0x7955454A
+msgid 0x7955454A
 msgstr "Введите полное число, состоящее из {$0} цифр"
 
-msgkey 0x79A98A10
+msgid 0x79A98A10
 msgstr "Монровия, Рейкьявик"
 
-msgkey 0x79C00BDE
+msgid 0x79C00BDE
 msgstr "Не удалось получить состояние дайлера"
 
-msgkey 0x79E47F88
+msgid 0x79E47F88
 msgstr "Репитер может расширять только 2.4G сети Wi-Fi."
 
-msgkey 0x7A1F7C1A
+msgid 0x7A1F7C1A
 msgstr "Скачайте приложение Mi Home/Xiaomi Home"
 
-msgkey 0x7A5CCF05
+msgid 0x7A5CCF05
 msgstr "VPN: "
 
-msgkey 0x7A8EDFCC
+msgid 0x7A8EDFCC
 msgstr "(UTC-7) Горное время (США и Канада)"
 
-msgkey 0x7AD84E69
+msgid 0x7AD84E69
 msgstr "3.Новый узел Mesh-сети имеет те же настройки Wi-Fi, что и старый."
 
-msgkey 0x7B437C69
+msgid 0x7B437C69
 msgstr "Выберите существующую сеть"
 
-msgkey 0x7BC61695
+msgid 0x7BC61695
 msgstr "Пароль"
 
-msgkey 0x7BCCD057
+msgid 0x7BCCD057
 msgstr "China Mobile"
 
-msgkey 0x7BE65E23
+msgid 0x7BE65E23
 msgstr "Проверьте сетевое соединение."
 
-msgkey 0x7C1984FF
+msgid 0x7C1984FF
 msgstr "дд/ММ/гггг чч:мм:сс"
 
-msgkey 0x7C3AAFFF
+msgid 0x7C3AAFFF
 msgstr "Не выключать"
 
-msgkey 0x7C42EBEF
+msgid 0x7C42EBEF
 msgstr "(UTC+9) Сеул"
 
-msgkey 0x7C64B036
+msgid 0x7C64B036
 msgstr "Роутер переключен в режим основной станции."
 
 # DUP
-msgkey 0x7CF8CA87
+msgid 0x7CF8CA87
 msgstr "мин"
 
 # DUP
-msgkey 0x7CF8CA87
+msgid 0x7CF8CA87
 msgstr "мин."
 
-msgkey 0x7D178F4F
+msgid 0x7D178F4F
 msgstr "Начать восстановление"
 
-msgkey 0x7D22F93F
+msgid 0x7D22F93F
 msgstr ""
 "Все настройки будут удалены. Перед восстановлением настроек рекомендуется"
 " сделать резервную копию."
 
-msgkey 0x7D243A0A
+msgid 0x7D243A0A
 msgstr "Изменить часовой пояс"
 
-msgkey 0x7D4A0DEA
+msgid 0x7D4A0DEA
 msgstr "Детройт, Нассау, Нью-Йорк, Порт-О-Пренс, Торонто"
 
-msgkey 0x7D6C27CB
+msgid 0x7D6C27CB
 msgstr "Mi Router AX9000"
 
-msgkey 0x7D7B336C
+msgid 0x7D7B336C
 msgstr "MAC-адрес"
 
-msgkey 0x7D916B3B
+msgid 0x7D916B3B
 msgstr "Часто задаваемые вопросы"
 
-msgkey 0x7E0A6D0D
+msgid 0x7E0A6D0D
 msgstr "Анкоридж, Джуно, Метлакатла, Номе, Ситка, Якутат"
 
-msgkey 0x7E0E1DE8
+msgid 0x7E0E1DE8
 msgstr "Перу"
 
-msgkey 0x7E1397AB
+msgid 0x7E1397AB
 msgstr "Управляйте роутером в любое время и в любом месте"
 
-msgkey 0x7E632DE1
+msgid 0x7E632DE1
 msgstr ""
 "Если роутер работает нормально, мы рекомендуем использовать приложение Mi"
 " Home/Xiaomi Home для установки вашего устройства. Если установка не удалась"
 " или вам нужно перейти на предыдущую версию, вы можете установить устройство"
 " вручную."
 
-msgkey 0x7E665AAD
+msgid 0x7E665AAD
 msgstr ""
 "Некоторые старые устройства не поддерживают Wi-Fi 6 должным образом и могут"
 " иметь проблемы совместимости, например ошибку сканирования или сбой"
@@ -3176,978 +3176,978 @@ msgstr ""
 " совместимости. Кроме того, будут отключены функции, связанные с Wi-Fi 6,"
 " такие как OFDMA, BSS Coloring и т. д."
 
-msgkey 0x7E7BFF9D
+msgid 0x7E7BFF9D
 msgstr "Выберите устройство"
 
-msgkey 0x7E87EB7E
+msgid 0x7E87EB7E
 msgstr "Дублин, Эдинбург, Лиссабон, Лондон"
 
 # DUP
-msgkey 0x7EC5EC99
+msgid 0x7EC5EC99
 msgstr "Испания"
 
 # DUP
-msgkey 0x7EC5EC99
+msgid 0x7EC5EC99
 msgstr "Испания"
 
-msgkey 0x7EE5F435
+msgid 0x7EE5F435
 msgstr "Mi Router создал сеть Wi-Fi"
 
-msgkey 0x7F82983D
+msgid 0x7F82983D
 msgstr "Не удалось проверить обновление"
 
-msgkey 0x7FA203B4
+msgid 0x7FA203B4
 msgstr "Скорость WAN-порта"
 
-msgkey 0x7FABC010
+msgid 0x7FABC010
 msgstr "Дата не может быть раньше, чем {$0}"
 
-msgkey 0x7FE7CE95
+msgid 0x7FE7CE95
 msgstr ""
 "3. Включите узел и дождитесь, когда индикатор системы роутера загорится"
 " синим."
 
-msgkey 0x7FFAF515
+msgid 0x7FFAF515
 msgstr "Удалить все данные с диска"
 
-msgkey 0x801F4D1C
+msgid 0x801F4D1C
 msgstr "Полоса пропускания домашней сети Wi-Fi"
 
-msgkey 0x8033049E
+msgid 0x8033049E
 msgstr "Индия"
 
-msgkey 0x80397564
+msgid 0x80397564
 msgstr "Адрес LAN IPv6"
 
-msgkey 0x803B6868
+msgid 0x803B6868
 msgstr "Макасар"
 
-msgkey 0x8047D07F
+msgid 0x8047D07F
 msgstr ""
 "Используйте приложение Mi WiFi, чтобы оценить функциональные возможности"
 " умного роутера"
 
-msgkey 0x806DC303
+msgid 0x806DC303
 msgstr ""
 "Проверка диска была выполнена недавно. Повторная проверка не требуется."
 
-msgkey 0x8079CFD2
+msgid 0x8079CFD2
 msgstr "Стандартное восточное время (США и Канада)"
 
-msgkey 0x818DA010
+msgid 0x818DA010
 msgstr "Начать установку"
 
-msgkey 0x8190E3A3
+msgid 0x8190E3A3
 msgstr "Гренландия"
 
-msgkey 0x81A783B0
+msgid 0x81A783B0
 msgstr "Пароль сети Wi-Fi должен содержать от 8 до 63 символов"
 
-msgkey 0x81B2CFA8
+msgid 0x81B2CFA8
 msgstr "Изменить сервис"
 
-msgkey 0x81C1CE9D
+msgid 0x81C1CE9D
 msgstr ""
 "Если загрузка замедляет скорость работы сети роутера, нажмите «Приостановить"
 " все загрузки»."
 
-msgkey 0x81D9F66A
+msgid 0x81D9F66A
 msgstr "Начальный адрес"
 
-msgkey 0x81E8A529
+msgid 0x81E8A529
 msgstr "Режим контроля"
 
-msgkey 0x81FD2AF0
+msgid 0x81FD2AF0
 msgstr "China Tietong"
 
-msgkey 0x81FE1B7D
+msgid 0x81FE1B7D
 msgstr "Невозможно настроить проводной репитер"
 
-msgkey 0x8251E4AE
+msgid 0x8251E4AE
 msgstr "Подключение узла Mesh-сети"
 
-msgkey 0x82D42929
+msgid 0x82D42929
 msgstr "Настройки времени"
 
-msgkey 0x82E87DCC
+msgid 0x82E87DCC
 msgstr "Обновление…"
 
-msgkey 0x82F6DA84
+msgid 0x82F6DA84
 msgstr "(UTC+2) Амман"
 
-msgkey 0x82F8606B
+msgid 0x82F8606B
 msgstr "Это устройство не сможет подключиться к сети."
 
-msgkey 0x8311387A
+msgid 0x8311387A
 msgstr "(UTC+2) Бейрут"
 
-msgkey 0x831AA76E
+msgid 0x831AA76E
 msgstr "Если автоматическое переключение недоступно, посетите"
 
-msgkey 0x831FAA84
+msgid 0x831FAA84
 msgstr "Это представляет угрозу безопасности сети."
 
-msgkey 0x833A90CD
+msgid 0x833A90CD
 msgstr ""
 "Автоматически изменять пропускную способность подключенных устройств"
 
-msgkey 0x834FD120
+msgid 0x834FD120
 msgstr "Программа улучшения качества"
 
-msgkey 0x836DCA51
+msgid 0x836DCA51
 msgstr "Перезагрузите модем и повторите попытку."
 
-msgkey 0x83707E3F
+msgid 0x83707E3F
 msgstr "Нет ответа от DHCP-сервера"
 
-msgkey 0x838C6732
+msgid 0x838C6732
 msgstr "Типы файлов"
 
-msgkey 0x83D874E5
+msgid 0x83D874E5
 msgstr "(UTC+4) Абу-Даби, Маскат"
 
-msgkey 0x84553919
+msgid 0x84553919
 msgstr ""
 "Только пользователи с платной учетной записью имеют доступ к офлайн-функциям"
 
-msgkey 0x848A9710
+msgid 0x848A9710
 msgstr "Проверить наличие обновлений"
 
-msgkey 0x84A89C0F
+msgid 0x84A89C0F
 msgstr ""
 "Для подключения нового роутера к роутеру Mi Router в режиме ретранслятора"
 " необходимо установить одинаковые настройки стран/регионов"
 
-msgkey 0x84D75D2A
+msgid 0x84D75D2A
 msgstr "Назад"
 
-msgkey 0x84D81D20
+msgid 0x84D81D20
 msgstr ""
 "1.Гостевая сеть Wi-Fi будет отключена после переключения в режим"
 " беспроводного усилителя сигнала."
 
-msgkey 0x85016C3F
+msgid 0x85016C3F
 msgstr "Проверьте WAN-разъем и IP-адрес"
 
-msgkey 0x8521D2BE
+msgid 0x8521D2BE
 msgstr "Dr. Peng"
 
-msgkey 0x852C0778
+msgid 0x852C0778
 msgstr "Вы ввели слишком длинное имя роутера"
 
-msgkey 0x853CC582
+msgid 0x853CC582
 msgstr "Mi Router 3A"
 
-msgkey 0x8557BB54
+msgid 0x8557BB54
 msgstr "Не удалось применить настройки. Проверьте имя сети и пароль."
 
-msgkey 0x859A2D06
+msgid 0x859A2D06
 msgstr "ID приложения"
 
-msgkey 0x86129EB5
+msgid 0x86129EB5
 msgstr "Назначение статического IP-адреса DHCP"
 
-msgkey 0x8619F9B2
+msgid 0x8619F9B2
 msgstr "Изменить пароль"
 
-msgkey 0x863BEE65
+msgid 0x863BEE65
 msgstr "Жесткий диск в идеальном состоянии"
 
-msgkey 0x864192C6
+msgid 0x864192C6
 msgstr "Восточноевропейское время"
 
-msgkey 0x866AF834
+msgid 0x866AF834
 msgstr "Проверьте соединение через WAN-порт"
 
-msgkey 0x86C01633
+msgid 0x86C01633
 msgstr "Не удалось включить роутер. Хранилище не обнаружено."
 
-msgkey 0x86C1FB08
+msgid 0x86C1FB08
 msgstr ""
 "Недопустимый IP-адрес. Допустимый формат IP-адреса: 1.0.0.0~126.0.0.0 или"
 " 128.0.0.0~223.255.255.255."
 
-msgkey 0x8718B9C2
+msgid 0x8718B9C2
 msgstr ""
 "Если функция включена, у сетей 2,4 ГГц и 5 ГГц будет одинаковое имя. Роутер"
 " выберет наиболее подходящий сигнал. Например, если устройство находится"
 " рядом, роутер выберет сеть 5 ГГц, если далеко — сеть 2,4 ГГц. Во время"
 " переключения возможны кратковременные перебои"
 
-msgkey 0x8718BFB1
+msgid 0x8718BFB1
 msgstr "Добро пожаловать"
 
-msgkey 0x87560B3C
+msgid 0x87560B3C
 msgstr "Сбой получения данных"
 
-msgkey 0x875EEEE8
+msgid 0x875EEEE8
 msgstr ""
 "Решение №3: Выполните клонирование MAC-адреса и повторите попытку"
 " подключения"
 
-msgkey 0x877482A7
+msgid 0x877482A7
 msgstr "Ханой, Бангкок, Барнаул, Хошимин, Новосибирск"
 
-msgkey 0x87843FE1
+msgid 0x87843FE1
 msgstr "Внутренний IP-адрес: "
 
-msgkey 0x879BD41B
+msgid 0x879BD41B
 msgstr ""
 "Протокол PPPoE не позволяет одновременно использовать один аккаунт в"
 " нескольких местах."
 
-msgkey 0x879CE485
+msgid 0x879CE485
 msgstr ""
 "Решение №1: Перезапустите модем и/или роутер и повторно подключитесь к PPPoE"
 " через 5 минут"
 
-msgkey 0x87BDD2A9
+msgid 0x87BDD2A9
 msgstr "Поиск узлов Mesh-сети…"
 
-msgkey 0x87C26616
+msgid 0x87C26616
 msgstr "Средне-Атлантические штаты"
 
-msgkey 0x88A41747
+msgid 0x88A41747
 msgstr "Управление беспроводным доступом"
 
-msgkey 0x88CF1965
+msgid 0x88CF1965
 msgstr "Уровень сигнала Wi-Fi"
 
-msgkey 0x88DE8E3E
+msgid 0x88DE8E3E
 msgstr "2. Убедитесь, что сетевой кабель не поврежден"
 
-msgkey 0x88EB3D81
+msgid 0x88EB3D81
 msgstr "(UTC) Касабланка"
 
-msgkey 0x89407AD9
+msgid 0x89407AD9
 msgstr "Не было проверено"
 
-msgkey 0x899FF045
+msgid 0x899FF045
 msgstr "Чатемское стандартное время"
 
-msgkey 0x89B61F0D
+msgid 0x89B61F0D
 msgstr "Статический IP-адрес отключен"
 
-msgkey 0x8A05046A
+msgid 0x8A05046A
 msgstr "Недопустимый формат MAC-адреса"
 
-msgkey 0x8A301FC7
+msgid 0x8A301FC7
 msgstr "Иранское стандартное время"
 
-msgkey 0x8A5AED33
+msgid 0x8A5AED33
 msgstr "Рекомендуемые настройки"
 
-msgkey 0x8A60DAA2
+msgid 0x8A60DAA2
 msgstr "Не удалось получить IP-адрес"
 
-msgkey 0x8AA5301B
+msgid 0x8AA5301B
 msgstr "(UTC+8) Тайбэй"
 
 # DUP
-msgkey 0x8AA5B8EE
+msgid 0x8AA5B8EE
 msgstr "Германия"
 
 # DUP
-msgkey 0x8AA5B8EE
+msgid 0x8AA5B8EE
 msgstr "Германия"
 
-msgkey 0x8AD5FD24
+msgid 0x8AD5FD24
 msgstr "Приостановить все загрузки"
 
-msgkey 0x8B12F74E
+msgid 0x8B12F74E
 msgstr "Служба ЦОД работает неправильно"
 
-msgkey 0x8B239E45
+msgid 0x8B239E45
 msgstr ""
 "Внимание: некоторые функции и плагины могут быть недоступны в режиме"
 " репитера"
 
-msgkey 0x8B4657E4
+msgid 0x8B4657E4
 msgstr "Чиуауа, Мазатлан"
 
-msgkey 0x8B491AF6
+msgid 0x8B491AF6
 msgstr "Завершить"
 
-msgkey 0x8B507F30
+msgid 0x8B507F30
 msgstr "China Telecom"
 
-msgkey 0x8B891A18
+msgid 0x8B891A18
 msgstr "Афины, Бухарест, Хельсинки, Киев, Мариехамн"
 
-msgkey 0x8BEFE34A
+msgid 0x8BEFE34A
 msgstr "Перт"
 
-msgkey 0x8C2F5622
+msgid 0x8C2F5622
 msgstr "Завершено"
 
-msgkey 0x8C42D2EB
+msgid 0x8C42D2EB
 msgstr "Секунду…"
 
-msgkey 0x8C4580D9
+msgid 0x8C4580D9
 msgstr "Группировка файлов…"
 
-msgkey 0x8CE9AC5D
+msgid 0x8CE9AC5D
 msgstr ""
 "1. Подключите Mi Router при помощи Ethernet-кабеля к существующему роутеру"
 " через разъем WAN"
 
-msgkey 0x8D58F0B8
+msgid 0x8D58F0B8
 msgstr "Сбой получения данных о состоянии"
 
-msgkey 0x8D5EB000
+msgid 0x8D5EB000
 msgstr "Добавление узла Mesh-сети"
 
-msgkey 0x8D77B967
+msgid 0x8D77B967
 msgstr "Разъем WAN существующего роутера"
 
-msgkey 0x8D91ECA8
+msgid 0x8D91ECA8
 msgstr ""
 "5G Wi-Fi обеспечивает более высокую скорость соединения для устройств,"
 " находящихся рядом с роутером"
 
-msgkey 0x8DCDB9B1
+msgid 0x8DCDB9B1
 msgstr "Гостевой режим отключен"
 
-msgkey 0x8DCDE153
+msgid 0x8DCDE153
 msgstr ""
 "1. Текущее состояние вашего жестокого диска в скором времени может стать"
 " причиной возникновения проблем"
 
-msgkey 0x8E2D883E
+msgid 0x8E2D883E
 msgstr "(UTC+13) Нукуалофа"
 
-msgkey 0x8E38860D
+msgid 0x8E38860D
 msgstr "Ошибка сети"
 
-msgkey 0x8E48ED3C
+msgid 0x8E48ED3C
 msgstr "Добавить адрес сервера"
 
-msgkey 0x8E6E0A9D
+msgid 0x8E6E0A9D
 msgstr "Конечный порт"
 
-msgkey 0x8E7055F4
+msgid 0x8E7055F4
 msgstr "Аляска"
 
-msgkey 0x8E9156A3
+msgid 0x8E9156A3
 msgstr "Тролл"
 
-msgkey 0x8EB9E086
+msgid 0x8EB9E086
 msgstr "Внутренний IP-адрес"
 
-msgkey 0x8F8AD2D0
+msgid 0x8F8AD2D0
 msgstr "Южноамериканский часовой пояс"
 
-msgkey 0x8F939C22
+msgid 0x8F939C22
 msgstr "Введите имя сети и пароль"
 
-msgkey 0x8F9B6468
+msgid 0x8F9B6468
 msgstr ""
 "Дождитесь завершения настройки роутера и подключите его следующей сети: "
 
-msgkey 0x8FBE3105
+msgid 0x8FBE3105
 msgstr "Другие исключения (несоответствие протокола и т.д.)"
 
-msgkey 0x8FD9803D
+msgid 0x8FD9803D
 msgstr ""
 "Решение: Выполните повторное подключение вручную с веб-сайта miwifi.com или"
 " перезапустите роутер для автоматического подключения."
 
-msgkey 0x9007B3EA
+msgid 0x9007B3EA
 msgstr "Остров Пасхи"
 
-msgkey 0x9070348B
+msgid 0x9070348B
 msgstr "Серверы: "
 
-msgkey 0x907692AD
+msgid 0x907692AD
 msgstr "Касабланка"
 
-msgkey 0x907F0827
+msgid 0x907F0827
 msgstr "2. IP-адрес"
 
-msgkey 0x9090C8EB
+msgid 0x9090C8EB
 msgstr ""
 "Не удалось получить доступ. Проверьте состояние сети и повторите попытку."
 
-msgkey 0x9106754D
+msgid 0x9106754D
 msgstr "Оценка состояния диска"
 
-msgkey 0x910B11C3
+msgid 0x910B11C3
 msgstr "Это поле не может быть пустым"
 
-msgkey 0x91130E4E
+msgid 0x91130E4E
 msgstr "IP-адрес локальной сети (LAN) будет изменен на"
 
-msgkey 0x9138B5D9
+msgid 0x9138B5D9
 msgstr "Йоханнесбург, Масеру, Мбабане"
 
-msgkey 0x91872802
+msgid 0x91872802
 msgstr "Газа, Хеврон"
 
-msgkey 0x91990C4C
+msgid 0x91990C4C
 msgstr "Маккари, Магадан, Сахалин, Среднеколымск, Бугенвиль"
 
-msgkey 0x919C2DFE
+msgid 0x919C2DFE
 msgstr "Шифрование"
 
-msgkey 0x91AFB03A
+msgid 0x91AFB03A
 msgstr "Дакар, Монровия, Сан-Томе, Данмарксхавн, Рейкьявик"
 
-msgkey 0x9204C1B8
+msgid 0x9204C1B8
 msgstr ""
 "Виртуальная частная сеть (VPN) — это тип технологий удаленного доступа,"
 " использующийся в различных целях, например для предоставления доступа к"
 " внутрикорпоративной сети сотруднику, находящемуся в командировке."
 
-msgkey 0x920AF4D9
+msgid 0x920AF4D9
 msgstr "Баия-де-Бандерас, Мерида, Мехико, Монтеррей"
 
-msgkey 0x923958A0
+msgid 0x923958A0
 msgstr "Частота"
 
-msgkey 0x925F1A36
+msgid 0x925F1A36
 msgstr "Манила"
 
-msgkey 0x929222B1
+msgid 0x929222B1
 msgstr "Недопустимый {$0}."
 
-msgkey 0x92B5CFE1
+msgid 0x92B5CFE1
 msgstr "2. Добавьте необходимые данные и приступите к использованию VPN"
 
-msgkey 0x930DF04A
+msgid 0x930DF04A
 msgstr ""
 "Поблизости обнаружены сигналы радара. В соответствии с национальными"
 " законами и нормативными актами и во избежание помех радиолокационным"
 " сигналам полоса пропускания 160 МГц отключена. Полоса пропускания"
 " автоматически переключена на 80 МГц."
 
-msgkey 0x93231C45
+msgid 0x93231C45
 msgstr "Супер шифрование (WPA3-Personal)"
 
-msgkey 0x933A9235
+msgid 0x933A9235
 msgstr "Завершить задачу"
 
-msgkey 0x93756B73
+msgid 0x93756B73
 msgstr "Аделаида"
 
-msgkey 0x9392696E
+msgid 0x9392696E
 msgstr "Обнаружение"
 
-msgkey 0x940D51C5
+msgid 0x940D51C5
 msgstr "(UTC+2) Стамбул"
 
-msgkey 0x943C34FF
+msgid 0x943C34FF
 msgstr ""
 "В сети поддерживается до четырех Mesh-роутеров для обеспечения хорошей"
 " работы Mesh-сети. Создайте новую сеть для дополнительных Mesh-роутеров."
 
-msgkey 0x945A03A9
+msgid 0x945A03A9
 msgstr "Ташкент"
 
-msgkey 0x946552EC
+msgid 0x946552EC
 msgstr "Подробнее"
 
-msgkey 0x94A8FAEF
+msgid 0x94A8FAEF
 msgstr "(UTC+2) Дамаск"
 
-msgkey 0x94AFB089
+msgid 0x94AFB089
 msgstr "Коломбо"
 
-msgkey 0x94BA5A04
+msgid 0x94BA5A04
 msgstr "Все готово! Можно использовать! Новые возможности данной версии"
 
-msgkey 0x94DFAD3D
+msgid 0x94DFAD3D
 msgstr "Бруней, Иркутск, Куала-Лумпур, Сингапур, Улан-Батор"
 
-msgkey 0x9504B536
+msgid 0x9504B536
 msgstr "Настроить QoS"
 
-msgkey 0x950FCA68
+msgid 0x950FCA68
 msgstr "Конфликт IP-адреса"
 
-msgkey 0x951324C3
+msgid 0x951324C3
 msgstr "Отключено"
 
-msgkey 0x9524065E
+msgid 0x9524065E
 msgstr "Подключение к Интернету: "
 
-msgkey 0x9528354D
+msgid 0x9528354D
 msgstr "(UTC+14) Кирибати"
 
-msgkey 0x952DD872
+msgid 0x952DD872
 msgstr "Все устройства будут отключены от роутера."
 
-msgkey 0x952E405D
+msgid 0x952E405D
 msgstr "1. Произошла ошибка диска."
 
-msgkey 0x95380DBA
+msgid 0x95380DBA
 msgstr "Отключить"
 
-msgkey 0x95412C20
+msgid 0x95412C20
 msgstr "Недопустимый MAC-адрес"
 
-msgkey 0x954F1622
+msgid 0x954F1622
 msgstr "Сервер обнаружил ошибку"
 
-msgkey 0x957DCCD7
+msgid 0x957DCCD7
 msgstr "Хороший"
 
-msgkey 0x958EA72A
+msgid 0x958EA72A
 msgstr ""
 "Порт WAN будет переключен на порт 1 GbE, а порт 2,5 GbE будет использоваться"
 " в качестве порта LAN. Сеть роутера будет перезапущена после завершения"
 " переключения (подключенные устройства будут отключены, и ожидается, что они"
 " будут заново подключены в течение 1 минуты). Переключить порты сейчас?"
 
-msgkey 0x95B85A48
+msgid 0x95B85A48
 msgstr "Не удалось обнаружить выбранную сеть"
 
 # DUP
-msgkey 0x95D77F4C
+msgid 0x95D77F4C
 msgstr "Имя Wi-Fi"
 
 # DUP
-msgkey 0x95D77F4C
+msgid 0x95D77F4C
 msgstr "Имя сети Wi-Fi"
 
-msgkey 0x95E7DDE0
+msgid 0x95E7DDE0
 msgstr "Форматирование диска"
 
-msgkey 0x9610DA5D
+msgid 0x9610DA5D
 msgstr "Загрузить журнал"
 
-msgkey 0x9656796D
+msgid 0x9656796D
 msgstr "Готово"
 
-msgkey 0x965E709D
+msgid 0x965E709D
 msgstr "Включение гостевой сети также активирует 2.4G Wi-Fi"
 
-msgkey 0x967642F6
+msgid 0x967642F6
 msgstr ""
 "DFS-каналы (52 - 64) не могли быть выбраны при включённом режиме Mesh"
 
-msgkey 0x96A96916
+msgid 0x96A96916
 msgstr "Название сети в диапазоне 2,4 ГГц"
 
-msgkey 0x96F238C3
+msgid 0x96F238C3
 msgstr "Журнал роутера"
 
 # DUP
-msgkey 0x96FCAD6C
+msgid 0x96FCAD6C
 msgstr ""
 "1. Разместите добавляемый узел Mesh-сети рядом с центральной точкой доступа."
 
 # DUP
-msgkey 0x96FCAD6C
+msgid 0x96FCAD6C
 msgstr ""
 "1. Разместите добавляемый узел Mesh-сети рядом с центральной точкой доступа."
 
-msgkey 0x9709CFC5
+msgid 0x9709CFC5
 msgstr "Назад"
 
-msgkey 0x971AEE18
+msgid 0x971AEE18
 msgstr "Форматировать"
 
-msgkey 0x974C90A8
+msgid 0x974C90A8
 msgstr "Повторить проверку"
 
-msgkey 0x9753367B
+msgid 0x9753367B
 msgstr "Сбой установки обновления"
 
-msgkey 0x9798F9AC
+msgid 0x9798F9AC
 msgstr "Начать оптимизацию диска"
 
-msgkey 0x979C8E4D
+msgid 0x979C8E4D
 msgstr "Отсканируйте QR-код со смартфона, чтобы скачать приложение"
 
-msgkey 0x97D11C65
+msgid 0x97D11C65
 msgstr "Тихоокеанское (западное побережье) стандартное время A"
 
-msgkey 0x97EC1663
+msgid 0x97EC1663
 msgstr "Нет подключенных устройств"
 
-msgkey 0x97ECDFBB
+msgid 0x97ECDFBB
 msgstr "Ошибка раздела"
 
-msgkey 0x98716811
+msgid 0x98716811
 msgstr "Ченнаи, Калькутта, Мумбаи, Нью-Дели"
 
-msgkey 0x98A3F157
+msgid 0x98A3F157
 msgstr "Добавить вручную"
 
-msgkey 0x9913E38C
+msgid 0x9913E38C
 msgstr "USB-хранилище"
 
-msgkey 0x99BC8D4B
+msgid 0x99BC8D4B
 msgstr "Проводной репитер (расширить существующую сеть)"
 
-msgkey 0x99D82762
+msgid 0x99D82762
 msgstr "Изменить пропускную способность вручную"
 
-msgkey 0x99F3F00A
+msgid 0x99F3F00A
 msgstr "Тихоокеанское (западное побережье) стандартное время B"
 
-msgkey 0x9A12D0FE
+msgid 0x9A12D0FE
 msgstr "Отменить обновление"
 
-msgkey 0x9A3C66C6
+msgid 0x9A3C66C6
 msgstr ""
 "Просмотр данного сайта может подвергнуть риску безопасность вашего"
 " устройства и устройств, подключенных к нему."
 
-msgkey 0x9A4C1564
+msgid 0x9A4C1564
 msgstr "Доступ к флэш-накопителю"
 
-msgkey 0x9A65CFED
+msgid 0x9A65CFED
 msgstr "Выберите не менее 1 объекта"
 
-msgkey 0x9A7C3CC6
+msgid 0x9A7C3CC6
 msgstr "Запрашиваемый объект не найден."
 
-msgkey 0x9A8706DA
+msgid 0x9A8706DA
 msgstr "Подключение к Интернету"
 
-msgkey 0x9A8DD488
+msgid 0x9A8DD488
 msgstr "Проверка интернет-подключения…"
 
-msgkey 0x9A902624
+msgid 0x9A902624
 msgstr ""
 "DFS-каналы (52 - 140) не могли быть выбраны при включённом режиме Mesh"
 
-msgkey 0x9AA16718
+msgid 0x9AA16718
 msgstr "Недопустимый IP-адрес"
 
-msgkey 0x9ADBD2E9
+msgid 0x9ADBD2E9
 msgstr "Файлы не выбраны"
 
-msgkey 0x9AE0D46E
+msgid 0x9AE0D46E
 msgstr "Не более {$0} символов"
 
-msgkey 0x9AF43464
+msgid 0x9AF43464
 msgstr "Аддис-Абеба, Асмэра, Дар-Эс-Салам, Найроби, Антананариву"
 
-msgkey 0x9AF67F90
+msgid 0x9AF67F90
 msgstr "Конфликт порта"
 
-msgkey 0x9AFE8FE3
+msgid 0x9AFE8FE3
 msgstr "Добавить вручную"
 
-msgkey 0x9B0A3415
+msgid 0x9B0A3415
 msgstr ""
 "After this switch is turned on, the router will run in Wi-Fi 5 Compatible"
 " Mode to resolve the compatibility issues. It will also turn off Wi-Fi 6"
 " related functions, such as OFDMA, BSS Coloring, etc."
 
-msgkey 0x9B0D0C01
+msgid 0x9B0D0C01
 msgstr "Перезагрузите роутер"
 
-msgkey 0x9B108A80
+msgid 0x9B108A80
 msgstr "Правила перенаправления диапазонов: "
 
-msgkey 0x9B47EA0E
+msgid 0x9B47EA0E
 msgstr "Загрузить {$0}"
 
-msgkey 0x9B490F1D
+msgid 0x9B490F1D
 msgstr "Сменить режим?"
 
-msgkey 0x9B537DE5
+msgid 0x9B537DE5
 msgstr "Имя роутера и пароль администратора"
 
-msgkey 0x9BD38039
+msgid 0x9BD38039
 msgstr "Сбой форматирования. Повторите попытку."
 
-msgkey 0x9BEBBE9C
+msgid 0x9BEBBE9C
 msgstr "Настройки PPPoE-соединения"
 
-msgkey 0x9BEE9555
+msgid 0x9BEE9555
 msgstr "Низкий"
 
-msgkey 0x9C4084EF
+msgid 0x9C4084EF
 msgstr "Двухдиапазонная сеть Wi-Fi"
 
-msgkey 0x9CA717BF
+msgid 0x9CA717BF
 msgstr ""
 "Когда скорость сети не поднимается выше 80 Мбит/с, для повышения скорости"
 " можно включить Hardware NAT. В этом случае перестанут работать функции QoS,"
 " ограничения скорости и скорости в реальном времени. Используйте Hardware"
 " NAT только при необходимости."
 
-msgkey 0x9CB68286
+msgid 0x9CB68286
 msgstr ""
 "1. Чтобы получить данные об имени пользователя VPN, пароле, DNS-адресе и"
 " типе протокола, сначала необходимо создать учетную запись на веб-сайте"
 " поставщика услуг VPN."
 
-msgkey 0x9D2DAC02
+msgid 0x9D2DAC02
 msgstr "Вы ввели неверный пароль администратора"
 
-msgkey 0x9D46EF52
+msgid 0x9D46EF52
 msgstr "Более {$0} символов"
 
-msgkey 0x9D7C9DC3
+msgid 0x9D7C9DC3
 msgstr "Белиз, Коста-Рика, Сальвадор, Гватемала, Манагуа"
 
-msgkey 0x9D892EE1
+msgid 0x9D892EE1
 msgstr "Не удалось удалить MAC-адрес"
 
-msgkey 0x9D8DBB03
+msgid 0x9D8DBB03
 msgstr "Обновить"
 
-msgkey 0x9DDA6F7B
+msgid 0x9DDA6F7B
 msgstr "(UTC+11:30) остров Норфолк"
 
-msgkey 0x9DFB0D23
+msgid 0x9DFB0D23
 msgstr "Turning 2.4G Wi-Fi off will turn Guest Wi-Fi off as well"
 
-msgkey 0x9E017CE0
+msgid 0x9E017CE0
 msgstr "Результат исправления ошибок"
 
-msgkey 0x9E1406B2
+msgid 0x9E1406B2
 msgstr "Убедитесь, что доменное имя введено правильно"
 
-msgkey 0x9EB59A0F
+msgid 0x9EB59A0F
 msgstr "Сброс настроек роутера"
 
-msgkey 0x9F001BD2
+msgid 0x9F001BD2
 msgstr ""
 "В соответствии с национальными законами и нормативными актами роутер"
 " выполняет обнаружение и предотвращение сигнала радара. Подключение к Wi-Fi"
 " будет включено через {$time} секунд. Подождите"
 
-msgkey 0x9F21F03C
+msgid 0x9F21F03C
 msgstr "Роутер работает в безопасном режиме"
 
-msgkey 0x9F71ECCA
+msgid 0x9F71ECCA
 msgstr "Недостаточно памяти"
 
-msgkey 0x9FF2C1E2
+msgid 0x9FF2C1E2
 msgstr "Ошибка 678: неверное имя пользователя или пароль PPPoE"
 
-msgkey 0x9FFC2113
+msgid 0x9FFC2113
 msgstr "Добавить"
 
-msgkey 0xA000D240
+msgid 0xA000D240
 msgstr "Не более {$0} символов"
 
-msgkey 0xA012B123
+msgid 0xA012B123
 msgstr "MM/dd/yyyy hh:mm:ss"
 
-msgkey 0xA033535E
+msgid 0xA033535E
 msgstr "Что такое DDNS?"
 
-msgkey 0xA05653B2
+msgid 0xA05653B2
 msgstr ""
 "Перезагрузите роутер, чтобы применить настройки. Это может занять примерно"
 " 30 с."
 
-msgkey 0xA05979FC
+msgid 0xA05979FC
 msgstr "Магадан"
 
-msgkey 0xA06B91C1
+msgid 0xA06B91C1
 msgstr "Максимальная скорость загрузки"
 
-msgkey 0xA0FEAA7A
+msgid 0xA0FEAA7A
 msgstr "DHCP-сервер"
 
-msgkey 0xA1360C81
+msgid 0xA1360C81
 msgstr "Сведения о роутере"
 
-msgkey 0xA19B5804
+msgid 0xA19B5804
 msgstr ""
 "Свяжитесь с интернет-провайдером для получения дополнительной информации"
 
-msgkey 0xA1A8911B
+msgid 0xA1A8911B
 msgstr "Скорость скачивания"
 
-msgkey 0xA1EADE4A
+msgid 0xA1EADE4A
 msgstr "Удалить это устройство?"
 
-msgkey 0xA2357EB6
+msgid 0xA2357EB6
 msgstr "(UTC+10) Якутск"
 
-msgkey 0xA24AD91D
+msgid 0xA24AD91D
 msgstr "или"
 
 # DUP
-msgkey 0xA2531011
+msgid 0xA2531011
 msgstr "Кабул"
 
 # DUP
-msgkey 0xA2531011
+msgid 0xA2531011
 msgstr "Кабул"
 
-msgkey 0xA2D46FB9
+msgid 0xA2D46FB9
 msgstr "Возможны проблемы с многоадресным аккаунтом."
 
-msgkey 0xA37C165E
+msgid 0xA37C165E
 msgstr "Последняя цифра IP-адреса"
 
-msgkey 0xA3D81A24
+msgid 0xA3D81A24
 msgstr "Средняя скорость"
 
-msgkey 0xA4ADEA1C
+msgid 0xA4ADEA1C
 msgstr "Всего скачано"
 
-msgkey 0xA4BEA8D1
+msgid 0xA4BEA8D1
 msgstr "Great Wall Broadband"
 
-msgkey 0xA4EC9E60
+msgid 0xA4EC9E60
 msgstr "Используйте цифры, английские буквы или символы"
 
-msgkey 0xA5797896
+msgid 0xA5797896
 msgstr "Ереван"
 
-msgkey 0xA57DBC6E
+msgid 0xA57DBC6E
 msgstr "Настройки"
 
-msgkey 0xA59A28C1
+msgid 0xA59A28C1
 msgstr "Бельгия"
 
-msgkey 0xA5E7C6B6
+msgid 0xA5E7C6B6
 msgstr "Проверка скорости соединения…"
 
-msgkey 0xA5E94313
+msgid 0xA5E94313
 msgstr "Безопасность"
 
-msgkey 0xA6039B3B
+msgid 0xA6039B3B
 msgstr "Система кабельного модема Gehua"
 
-msgkey 0xA6377C96
+msgid 0xA6377C96
 msgstr "Список изменений"
 
-msgkey 0xA6590D3C
+msgid 0xA6590D3C
 msgstr "Оборотов в минуту"
 
-msgkey 0xA65C3705
+msgid 0xA65C3705
 msgstr "(UTC) Монровия, Рейкьявик"
 
-msgkey 0xA66AA062
+msgid 0xA66AA062
 msgstr "DDNS (динамический DNS)"
 
-msgkey 0xA6C5CE3E
+msgid 0xA6C5CE3E
 msgstr "Синхронизация конфигурации Mesh-сети"
 
-msgkey 0xA6CCFC30
+msgid 0xA6CCFC30
 msgstr "Новый пароль не может совпадать со старым"
 
-msgkey 0xA6EBEA9F
+msgid 0xA6EBEA9F
 msgstr "Ошибка 691: неверное имя пользователя или пароль PPPoE"
 
-msgkey 0xA7119D76
+msgid 0xA7119D76
 msgstr "Сбой проверки. Повторите попытку."
 
-msgkey 0xA71AED9E
+msgid 0xA71AED9E
 msgstr "Отключить"
 
-msgkey 0xA7212691
+msgid 0xA7212691
 msgstr "Местоположение"
 
-msgkey 0xA7953DF9
+msgid 0xA7953DF9
 msgstr "Роутер Mi Router 4C"
 
-msgkey 0xA7BF6A4F
+msgid 0xA7BF6A4F
 msgstr "Обслуживание широкополосной сети Great Wall"
 
-msgkey 0xA7E5043D
+msgid 0xA7E5043D
 msgstr "Бангладешское стандартное время"
 
-msgkey 0xA7EB5AB1
+msgid 0xA7EB5AB1
 msgstr "Формат даты: dd.MM.yyyy"
 
-msgkey 0xA7F871B5
+msgid 0xA7F871B5
 msgstr "QoS"
 
-msgkey 0xA7FA35B0
+msgid 0xA7FA35B0
 msgstr ""
 "Это может занять примерно 7 минут. Световой индикатор сменит цвет на синий,"
 " когда обновление будет завершено."
 
-msgkey 0xA82D2989
+msgid 0xA82D2989
 msgstr "Проверьте статический IP-адрес"
 
-msgkey 0xA82DC1EB
+msgid 0xA82DC1EB
 msgstr "Выключение Wi-Fi также отключает гостевую сеть Wi-Fi"
 
-msgkey 0xA83EA4C1
+msgid 0xA83EA4C1
 msgstr ""
 "Недопустимый локальный IP-адрес. Допустимые форматы:"
 " 10.0.0.0~10.255.255.255, 172.16.0.0~172.23.255.255 или"
 " 192.168.0.0~192.168.255.255."
 
-msgkey 0xA84DAF51
+msgid 0xA84DAF51
 msgstr "Не найден пригодный для использования узел Mesh-сети:"
 
-msgkey 0xA852DE07
+msgid 0xA852DE07
 msgstr ""
 "Сеть Wi-Fi создана, выполните подключение к беспроводной сети вручную"
 
-msgkey 0xA8BB2060
+msgid 0xA8BB2060
 msgstr "(UTC+5) Исламабад, Карачи"
 
-msgkey 0xA8BE3F8D
+msgid 0xA8BE3F8D
 msgstr "Сбой подключения"
 
-msgkey 0xA8C8D16D
+msgid 0xA8C8D16D
 msgstr "Брюссель, Копенгаген, Мадрид, Париж"
 
-msgkey 0xA8D503EC
+msgid 0xA8D503EC
 msgstr "Пользователи"
 
-msgkey 0xA900F910
+msgid 0xA900F910
 msgstr "(UTC+8) Куала-Лумпур, Сингапур"
 
-msgkey 0xA906D1E6
+msgid 0xA906D1E6
 msgstr ""
 "Внимание: отключите Mi Router от старого роутера и подключите его к"
 " локальной сети провайдера через WAN (синий разъем)"
 
-msgkey 0xA9244338
+msgid 0xA9244338
 msgstr "Токио"
 
-msgkey 0xA962105A
+msgid 0xA962105A
 msgstr "Модель"
 
-msgkey 0xA96A8D59
+msgid 0xA96A8D59
 msgstr "Сбой набора (ошибка"
 
 # DUP
-msgkey 0xA96CDCFB
+msgid 0xA96CDCFB
 msgstr "Вьетнам"
 
 # DUP
-msgkey 0xA96CDCFB
+msgid 0xA96CDCFB
 msgstr "Вьетнам"
 
-msgkey 0xA97EDAA7
+msgid 0xA97EDAA7
 msgstr "Режим Wi-Fi 6 (802.11ax)"
 
-msgkey 0xA9817C91
+msgid 0xA9817C91
 msgstr "Не удалось применить параметры VPN"
 
-msgkey 0xA993BBB2
+msgid 0xA993BBB2
 msgstr "Недопустимый идентификатор устройства"
 
-msgkey 0xA9D24D37
+msgid 0xA9D24D37
 msgstr "Режим проводного усилителя сигнала"
 
-msgkey 0xA9E66C66
+msgid 0xA9E66C66
 msgstr "Введите {$0}."
 
-msgkey 0xA9F4AC0A
+msgid 0xA9F4AC0A
 msgstr "Тип подключения к Интернету"
 
-msgkey 0xA9F52CFA
+msgid 0xA9F52CFA
 msgstr "Шаг 1: подключите роутер к источнику питания."
 
-msgkey 0xAA07D049
+msgid 0xAA07D049
 msgstr "Не удалось включить проводной репитер"
 
-msgkey 0xAA286E53
+msgid 0xAA286E53
 msgstr "Свяжитесь с вашим провайдером"
 
-msgkey 0xAA3FA0AC
+msgid 0xAA3FA0AC
 msgstr "Настроить"
 
-msgkey 0xAA8C4D3F
+msgid 0xAA8C4D3F
 msgstr ""
 "Если эта функция включена, роутер может автоматически обнаруживать"
 " неинициализированные Wi-Fi устройства, которые поддерживают гладкое"
@@ -4155,1389 +4155,1389 @@ msgstr ""
 " роутера изменен, он также будет автоматически синхронизирован с"
 " устройствами, поддерживающими Xiaomi Easy Connect."
 
-msgkey 0xAAA55A69
+msgid 0xAAA55A69
 msgstr "Обнаружен конфликт IP-адресов"
 
-msgkey 0xAACE57D8
+msgid 0xAACE57D8
 msgstr "Ошибка системы. Подождите немного и повторите попытку."
 
-msgkey 0xAB68D0D1
+msgid 0xAB68D0D1
 msgstr "Сайт не отвечает. Обновите страницу и повторите попытку."
 
-msgkey 0xAB8B8B5B
+msgid 0xAB8B8B5B
 msgstr "UPnP отключен"
 
-msgkey 0xAB8CB4EC
+msgid 0xAB8CB4EC
 msgstr "Ограничение скорости для приложений"
 
-msgkey 0xABA2F54F
+msgid 0xABA2F54F
 msgstr "Healthy check error: hard drive unmout fail"
 
-msgkey 0xABABBA39
+msgid 0xABABBA39
 msgstr "Настройки сети (тип подключения, сетевая учетная запись и пароль)"
 
-msgkey 0xABAE4260
+msgid 0xABAE4260
 msgstr "Адреса не добавлены"
 
-msgkey 0xABBE988B
+msgid 0xABBE988B
 msgstr "2. Процесс инициализации будет"
 
-msgkey 0xAC50F23F
+msgid 0xAC50F23F
 msgstr "Требуется перезагрузка"
 
-msgkey 0xAC51C3AB
+msgid 0xAC51C3AB
 msgstr "Ethernet-адаптер"
 
-msgkey 0xAC55ED1B
+msgid 0xAC55ED1B
 msgstr "Секунду…"
 
-msgkey 0xAC85CEBD
+msgid 0xAC85CEBD
 msgstr "Режим распределения пропускной способности"
 
-msgkey 0xAC9E460E
+msgid 0xAC9E460E
 msgstr "Галапагос"
 
-msgkey 0xACAC3C85
+msgid 0xACAC3C85
 msgstr "Параметры сети Wi-Fi"
 
-msgkey 0xACCC1931
+msgid 0xACCC1931
 msgstr "Целевой IP-адрес: "
 
-msgkey 0xAD12B860
+msgid 0xAD12B860
 msgstr "Янгон, Кокос"
 
-msgkey 0xAD1F9DCF
+msgid 0xAD1F9DCF
 msgstr "Нет ответа от PPPoE-сервера"
 
-msgkey 0xAD682067
+msgid 0xAD682067
 msgstr "(UTC-10) Гавайи"
 
-msgkey 0xADA293A3
+msgid 0xADA293A3
 msgstr "Макао, Шанхай, Тайбэй"
 
-msgkey 0xADC86B1F
+msgid 0xADC86B1F
 msgstr "Скорость"
 
-msgkey 0xADDB9E7A
+msgid 0xADDB9E7A
 msgstr "Не удалось подключиться к DNS-серверу"
 
-msgkey 0xADF4A82D
+msgid 0xADF4A82D
 msgstr "Багдад, Кувейт, Катар, Эр-Рияд, Стамбул"
 
-msgkey 0xAE28EB4A
+msgid 0xAE28EB4A
 msgstr "Новая резервная копия"
 
-msgkey 0xAE46AD5B
+msgid 0xAE46AD5B
 msgstr "Не удалось проверить наличие обновлений"
 
-msgkey 0xAE555CD7
+msgid 0xAE555CD7
 msgstr "Кайенна, Форталеза"
 
-msgkey 0xAE6F145C
+msgid 0xAE6F145C
 msgstr "Австралия"
 
-msgkey 0xAE8D9D71
+msgid 0xAE8D9D71
 msgstr "Компания"
 
-msgkey 0xAEDED05B
+msgid 0xAEDED05B
 msgstr "Сервис Oray DDNS не используется"
 
-msgkey 0xAF23C2EA
+msgid 0xAF23C2EA
 msgstr "Mi Router 3"
 
-msgkey 0xAF4C5C89
+msgid 0xAF4C5C89
 msgstr "Доступ к VPN"
 
-msgkey 0xAF4CDE2B
+msgid 0xAF4CDE2B
 msgstr "Файл не существует или поврежден"
 
-msgkey 0xAF696118
+msgid 0xAF696118
 msgstr "Сетевой статус в реальном времени"
 
-msgkey 0xAF700AF1
+msgid 0xAF700AF1
 msgstr "QoS"
 
-msgkey 0xAF852DCD
+msgid 0xAF852DCD
 msgstr "Не удалось восстановить заводские настройки"
 
-msgkey 0xAF8C0C4A
+msgid 0xAF8C0C4A
 msgstr "Восстановите заводские настройки роутера."
 
-msgkey 0xAFC1D371
+msgid 0xAFC1D371
 msgstr "Нет устройств"
 
-msgkey 0xAFE94E92
+msgid 0xAFE94E92
 msgstr "Отправить без изменений?"
 
-msgkey 0xB022538D
+msgid 0xB022538D
 msgstr "Недопустимый статический IP-адрес"
 
-msgkey 0xB030E101
+msgid 0xB030E101
 msgstr "Касабланка, Эль-Аюн"
 
-msgkey 0xB0629B19
+msgid 0xB0629B19
 msgstr "Дата начала не может быть позднее даты окончания."
 
-msgkey 0xB073298A
+msgid 0xB073298A
 msgstr "Средний"
 
-msgkey 0xB0812C2A
+msgid 0xB0812C2A
 msgstr "Доступ"
 
-msgkey 0xB0841D6D
+msgid 0xB0841D6D
 msgstr ""
 "Шаг 2: подключите кабель Ethernet к WAN-порту существующего роутера."
 
-msgkey 0xB09C55DB
+msgid 0xB09C55DB
 msgstr "Дания"
 
-msgkey 0xB0D4AA67
+msgid 0xB0D4AA67
 msgstr "Нет доступных обновлений"
 
-msgkey 0xB0EAE75E
+msgid 0xB0EAE75E
 msgstr "Беспроводная сеть"
 
-msgkey 0xB10B5D0B
+msgid 0xB10B5D0B
 msgstr "Устройства, подключенные к сети Wi-Fi"
 
-msgkey 0xB1144EA4
+msgid 0xB1144EA4
 msgstr "Европа"
 
-msgkey 0xB11B6A6A
+msgid 0xB11B6A6A
 msgstr "Подождите， выполняется сканирование хранилища"
 
-msgkey 0xB13B36AC
+msgid 0xB13B36AC
 msgstr ""
 "Служба поддержки клиентов оператора широкополосного доступа к Интернету"
 " China Telecom"
 
-msgkey 0xB15B0B0C
+msgid 0xB15B0B0C
 msgstr ""
 "Если вы отключите JavaScript, вы не сможете получить доступ к miwifi.com для"
 " управления вашим роутером."
 
-msgkey 0xB175F0F4
+msgid 0xB175F0F4
 msgstr "Не удалось расширить сеть"
 
-msgkey 0xB19B521E
+msgid 0xB19B521E
 msgstr "Подтвердите пароль"
 
-msgkey 0xB1B0EF86
+msgid 0xB1B0EF86
 msgstr "Отключено. WAN-порт не подключен к сети"
 
-msgkey 0xB2003A7E
+msgid 0xB2003A7E
 msgstr "Используйте пароль, указанный ниже"
 
-msgkey 0xB2504587
+msgid 0xB2504587
 msgstr "Mi Router 4Q"
 
-msgkey 0xB2711D33
+msgid 0xB2711D33
 msgstr "Отключить устройство"
 
-msgkey 0xB2AB1186
+msgid 0xB2AB1186
 msgstr "(UTC-12) Международная линия изменения даты"
 
-msgkey 0xB2B62428
+msgid 0xB2B62428
 msgstr "Проверьте номер телефона"
 
-msgkey 0xB2CEDD95
+msgid 0xB2CEDD95
 msgstr "Упорядочение файлов…"
 
-msgkey 0xB2E1EC07
+msgid 0xB2E1EC07
 msgstr "Недопустимое значение"
 
-msgkey 0xB2EAE041
+msgid 0xB2EAE041
 msgstr "Устройства UPnP: "
 
-msgkey 0xB2F3BA72
+msgid 0xB2F3BA72
 msgstr "Тбилиси"
 
-msgkey 0xB313AECC
+msgid 0xB313AECC
 msgstr "Адрес сервера"
 
-msgkey 0xB33DEC7F
+msgid 0xB33DEC7F
 msgstr "Пропустить"
 
-msgkey 0xB34E464B
+msgid 0xB34E464B
 msgstr "Проверьте настройки DNS"
 
-msgkey 0xB35E1D6F
+msgid 0xB35E1D6F
 msgstr "Добавить правило"
 
-msgkey 0xB38396FF
+msgid 0xB38396FF
 msgstr "Xiaomi Easy Connect"
 
-msgkey 0xB3AA0F40
+msgid 0xB3AA0F40
 msgstr "Москва, Симферополь"
 
-msgkey 0xB3ABF558
+msgid 0xB3ABF558
 msgstr "Сетевая группа Mesh"
 
-msgkey 0xB3AE343F
+msgid 0xB3AE343F
 msgstr "Загрузите приложение Mi WiFi, чтобы управлять роутером"
 
-msgkey 0xB3B1EC91
+msgid 0xB3B1EC91
 msgstr "Непальское стандартное время"
 
-msgkey 0xB3BFCBEB
+msgid 0xB3BFCBEB
 msgstr "Режим репитера (расширение сети Wi-Fi)"
 
-msgkey 0xB3C13D4D
+msgid 0xB3C13D4D
 msgstr "Добавьте устройство, трафик которого будет проходить через VPN"
 
-msgkey 0xB3C8F1D1
+msgid 0xB3C8F1D1
 msgstr "Пользовательская служба DNS не отвечает"
 
-msgkey 0xB3CC7218
+msgid 0xB3CC7218
 msgstr "Mi Router"
 
-msgkey 0xB3D2FB8C
+msgid 0xB3D2FB8C
 msgstr "Гавана"
 
-msgkey 0xB426AAAC
+msgid 0xB426AAAC
 msgstr "Бета"
 
-msgkey 0xB491DC34
+msgid 0xB491DC34
 msgstr "Новая Зеландия"
 
-msgkey 0xB4BECFFC
+msgid 0xB4BECFFC
 msgstr "Введите пароль"
 
-msgkey 0xB4BEF430
+msgid 0xB4BEF430
 msgstr "Чатам"
 
-msgkey 0xB4CF91F9
+msgid 0xB4CF91F9
 msgstr "Центральная Африка"
 
-msgkey 0xB4D50C08
+msgid 0xB4D50C08
 msgstr "Максимальная скорость скачивания"
 
-msgkey 0xB4F94FCA
+msgid 0xB4F94FCA
 msgstr ""
 "При использовании приложения Mi WiFi исчезает необходимость запоминать"
 " пароль"
 
-msgkey 0xB5036796
+msgid 0xB5036796
 msgstr "Аризона"
 
-msgkey 0xB5CD9B65
+msgid 0xB5CD9B65
 msgstr "Добавьте новый узел Mesh-сети"
 
-msgkey 0xB5E43BC8
+msgid 0xB5E43BC8
 msgstr "Ниуэ"
 
-msgkey 0xB610ECAF
+msgid 0xB610ECAF
 msgstr "Сохранить"
 
-msgkey 0xB64F84AE
+msgid 0xB64F84AE
 msgstr "Ошибка широкополосного дайлера"
 
-msgkey 0xB668CFF1
+msgid 0xB668CFF1
 msgstr "Установка плагина"
 
-msgkey 0xB67D129F
+msgid 0xB67D129F
 msgstr "Болгария"
 
-msgkey 0xB6C85EA0
+msgid 0xB6C85EA0
 msgstr "Нукуалофа"
 
-msgkey 0xB6EFF91C
+msgid 0xB6EFF91C
 msgstr "Мост"
 
-msgkey 0xB7016B92
+msgid 0xB7016B92
 msgstr ""
 "Интеллектуальный автоматический поиск AIoT позволяет в автоматическом режиме"
 " обнаруживать смарт-устройства Mi, которые не были инициализированы, и"
 " быстро подключать их через приложение Mi Home."
 
-msgkey 0xB72DB525
+msgid 0xB72DB525
 msgstr "Не удалось отправить"
 
-msgkey 0xB7338E6F
+msgid 0xB7338E6F
 msgstr "Пекин, Чунцин, Гонконг, Урумчи"
 
-msgkey 0xB7347B96
+msgid 0xB7347B96
 msgstr "Расширение Mesh-сети выполнено"
 
-msgkey 0xB756FCB5
+msgid 0xB756FCB5
 msgstr "Антивирус Tencent Security Manager"
 
-msgkey 0xB758930E
+msgid 0xB758930E
 msgstr "(UTC+5:45) Катманду"
 
-msgkey 0xB7656DE9
+msgid 0xB7656DE9
 msgstr ""
 "Режим черного списка (доступ к интернету для устройств из списка будет"
 " ограничен)"
 
-msgkey 0xB7BF6D61
+msgid 0xB7BF6D61
 msgstr ""
 "Улучшения производительности Wi-Fi 6 (802.11ax)заметны только на"
 " устройствах, поддерживающих протокол Wi-Fi 6 (802.11ax)"
 
-msgkey 0xB7C4DD7C
+msgid 0xB7C4DD7C
 msgstr "Частота"
 
-msgkey 0xB7C68DF9
+msgid 0xB7C68DF9
 msgstr "Не удалось выполнить это действие. Возможно устройство отключено."
 
-msgkey 0xB7E4D3DC
+msgid 0xB7E4D3DC
 msgstr "Пароли не совпадают."
 
-msgkey 0xB81C440E
+msgid 0xB81C440E
 msgstr ""
 "5. Нажмите и удерживайте кнопку сброса, чтобы восстановить заводские"
 " настройки роутера, а затем повторите попытку."
 
-msgkey 0xB8769AF0
+msgid 0xB8769AF0
 msgstr "Без ограничений"
 
-msgkey 0xB8CBC134
+msgid 0xB8CBC134
 msgstr "Австралийское западное стандартное время"
 
-msgkey 0xB8F93694
+msgid 0xB8F93694
 msgstr "Румыния"
 
-msgkey 0xB93BE534
+msgid 0xB93BE534
 msgstr "Добавить адрес VPN-сервера"
 
-msgkey 0xB9463D12
+msgid 0xB9463D12
 msgstr "Проверьте настройки DNS-сервера"
 
-msgkey 0xB95CAA52
+msgid 0xB95CAA52
 msgstr "Найроби"
 
-msgkey 0xB963358A
+msgid 0xB963358A
 msgstr "(UTC-6) Центральное время (США и Канада)"
 
-msgkey 0xB9A9A2DD
+msgid 0xB9A9A2DD
 msgstr "Имя"
 
-msgkey 0xB9BF8DFA
+msgid 0xB9BF8DFA
 msgstr "Проверьте поля"
 
-msgkey 0xB9E3A1B4
+msgid 0xB9E3A1B4
 msgstr "Юкла"
 
-msgkey 0xB9F192C7
+msgid 0xB9F192C7
 msgstr "Колумбия"
 
-msgkey 0xBA025C1A
+msgid 0xBA025C1A
 msgstr "Убедитесь, что у вас есть разрешение на использование этой сборки."
 
-msgkey 0xBA051B5F
+msgid 0xBA051B5F
 msgstr "Не удалось переключиться в режим роутера"
 
-msgkey 0xBA0FA3CE
+msgid 0xBA0FA3CE
 msgstr ""
 "Не отключайте роутер во время обновления, так как это может привести к"
 " необратимому повреждению."
 
-msgkey 0xBA299E91
+msgid 0xBA299E91
 msgstr "Состояние репитера"
 
-msgkey 0xBA3D4826
+msgid 0xBA3D4826
 msgstr "Вануатский часовой пояс"
 
-msgkey 0xBA6BA7A7
+msgid 0xBA6BA7A7
 msgstr "Нижняя Калифорния"
 
-msgkey 0xBA859BB1
+msgid 0xBA859BB1
 msgstr "Настройка VPN"
 
-msgkey 0xBAF91F7B
+msgid 0xBAF91F7B
 msgstr ""
 "Этот Mi аккаунт был отключен от роутера. Вы можете выполнить вход через"
 " аккаунт администратора и подключить Mi аккаунт снова."
 
-msgkey 0xBB058743
+msgid 0xBB058743
 msgstr "Сбой подключения PPPoE (ошибка 691)"
 
-msgkey 0xBB3F37C0
+msgid 0xBB3F37C0
 msgstr "Тихоокеанское (западное побережье) стандартное время C"
 
-msgkey 0xBB45DF89
+msgid 0xBB45DF89
 msgstr "(UTC+4) Баку"
 
-msgkey 0xBB68EA54
+msgid 0xBB68EA54
 msgstr "Добавьте устройство с помощью MAC-адреса"
 
-msgkey 0xBB6CBB40
+msgid 0xBB6CBB40
 msgstr "Максимальная скорость"
 
-msgkey 0xBBACA77F
+msgid 0xBBACA77F
 msgstr "Расположение файлового хранилища"
 
-msgkey 0xBBB0ACC7
+msgid 0xBBB0ACC7
 msgstr "Мобильное приложение также позволяет просматривать фото и видео"
 
-msgkey 0xBBDE7E96
+msgid 0xBBDE7E96
 msgstr "Рекомендуется статический IP-адрес"
 
-msgkey 0xBBF0D150
+msgid 0xBBF0D150
 msgstr "Подключенные устройства"
 
-msgkey 0xBC02413C
+msgid 0xBC02413C
 msgstr "Доступные резервные копии"
 
-msgkey 0xBC3D9B64
+msgid 0xBC3D9B64
 msgstr ""
 "Сильный сигнал для улучшенного подключения и более широкой зоны покрытия"
 
-msgkey 0xBC749835
+msgid 0xBC749835
 msgstr "Недопустимый формат файла"
 
-msgkey 0xBC8FBB0C
+msgid 0xBC8FBB0C
 msgstr "Беспроводной репитер"
 
-msgkey 0xBCA6A645
+msgid 0xBCA6A645
 msgstr "(UTC+10) Хобарт"
 
-msgkey 0xBCDD4A54
+msgid 0xBCDD4A54
 msgstr "Часовой пояс Кабо-Верде"
 
-msgkey 0xBD07243E
+msgid 0xBD07243E
 msgstr "Включение"
 
-msgkey 0xBD22C112
+msgid 0xBD22C112
 msgstr "Время аренды"
 
-msgkey 0xBD520C4E
+msgid 0xBD520C4E
 msgstr "Необязательно"
 
-msgkey 0xBE052F3F
+msgid 0xBE052F3F
 msgstr ""
 "Подходит для сред Интернета, где для роутера не назначен префикс IPv6."
 " Например, обычного модема с коммутируемым доступом (Dial-up)"
 
-msgkey 0xBE07C02D
+msgid 0xBE07C02D
 msgstr "Подвал"
 
-msgkey 0xBE621FEE
+msgid 0xBE621FEE
 msgstr "Введите более {$0} символов"
 
-msgkey 0xBE6A213F
+msgid 0xBE6A213F
 msgstr "Не удалось автоматически подключиться к роутеру. "
 
-msgkey 0xBE8FD973
+msgid 0xBE8FD973
 msgstr "Здравствуйте!"
 
-msgkey 0xBEC18DE2
+msgid 0xBEC18DE2
 msgstr "Уделите несколько минут на настройку роутера"
 
-msgkey 0xBEC2CBE6
+msgid 0xBEC2CBE6
 msgstr "Источник питания существующего роутера"
 
-msgkey 0xBED1044B
+msgid 0xBED1044B
 msgstr "(UTC-3) Монтевидео"
 
-msgkey 0xBF57A3C1
+msgid 0xBF57A3C1
 msgstr "Порт-Луи"
 
-msgkey 0xBF6BF27C
+msgid 0xBF6BF27C
 msgstr "Адрес"
 
-msgkey 0xBFBB3BA9
+msgid 0xBFBB3BA9
 msgstr "1. Восстановить заводские настройки маршрутизатора Xiaomi? "
 
-msgkey 0xBFDD668E
+msgid 0xBFDD668E
 msgstr "Изображение"
 
-msgkey 0xBFF63414
+msgid 0xBFF63414
 msgstr "Изменить параметры сети Wi-Fi"
 
-msgkey 0xBFFDBF9E
+msgid 0xBFFDBF9E
 msgstr ""
 "Не отключайте роутер от источника питания до выключения светового"
 " индикатора."
 
-msgkey 0xC01470E0
+msgid 0xC01470E0
 msgstr "Саскачеван"
 
-msgkey 0xC029C8EF
+msgid 0xC029C8EF
 msgstr "Клонировать"
 
 # DUP
-msgkey 0xC02E88B4
+msgid 0xC02E88B4
 msgstr "Катманду"
 
 # DUP
-msgkey 0xC02E88B4
+msgid 0xC02E88B4
 msgstr "Катманду"
 
-msgkey 0xC043DE57
+msgid 0xC043DE57
 msgstr "Состояние трафика"
 
-msgkey 0xC09746BF
+msgid 0xC09746BF
 msgstr "(UTC+10) Канберра, Мельбурн, Сидней"
 
-msgkey 0xC09F08EF
+msgid 0xC09F08EF
 msgstr "(UTC-1) Азорские острова"
 
-msgkey 0xC0BA046B
+msgid 0xC0BA046B
 msgstr "Не удалось применить параметры"
 
-msgkey 0xC0BB5B48
+msgid 0xC0BB5B48
 msgstr "Камбоджа"
 
-msgkey 0xC0BC6C60
+msgid 0xC0BC6C60
 msgstr ""
 "Для поиска и добавления узлов Mesh-сети сначала перейдите на страницу"
 " «Настройки Wi-Fi» и включите 5G Wi-Fi."
 
-msgkey 0xC0CC8743
+msgid 0xC0CC8743
 msgstr "Греция"
 
-msgkey 0xC1A96044
+msgid 0xC1A96044
 msgstr "(UTC-9:30) острова Марксас"
 
-msgkey 0xC1CD21BE
+msgid 0xC1CD21BE
 msgstr "IP-адрес роутера"
 
-msgkey 0xC2127D5E
+msgid 0xC2127D5E
 msgstr "(UTC+12) Мировое время +12"
 
-msgkey 0xC216EC7F
+msgid 0xC216EC7F
 msgstr "Чтение"
 
-msgkey 0xC2415639
+msgid 0xC2415639
 msgstr "Кирибати"
 
-msgkey 0xC285B5F1
+msgid 0xC285B5F1
 msgstr ""
 "2. Убедитесь, что Mi Router и существующий роутер подключены к одной сети."
 
-msgkey 0xC29F7E0B
+msgid 0xC29F7E0B
 msgstr ""
 "Вы можете подключаться к интернету, даже если роутер находит в безопасном"
 " режиме."
 
-msgkey 0xC2BBF4A6
+msgid 0xC2BBF4A6
 msgstr ""
 "Полоса пропускания 160 МГц применима только к каналам 36-64, и система"
 " автоматически переключит полосу пропускания на 80 МГц"
 
-msgkey 0xC2D141D7
+msgid 0xC2D141D7
 msgstr "дн."
 
-msgkey 0xC2D98B81
+msgid 0xC2D98B81
 msgstr "Условия использования"
 
-msgkey 0xC2F256DD
+msgid 0xC2F256DD
 msgstr "Файловая система"
 
-msgkey 0xC378317C
+msgid 0xC378317C
 msgstr "WAN-порт подключен к сети"
 
-msgkey 0xC3A717EC
+msgid 0xC3A717EC
 msgstr "Не удалось получить сведения о разработчике"
 
-msgkey 0xC3CA12EE
+msgid 0xC3CA12EE
 msgstr "Азорские острова"
 
-msgkey 0xC3CA59A2
+msgid 0xC3CA59A2
 msgstr "Восстановить объекты"
 
-msgkey 0xC3F303CD
+msgid 0xC3F303CD
 msgstr "Офис"
 
-msgkey 0xC40027EB
+msgid 0xC40027EB
 msgstr "Источник не готов"
 
-msgkey 0xC417360C
+msgid 0xC417360C
 msgstr ""
 "Для максимального удобства работы в режиме Mesh-сети переключение в режим"
 " ретранслятора не поддерживается."
 
-msgkey 0xC4233A0A
+msgid 0xC4233A0A
 msgstr "IP-адрес роутера: "
 
-msgkey 0xC425F35A
+msgid 0xC425F35A
 msgstr "Подключение через WAN-порт не обнаружено"
 
-msgkey 0xC43129CC
+msgid 0xC43129CC
 msgstr "Попробуйте другой браузер: "
 
-msgkey 0xC46BD1CC
+msgid 0xC46BD1CC
 msgstr ""
 "Обнаружено, что Wi-Fi 2,4 ГГц в данный момент выключен. Включите его и"
 " добавьте еще раз."
 
-msgkey 0xC4A4AA97
+msgid 0xC4A4AA97
 msgstr "Введите полный URL-адрес (например, http://miwifi.com)"
 
-msgkey 0xC51E0E49
+msgid 0xC51E0E49
 msgstr "Не удалось выполнить это действие"
 
-msgkey 0xC52835CF
+msgid 0xC52835CF
 msgstr ""
 "Если гарантия на ваш жесткий диск истекает менее, чем через год, обратитесь"
 " в службу поддержки"
 
-msgkey 0xC52DBD27
+msgid 0xC52DBD27
 msgstr "Длина префикса для адреса WAN IPv6 по умолчанию составляет 128 бит"
 
-msgkey 0xC53EAB66
+msgid 0xC53EAB66
 msgstr "Запустить проверку"
 
-msgkey 0xC5A66961
+msgid 0xC5A66961
 msgstr "Ошибка дата-центра"
 
-msgkey 0xC60BDBFB
+msgid 0xC60BDBFB
 msgstr "Возможные причины"
 
-msgkey 0xC613E81E
+msgid 0xC613E81E
 msgstr "Доступно"
 
-msgkey 0xC65B4484
+msgid 0xC65B4484
 msgstr ""
 "Эта функция может вызвать некоторую потерю пакетов и задержку в"
 " перегруженной сетевой среде."
 
-msgkey 0xC662C2D8
+msgid 0xC662C2D8
 msgstr "Маршрутизатор Mi AX3600 (AIoT)"
 
-msgkey 0xC6A04C8F
+msgid 0xC6A04C8F
 msgstr "Корейское стандартное время"
 
-msgkey 0xC6AFBB11
+msgid 0xC6AFBB11
 msgstr "Москва, Санкт-Петербург, Волгоград"
 
-msgkey 0xC6AFFCBC
+msgid 0xC6AFFCBC
 msgstr "Настройки IPv6 закрыты"
 
-msgkey 0xC6CE404F
+msgid 0xC6CE404F
 msgstr "Адрес LAN IPv6"
 
-msgkey 0xC6D88B5E
+msgid 0xC6D88B5E
 msgstr "Столица"
 
-msgkey 0xC6E532BC
+msgid 0xC6E532BC
 msgstr "Всемирное координированное время-02"
 
-msgkey 0xC761D4E8
+msgid 0xC761D4E8
 msgstr "(UTC+4) Ереван"
 
-msgkey 0xC7940E52
+msgid 0xC7940E52
 msgstr "Обнаружена проблема, связанная с подключенным кабелем Ethernet."
 
-msgkey 0xC7A10D4A
+msgid 0xC7A10D4A
 msgstr "(UTC-3) Буэнос-Айрес"
 
-msgkey 0xC7B390E1
+msgid 0xC7B390E1
 msgstr "Проверка обновлений…"
 
-msgkey 0xC7F671FB
+msgid 0xC7F671FB
 msgstr "Приоритет на скорости просмотра веб-страниц"
 
-msgkey 0xC840FA66
+msgid 0xC840FA66
 msgstr "Текущее устройство"
 
-msgkey 0xC9357908
+msgid 0xC9357908
 msgstr "Бангкок, Ханой, Джакарта"
 
-msgkey 0xC9380C3E
+msgid 0xC9380C3E
 msgstr "Документы"
 
-msgkey 0xC93D8AD8
+msgid 0xC93D8AD8
 msgstr "Тип подключения: "
 
-msgkey 0xC96FD163
+msgid 0xC96FD163
 msgstr "Выполняется настройка сетевого режима IPv6. Подождите..."
 
-msgkey 0xC97D8517
+msgid 0xC97D8517
 msgstr "Произошла ошибка"
 
-msgkey 0xC99C143A
+msgid 0xC99C143A
 msgstr "Пропустить этот шаг"
 
-msgkey 0xC9C0AC7F
+msgid 0xC9C0AC7F
 msgstr ""
 "Установите клиентское программное обеспечение для ПК или Mac, чтобы с"
 " легкостью управлять жестким диском роутера Mi WiFi"
 
-msgkey 0xC9CB2395
+msgid 0xC9CB2395
 msgstr "Нельзя отключить, когда включен режим Wi-Fi-репитера"
 
-msgkey 0xC9E25910
+msgid 0xC9E25910
 msgstr "Вы ввели неверный пароль"
 
-msgkey 0xCA1F0D8C
+msgid 0xCA1F0D8C
 msgstr "Недостаточно памяти"
 
-msgkey 0xCA204B59
+msgid 0xCA204B59
 msgstr ""
 "Локальная и глобальные сети не могут находиться в одном сегменте сети."
 
-msgkey 0xCA38F4D3
+msgid 0xCA38F4D3
 msgstr "Получите максимум от роутера с приложением Mi WiFi"
 
-msgkey 0xCA5D86DC
+msgid 0xCA5D86DC
 msgstr ""
 "Сетевой порт 2,5 Гбит/с в настоящее время работает как LAN-порт. Вы можете"
 " подключить устройство LAN"
 
-msgkey 0xCAA19F30
+msgid 0xCAA19F30
 msgstr "Ошибка файловой системы "
 
-msgkey 0xCABA8AE6
+msgid 0xCABA8AE6
 msgstr "Последняя проверка"
 
-msgkey 0xCAD17FE7
+msgid 0xCAD17FE7
 msgstr "Загрузите приложение Mi WiFi"
 
-msgkey 0xCAE3D874
+msgid 0xCAE3D874
 msgstr "Финляндия"
 
-msgkey 0xCB1FCB92
+msgid 0xCB1FCB92
 msgstr "Имя роутера"
 
-msgkey 0xCB38E3DB
+msgid 0xCB38E3DB
 msgstr "Не удалось завершить настройку"
 
-msgkey 0xCB5CCC64
+msgid 0xCB5CCC64
 msgstr "Aipu Broadband"
 
-msgkey 0xCBA8E50C
+msgid 0xCBA8E50C
 msgstr "Выберите имя новой сети и пароль"
 
-msgkey 0xCC545BEA
+msgid 0xCC545BEA
 msgstr "Гавайи"
 
-msgkey 0xCCE7F575
+msgid 0xCCE7F575
 msgstr "Состояние"
 
-msgkey 0xCCFA357C
+msgid 0xCCFA357C
 msgstr ""
 "2. После переключения в режим ретранслятора функции Mesh-сети будут"
 " недоступны."
 
-msgkey 0xCD3534FC
+msgid 0xCD3534FC
 msgstr "Диск уже "
 
-msgkey 0xCD585ABA
+msgid 0xCD585ABA
 msgstr "Город"
 
-msgkey 0xCD66B4E4
+msgid 0xCD66B4E4
 msgstr "Выполните поиск узла Mesh-сети, который необходимо добавить"
 
-msgkey 0xCD975F2B
+msgid 0xCD975F2B
 msgstr "Маркизские о-ва"
 
-msgkey 0xCDA9D190
+msgid 0xCDA9D190
 msgstr "Проверьте номер телефона"
 
-msgkey 0xCDAA80DD
+msgid 0xCDAA80DD
 msgstr "WPA3"
 
-msgkey 0xCDB07FE7
+msgid 0xCDB07FE7
 msgstr "Центральное стандартное время (США и Канада)"
 
-msgkey 0xCE0F43DF
+msgid 0xCE0F43DF
 msgstr "Проверка диска…"
 
-msgkey 0xCE2F5AAC
+msgid 0xCE2F5AAC
 msgstr "(UTC-4) Атлантическое время (Канада)"
 
-msgkey 0xCE36E548
+msgid 0xCE36E548
 msgstr "Роутер работает в режиме беспроводного репитера."
 
-msgkey 0xCE38F72A
+msgid 0xCE38F72A
 msgstr "Сброс сетевого пароля"
 
-msgkey 0xCE545EB0
+msgid 0xCE545EB0
 msgstr "Восточноазиатское стандартное время"
 
-msgkey 0xCE8BC73B
+msgid 0xCE8BC73B
 msgstr "(UTC+1) Брюссель, Копенгаген, Мадрид, Париж"
 
-msgkey 0xCEF7E036
+msgid 0xCEF7E036
 msgstr "1. Ваш жесткий диск в порядке."
 
-msgkey 0xCF298202
+msgid 0xCF298202
 msgstr ""
 "Ошибка аутентификации. Проверьте правильность ввода имени пользователя и"
 " пароля"
 
-msgkey 0xCF35B59A
+msgid 0xCF35B59A
 msgstr "Дубай, Астрахань, Саратов, Маэ, Маврикий"
 
-msgkey 0xCF54D738
+msgid 0xCF54D738
 msgstr "Просмотр всей сети"
 
-msgkey 0xCF61329F
+msgid 0xCF61329F
 msgstr "Universal Plug and Play (UPnP)"
 
-msgkey 0xCF6BD868
+msgid 0xCF6BD868
 msgstr "1. Ваш жесткий диск в отличном состоянии."
 
-msgkey 0xCF705833
+msgid 0xCF705833
 msgstr "Память"
 
-msgkey 0xCF7F8702
+msgid 0xCF7F8702
 msgstr "Время аренды (мин)"
 
-msgkey 0xCF8DF29B
+msgid 0xCF8DF29B
 msgstr "Поддержка"
 
-msgkey 0xCFA9DD8A
+msgid 0xCFA9DD8A
 msgstr "Хараре, Претория"
 
-msgkey 0xCFF21B82
+msgid 0xCFF21B82
 msgstr "Выберите страну/регион"
 
 # DUP
-msgkey 0xD00EE777
+msgid 0xD00EE777
 msgstr "Бразилия"
 
 # DUP
-msgkey 0xD00EE777
+msgid 0xD00EE777
 msgstr "Бразилия"
 
-msgkey 0xD035046D
+msgid 0xD035046D
 msgstr "Перенаправление портов"
 
-msgkey 0xD056807A
+msgid 0xD056807A
 msgstr "Пароль не может содержать китайские или специальные символы"
 
-msgkey 0xD05A4A39
+msgid 0xD05A4A39
 msgstr "Не удалось обнаружить Wi-Fi"
 
-msgkey 0xD05BB39D
+msgid 0xD05BB39D
 msgstr "Очистить все пользовательские конфигурации"
 
-msgkey 0xD06AE6AB
+msgid 0xD06AE6AB
 msgstr "Вы ввели неверный пароль"
 
-msgkey 0xD07A922D
+msgid 0xD07A922D
 msgstr "(UTC-1) Архипелаг Кабо-Верде"
 
-msgkey 0xD0AD492B
+msgid 0xD0AD492B
 msgstr "Загрузка…"
 
-msgkey 0xD0B2884E
+msgid 0xD0B2884E
 msgstr "Сетевые настройки IPv6"
 
-msgkey 0xD0B4A205
+msgid 0xD0B4A205
 msgstr "Кувейт, Эр-Рияд"
 
-msgkey 0xD0B5877A
+msgid 0xD0B5877A
 msgstr "Устройства, поддерживающие только WPA, не могут быть подключены"
 
-msgkey 0xD106C3D3
+msgid 0xD106C3D3
 msgstr "Выполняется оптимизация"
 
-msgkey 0xD1699D88
+msgid 0xD1699D88
 msgstr "Загрузка…"
 
-msgkey 0xD1A803F1
+msgid 0xD1A803F1
 msgstr "Сбой расширения Mesh-сети"
 
-msgkey 0xD1F3C92D
+msgid 0xD1F3C92D
 msgstr "Выберите имя сети Wi-Fi и пароль"
 
-msgkey 0xD2031F8B
+msgid 0xD2031F8B
 msgstr "Шри-Джаяварденепура"
 
-msgkey 0xD221B345
+msgid 0xD221B345
 msgstr "Исходный пароль"
 
-msgkey 0xD2AC5F8F
+msgid 0xD2AC5F8F
 msgstr "Проверка интервала"
 
-msgkey 0xD2B56805
+msgid 0xD2B56805
 msgstr "Часовой пояс Самоа"
 
-msgkey 0xD2BAB1C9
+msgid 0xD2BAB1C9
 msgstr "Добавить"
 
-msgkey 0xD2D4BACD
+msgid 0xD2D4BACD
 msgstr "Главная"
 
-msgkey 0xD2E96560
+msgid 0xD2E96560
 msgstr ""
 "Недействительный IP-адрес. Ваш IP-адрес должен быть в диапазонах"
 " 1.0.0.0~126.255.255.255 или 128.0.0.0~223.255.255.255"
 
-msgkey 0xD312A8AA
+msgid 0xD312A8AA
 msgstr "Эндербери, Факаофо, Тонгатапу"
 
-msgkey 0xD328160F
+msgid 0xD328160F
 msgstr "Размер MTU должен составлять от 576 до 1498 байт"
 
-msgkey 0xD34624A2
+msgid 0xD34624A2
 msgstr "Резервирование устройства"
 
-msgkey 0xD35CEA34
+msgid 0xD35CEA34
 msgstr "Атлантическое стандартное время (Канада)"
 
-msgkey 0xD386753A
+msgid 0xD386753A
 msgstr "Стандартный"
 
-msgkey 0xD3ABA16A
+msgid 0xD3ABA16A
 msgstr ""
 "Если функция включена, у сетей 2,4 ГГц и 5 ГГц будет одинаковое имя. Роутер"
 " выберет наиболее подходящий сигнал. Например, если устройство находится"
 " рядом, роутер выберет сеть 5 ГГц, если далеко — сеть 2,4 ГГц. Во время"
 " переключения возможны кратковременные перебои"
 
-msgkey 0xD3BABF27
+msgid 0xD3BABF27
 msgstr "Рекомендуется PPPoE (требуется имя пользователя и пароль)"
 
-msgkey 0xD3D4DEF3
+msgid 0xD3D4DEF3
 msgstr "Проверка настроек…"
 
-msgkey 0xD3EAB0A5
+msgid 0xD3EAB0A5
 msgstr "Мальта"
 
-msgkey 0xD4133496
+msgid 0xD4133496
 msgstr "Сброс настроек"
 
-msgkey 0xD41680C8
+msgid 0xD41680C8
 msgstr "Изменение сетевых настроек"
 
-msgkey 0xD4B9BAD5
+msgid 0xD4B9BAD5
 msgstr "KuaiPan"
 
-msgkey 0xD4E29FD7
+msgid 0xD4E29FD7
 msgstr "Проверка этого диска пока не проводилась"
 
-msgkey 0xD505AE78
+msgid 0xD505AE78
 msgstr "Неверное имя пользователя или пароль PPPoE"
 
-msgkey 0xD536BC46
+msgid 0xD536BC46
 msgstr ""
 "Поддерживаются только следующие тиы файлов: jpg, jpeg, png, gif, tif, и bmp."
 
-msgkey 0xD53B1327
+msgid 0xD53B1327
 msgstr "Не удалось отключить служебный плагин или жесткий диск"
 
-msgkey 0xD54058CF
+msgid 0xD54058CF
 msgstr "DHCP-клиент"
 
-msgkey 0xD54612E3
+msgid 0xD54612E3
 msgstr "(UTC-2) Мировое время -2"
 
-msgkey 0xD5EC1657
+msgid 0xD5EC1657
 msgstr ""
 "2. Включите DDNS, добавьте сервер, укажите параметры сервера и сохраните."
 
-msgkey 0xD61C3475
+msgid 0xD61C3475
 msgstr "Проверка сети"
 
-msgkey 0xD6222AA9
+msgid 0xD6222AA9
 msgstr "(UTC+2) Иерусалим"
 
-msgkey 0xD6371DC7
+msgid 0xD6371DC7
 msgstr "1. Имя сети"
 
-msgkey 0xD654DB9F
+msgid 0xD654DB9F
 msgstr "В настоящее время устройства подключеные по 5G отсутствуют"
 
-msgkey 0xD66946EB
+msgid 0xD66946EB
 msgstr "Буэнос-Айрес, Сан-Луис, Масейо, Монтевидео, Парамарибо"
 
-msgkey 0xD690D321
+msgid 0xD690D321
 msgstr "Присоединиться"
 
-msgkey 0xD6C7FACE
+msgid 0xD6C7FACE
 msgstr "Изменить имя роутера"
 
-msgkey 0xD6C8CEEA
+msgid 0xD6C8CEEA
 msgstr ""
 "Во время этого процесса беспроводная сеть будет перезапущена и произойдет"
 " кратковременное отключение."
 
-msgkey 0xD6CD2E1A
+msgid 0xD6CD2E1A
 msgstr "Индийское стандартное время"
 
-msgkey 0xD6EA354A
+msgid 0xD6EA354A
 msgstr "Не удалось определить тип сети. Выберите вручную: "
 
-msgkey 0xD71BA6EC
+msgid 0xD71BA6EC
 msgstr "Поиск устройств поблизости…"
 
-msgkey 0xD71D26BA
+msgid 0xD71D26BA
 msgstr "Состояние UPnP"
 
-msgkey 0xD72A636D
+msgid 0xD72A636D
 msgstr "Создание сети Wi-Fi 2. 4 Ггц и 5 ГГц"
 
-msgkey 0xD7526E22
+msgid 0xD7526E22
 msgstr "Внешние разъемы"
 
-msgkey 0xD77998FD
+msgid 0xD77998FD
 msgstr "Переключение между режимом роутера и режимом репитера"
 
-msgkey 0xD7970ABA
+msgid 0xD7970ABA
 msgstr "Настроить"
 
-msgkey 0xD798E39D
+msgid 0xD798E39D
 msgstr "Добавьте устройства из списка устройств"
 
-msgkey 0xD79AF817
+msgid 0xD79AF817
 msgstr "Модель диска"
 
-msgkey 0xD7C7130B
+msgid 0xD7C7130B
 msgstr "VPN для сервисов Mi"
 
-msgkey 0xD7E17688
+msgid 0xD7E17688
 msgstr "Марокко"
 
-msgkey 0xD7E4CEAA
+msgid 0xD7E4CEAA
 msgstr "Внимание"
 
-msgkey 0xD830F970
+msgid 0xD830F970
 msgstr "Добавить устройства VPN с помощью MAC-адреса"
 
-msgkey 0xD84EFBF0
+msgid 0xD84EFBF0
 msgstr "Египет"
 
-msgkey 0xD8671243
+msgid 0xD8671243
 msgstr "Перезагрузите роутер для завершения установки обновления."
 
-msgkey 0xD8726A1D
+msgid 0xD8726A1D
 msgstr "Не удалось получить данные аккаунта PPPoE"
 
-msgkey 0xD87A418B
+msgid 0xD87A418B
 msgstr "Не удалось получить сведения об устройстве"
 
-msgkey 0xD890C79D
+msgid 0xD890C79D
 msgstr "Иордания"
 
-msgkey 0xD8A709D9
+msgid 0xD8A709D9
 msgstr "Не покидайте эту страницу до завершения обновления роутера."
 
-msgkey 0xD8D12D13
+msgid 0xD8D12D13
 msgstr "Служба поддержки клиентов оператора China Unicom"
 
-msgkey 0xD8F855D7
+msgid 0xD8F855D7
 msgstr "Повторите ввод"
 
-msgkey 0xD92D36DB
+msgid 0xD92D36DB
 msgstr "Спальня"
 
-msgkey 0xD9E91C4B
+msgid 0xD9E91C4B
 msgstr "WAN-порт не подключен"
 
-msgkey 0xD9F2BF54
+msgid 0xD9F2BF54
 msgstr "Недопустимая маска подсети"
 
-msgkey 0xDA0109E8
+msgid 0xDA0109E8
 msgstr "(UTC+12:45) острова Чатем"
 
-msgkey 0xDA098C2D
+msgid 0xDA098C2D
 msgstr "Екатеринбург"
 
-msgkey 0xDA0BAAD5
+msgid 0xDA0BAAD5
 msgstr "Сначала веб-страница"
 
-msgkey 0xDA1B881C
+msgid 0xDA1B881C
 msgstr "Маска подсети"
 
-msgkey 0xDA29E3C9
+msgid 0xDA29E3C9
 msgstr "Результат проверки"
 
-msgkey 0xDA66C50C
+msgid 0xDA66C50C
 msgstr "Последнее обновление"
 
-msgkey 0xDB2A9E89
+msgid 0xDB2A9E89
 msgstr "Жесткий диск в хорошем состоянии. Присутствуют небольшие проблемы."
 
-msgkey 0xDB316DF0
+msgid 0xDB316DF0
 msgstr "(UTC+3) Калининград"
 
-msgkey 0xDB33653A
+msgid 0xDB33653A
 msgstr ""
 "Во время перезагрузки роутера все устройства будут отключены от сети."
 
-msgkey 0xDB5FCFE2
+msgid 0xDB5FCFE2
 msgstr "Горный часовой пояс"
 
-msgkey 0xDB80A367
+msgid 0xDB80A367
 msgstr "Пропускная способность"
 
-msgkey 0xDB904CBF
+msgid 0xDB904CBF
 msgstr "Атлантическое (восточное побережье) стандартное время"
 
-msgkey 0xDBA2D024
+msgid 0xDBA2D024
 msgstr "Не удалось подключить роутер"
 
-msgkey 0xDBB027B3
+msgid 0xDBB027B3
 msgstr "Устройства подключения к игровой сети с частотой 5 ГГц"
 
-msgkey 0xDC0414AE
+msgid 0xDC0414AE
 msgstr "(UTC+2) Хараре, Претория"
 
-msgkey 0xDC10C9A7
+msgid 0xDC10C9A7
 msgstr ""
 "Перейдите на страницу настроек Wi-Fi и включите поиск всех частот Wi-Fi и"
 " добавление узлов Mesh-сети."
 
-msgkey 0xDC8B4D0F
+msgid 0xDC8B4D0F
 msgstr "Доступ к файлам на диске через браузер"
 
-msgkey 0xDCA0912B
+msgid 0xDCA0912B
 msgstr "Канада"
 
-msgkey 0xDCAB2963
+msgid 0xDCAB2963
 msgstr "Сделать другие роутеры целями репитера"
 
-msgkey 0xDCC2E740
+msgid 0xDCC2E740
 msgstr "Тип протокола"
 
-msgkey 0xDCDFCEB7
+msgid 0xDCDFCEB7
 msgstr "Количество оборотов диска"
 
-msgkey 0xDCEEDA01
+msgid 0xDCEEDA01
 msgstr "Подключить"
 
-msgkey 0xDD0C9BF8
+msgid 0xDD0C9BF8
 msgstr ""
 "Порт WAN будет переключен на порт 2,5 GbE, а порт 1 GbE будет использоваться"
 " в качестве порта LAN. Сеть роутера будет перезапущена после завершения"
 " переключения (подключенные устройства будут отключены, и ожидается, что они"
 " будут заново подключены в течение 1 минуты). Переключить порты сейчас?"
 
-msgkey 0xDD12AE31
+msgid 0xDD12AE31
 msgstr "Настройка максимальной скорости"
 
-msgkey 0xDD42F863
+msgid 0xDD42F863
 msgstr "Имя сети"
 
-msgkey 0xDD5BF62D
+msgid 0xDD5BF62D
 msgstr "Файл не существует или поврежден. Повторите попытку."
 
-msgkey 0xDD5EE73D
+msgid 0xDD5EE73D
 msgstr "Пропускная способность"
 
-msgkey 0xDD6ED210
+msgid 0xDD6ED210
 msgstr "Секунду…"
 
-msgkey 0xDD9885F2
+msgid 0xDD9885F2
 msgstr ""
 "Имя пользователя было заблокировано из-за объема исходящего спам-трафика"
 
-msgkey 0xDDE1C543
+msgid 0xDDE1C543
 msgstr "Добавлено"
 
-msgkey 0xDDE5C0F4
+msgid 0xDDE5C0F4
 msgstr "Hardware NAT (HwNAT)"
 
-msgkey 0xDE0E7EC5
+msgid 0xDE0E7EC5
 msgstr "Установите пароль администратора"
 
-msgkey 0xDE29CD26
+msgid 0xDE29CD26
 msgstr "Подключенные устройства: "
 
-msgkey 0xDE3F4EC2
+msgid 0xDE3F4EC2
 msgstr "Начать поиск"
 
-msgkey 0xDE579EDA
+msgid 0xDE579EDA
 msgstr "Ввести имя сети вручную"
 
-msgkey 0xDE5BE367
+msgid 0xDE5BE367
 msgstr "Этот язык пока не поддерживается."
 
-msgkey 0xDEBBBA27
+msgid 0xDEBBBA27
 msgstr ""
 "Двухдиапазонная сеть Wi-Fi отключена, имя сети в диапазоне 5 ГГц будет"
 " аналогично имени сети в диапазоне 2,4 ГГц. Это можно изменить в разделе"
 " «Настройки»."
 
-msgkey 0xDED1AF76
+msgid 0xDED1AF76
 msgstr "Параметры частоты 5 ГГц"
 
-msgkey 0xDED238FB
+msgid 0xDED238FB
 msgstr "(UTC+9:30) Аделаида"
 
-msgkey 0xDEF300A8
+msgid 0xDEF300A8
 msgstr "Кабель домашней сети не найден"
 
-msgkey 0xDF0D5533
+msgid 0xDF0D5533
 msgstr "Приоритет на скорости просмотра видео"
 
-msgkey 0xDF5D0F8F
+msgid 0xDF5D0F8F
 msgstr "China Unicom"
 
-msgkey 0xDFFE730B
+msgid 0xDFFE730B
 msgstr "Крестон, Досон-Крик, Форт Нельсон, Эрмосильо, Финикс"
 
-msgkey 0xE02E6005
+msgid 0xE02E6005
 msgstr "Функция гостевой сети Wi-Fi"
 
-msgkey 0xE06A1553
+msgid 0xE06A1553
 msgstr ""
 "Во время перезагрузки роутера все устройства будут отключены от сети."
 
-msgkey 0xE06E85BD
+msgid 0xE06E85BD
 msgstr "Дополнительно"
 
-msgkey 0xE0920D3F
+msgid 0xE0920D3F
 msgstr "Этот режим позволяет переключаться между"
 
-msgkey 0xE0C03B83
+msgid 0xE0C03B83
 msgstr "Программа улучшения качества"
 
-msgkey 0xE0E15E01
+msgid 0xE0E15E01
 msgstr "Mi Router 2"
 
-msgkey 0xE0E5D341
+msgid 0xE0E5D341
 msgstr "Нет доступных обновлений"
 
-msgkey 0xE10145DE
+msgid 0xE10145DE
 msgstr "Роутер Mi Router Nano"
 
-msgkey 0xE107B3E5
+msgid 0xE107B3E5
 msgstr "Норвегия"
 
-msgkey 0xE165228B
+msgid 0xE165228B
 msgstr "Выберите файл"
 
-msgkey 0xE196763E
+msgid 0xE196763E
 msgstr "Подробнее"
 
-msgkey 0xE1BE43BE
+msgid 0xE1BE43BE
 msgstr "(UTC+1) Белград, Братислава, Будапешт, Любляна"
 
-msgkey 0xE1C16872
+msgid 0xE1C16872
 msgstr ""
 "Резервная копия настроек может быть использована после прошивки или сброса"
 " настроек вашего роутера"
 
-msgkey 0xE1E4D982
+msgid 0xE1E4D982
 msgstr "Установите приоритет для выбранных устройств"
 
-msgkey 0xE2478464
+msgid 0xE2478464
 msgstr "Проверить состояние"
 
-msgkey 0xE24DAF95
+msgid 0xE24DAF95
 msgstr "Доменное имя не существует или служба DDNS сервера Oray не работает"
 
-msgkey 0xE2591190
+msgid 0xE2591190
 msgstr "Имя узла"
 
-msgkey 0xE2DB0C2A
+msgid 0xE2DB0C2A
 msgstr "Видео"
 
-msgkey 0xE2EE33FB
+msgid 0xE2EE33FB
 msgstr "Отключение 2.4 Wi-Fi также отключит гостевую сеть"
 
-msgkey 0xE314A512
+msgid 0xE314A512
 msgstr "Осака, Саппоро, Токио"
 
-msgkey 0xE3188805
+msgid 0xE3188805
 msgstr "Ошибка интернет-соединения"
 
-msgkey 0xE3304CA8
+msgid 0xE3304CA8
 msgstr "(UTC+7) Новосибирск"
 
-msgkey 0xE39F84B2
+msgid 0xE39F84B2
 msgstr "(UTC) Берлин, Эдинбург, Лиссабон, Лондон"
 
-msgkey 0xE3CCC685
+msgid 0xE3CCC685
 msgstr "Проверка: "
 
-msgkey 0xE3E18060
+msgid 0xE3E18060
 msgstr "Проверьте интернет-подключение перед активацией этой функции: "
 
-msgkey 0xE3E1EA0E
+msgid 0xE3E1EA0E
 msgstr "Решение"
 
-msgkey 0xE41BEF2B
+msgid 0xE41BEF2B
 msgstr "Белград, Братислава, Будапешт, Любляна, Прага"
 
-msgkey 0xE449EDE5
+msgid 0xE449EDE5
 msgstr "VPN отключен. Повторно подключитесь, чтобы применить настройки."
 
-msgkey 0xE4516BE3
+msgid 0xE4516BE3
 msgstr "Стандартный режим роутера"
 
-msgkey 0xE489A4F3
+msgid 0xE489A4F3
 msgstr "Умное распределение полосы пропускания с помощью QoS"
 
-msgkey 0xE49AE5FE
+msgid 0xE49AE5FE
 msgstr ""
 "Сочетает в себе частоты 2,4 ГГц, 5 ГГц и 5 ГГц для игровой сети Wi-Fi и"
 " автоматически переключается на лучшую доступную сеть Wi-Fi."
 
-msgkey 0xE4BBA267
+msgid 0xE4BBA267
 msgstr "Не удалось отключить"
 
-msgkey 0xE5375E98
+msgid 0xE5375E98
 msgstr "Маска подсети:"
 
-msgkey 0xE5705763
+msgid 0xE5705763
 msgstr "(UTC-8) Нижняя Калифорния"
 
-msgkey 0xE5A33909
+msgid 0xE5A33909
 msgstr "Обновление системы"
 
-msgkey 0xE5EAF8AE
+msgid 0xE5EAF8AE
 msgstr ""
 "Гостевая сеть Wi-Fi будет отключена после переключения в режим проводного"
 " усилителя сигнала."
 
-msgkey 0xE5F87AC3
+msgid 0xE5F87AC3
 msgstr "У этого аккаунта нет прав администратора для этого роутера"
 
-msgkey 0xE62FC187
+msgid 0xE62FC187
 msgstr "Настройки применены"
 
-msgkey 0xE640CF40
+msgid 0xE640CF40
 msgstr "Конфликт IP-адресов"
 
-msgkey 0xE6515F25
+msgid 0xE6515F25
 msgstr "Samba чтение"
 
-msgkey 0xE66CE303
+msgid 0xE66CE303
 msgstr ""
 "Настройка выполнена успешно. Роутер перезагружается. В соответствии с"
 " национальными законами и нормативными актами роутер выполняет обнаружение и"
 " предотвращение сигнала радара. Подключение к Wi-Fi будет включено в течение"
 " 10 секунд. Подождите..."
 
-msgkey 0xE6B7B7FB
+msgid 0xE6B7B7FB
 msgstr "Извлечь жесткий диск?"
 
-msgkey 0xE7013168
+msgid 0xE7013168
 msgstr "Секунду…"
 
-msgkey 0xE71F1028
+msgid 0xE71F1028
 msgstr "Сохранено"
 
-msgkey 0xE72A081B
+msgid 0xE72A081B
 msgstr "iOS"
 
-msgkey 0xE72F4639
+msgid 0xE72F4639
 msgstr "Резервировать настройки роутера"
 
-msgkey 0xE7407301
+msgid 0xE7407301
 msgstr "IP-адрес локальной сети"
 
-msgkey 0xE7878D05
+msgid 0xE7878D05
 msgstr "ч"
 
-msgkey 0xE7A20A6F
+msgid 0xE7A20A6F
 msgstr "IP-адрес DMZ"
 
-msgkey 0xE7C48D10
+msgid 0xE7C48D10
 msgstr ""
 "DDNS позволяет получить удаленный доступ к роутеру через статический домен."
 
-msgkey 0xE7E36E91
+msgid 0xE7E36E91
 msgstr "Кабо-Верде"
 
-msgkey 0xE7F41CC8
+msgid 0xE7F41CC8
 msgstr "Режим (настроить сеть Wi-Fi)"
 
-msgkey 0xE80F30C9
+msgid 0xE80F30C9
 msgstr "Скорость загрузки в реальном времени"
 
-msgkey 0xE81EBEC7
+msgid 0xE81EBEC7
 msgstr "100 Мбит"
 
-msgkey 0xE85AB00C
+msgid 0xE85AB00C
 msgstr ""
 "Wi-Fi 6 — это технология Wi-Fi нового поколения, поддерживающая OFDMA, BSS"
 " coloring и другие новые функции, что обеспечивает лучшую связь для"
@@ -5547,600 +5547,600 @@ msgstr ""
 " подключаться к Wi-Fi. Скачайте последнюю версию драйвера с веб-сайта"
 " производителя:"
 
-msgkey 0xE8627BA1
+msgid 0xE8627BA1
 msgstr "WPA3/WPA2"
 
-msgkey 0xE8898171
+msgid 0xE8898171
 msgstr "Android-приложение"
 
-msgkey 0xE88FA129
+msgid 0xE88FA129
 msgstr "Отключить"
 
-msgkey 0xE8919A82
+msgid 0xE8919A82
 msgstr "Согласитесь с условиями"
 
-msgkey 0xE8B309DC
+msgid 0xE8B309DC
 msgstr "Не управляется"
 
 # DUP
-msgkey 0xE960E789
+msgid 0xE960E789
 msgstr "Франция"
 
 # DUP
-msgkey 0xE960E789
+msgid 0xE960E789
 msgstr "Франция"
 
-msgkey 0xE97CCD7B
+msgid 0xE97CCD7B
 msgstr "Проверьте настройки локального IP-адреса роутера"
 
-msgkey 0xE9A127A5
+msgid 0xE9A127A5
 msgstr "Самоа"
 
-msgkey 0xE9D49A5D
+msgid 0xE9D49A5D
 msgstr "Подключение Ethernet не обнаружено."
 
-msgkey 0xEA0FDF87
+msgid 0xEA0FDF87
 msgstr "Лорд Хоу"
 
-msgkey 0xEA28FF20
+msgid 0xEA28FF20
 msgstr "Беспроводной адаптер"
 
-msgkey 0xEA2A3176
+msgid 0xEA2A3176
 msgstr ""
 "Восстановить заводские настройки роутера? Вы не сможете отменить это"
 " действие."
 
-msgkey 0xEA3321FE
+msgid 0xEA3321FE
 msgstr ""
 "Служба поддержки клиентов оператора широкополосного доступа к интернету"
 " China Mobile"
 
-msgkey 0xEA3898A1
+msgid 0xEA3898A1
 msgstr "Устройства не добавлены"
 
-msgkey 0xEA4AAC05
+msgid 0xEA4AAC05
 msgstr ""
 "), убедитесь, что ввели правильный пароль, или обратитесь к поставщику услуг"
 " за дополнительной информацией"
 
-msgkey 0xEA621B65
+msgid 0xEA621B65
 msgstr "Ваш роутер не связан с Mi аккаунтом."
 
-msgkey 0xEA73B82D
+msgid 0xEA73B82D
 msgstr ""
 "Имя сети и пароль должны совпадать с именем сети и паролем целевого роутера"
 
-msgkey 0xEA884F50
+msgid 0xEA884F50
 msgstr "Добавьте список исключений."
 
-msgkey 0xEA95A896
+msgid 0xEA95A896
 msgstr "Ошибка файловой системы"
 
-msgkey 0xEAACA355
+msgid 0xEAACA355
 msgstr "(UTC+7) Бангкок, Ханой, Джакарта"
 
-msgkey 0xEAE534B3
+msgid 0xEAE534B3
 msgstr "Mi Router 3 Pro"
 
-msgkey 0xEB09C364
+msgid 0xEB09C364
 msgstr ""
 "Гостевая сеть будет отключена, когда вы включите режим проводного репитера"
 
-msgkey 0xEB233FE5
+msgid 0xEB233FE5
 msgstr "Беспроводной репитер"
 
-msgkey 0xEB26AB0D
+msgid 0xEB26AB0D
 msgstr "Параметры сети"
 
-msgkey 0xEB5A7304
+msgid 0xEB5A7304
 msgstr "Сохранение…"
 
-msgkey 0xEB7AF845
+msgid 0xEB7AF845
 msgstr "PPPoE"
 
-msgkey 0xEBBEBE99
+msgid 0xEBBEBE99
 msgstr "Блантайр, Бужумбура, Габороне, Хараре"
 
-msgkey 0xEC070818
+msgid 0xEC070818
 msgstr "Пароль сети Wi-Fi"
 
-msgkey 0xEC0E8BC8
+msgid 0xEC0E8BC8
 msgstr "Настроить DMZ"
 
-msgkey 0xEC1E4575
+msgid 0xEC1E4575
 msgstr "Выберите {$0}"
 
-msgkey 0xEC722850
+msgid 0xEC722850
 msgstr "Хороший"
 
-msgkey 0xEC92C9E5
+msgid 0xEC92C9E5
 msgstr "4. Включите добавляемый узел Mesh-сети;"
 
-msgkey 0xECAD0E65
+msgid 0xECAD0E65
 msgstr "Убедитесь, что вы заполнили все обязательные поля."
 
-msgkey 0xECF710C7
+msgid 0xECF710C7
 msgstr "Введите {$0} полностью"
 
-msgkey 0xED380632
+msgid 0xED380632
 msgstr "Параметры разработчика"
 
-msgkey 0xED3C87C5
+msgid 0xED3C87C5
 msgstr "Чита, Дили, Хандига, Якутск, Палау"
 
-msgkey 0xED41D146
+msgid 0xED41D146
 msgstr "Статический адрес"
 
-msgkey 0xED96A2D1
+msgid 0xED96A2D1
 msgstr "Префикс LAN IPv6"
 
-msgkey 0xEDB3E4B9
+msgid 0xEDB3E4B9
 msgstr "Забыли пароль?"
 
-msgkey 0xEDBD1897
+msgid 0xEDBD1897
 msgstr "Нельзя использовать DMZ, когда включено перенаправление портов"
 
-msgkey 0xEDF4204A
+msgid 0xEDF4204A
 msgstr "Трафик по службе"
 
-msgkey 0xEE098F2D
+msgid 0xEE098F2D
 msgstr "Настройки"
 
-msgkey 0xEE525C5C
+msgid 0xEE525C5C
 msgstr ""
 "Автоматическое резервное копирование фотографий с мобильного устройства в"
 " хранилище Mi WiFi, позволяющее не думать о памяти телефона или трафике"
 
-msgkey 0xEEC60FC7
+msgid 0xEEC60FC7
 msgstr ""
 "Функция расширения Mesh-сети будет недоступна при использовании"
 " аутентификации WPA3-Personal. Продолжить?"
 
-msgkey 0xEECDB5E4
+msgid 0xEECDB5E4
 msgstr "Импорт из существующего роутера"
 
-msgkey 0xEEFDD25A
+msgid 0xEEFDD25A
 msgstr "Проверьте дополнительный номер телефона"
 
-msgkey 0xEEFFA81D
+msgid 0xEEFFA81D
 msgstr "Португалия"
 
-msgkey 0xEF053BCA
+msgid 0xEF053BCA
 msgstr "(UTC+2) Хельсинки, Киев, Рига, София, Таллин, Вильнюс"
 
-msgkey 0xEF11A691
+msgid 0xEF11A691
 msgstr "Принять"
 
-msgkey 0xEF37E01E
+msgid 0xEF37E01E
 msgstr "Интерфейс диска"
 
-msgkey 0xEF3F4070
+msgid 0xEF3F4070
 msgstr "Приложение"
 
-msgkey 0xEFF3A5AB
+msgid 0xEFF3A5AB
 msgstr "(UTC-7) Аризона"
 
-msgkey 0xEFF506A5
+msgid 0xEFF506A5
 msgstr "Ограничение доступа к настройкам администратора"
 
-msgkey 0xF0332F61
+msgid 0xF0332F61
 msgstr "(UTC-4) Джорджтаун, Ла-Пас, Манаус, Сен-Хуан"
 
-msgkey 0xF04BFFE3
+msgid 0xF04BFFE3
 msgstr "IP-адрес"
 
-msgkey 0xF06510AA
+msgid 0xF06510AA
 msgstr "Ошибка DHCP-сервера"
 
-msgkey 0xF0A78461
+msgid 0xF0A78461
 msgstr "Шлюз WAN IPv6"
 
-msgkey 0xF0C078D1
+msgid 0xF0C078D1
 msgstr ""
 "Названия гостевой сети и идентификатора сети (SSID) в диапазоне 2,4 ГГц не"
 " могут совпадать"
 
-msgkey 0xF0D727FF
+msgid 0xF0D727FF
 msgstr "Если вы осведомлены об угрозах безопасности, вы также можете "
 
-msgkey 0xF0EB3CFD
+msgid 0xF0EB3CFD
 msgstr "Перезагрузите модем и повторите попытку."
 
-msgkey 0xF0FFBE4A
+msgid 0xF0FFBE4A
 msgstr "Отключить"
 
-msgkey 0xF104861F
+msgid 0xF104861F
 msgstr "Сбой доступа к шлюзу"
 
-msgkey 0xF1067E4B
+msgid 0xF1067E4B
 msgstr "2.Дождитесь появления нового роутера в панели администрирования. "
 
-msgkey 0xF1247D15
+msgid 0xF1247D15
 msgstr "Тихоокеанское стандартное время (США и Канада)"
 
-msgkey 0xF14A7E09
+msgid 0xF14A7E09
 msgstr "Изменение пароля администратора"
 
 # DUP
-msgkey 0xF16DB83E
+msgid 0xF16DB83E
 msgstr "Сингапур"
 
 # DUP
-msgkey 0xF16DB83E
+msgid 0xF16DB83E
 msgstr "Сингапур"
 
-msgkey 0xF16EBF0E
+msgid 0xF16EBF0E
 msgstr "Имя задачи"
 
-msgkey 0xF172ACA2
+msgid 0xF172ACA2
 msgstr "Не удалось получить сведения о настройках роутера"
 
-msgkey 0xF18A69F7
+msgid 0xF18A69F7
 msgstr "Пропускная способность подключенных устройств"
 
-msgkey 0xF1A5F0CD
+msgid 0xF1A5F0CD
 msgstr "Обязательно"
 
-msgkey 0xF1C97E6D
+msgid 0xF1C97E6D
 msgstr "Афины, Бухарест"
 
-msgkey 0xF1FD1A5A
+msgid 0xF1FD1A5A
 msgstr "Состояние DMZ: "
 
-msgkey 0xF2125269
+msgid 0xF2125269
 msgstr "Расширение успешно завершено"
 
-msgkey 0xF2350645
+msgid 0xF2350645
 msgstr "Введите адрес"
 
-msgkey 0xF2630757
+msgid 0xF2630757
 msgstr "Интернет-провайдер и имя узла"
 
-msgkey 0xF26DB780
+msgid 0xF26DB780
 msgstr "Ирландия"
 
-msgkey 0xF28BC0F7
+msgid 0xF28BC0F7
 msgstr "2500 Мбит"
 
-msgkey 0xF2E57726
+msgid 0xF2E57726
 msgstr ""
 "Слабый сигнал! Разместите роутер рядом с центральной точкой доступа."
 
-msgkey 0xF315E661
+msgid 0xF315E661
 msgstr ""
 "Не удалось обнаружить хранилище. Подключитесь к Mi WiFi с помощью USB."
 
-msgkey 0xF31A931D
+msgid 0xF31A931D
 msgstr "Дублин"
 
-msgkey 0xF321F315
+msgid 0xF321F315
 msgstr "(UTC-4) Куяба"
 
-msgkey 0xF32C1B7A
+msgid 0xF32C1B7A
 msgstr "Стандартное время Аляски"
 
-msgkey 0xF3662ACA
+msgid 0xF3662ACA
 msgstr "Сбой набора номера модемом"
 
-msgkey 0xF381B01D
+msgid 0xF381B01D
 msgstr "Без шифрования (общий доступ)"
 
-msgkey 0xF39199CB
+msgid 0xF39199CB
 msgstr "Технология Game First"
 
-msgkey 0xF3DD2322
+msgid 0xF3DD2322
 msgstr "Запись"
 
-msgkey 0xF3DFA9EC
+msgid 0xF3DFA9EC
 msgstr "Раротонга, Таити"
 
-msgkey 0xF4265420
+msgid 0xF4265420
 msgstr "Смешанное (WPA/WPA2-Personal)"
 
 # DUP
-msgkey 0xF4602F9D
+msgid 0xF4602F9D
 msgstr "Турция"
 
 # DUP
-msgkey 0xF4602F9D
+msgid 0xF4602F9D
 msgstr "Турция"
 
-msgkey 0xF4B43EA7
+msgid 0xF4B43EA7
 msgstr "Изменить правила перенаправления портов"
 
-msgkey 0xF4B78292
+msgid 0xF4B78292
 msgstr "TCP и UDP"
 
-msgkey 0xF4C4F236
+msgid 0xF4C4F236
 msgstr "Сбой установки обновления"
 
-msgkey 0xF4DF990E
+msgid 0xF4DF990E
 msgstr "Память"
 
-msgkey 0xF4FB9360
+msgid 0xF4FB9360
 msgstr "Ошибка системы. Подождите немного и повторите попытку."
 
-msgkey 0xF5173E7E
+msgid 0xF5173E7E
 msgstr "(UTC+4) Тбилиси"
 
-msgkey 0xF529CB04
+msgid 0xF529CB04
 msgstr "Сбой набора"
 
-msgkey 0xF532D56D
+msgid 0xF532D56D
 msgstr "OSX"
 
-msgkey 0xF53DD352
+msgid 0xF53DD352
 msgstr "Проверка: "
 
-msgkey 0xF564C4E0
+msgid 0xF564C4E0
 msgstr "Главная"
 
-msgkey 0xF5654951
+msgid 0xF5654951
 msgstr "Гостиная"
 
-msgkey 0xF56B53C9
+msgid 0xF56B53C9
 msgstr "Роутер Mi Router 4CM"
 
-msgkey 0xF5A06E2D
+msgid 0xF5A06E2D
 msgstr "Интерфейс туннеля"
 
-msgkey 0xF5CB65B1
+msgid 0xF5CB65B1
 msgstr "Выбрать пропускную способность вручную"
 
-msgkey 0xF60900E1
+msgid 0xF60900E1
 msgstr "Австралийское центральное стандартное время"
 
-msgkey 0xF60A8313
+msgid 0xF60A8313
 msgstr "Состояние"
 
-msgkey 0xF6181A3F
+msgid 0xF6181A3F
 msgstr ""
 "В целях безопасности выбор обновления микропрограммы, номер версии которой"
 " меньше номера текущей версии, запрещен"
 
-msgkey 0xF635DBB8
+msgid 0xF635DBB8
 msgstr "Проверьте аккаунт и пароль"
 
-msgkey 0xF662EA11
+msgid 0xF662EA11
 msgstr "(UTC-5) Индиана (восточная часть)"
 
-msgkey 0xF670A799
+msgid 0xF670A799
 msgstr "Обновить вручную"
 
-msgkey 0xF683D95E
+msgid 0xF683D95E
 msgstr "Загрузить клиент"
 
-msgkey 0xF684FC15
+msgid 0xF684FC15
 msgstr "Xunlei"
 
-msgkey 0xF68D995D
+msgid 0xF68D995D
 msgstr "Выберите набор плагинов для установки:"
 
-msgkey 0xF6F9AF8E
+msgid 0xF6F9AF8E
 msgstr "Включите режим преодоления препятствий"
 
-msgkey 0xF7129707
+msgid 0xF7129707
 msgstr "Нет сведений о настройках"
 
-msgkey 0xF730B30F
+msgid 0xF730B30F
 msgstr ""
 "IP-адрес недоступен в диапазоне IP-адресов. Повторите попытку. При настройке"
 " обратитесь к доступным IP-адресам DHCP-сервера."
 
-msgkey 0xF76275D6
+msgid 0xF76275D6
 msgstr "Доступ к жесткому диску"
 
-msgkey 0xF76A76DC
+msgid 0xF76A76DC
 msgstr "Черный список сетей Wi-Fi"
 
-msgkey 0xF77797C1
+msgid 0xF77797C1
 msgstr "Имя роутера и пароль администратора"
 
-msgkey 0xF7AA2E30
+msgid 0xF7AA2E30
 msgstr "Секунду…"
 
-msgkey 0xF7BDAE03
+msgid 0xF7BDAE03
 msgstr "Скорость скачивания: "
 
-msgkey 0xF7D481B5
+msgid 0xF7D481B5
 msgstr "Ошибка соединения"
 
-msgkey 0xF804DDEF
+msgid 0xF804DDEF
 msgstr "Расширение не выполнено"
 
-msgkey 0xF81B88E8
+msgid 0xF81B88E8
 msgstr "Роутер подключится к сети после перезагрузки"
 
-msgkey 0xF821E328
+msgid 0xF821E328
 msgstr "Введите до {$0}"
 
-msgkey 0xF822652B
+msgid 0xF822652B
 msgstr "Не найдено"
 
-msgkey 0xF839838C
+msgid 0xF839838C
 msgstr "(UTC+5:30) Ченнаи, Калькутта, Мумбаи, Нью-Дели"
 
-msgkey 0xF84143E2
+msgid 0xF84143E2
 msgstr "Ошибка входа"
 
-msgkey 0xF8953D2F
+msgid 0xF8953D2F
 msgstr "Не удалось получить сведения о плагине"
 
-msgkey 0xF8E97475
+msgid 0xF8E97475
 msgstr "Устройства"
 
-msgkey 0xF96C7702
+msgid 0xF96C7702
 msgstr "(UTC+9) Осака, Саппоро, Токио"
 
-msgkey 0xF96D6230
+msgid 0xF96D6230
 msgstr "Ожидание перезагрузки…"
 
 # DUP
-msgkey 0xF9942387
+msgid 0xF9942387
 msgstr "Асунсьон"
 
 # DUP
-msgkey 0xF9942387
+msgid 0xF9942387
 msgstr "Асунсьон"
 
-msgkey 0xF9B86C9A
+msgid 0xF9B86C9A
 msgstr "Япония"
 
-msgkey 0xF9D9A570
+msgid 0xF9D9A570
 msgstr "Стандартное горное время (США и Канада)"
 
-msgkey 0xF9EB94CF
+msgid 0xF9EB94CF
 msgstr "Венесуэльское стандартное время"
 
-msgkey 0xFA1872ED
+msgid 0xFA1872ED
 msgstr "Обновить вручную"
 
-msgkey 0xFA357C36
+msgid 0xFA357C36
 msgstr ""
 "Some legacy devices do not support Wi-Fi 6 well and may have compatibility"
 " issues such as scan failure or Wi-Fi connection failure. "
 
-msgkey 0xFAA34F8B
+msgid 0xFAA34F8B
 msgstr "Проверьте Ethernet-подключение роутера"
 
-msgkey 0xFAAAE92C
+msgid 0xFAAAE92C
 msgstr "Ньюфаундленд"
 
-msgkey 0xFAAE3F8D
+msgid 0xFAAE3F8D
 msgstr "Окленд, Веллингтон"
 
-msgkey 0xFB06F733
+msgid 0xFB06F733
 msgstr "Настройки сетевого режима IPv6"
 
-msgkey 0xFB388EE9
+msgid 0xFB388EE9
 msgstr "Стамбул"
 
-msgkey 0xFB398EA3
+msgid 0xFB398EA3
 msgstr "Повторить поиск"
 
 # DUP
-msgkey 0xFB621BD0
+msgid 0xFB621BD0
 msgstr "Малайзия"
 
 # DUP
-msgkey 0xFB621BD0
+msgid 0xFB621BD0
 msgstr "Малайзия"
 
-msgkey 0xFB89B02A
+msgid 0xFB89B02A
 msgstr "Аделаида, Брокен-Хилл"
 
-msgkey 0xFB8AC03D
+msgid 0xFB8AC03D
 msgstr "Форматировать диск роутера"
 
-msgkey 0xFB8ACEE2
+msgid 0xFB8ACEE2
 msgstr "Все устройства будут отключены от сети роутера."
 
-msgkey 0xFB8FA769
+msgid 0xFB8FA769
 msgstr "Не удалось подключиться"
 
-msgkey 0xFB98C1BE
+msgid 0xFB98C1BE
 msgstr "В настоящее время AIoT не поддерживается в вашей стране/регионе"
 
-msgkey 0xFC0B95FC
+msgid 0xFC0B95FC
 msgstr "Создать правила перенаправления диапазонов"
 
-msgkey 0xFC7297B8
+msgid 0xFC7297B8
 msgstr "DHCP-сервер не отвечает"
 
-msgkey 0xFC77CEE2
+msgid 0xFC77CEE2
 msgstr "Ближневосточный часовой пояс B"
 
-msgkey 0xFCACC77C
+msgid 0xFCACC77C
 msgstr "Нет устройств UPnP"
 
-msgkey 0xFCCB4155
+msgid 0xFCCB4155
 msgstr "Адрес WAN IPv6"
 
-msgkey 0xFD3E81A1
+msgid 0xFD3E81A1
 msgstr "(UTC+3) Эр-Рияд, Кувейт"
 
-msgkey 0xFD4B11B1
+msgid 0xFD4B11B1
 msgstr "Секунду…"
 
-msgkey 0xFD523375
+msgid 0xFD523375
 msgstr "Поток"
 
-msgkey 0xFD5E5AE5
+msgid 0xFD5E5AE5
 msgstr "Добавление узлов Mesh-сети"
 
-msgkey 0xFD72664B
+msgid 0xFD72664B
 msgstr ""
 "К данной функции имеют доступ только пользователи с платной учетной записью"
 
-msgkey 0xFDF6EEDD
+msgid 0xFDF6EEDD
 msgstr "Хорватия"
 
-msgkey 0xFE354A9B
+msgid 0xFE354A9B
 msgstr "Нигерия"
 
 # DUP
-msgkey 0xFE7EDFD0
+msgid 0xFE7EDFD0
 msgstr ""
 "Сетевой порт 1 Гбит/с в настоящее время работает как LAN-порт. Вы можете"
 " подключить устройство LAN"
 
 # DUP
-msgkey 0xFE7EDFD0
+msgid 0xFE7EDFD0
 msgstr ""
 "Сетевой порт 1 Гбит/с в настоящее время работает как LAN-порт. Вы можете"
 " подключить устройство LAN"
 
-msgkey 0xFE87D13A
+msgid 0xFE87D13A
 msgstr ""
 "Введите ssh plugin@miwifi.com -p 2222 при помощи SSH для доступа к вашему"
 " роутеру. Пароль по умолчанию: admin (может быть изменен после авторизации)."
 
-msgkey 0xFEA376E7
+msgid 0xFEA376E7
 msgstr "Чикаго, Матаморос, Нью-Салем, Рейни Ривер, Виннипег"
 
-msgkey 0xFEA81BC2
+msgid 0xFEA81BC2
 msgstr ""
 "Обновите роутер через OTA. Если это не помогло, загрузите обновление и"
 " установите его вручную."
 
-msgkey 0xFEAFFACF
+msgid 0xFEAFFACF
 msgstr "Покрытие"
 
-msgkey 0xFEB16ADF
+msgid 0xFEB16ADF
 msgstr "WAN-порт Mi Router"
 
-msgkey 0xFEB35F86
+msgid 0xFEB35F86
 msgstr "Не удалось включить плагин"
 
-msgkey 0xFEB72BE1
+msgid 0xFEB72BE1
 msgstr "Богота, Лима, Кито"
 
-msgkey 0xFEC6FD06
+msgid 0xFEC6FD06
 msgstr "Turning on Guest Wi-Fi will turn on 2.4G Wi-Fi as well"
 
-msgkey 0xFF45DCF1
+msgid 0xFF45DCF1
 msgstr "(UTC+4) Порт-Луи"
 
-msgkey 0xFF556106
+msgid 0xFF556106
 msgstr "Добавьте адрес сервера, с которого трафик будет проходить через VPN"
 
-msgkey 0xFF89F359
+msgid 0xFF89F359
 msgstr "Smart VPN"
 
-msgkey 0xFFADF799
+msgid 0xFFADF799
 msgstr "Совпадает с паролем Wi-Fi"
 
-msgkey 0xFFBF3E13
+msgid 0xFFBF3E13
 msgstr "Конфликт настроек роутера"
 
-msgkey 0xFFDB9B06
+msgid 0xFFDB9B06
 msgstr "Микелон"
 
 # DUP
-msgkey 0xFFEC254B
+msgid 0xFFEC254B
 msgstr "с"
 
 # DUP
-msgkey 0xFFEC254B
+msgid 0xFFEC254B
 msgstr "с"
 
