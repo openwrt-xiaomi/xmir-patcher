@@ -24,8 +24,7 @@ class u32_t(int):
     return u32_t(int.__xor__(self, other) & 0xFFFFFFFF)
 
 def sfh_int8(data, offset = 0):
-  x = int.from_bytes(data[offset:offset+1], byteorder='little')
-  return x if x < 0x80 else x - 0x100
+  return int.from_bytes(data[offset:offset+1], byteorder='little', signed=True)
 
 def sfh_uint16(data, offset = 0):
   return int.from_bytes(data[offset:offset+2], byteorder='little')
@@ -79,6 +78,9 @@ MSG_STR       = 4
 
 class Msg:
   def __init__(self):
+    self.init()
+    
+  def init(self):
     self.plural_num = -1
     self.ctxt = None
     self.id = None
@@ -95,6 +97,7 @@ class LmoEntry:
     self.offset = offset
     self.length = length
     self.val = val
+    self.dup = 0
 
 
 class Lmo:
@@ -107,23 +110,25 @@ class Lmo:
     self.msg = Msg()
 
   def add_entry(self, key_id, val_id, val):
-    if self.skip_dup:
-      ent = next((ent for ent in self.entries if ent.key_id == key_id), None)
-      if ent:
-        return False  # skip duplicate
     entry = LmoEntry()
     entry.key_id = key_id
     entry.val_id = val_id
     entry.offset = len(self.entries)
     entry.length = len(val)
     entry.val = val
+    ent = next((ent for ent in self.entries if ent.key_id == key_id), None)
+    if ent:
+      if self.skip_dup:
+        return None  # skip duplicate
+      entry.dup = 1
+      ent.dup = 1
     self.entries.append(entry)
-    return True
+    return entry
 
   def print_msg(self):
     msg = self.msg
     if not msg.id and not msg.val[0]:
-      return msg
+      return
     if msg.key is not None:
       val = msg.val[msg.plural_num]
       self.add_entry(msg.key, msg.plural_num + 1, val)
@@ -147,19 +152,16 @@ class Lmo:
         if key_id != val_id:
           self.add_entry(key_id, msg.plural_num + 1, val)
     elif msg.val[0]:
-      p = msg.val[0]
+      val = msg.val[0]
       prefix = b'\\nPlural-Forms: '
-      x = p.find(prefix)
+      x = val.find(prefix)
       if x > 0:
         x += len(prefix)
-        x2 = p.find(b'\\n', x)
+        x2 = val.find(b'\\n', x)
         if x2 > 0:
-          field = p[x:x2]
-          self.add_entry(0, 0, field)
-    self.msg = None
-    self.msg = Msg()
-    #print('-------------')
-    return self.msg
+          self.add_entry(0, 0, val[x:x2])
+    # reinit object msg
+    self.msg.init()
 
   def extract_string(self, line):
     if line.startswith('#'):
@@ -180,15 +182,15 @@ class Lmo:
   def process_line(self, line):
     msg = self.msg
     if line.startswith('msgctxt "'):
-      msg = self.print_msg()
+      self.print_msg()
       msg.ctxt = ""
       msg.cur = MSG_CTXT
     elif line.startswith('msgid "'):
-      msg = self.print_msg()
+      self.print_msg()
       msg.id = ""
       msg.cur = MSG_ID
     elif line.startswith('msgid 0x') or line.startswith('msgkey 0x'):
-      msg = self.print_msg()
+      self.print_msg()
       msg.id = '\x01'
       msg.plural_num = 0
       x = line.find('0x')
@@ -214,23 +216,19 @@ class Lmo:
     # read text data
     if msg.cur != MSG_UNSPEC:
       tmp = self.extract_string(line)
-      if tmp is not None and len(tmp) > 0:
+      if tmp:
         if msg.cur == MSG_CTXT:
           msg.ctxt += tmp
-          #print('mctxt = "{}"'.format(msg.ctxt))
         if msg.cur == MSG_ID:
           msg.id += tmp
-          #print('msgid = "{}"'.format(msg.id))
         if msg.cur == MSG_ID_PLURAL:
           msg.id_plural += tmp
         if msg.cur == MSG_STR:
           msg.val[msg.plural_num] += tmp.encode("utf-8")
-          #print('msgstr[{}] = "{}"'.format(msg.plural_num, tmp))
-    self.msg = msg
 
   def load_from_text(self, filename):
     self.entries = []
-    self.msg = Msg()
+    self.msg.init()
     with open(filename, "r", encoding='UTF-8') as file:
       for line in file:
         self.process_line(line.rstrip())
@@ -251,7 +249,9 @@ class Lmo:
       length = len(val)
       buf[offset:offset+length] = val
       val_id = ent.val_id
-      elst.append(LmoEntry(ent.key_id, val_id, offset, length, val))
+      ek = LmoEntry(ent.key_id, val_id, offset, length, val)
+      ek.dup = ent.dup
+      elst.append(ek)
       offset += length
       if offset & 3 != 0:
         offset += 4 - (offset & 3)
@@ -264,11 +264,9 @@ class Lmo:
       buf[offset+4 :offset+8]  = ent.val_id.to_bytes(4, byteorder='big')
       buf[offset+8 :offset+12] = ent.offset.to_bytes(4, byteorder='big')
       buf[offset+12:offset+16] = ent.length.to_bytes(4, byteorder='big')
-      if self.verbose:
-        for k, ek in enumerate(elst):
-          if ent.key_id == ek.key_id and ent.offset != ek.offset:
-            val = "" if ent.val is None else ent.val.decode()
-            print('DUP: 0x%08X (0x%05X) "%s"' % (ent.key_id, ent.offset, val))
+      if self.verbose and ent.dup:
+        val = ent.val.decode() if ent.val is not None else ""
+        print('DUP: 0x%08X (0x%05X) "%s"' % (ent.key_id, ent.offset, val))
       offset += 16
     if offset > 0:
       buf[offset:offset+4] = table_offset.to_bytes(4, byteorder='big')
@@ -284,6 +282,7 @@ if __name__ == "__main__":
   fn_inp = sys.argv[1]
   fn_out = sys.argv[2]
   lmo = Lmo(verbose = 99)
+  lmo.skip_dup = False
   lmo.load_from_text(fn_inp)
   lmo.save_to_bin(fn_out)
   print('\nLMO-file saved to "{}"'.format(fn_out))

@@ -49,10 +49,9 @@ class Lmo:
       off += 16
     if self.use_plural_num is None:
       self.use_plural_num = True
-      for i, e in enumerate(self.entries):
-        if e.val_id > 10:
-          self.use_plural_num = False
-          break
+      ent = next((ent for ent in self.entries if ent.val_id > 10), None)
+      if ent:
+        self.use_plural_num = False
     self.entries = sorted(self.entries, key=lambda x: x.offset)
     #self.dup_search()
 
