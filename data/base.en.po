@@ -96,6 +96,9 @@ msgid 0x0129E6AE
 msgstr ""
 "Select an existing wireless network to repeat or enter the SSID and password"
 
+msgid 0x014B6561
+msgstr "Tietong broadband network service"
+
 msgid 0x01614E39
 msgstr "CPU load: "
 
@@ -753,6 +756,12 @@ msgstr "Connect automatically when the device is on"
 # DUP
 msgid 0x136A1A16
 msgstr "Connect automatically when the device is on"
+
+msgid 0x13743569
+msgstr ""
+"Turn on to switch to USB 3.0 mode. However, using USB 3.0 may affect 2.4GHz"
+" Wi-Fi signal. Unless you need it, you can keep this feature off and"
+" continue using USB 2.0."
 
 msgid 0x1374FD9B
 msgstr "Hide network"
@@ -1806,6 +1815,9 @@ msgstr ""
 "Some legacy devices may not be able to connect to router with the channel"
 " selected"
 
+msgid 0x386FC05C
+msgstr "Oray service system error"
+
 msgid 0x3870C4A3
 msgstr "No devices added"
 
@@ -2490,6 +2502,9 @@ msgstr "Network info"
 msgid 0x4FF0400E
 msgstr "Partition data migration count"
 
+msgid 0x5021C7C3
+msgstr "Domain name exists, but doesn't belong to the user"
+
 msgid 0x503A51B0
 msgstr "QoS service is off"
 
@@ -2741,6 +2756,9 @@ msgstr "Internet"
 msgid 0x5918ECF8
 msgstr "Just a sec…"
 
+msgid 0x5929C4C9
+msgstr "Moscow Time"
+
 msgid 0x596A7949
 msgstr "Hard drive check result"
 
@@ -2749,6 +2767,9 @@ msgstr "Music"
 
 msgid 0x5A7874EC
 msgstr "Can't set up port forwarding while DMZ is on"
+
+msgid 0x5A83E53A
+msgstr "Contact network provider to reset password"
 
 # DUP
 msgid 0x5A9D65D3
@@ -3692,6 +3713,14 @@ msgstr "Spain"
 
 msgid 0x7EE5F435
 msgstr "Mi Router has created a Wi-Fi network for you"
+
+msgid 0x7F4F27CE
+msgstr ""
+"MU-MIMO (Multi-User Multiple-Input Multiple-Output) and Beamforming"
+" technologies allow the router communicate with several terminals at the"
+" same time to improve wireless resources utilization efficiency and Wi-Fi"
+" experience. Both Router and terminals are needed to use this feature."
+" Turning it on will also enable MU-MIMO and Beamforming."
 
 msgid 0x7F82983D
 msgstr "Couldn't verify update"
@@ -5437,6 +5466,9 @@ msgstr ""
 "1. Are you sure you want to restore the factory settings and reset the"
 " Xiaomi router to its original state? "
 
+msgid 0xBFBFA0CE
+msgstr "Aipu broadband network service"
+
 msgid 0xBFDD668E
 msgstr "Image"
 
@@ -6688,6 +6720,11 @@ msgstr "Restrict access to administrator settings"
 # DUP
 msgid 0xEFF506A5
 msgstr "Restrict access to administrator settings"
+
+msgid 0xF0105F11
+msgstr ""
+"Domain name closed by the system. Contact the service provider for"
+" assistance"
 
 msgid 0xF04BFFE3
 msgstr "IP address"
