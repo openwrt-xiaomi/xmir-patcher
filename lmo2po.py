@@ -10,9 +10,9 @@ def die(msg):
 
 
 class LmoEntry:
-  def __init__(self, key_id = 0, val_id = 0, offset = 0, length = 0, val = None):
+  def __init__(self, key_id = 0, plural = 0, offset = 0, length = 0, val = None):
     self.key_id = key_id
-    self.val_id = val_id
+    self.plural = plural
     self.offset = offset
     self.length = length
     self.val = val
@@ -26,10 +26,10 @@ class Lmo:
   def __init__(self):
     self.options = ""
     self.entries = []
-    self.use_plural_num = None   # value of entry.val_id
 
   def load_from_bin(self, filename):
     self.entries = []
+    use_plural_num = False
     with open(filename, "rb") as file:
       data = file.read()
     table_offset = int.from_bytes(data[-4:], byteorder='big')
@@ -40,18 +40,21 @@ class Lmo:
         break
       entry = LmoEntry()
       entry.key_id = int.from_bytes(data[off   :off+4] , byteorder='big')
-      entry.val_id = int.from_bytes(data[off+4 :off+8] , byteorder='big')
+      entry.plural = int.from_bytes(data[off+4 :off+8] , byteorder='big') - 1
       entry.offset = int.from_bytes(data[off+8 :off+12], byteorder='big')
       entry.length = int.from_bytes(data[off+12:off+16], byteorder='big')
       entry.val = data[entry.offset:entry.offset+entry.length]
-      #print("%08X %d %08X %d" % (entry.key_id, entry.val_id, entry.offset, entry.length))
+      #print("%08X %d %08X %d" % (entry.key_id, entry.plural, entry.offset, entry.length))
+      if off == table_offset:
+        if entry.key_id == 0 and entry.plural == -1:
+          use_plural_num = True
+      if use_plural_num:
+        if entry.plural >= 10 or (off != table_offset and entry.plural < 0):
+          die("Too many plural forms")
+      else:
+        entry.plural = 0  # older version LMO-files contain hash of value
       self.entries.append(entry)
       off += 16
-    if self.use_plural_num is None:
-      self.use_plural_num = True
-      ent = next((ent for ent in self.entries if ent.val_id > 10), None)
-      if ent:
-        self.use_plural_num = False
     self.entries = sorted(self.entries, key=lambda x: x.offset)
     #self.dup_search()
 
@@ -76,7 +79,7 @@ class Lmo:
       val = ent.val.decode('utf-8')
       val = val.replace('\\', '\\\\')
       val = val.replace('"', r'\"')      
-      if ent.key_id == 0 and ent.val_id == 0 and ent.offset == 0:
+      if ent.key_id == 0 and ent.plural == -1:
         val = val.replace('\n', r'\n')
         txt += 'msgid ""' + '\n'
         txt += 'msgstr ""' + '\n'
@@ -90,11 +93,11 @@ class Lmo:
         txt += '\n'
         continue
       prefix = ''
-      if self.use_plural_num and ent.val_id != 1:
-        prefix = '[%d]' % (ent.val_id - 1)
+      #if ent.plural != 0:
+      #  prefix = '[%d]' % ent.plural
       if ent.dup:
         txt += '# DUP' + '\n'
-      txt += 'msgkey 0x{}'.format("%08X" % ent.key_id) + '\n' 
+      txt += 'msgid 0x{}'.format("%08X" % ent.key_id) + '\n' 
       line_limit = 77
       val = val.replace('\r', '')
       if val.find('\n') >= 0:
@@ -143,7 +146,7 @@ if __name__ == "__main__":
   if not ('m' in lmo.options):
     lmo.save_to_text(fn_out)
     print('\nPO-file saved to "{}"'.format(fn_out))
-    sys.exit(1)
+    sys.exit(0)
 
   # Merge 2 lmo-files
   fn_inp2 = sys.argv[4]
@@ -158,8 +161,6 @@ if __name__ == "__main__":
     if not dup:
       lmo.entries.append(ent)
   lmo.options = 'k'
-  if not lmo2.use_plural_num:
-    lmo.use_plural_num = False
   lmo.save_to_text(fn_out)
   print('\nMerged PO-file saved to "{}"'.format(fn_out))
   
