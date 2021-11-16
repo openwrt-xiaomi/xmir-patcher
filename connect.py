@@ -70,7 +70,7 @@ fn_pf2 = dn_tmp + fn_pfname + '_02'
 fn_pf3 = dn_tmp + fn_pfname + '_03'
 
 fn_suffix = '_mips'
-if dn == 'r3d':
+if dn == 'r3d' or dn == 'd01':
   fn_suffix = '_armv7a'
 if dn == "rb03":
   fn_suffix = '_arm64'
