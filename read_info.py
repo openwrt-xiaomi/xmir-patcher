@@ -407,7 +407,7 @@ class DevInfo():
     ret = self.bl
     if verbose:
       print("Bootloader info:")
-    plst = self.get_part_list(['bootloader', 'SBL1', 'APPSBL', 'SBL2', 'SBL3'], comptype = 'ends')
+    plst = self.get_part_list(['bootloader', 'uboot', 'SBL1', 'APPSBL', 'SBL2', 'SBL3'], comptype = 'ends')
     if not plst:
       return ret
     for i, p in enumerate(plst):  
@@ -484,7 +484,7 @@ class DevInfo():
     ret = self.env.fw
     if verbose:
       print("ENV info:")
-    plst = self.get_part_list(['config', 'APPSBLENV', 'bdata'], comptype = 'ends')
+    plst = self.get_part_list(['config', 'nvram', 'APPSBLENV', 'bdata'], comptype = 'ends')
     if not plst:
       return ret
     env_breed_addr = 0x60000  # breed env addr for r3g
