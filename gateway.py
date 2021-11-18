@@ -218,7 +218,7 @@ class Gateway():
     self.config[key] = value
     self.save_config()
 
-  def get_ssh(self, verbose = 0):
+  def get_ssh(self, verbose = 0, contimeout = None):
     if self.ssh:
       try:
         self.ssh.keepalive_send()
@@ -228,7 +228,10 @@ class Gateway():
     self.shutdown()
     try:
       self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+      if contimeout is not None:
+        self.socket.settimeout(contimeout)
       self.socket.connect((self.ip_addr, self.ssh_port))
+      self.socket.settimeout(None)  # enable blocking mode
       self.ssh = ssh2.session.Session()
       self.ssh.handshake(self.socket)
       self.ssh.userauth_password('root', 'root')
@@ -276,9 +279,9 @@ class Gateway():
       self.shutdown()
     return None
 
-  def ping(self, verbose = 2):
+  def ping(self, verbose = 2, contimeout = None):
     if self.use_ssh:
-      ssh = self.get_ssh(verbose)
+      ssh = self.get_ssh(verbose, contimeout)
       if not ssh:
         return False
     else:

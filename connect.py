@@ -153,7 +153,7 @@ else:
 requests.get(gw.apiurl + "xqnetdetect/netspeed")
 
 time.sleep(0.5)
-gw.ping()
+gw.ping(contimeout = 8)
 
 print("")
 print("#### Connection to device {} is OK ####".format(gw.device_name))
