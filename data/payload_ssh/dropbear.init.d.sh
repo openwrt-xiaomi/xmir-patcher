@@ -1,0 +1,165 @@
+#!/bin/sh /etc/rc.common
+# Copyright (C) 2006-2010 OpenWrt.org
+# Copyright (C) 2006 Carlos Sobrinho
+
+START=50
+STOP=50
+
+SERVICE_USE_PID=1
+
+NAME=dropbear
+PROG=/etc/dropbear/dropbear
+PIDCOUNT=0
+EXTRA_COMMANDS="killclients"
+EXTRA_HELP="	killclients Kill ${NAME} processes except servers and yourself"
+
+dropbear_start()
+{
+	append_ports()
+	{
+		local ifname="$1"
+		local port="$2"
+
+		grep -qs "^ *$ifname:" /proc/net/dev || {
+			append args "-p $port"
+			return
+		}
+
+		for addr in $(
+			ifconfig "$ifname" | sed -ne '
+				/addr: *fe[89ab][0-9a-f]:/d
+				s/.* addr: *\([0-9a-f:\.]*\).*/\1/p
+			'
+		); do
+			append args "-p $addr:$port"
+		done
+	}
+
+
+	local section="$1"
+
+	# check if section is enabled (default)
+	local enabled
+	config_get_bool enabled "${section}" enable 1
+	[ "${enabled}" -eq 0 ] && return 1
+
+	# verbose parameter
+	local verbosed
+	config_get_bool verbosed "${section}" verbose 0
+
+	# increase pid file count to handle multiple instances correctly
+	PIDCOUNT="$(( ${PIDCOUNT} + 1))"
+
+	# prepare parameters (initialise with pid file)
+	local pid_file="/var/run/${NAME}.${PIDCOUNT}.pid"
+	local args="-P $pid_file"
+	local val
+	# A) password authentication
+	config_get_bool val "${section}" PasswordAuth 1
+	[ "${val}" -eq 0 ] && append args "-s"
+	# B) listen interface and port
+	local port
+	local interface
+	config_get interface "${section}" Interface
+	config_get interface "${interface}" ifname "$interface"
+	config_get port "${section}" Port 22
+	append_ports "$interface" "$port"
+	# C) banner file
+	config_get val "${section}" BannerFile
+	[ -f "${val}" ] && append args "-b ${val}"
+	# D) gatewayports
+	config_get_bool val "${section}" GatewayPorts 0
+	[ "${val}" -eq 1 ] && append args "-a"
+	# E) root password authentication
+	config_get_bool val "${section}" RootPasswordAuth 1
+	[ "${val}" -eq 0 ] && append args "-g"
+	# F) root login
+	config_get_bool val "${section}" RootLogin 1
+	[ "${val}" -eq 0 ] && append args "-w"
+	# G) host keys
+	config_get val "${section}" rsakeyfile
+	[ -f "${val}" ] && append args "-r ${val}"
+	config_get val "${section}" dsskeyfile
+	[ -f "${val}" ] && append args "-d ${val}"
+
+	# execute program and return its exit code
+	[ "${verbosed}" -ne 0 ] && echo "${initscript}: section ${section} starting ${PROG} ${args}"
+	SERVICE_PID_FILE="$pid_file" service_start ${PROG} ${args}
+}
+
+start()
+{
+	include /lib/network
+	scan_interfaces
+	config_load "${NAME}"
+	config_foreach dropbear_start dropbear
+}
+
+stop()
+{
+	local pid_file pid_files
+	
+	pid_files=`ls /var/run/${NAME}.*.pid 2>/dev/null`
+	
+	[ -z "$pid_files" ] && return 1
+	
+	for pid_file in $pid_files; do
+		SERVICE_PID_FILE="$pid_file" service_stop ${PROG} && {
+			rm -f ${pid_file}
+		}
+	done
+}
+
+killclients()
+{
+	local ignore=''
+	local server
+	local pid
+
+	# if this script is run from inside a client session, then ignore that session
+	pid="$$"
+	while [ "${pid}" -ne 0 ]
+	 do
+		# get parent process id
+		pid=`cut -d ' ' -f 4 "/proc/${pid}/stat"`
+		[ "${pid}" -eq 0 ] && break
+
+		# check if client connection
+		grep -F -q -e "${PROG}" "/proc/${pid}/cmdline" && {
+			append ignore "${pid}"
+			break
+		}
+	done
+
+	# get all server pids that should be ignored
+	for server in `cat /var/run/${NAME}.*.pid`
+	 do
+		append ignore "${server}"
+	done
+
+	# get all running pids and kill client connections
+	local skip
+	for pid in `pidof "${NAME}"`
+	 do
+		# check if correct program, otherwise process next pid
+		grep -F -q -e "${PROG}" "/proc/${pid}/cmdline" || {
+			continue
+		}
+
+		# check if pid should be ignored (servers, ourself)
+		skip=0
+		for server in ${ignore}
+		 do
+			if [ "${pid}" == "${server}" ]
+			 then
+				skip=1
+				break
+			fi
+		done
+		[ "${skip}" -ne 0 ] && continue
+
+		# kill process
+		echo "${initscript}: Killing ${pid}..."
+		kill -KILL ${pid}
+	done
+}

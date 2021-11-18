@@ -116,8 +116,11 @@ with tarfile.open(fn_payload2, "w:gz", compresslevel=9) as tar:
 
 with tarfile.open(fn_payload3, "w:gz", compresslevel=9) as tar:
   tar.add(fn_pf3, arcname = os.path.basename(fn_pf3))
-  tar.add(dn_dir + fn_exploit, arcname = fn_exploit)
   tar.add(dn_tmp + fn_executor, arcname = fn_executor)
+  tar.add(dn_dir + fn_exploit, arcname = fn_exploit)
+  if gw.use_ssh:
+    tar.add(dn_dir + 'dropbear.uci.cfg', arcname = 'dropbear.uci.cfg')
+    tar.add(dn_dir + 'dropbear.init.d.sh', arcname = 'dropbear.init.d.sh')
 
 if os.path.exists(fn_pf1):
   os.remove(fn_pf1)
