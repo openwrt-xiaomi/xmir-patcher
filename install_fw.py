@@ -471,14 +471,15 @@ if fw_num is not None:
 if not kernel.cmd or not rootfs.cmd:
   die("Flashing recipe unknown!")
 
+gw.set_timeout(12)
 gw.upload(kernel.fn_local, kernel.fn_remote)
 gw.upload(rootfs.fn_local, rootfs.fn_remote)
 print('Writing kernel image to addr {} ...'.format("0x%08X" % kernel.addr))
 print("  " + kernel.cmd)
-gw.run_cmd(kernel.cmd)
+gw.run_cmd(kernel.cmd, timeout = 12)
 print('Writing rootfs image to addr {} ...'.format("0x%08X" % rootfs.addr))
 print("  " + rootfs.cmd)
-gw.run_cmd(rootfs.cmd)
+gw.run_cmd(rootfs.cmd, timeout = 40)
 print("The firmware has been successfully flashed!")
 
 

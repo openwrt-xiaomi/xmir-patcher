@@ -218,6 +218,11 @@ class Gateway():
     self.config[key] = value
     self.save_config()
 
+  def set_timeout(self, timeout):
+    self.timeout = timeout
+    if self.use_ssh and self.ssh:
+      self.ssh.set_timeout(int(self.timeout * 1000))
+
   def get_ssh(self, verbose = 0, contimeout = None):
     if self.ssh:
       try:
@@ -236,7 +241,7 @@ class Gateway():
       self.ssh.handshake(self.socket)
       self.ssh.userauth_password('root', 'root')
       self.ssh.set_blocking(True)
-      self.ssh.set_timeout(self.timeout * 1000);
+      self.ssh.set_timeout(int(self.timeout * 1000))
       return self.ssh
     except Exception as e:
       #print(e)
@@ -293,7 +298,7 @@ class Gateway():
         return False
     return True
 
-  def run_cmd(self, cmd, msg = None):
+  def run_cmd(self, cmd, msg = None, timeout = None):
     if self.use_ssh:
       ssh = self.get_ssh(self.verbose)
     else:
@@ -308,6 +313,9 @@ class Gateway():
     for idx, cmd in enumerate(cmdlist):
       if self.use_ssh:
         channel = ssh.open_session()
+        if timeout is not None:
+          saved_timeout = ssh.get_timeout()
+          ssh.set_timeout(int(timeout * 1000))
         #channel.pty('xterm')
         #print("exec = '{}'".format(cmd))
         channel.execute(cmd)
@@ -315,6 +323,8 @@ class Gateway():
           channel.wait_eof()
         except ssh2.exceptions.Timeout:
           die("SSH execute command timedout! CMD: \"{}\"".format(cmd))
+        if timeout is not None:
+          ssh.set_timeout(saved_timeout)
         try:
           channel.close()
           channel.wait_closed()
