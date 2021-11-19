@@ -739,6 +739,13 @@ class SysLog():
 
 
 if __name__ == "__main__":
+  if len(sys.argv) > 1 and sys.argv[1] == 'syslog':
+    gw = gateway.Gateway(timeout = 4)
+    if gw.status < 1:
+      die("Xiaomi Mi Wi-Fi device not found (IP: {})".format(gw.ip_addr))
+    slog = SysLog(gw, timeout = 10, verbose = 1, infolevel = 2)
+    sys.exit(0)
+  
   fn_dir    = ''
   fn_old    = 'full_info_old.txt'
   fn_local  = 'full_info.txt'
