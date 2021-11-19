@@ -206,8 +206,11 @@ class Gateway():
 
   def load_config(self):
     self.config = {}
-    with open('config.txt', 'r') as file:
-      self.config = json.load(file)
+    if os.path.exists('config.txt'): 
+      with open('config.txt', 'r') as file:
+        self.config = json.load(file)
+    if not "device_ip_addr" in self.config:
+      self.config['device_ip_addr'] = "192.168.1.1"
     self.config['device_ip_addr'] = (self.config['device_ip_addr']).strip()
 
   def save_config(self):
