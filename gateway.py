@@ -54,7 +54,6 @@ class Gateway():
   use_ssh = EXPLOIT_VIA_DROPBEAR
   verbose = 2
   timeout = 4
-  config = {}
   device_name = None
   rom_version = None
   rom_channel = None
@@ -70,10 +69,6 @@ class Gateway():
   def __init__(self, timeout = 4, verbose = 2, detect_device = True):
     self.verbose = verbose
     self.timeout = timeout
-    self.config['device_ip_addr'] = None
-    self.load_config()
-    if not 'ssh_port' in self.config:
-      self.config['ssh_port'] = 22   # SSH default port
     self.device_name = None
     self.webpassword = None
     self.status = -2
@@ -164,6 +159,7 @@ class Gateway():
   def apiurl(self):
     return "http://{ip_addr}/cgi-bin/luci/;stok={stok}/api/".format(ip_addr = self.ip_addr, stok = self.stok)
 
+  #===============================================================================
   def shutdown(self):
     if self.use_ssh:
       try:
@@ -186,41 +182,46 @@ class Gateway():
     self.ftp = None
     self.ssh = None
     self.socket = None
-    
+
+  #===============================================================================
   @property
   def ip_addr(self):
-    return self.config['device_ip_addr']
+    return self.get_config_param('device_ip_addr', '192.168.1.1').strip()
 
   @ip_addr.setter
   def ip_addr(self, value):
-    self.config['device_ip_addr'] = value
+    self.set_config_param('device_ip_addr', value)
 
   @property
   def ssh_port(self):
-    return self.config['ssh_port']
+    return self.get_config_param('ssh_port', 22)
 
   @ssh_port.setter
   def ssh_port(self, value):
-    self.config['ssh_port'] = value
-    self.save_config()
+    self.set_config_param('ssh_port', value)
 
+  #===============================================================================
   def load_config(self):
-    self.config = {}
+    config = {}
     if os.path.exists('config.txt'): 
       with open('config.txt', 'r') as file:
-        self.config = json.load(file)
-    if not "device_ip_addr" in self.config:
-      self.config['device_ip_addr'] = "192.168.1.1"
-    self.config['device_ip_addr'] = (self.config['device_ip_addr']).strip()
+        config = json.load(file)
+    return config
 
-  def save_config(self):
-    with open('config.txt', 'w') as file:
-      json.dump(self.config, file, indent=4, sort_keys=True)
+  def get_config_param(self, key, defvalue = None):
+    config = self.load_config()    
+    return config[key] if key in config else defvalue
 
   def set_config_param(self, key, value):
-    self.config[key] = value
-    self.save_config()
+    config = self.load_config()
+    config[key] = value.strip() if isinstance(value, str) else value
+    self.save_config(config)
 
+  def save_config(self, config):    
+    with open('config.txt', 'w') as file:
+      json.dump(config, file, indent=4, sort_keys=True)
+
+  #===============================================================================
   def set_timeout(self, timeout):
     self.timeout = timeout
     if self.use_ssh and self.ssh:
@@ -389,11 +390,11 @@ class Gateway():
     return True
 
 
+#===============================================================================
 if __name__ == "__main__":
   if len(sys.argv) > 1:
     ip_addr = sys.argv[1]
     gw = Gateway(detect_device = False)
     gw.ip_addr = ip_addr
-    gw.save_config()
     print("Device IP-address changed to {}".format(ip_addr))
     
