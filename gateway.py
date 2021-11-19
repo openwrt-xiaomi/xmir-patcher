@@ -21,6 +21,12 @@ from ssh2.utils import wait_socket
 import telnetlib
 import ftplib
 
+if sys.version_info < (3,8,0):
+  print("ERROR: Requires Python v3.8 or higher!")
+  sys.exit(1)
+
+from multiprocessing import shared_memory
+
 
 EXPLOIT_VIA_DROPBEAR = True
 
@@ -54,24 +60,24 @@ class Gateway():
   use_ssh = EXPLOIT_VIA_DROPBEAR
   verbose = 2
   timeout = 4
+  memcfg = None  # shared memory "XMiR_12345"
   device_name = None
   rom_version = None
   rom_channel = None
   mac_address = None
   nonce_key = None
-  webpassword = None
   stok = None
   status = -2
   ftp = None
   socket = None  # TCP socket for SSH 
   ssh = None     # SSH session
   
-  def __init__(self, timeout = 4, verbose = 2, detect_device = True):
+  def __init__(self, timeout = 4, verbose = 2, detect_device = True, load_cfg = True):
     self.verbose = verbose
     self.timeout = timeout
     self.device_name = None
-    self.webpassword = None
     self.status = -2
+    self.init_memcfg(load_cfg)
     atexit.register(self.shutdown)
     os.makedirs('outdir', exist_ok = True)
     os.makedirs('tmp', exist_ok = True)
@@ -128,7 +134,7 @@ class Gateway():
     except:
       return self.status
     if (x > 10):
-      self.webpassword = 'admin'
+      #self.webpassword = 'admin'
       die("You need to make the initial configuration in the WEB of the device!")
     self.status = 1
     return self.status
@@ -184,6 +190,73 @@ class Gateway():
     self.socket = None
 
   #===============================================================================
+  def init_memcfg(self, load_cfg = True):
+    _env_master_cfg = 'XMiR_cfg'
+    _memcfgname = 'XMiR_'
+    _memcfgsize = 1024*1024
+    ppid = os.environ[_env_master_cfg] if _env_master_cfg in os.environ else None
+    if ppid is None:
+      load_cfg = False
+    if load_cfg:
+      try:
+        sm = shared_memory.SharedMemory(_memcfgname + ppid)
+      except FileNotFoundError:
+        del os.environ[_env_master_cfg]
+        load_cfg = False
+    if not load_cfg:    
+      sm = shared_memory.SharedMemory(_memcfgname + '%d' % os.getpid(), create=True, size=_memcfgsize)
+      if not _env_master_cfg in os.environ:
+        os.environ[_env_master_cfg] = str(os.getpid())
+    self.memcfg = sm
+
+  def load_memcfg(self):
+    cfg = {}
+    if not self.memcfg:
+      return cfg
+    size = bytes(self.memcfg.buf[:4])
+    size = int.from_bytes(size, byteorder='little', signed=True)
+    if size <= 0:
+      return cfg
+    data = bytes(self.memcfg.buf[4:4+size])
+    cfg = json.loads(data.decode('utf-8'))
+    return cfg
+
+  def get_memcfg_param(self, key, defvalue = None):
+    cfg = self.load_memcfg()    
+    return cfg[key] if key in cfg else defvalue
+
+  def set_memcfg_param(self, key, value):
+    cfg = self.load_memcfg()
+    cfg[key] = value.strip() if isinstance(value, str) else value
+    self.save_memcfg(cfg)
+
+  def save_memcfg(self, cfg):
+    data = b''
+    if cfg:
+      data = json.dumps(cfg, ensure_ascii=False).encode('utf-8')
+    size = len(data)
+    self.memcfg.buf[:4] = size.to_bytes(4, byteorder='little', signed=True)
+    if size > 0:
+      self.memcfg.buf[4:4+len(data)] = data
+
+  #===============================================================================
+  @property
+  def ssh_port(self):
+    return self.get_memcfg_param('ssh_port', 22)
+
+  @ssh_port.setter
+  def ssh_port(self, value):
+    self.set_memcfg_param('ssh_port', value)
+
+  @property
+  def webpassword(self):
+    return self.get_memcfg_param('webpassword', None)
+
+  @webpassword.setter
+  def webpassword(self, value):
+    self.set_memcfg_param('webpassword', value)
+
+  #===============================================================================
   @property
   def ip_addr(self):
     return self.get_config_param('device_ip_addr', '192.168.1.1').strip()
@@ -191,14 +264,6 @@ class Gateway():
   @ip_addr.setter
   def ip_addr(self, value):
     self.set_config_param('device_ip_addr', value)
-
-  @property
-  def ssh_port(self):
-    return self.get_config_param('ssh_port', 22)
-
-  @ssh_port.setter
-  def ssh_port(self, value):
-    self.set_config_param('ssh_port', value)
 
   #===============================================================================
   def load_config(self):

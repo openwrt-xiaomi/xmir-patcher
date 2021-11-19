@@ -17,18 +17,17 @@ from gateway import *
 
 
 gw = gateway.Gateway(detect_device = False)
-if len(sys.argv) < 2:
-  ip_addr = gw.ip_addr
-else:
+
+if len(sys.argv) > 1:
   ip_addr = sys.argv[1]
   if not ip_addr:
     die("You entered an empty IP-address!")
-  gw.ip_addr(ip_addr)
-  gw.save_config()
+  gw.ip_addr = ip_addr
 
-gw = gateway.Gateway(timeout = 4)
+gw.set_timeout(4)
+gw.detect_device()
 if gw.status < 1:
-  die("Xiaomi Mi Wi-Fi device not found (IP: {})".format(ip_addr))
+  die("Xiaomi Mi Wi-Fi device not found (IP: {})".format(gw.ip_addr))
 
 dn = gw.device_name
 
@@ -104,7 +103,7 @@ command = "sh /tmp/" + fn_exploit
 fn_executor = "speedtest_urls.xml"
 with open(dn_dir + fn_executor, "rt", encoding = "UTF-8") as file:
   template = file.read()
-data = template.format(router_ip_address=ip_addr, command=command)
+data = template.format(router_ip_address=gw.ip_addr, command=command)
 with open(dn_tmp + fn_executor, "wt", encoding = "UTF-8", newline = "\n") as file:
   file.write(data)
 
