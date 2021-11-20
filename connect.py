@@ -31,7 +31,11 @@ if gw.status < 1:
 
 dn = gw.device_name
 
-if dn == 'rm2100':
+if dn == 'rm2100' or dn == 'r2350':
+  import connect2
+  sys.exit(0)
+
+if dn == 'r3600' and gw.rom_version == '1.0.17':
   import connect2
   sys.exit(0)
 

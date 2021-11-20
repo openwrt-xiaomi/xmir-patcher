@@ -162,6 +162,7 @@ class Gateway():
       die("WEB password is not correct!")
     self.webpassword = web_pass
     self.stok = stok
+    return stok
 
   @property
   def apiurl(self):
