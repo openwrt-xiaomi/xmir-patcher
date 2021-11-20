@@ -144,10 +144,10 @@ class Gateway():
     if not self.nonce_key or not self.mac_address:
       die("Xiaomi Mi Wi-Fi device is wrong model or not the stock firmware in it.")
     nonce = "0_" + self.mac_address + "_" + str(int(time.time())) + "_" + str(random.randint(1000, 10000))
-    if not self.webpassword:
-      self.webpassword = input("Enter device WEB password: ")
-    password = self.webpassword
-    account_str = (password + self.nonce_key).encode('utf-8')
+    web_pass = self.webpassword
+    if not web_pass:
+      web_pass = input("Enter device WEB password: ")
+    account_str = (web_pass + self.nonce_key).encode('utf-8')
     account_str = hashlib.sha1(account_str).hexdigest()
     password = (nonce + account_str).encode('utf-8')
     password = hashlib.sha1(password).hexdigest()
@@ -158,7 +158,9 @@ class Gateway():
     try:
       stok = re.findall(r'"token":"(.*?)"',r1.text)[0]
     except Exception:
+      self.webpassword = ""
       die("WEB password is not correct!")
+    self.webpassword = web_pass
     self.stok = stok
 
   @property
