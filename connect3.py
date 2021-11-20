@@ -43,9 +43,9 @@ def build_sign(model, ver):
   if not payload:
     die('Payload is not defined for device "{}".'.format(model))
   # add header of sign section (16 bytes)
-  sign = (poffset + len(payload)).to_bytes(4, byteorder='little') + b'\x00' * 12
+  sign = i2b(poffset) + (b'\x00' * 12)
   # add fake sign 
-  sign += b'\xEA' * poffset
+  sign += b'\xEA' * (poffset - len(payload))
   # add payload
   sign += payload
   return sign
