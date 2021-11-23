@@ -30,8 +30,12 @@ if len(sys.argv) > 1:
   print(" ")
   a_part = input("Enter partition name or mtd number: ")
   if a_part != 'a':
-    if isinstance(a_part, int):
-      p = a_part
+    try:
+      i_part = int(a_part)
+    except:
+      i_part = None
+    if i_part is not None:
+      p = i_part
       if p < 0 or p >= len(dev.partlist):
         die('Partition "mtd{}" not found!'.format(a_part))
     else:
