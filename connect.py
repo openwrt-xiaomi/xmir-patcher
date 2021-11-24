@@ -31,7 +31,7 @@ if gw.status < 1:
 
 dn = gw.device_name
 
-if dn == 'rm2100' or dn == 'r2350':
+if dn == 'r2100' or dn == 'r2350' or dn == 'rm1800' or dn == 'rm2100' or dn == 'ra67':
   import connect2
   sys.exit(0)
 

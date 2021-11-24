@@ -14,6 +14,14 @@ import urllib
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from gateway import *
 
+# Devices:
+# R2100   FW v2.0.722   Router AC2100
+# R2350   FW v1.3.8     AIoT Router AC2350
+# R3600   FW v1.0.17    AIoT Router AX3600
+# RM2100  FW v2.0.23    Router Redmi AC2100
+# RM1800  FW v1.0.336   AX1800 Wi-Fi 6 Mesh Router
+# RA67    FW v1.0.33    AX5 Router
+
 
 gw = Gateway(timeout = 4)
 if gw.status < 1:
