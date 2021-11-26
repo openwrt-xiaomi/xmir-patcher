@@ -1,5 +1,6 @@
 @echo off
 chcp 866 >NUL
+SET PYTHONUNBUFFERED=TRUE
 
 if "%~1"=="" goto menu
 
