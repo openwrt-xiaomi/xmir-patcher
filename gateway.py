@@ -71,6 +71,8 @@ class Gateway():
   ftp = None
   socket = None  # TCP socket for SSH 
   ssh = None     # SSH session
+  login = 'root' # default username
+  passw = 'root' # password for def user
   
   def __init__(self, timeout = 4, verbose = 2, detect_device = True, load_cfg = True):
     self.verbose = verbose
@@ -311,7 +313,7 @@ class Gateway():
       self.socket.settimeout(None)  # enable blocking mode
       self.ssh = ssh2.session.Session()
       self.ssh.handshake(self.socket)
-      self.ssh.userauth_password('root', 'root')
+      self.ssh.userauth_password(self.login, self.passw)
       self.ssh.set_blocking(True)
       self.ssh.set_timeout(int(self.timeout * 1000))
       return self.ssh
@@ -324,17 +326,38 @@ class Gateway():
 
   def get_telnet(self, verbose = 0):
     try:
-      tn = telnetlib.Telnet(self.ip_addr)
-      tn.read_until(b"login: ")
-      tn.write(b"root\n")
-      tn.read_until(b"Password: ")
-      tn.write(b"root\n")
-      tn.read_until(b"root@XiaoQiang:~#")
+      tn = telnetlib.Telnet(self.ip_addr, timeout=4)
+    except Exception as e:
+      if verbose:
+        die("TELNET not responding (IP: {})".format(self.ip_addr))
+      return None
+    try:
+      p_login = b'login: '
+      p_passw = b'Password: '
+      prompt = "{}@XiaoQiang:(.*?)#".format(self.login).encode('ascii')
+      idx, obj, output = tn.expect([p_login, prompt], timeout=2)
+      if idx < 0:
+        raise Exception('')
+      if idx > 0:
+        tn.prompt = obj.group()
+        return tn
+      tn.write("{}\n".format(self.login).encode('ascii'))
+      idx, obj, output = tn.expect([p_passw, prompt], timeout=2)
+      if idx < 0:
+        raise Exception('')
+      if idx > 0:
+        tn.prompt = obj.group()
+        return tn
+      tn.write("{}\n".format(self.passw).encode('ascii'))
+      idx, obj, output = tn.expect([prompt], timeout=2)
+      if idx < 0:
+        raise Exception('')
+      tn.prompt = obj.group()
       return tn
     except Exception as e:
       #print(e)
       if verbose:
-        die("TELNET not responding (IP: {})".format(self.ip_addr))
+        die("Can't login to TELNET (IP: {})".format(self.ip_addr))
     return None
 
   def get_ftp(self, verbose = 0):
@@ -347,7 +370,7 @@ class Gateway():
     self.shutdown()
     try:
       #timeout = 10 if self.timeout < 10 else self.timeout
-      self.ftp = ftplib.FTP(self.ip_addr, user='root', passwd='root', timeout=self.timeout)
+      self.ftp = ftplib.FTP(self.ip_addr, user=self.login, passwd=self.passw, timeout=self.timeout)
       self.ftp.voidcmd("NOOP")
       return self.ftp
     except Exception:
@@ -394,7 +417,7 @@ class Gateway():
         try:
           channel.wait_eof()
         except ssh2.exceptions.Timeout:
-          die("SSH execute command timedout! CMD: \"{}\"".format(cmd))
+          die("SSH execute command timed out! CMD: \"{}\"".format(cmd))
         if timeout is not None:
           ssh.set_timeout(saved_timeout)
         try:
@@ -406,7 +429,7 @@ class Gateway():
       else:
         cmd = (cmd + '\n').encode('ascii')
         tn.write(cmd)
-        tn.read_until(b"root@XiaoQiang:~#")
+        tn.read_until(tn.prompt, timeout = 4 if timeout is None else timeout)
     if not self.use_ssh:
       tn.write(b"exit\n")
     return True
