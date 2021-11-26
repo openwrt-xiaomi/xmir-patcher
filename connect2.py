@@ -47,7 +47,7 @@ def exec_cmd(cmd):
 
 res = exec_cmd('nvram set bootdelay=5; nvram set ssh_en=1; nvram commit;')
 if res != '{"code":0}':
-  die('Extension "/api/{}" not working!'.fromat(ext_name))
+  die('Extension "/api/{}" not working!'.format(ext_name))
 
 cmd = ''
 cmd += 'echo -e "root\\nroot" | passwd root' + '\n'
