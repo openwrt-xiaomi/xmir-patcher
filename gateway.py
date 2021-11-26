@@ -103,7 +103,7 @@ class Gateway():
         hardware = re.findall(r'hardwareVersion: \'(.*?)\'', r0.text)
         if hardware and len(hardware) > 0:
           self.device_name = hardware[0]
-      self.device_name = self.device_name.lower()
+      self.device_name = self.device_name.upper()
       romver = re.search(r'romVersion: \'(.*?)\'', r0.text)
       self.rom_version = romver.group(1).strip() if romver else None
       romchan = re.search(r'romChannel: \'(.*?)\'', r0.text)

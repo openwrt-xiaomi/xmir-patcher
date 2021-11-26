@@ -17,7 +17,7 @@ bl_name = bl_name.strip().lower()
 
 
 gw = gateway.Gateway()
-dname = gw.device_name
+dn = gw.device_name
 if not gw.device_name:
   die("Xiaomi Mi Wi-Fi device not found! (IP: {})".format(gateway.ip_addr))
 
@@ -26,7 +26,7 @@ fn_remote = '/tmp/bootloader.bin'
 fn_local  = None
 
 if bl_name == 'breed':
-  if dname != 'r3g' and dname != 'r3p' and dname != 'rm2100':
+  if dn != 'R3G' and dn != 'R3P' and dn != 'RM2100':
     die("Breed bootloader cannot be installed on this device!")
   fn_local = fn_dir + 'breed_r3g_eng.bin'
 

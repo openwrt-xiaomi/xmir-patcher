@@ -31,15 +31,15 @@ if gw.status < 1:
 
 dn = gw.device_name
 
-if dn == 'r2100' or dn == 'r2350' or dn == 'rm1800' or dn == 'rm2100' or dn == 'ra67':
+if dn == 'R2100' or dn == 'R2350' or dn == 'RM1800' or dn == 'RM2100' or dn == 'RA67':
   import connect2
   sys.exit(0)
 
-if dn == 'r3600' and gw.rom_version == '1.0.17':
+if dn == 'R3600' and gw.rom_version == '1.0.17':
   import connect2
   sys.exit(0)
 
-if dn == 'r3600' or dn == 'rb03':
+if dn == 'R3600' or dn == 'RB03':
   import connect3
   sys.exit(0)
 
@@ -73,9 +73,9 @@ fn_pf2 = dn_tmp + fn_pfname + '_02'
 fn_pf3 = dn_tmp + fn_pfname + '_03'
 
 fn_suffix = '_mips'
-if dn == 'r3d' or dn == 'd01':
+if dn == 'R3D' or dn == 'D01':
   fn_suffix = '_armv7a'
-if dn == "rb03":
+if dn == "RB03":
   fn_suffix = '_arm64'
 
 fn_pf = dn_dir + fn_pfname + fn_suffix
