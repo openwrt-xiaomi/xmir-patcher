@@ -612,7 +612,7 @@ class SysLog():
   mtdlist = []
   bdata = None    # EnvBuffer()
 
-  def __init__(self, gw, timeout = 10, verbose = 1, infolevel = 1):
+  def __init__(self, gw, timeout = 17, verbose = 1, infolevel = 1):
     self.gw = gateway.Gateway() if gw is None else gw
     self.verbose = verbose
     self.timeout = timeout
@@ -625,9 +625,10 @@ class SysLog():
     if infolevel >= 1:
       self.download_syslog()
     if infolevel >= 2:
+      self.parse_baseinfo(fatal_error = True)
       self.parse_mtdlist()
     if infolevel >= 3:
-      self.parse_bdata()
+      self.parse_bdata(fatal_error = True)
 
   def download_syslog(self, timeout = None):
     timeout = timeout if timeout is not None else self.timeout
@@ -664,8 +665,8 @@ class SysLog():
     fn_local = 'outdir/syslog.tar.gz'
     with open(fn_local, "wb") as file:
       file.write(zip)
-    if os.path.exists("syslog_test.tar.gz"):  # TEST
-      fn_local = "syslog_test.tar.gz"
+    #if os.path.exists("syslog_test.tar.gz"):  # TEST
+    #  fn_local = "syslog_test.tar.gz"
     tar = tarfile.open(fn_local, mode='r:gz')
     for member in tar.getmembers():
       if not member.isfile() or not member.name:
@@ -677,7 +678,7 @@ class SysLog():
       item.size = member.size
       item.data = tar.extractfile(member).read()
       self.files.append(item)
-      if self.verbose >= 2:
+      if self.verbose >= 3:
         print('name = "{}", size = {} ({})'.format(item.name, item.size, len(item.data)))
         if len(item.data) < 200:
           print(item.data)
@@ -692,6 +693,21 @@ class SysLog():
     if fatal_error:
       die('File "{}" not found in syslog!'.format(filename))
     return None
+
+  def parse_baseinfo(self, fatal_error = False):
+    self.device_sn = ""
+    file = self.get_file_by_name('xiaoqiang.log', fatal_error)
+    txt = file.data.decode('ascii')
+    sn = re.search('====SN\n(.*?)\n====', txt)
+    if not sn:
+      if fatal_error:
+        die('Device SN not found into syslog!')
+      return ""
+    sn = sn.group(1).strip()
+    if self.verbose >= 1:
+      print('Device SN: {}'.format(sn))
+    self.device_sn = sn
+    return sn
 
   def parse_mtdlist(self):
     self.mtdlist = []
@@ -725,9 +741,11 @@ class SysLog():
           return mtd
     return None
 
-  def parse_bdata(self):
+  def parse_bdata(self, fatal_error = False):
     self.bdata = None
-    file = self.get_file_by_name('bdata.txt', fatal_error = True)
+    file = self.get_file_by_name('bdata.txt', fatal_error)
+    if not file:
+      return None
     env = EnvBuffer(file.data.decode('ascii'), '\n')
     if self.verbose >= 2:
       print('SysLog BData List:')
@@ -743,7 +761,7 @@ if __name__ == "__main__":
     gw = gateway.Gateway(timeout = 4)
     if gw.status < 1:
       die("Xiaomi Mi Wi-Fi device not found (IP: {})".format(gw.ip_addr))
-    slog = SysLog(gw, timeout = 10, verbose = 1, infolevel = 2)
+    slog = SysLog(gw, timeout = 17, verbose = 1, infolevel = 2)
     sys.exit(0)
   
   fn_dir    = ''
