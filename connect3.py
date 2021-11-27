@@ -245,7 +245,7 @@ print('Default Telnet password: "{}"'.format(xqpass))
 
 if not gw.check_telnet():
   bdata = flasher.get_bdata_env()
-  if not 'telnet_en' in bdata.var or not bdata.var['telnet_en']:
+  if not 'telnet_en' in bdata.var or bdata.var['telnet_en'] != '1':
     flasher.patch_bdata()
 
 if not gw.check_telnet():
