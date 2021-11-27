@@ -136,7 +136,9 @@ class Gateway():
     self.status = 1
     return self.status
 
-  def web_ping(self, timeout):
+  def web_ping(self, timeout, wait_timeout = 0):
+    ret = True
+    start_time = datetime.datetime.now()
     try:
       res = requests.get("http://{ip_addr}/cgi-bin/luci/web".format(ip_addr = self.ip_addr), timeout = timeout)
       res.raise_for_status()
@@ -145,8 +147,12 @@ class Gateway():
       nonce_key = re.search(r'key: \'(.*)\',', res.text)
       self.nonce_key = nonce_key.group(1) if nonce_key else None
     except Exception:      
-      return False
-    return True
+      ret = False
+    if wait_timeout > 0:
+      dt = (wait_timeout * 1000 * 1000) - (datetime.datetime.now() - start_time).microseconds
+      if dt > 0:
+        time.sleep(dt / 1000 / 1000)
+    return ret
 
   def web_login(self):
     self.stok = None
@@ -196,7 +202,7 @@ class Gateway():
     while datetime.datetime.now() - start_time <= datetime.timedelta(seconds = timeout):
       if verbose:
         print('.', end='', flush=True)
-      if self.web_ping(1) is False:
+      if self.web_ping(1, 1) is False:
         if verbose:
           print('.', flush=True)
         time.sleep(1)
@@ -213,7 +219,7 @@ class Gateway():
     while datetime.datetime.now() - start_time <= datetime.timedelta(seconds = timeout):
       if verbose:
         print('.', end='', flush=True)
-      if self.web_ping(1) is True:
+      if self.web_ping(1, 1) is True:
         if verbose:
           print('log', end='', flush=True)
         self.web_login()  # TODO
