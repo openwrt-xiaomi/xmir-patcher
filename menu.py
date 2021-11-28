@@ -10,7 +10,7 @@ import gateway
 from gateway import die
 
 
-gw = gateway.Gateway(detect_device = False)
+gw = gateway.Gateway(detect_device = False, detect_ssh = False)
 
 def get_header(delim, suffix = ''):
   header = delim*58 + '\n'

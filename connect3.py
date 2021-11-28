@@ -18,7 +18,7 @@ from read_info import *
 from envbuffer import *
 
 
-gw = Gateway(timeout = 4)
+gw = Gateway(timeout = 4, detect_ssh = False)
 if gw.status < 1:
   die("Xiaomi Mi Wi-Fi device not found (IP: {})".format(gw.ip_addr))
 
@@ -28,8 +28,9 @@ print("MAC Address = {}".format(gw.mac_address))
 
 dn = gw.device_name
 gw.ssh_port = 22
-if gw.ping(verbose = 0) is True:
-  die(0, "Stock SSH server already installed and running")
+ret = gw.detect_ssh(verbose = 1, interactive = True)
+if ret > 0:
+  die(0, "SSH server already installed and running")
 
 
 class ExFlasher():

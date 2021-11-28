@@ -16,7 +16,7 @@ import gateway
 from gateway import *
 
 
-gw = gateway.Gateway(detect_device = False)
+gw = gateway.Gateway(detect_device = False, detect_ssh = False)
 
 if len(sys.argv) > 1:
   ip_addr = sys.argv[1]
@@ -48,8 +48,9 @@ print("rom_version = {} {}".format(gw.rom_version, gw.rom_channel))
 print("mac = {}".format(gw.mac_address))
 
 gw.ssh_port = 122
-if gw.ping(verbose = 0) is True:
-  die(0, "Exploit already installed and running")
+ret = gw.detect_ssh(verbose = 1, interactive = True)
+if ret > 0:
+  die(0, "SSH-server already installed and running")
 
 stok = gw.web_login()
 
@@ -159,6 +160,7 @@ else:
 requests.get(gw.apiurl + "xqnetdetect/netspeed")
 
 time.sleep(0.5)
+gw.passw = 'root'
 gw.ping(contimeout = 8)
 
 print("")

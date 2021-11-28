@@ -23,7 +23,7 @@ from gateway import *
 # RA67    FW v1.0.33    AX5 Router
 
 
-gw = Gateway(timeout = 4)
+gw = Gateway(timeout = 4, detect_ssh = False)
 if gw.status < 1:
   die("Xiaomi Mi Wi-Fi device not found (IP: {})".format(gw.ip_addr))
 
@@ -33,8 +33,9 @@ print("mac address = {}".format(gw.mac_address))
 
 dn = gw.device_name
 gw.ssh_port = 22
-if gw.ping(verbose = 0) is True:
-  die(0, "Stock SSH server already installed and running")
+ret = gw.detect_ssh(verbose = 1, interactive = True)
+if ret > 0:
+  die(0, "SSH server already installed and running")
 
 stok = gw.web_login()
 ext_name = 'misystem/set_config_iotdev'
@@ -61,6 +62,7 @@ res = exec_cmd(cmd)
 #  die('Extension "/api/misystem/set_config_iotdev" not working!!!')
 
 time.sleep(0.5)
+gw.passw = 'root'
 gw.ping(contimeout = 32)   # RSA host key generate very slow!
 
 print("")

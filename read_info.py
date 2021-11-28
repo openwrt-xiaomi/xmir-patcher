@@ -613,7 +613,7 @@ class SysLog():
   bdata = None    # EnvBuffer()
 
   def __init__(self, gw, timeout = 17, verbose = 1, infolevel = 1):
-    self.gw = gateway.Gateway() if gw is None else gw
+    self.gw = gateway.Gateway(detect_ssh = False) if gw is None else gw
     self.verbose = verbose
     self.timeout = timeout
     os.makedirs('outdir', exist_ok = True)
@@ -634,7 +634,7 @@ class SysLog():
     timeout = timeout if timeout is not None else self.timeout
     self.files = []
     if not self.gw:
-      gw = gateway.Gateway()
+      gw = gateway.Gateway(detect_ssh = False)
       gw.web_login()
     else:
       gw = self.gw
@@ -758,7 +758,7 @@ class SysLog():
 
 if __name__ == "__main__":
   if len(sys.argv) > 1 and sys.argv[1] == 'syslog':
-    gw = gateway.Gateway(timeout = 4)
+    gw = gateway.Gateway(timeout = 4, detect_ssh = False)
     if gw.status < 1:
       die("Xiaomi Mi Wi-Fi device not found (IP: {})".format(gw.ip_addr))
     slog = SysLog(gw, timeout = 17, verbose = 1, infolevel = 2)

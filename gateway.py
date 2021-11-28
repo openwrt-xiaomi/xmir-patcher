@@ -28,9 +28,6 @@ if sys.version_info < (3,8,0):
 from multiprocessing import shared_memory
 
 
-EXPLOIT_VIA_DROPBEAR = True
-
-
 def die(*args):
   err = 1
   prefix = "ERROR: "
@@ -57,7 +54,7 @@ def get_http_headers():
 
 
 class Gateway():
-  use_ssh = EXPLOIT_VIA_DROPBEAR
+  use_ssh = True
   verbose = 2
   timeout = 4
   memcfg = None  # shared memory "XMiR_12345"
@@ -73,7 +70,7 @@ class Gateway():
   ssh = None     # SSH session
   login = 'root' # default username
   
-  def __init__(self, timeout = 4, verbose = 2, detect_device = True, load_cfg = True):
+  def __init__(self, timeout = 4, verbose = 2, detect_device = True, detect_ssh = True, load_cfg = True):
     self.verbose = verbose
     self.timeout = timeout
     self.device_name = None
@@ -84,6 +81,12 @@ class Gateway():
     os.makedirs('tmp', exist_ok = True)
     if detect_device:
       self.detect_device()
+    if detect_ssh:
+      verb = 1 if verbose else 0
+      interact = True if verbose else False
+      port = self.detect_ssh(verbose = 1, interactive = interact)
+      if port <= 0:
+        die("Can't found valid SSH server on IP {}".format(self.ip_addr))
 
   def detect_device(self):
     self.device_name = None
@@ -364,6 +367,89 @@ class Gateway():
       json.dump(config, file, indent=4, sort_keys=True)
 
   #===============================================================================
+  def check_ssh(self, ip, port, password, contimeout = 2, timeout = 3):    
+    err = 0
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    ssh = None
+    try:
+      sock.settimeout(contimeout)
+      sock.connect((ip, port))
+      sock.settimeout(timeout)
+    except Exception as e:
+      err = -1
+    if password and err == 0:
+      try:
+        ssh = ssh2.session.Session()
+        ssh.handshake(sock)
+      except Exception as e:
+        err = -2
+      if err == 0:
+        try:
+          ssh.userauth_password(self.login, password)
+        except Exception as e:
+          err = -3
+    try:
+      ssh.disconnect()
+    except Exception:
+      pass
+    try:
+      sock.close()
+    except Exception:
+      pass
+    return err
+
+  def detect_ssh(self, verbose = 1, interactive = True, contimeout = 2, aux_port = 122):
+    ip_addr = self.ip_addr
+    ssh_port = self.ssh_port
+    if ssh_port == aux_port:
+      aux_port = 22
+    passw = self.passw
+    if passw:
+      ret = self.check_ssh(ip_addr, ssh_port, passw, contimeout = contimeout)
+      if ret >= 0:
+        return ssh_port  # OK
+      if ret == -1:
+        ssh_port = 0
+    if ssh_port:
+      portlist = [ ssh_port, aux_port ]
+    else:
+      portlist = [ aux_port ]
+    plist = []
+    for i, port in enumerate(portlist):
+      ret = self.check_ssh(ip_addr, port, None, contimeout = contimeout)
+      if ret == 0:
+        plist.append(port)
+    if not plist:
+      if verbose >= 2:
+        print("Can't found valid SSH server on IP {}".format(ip_addr))
+      return -1
+    if passw:
+      pswlist = [ passw ]
+      if passw != 'root':
+        pswlist.append('root')
+    else:
+      pswlist = ['root', None]
+    for p, psw in enumerate(pswlist):
+      if psw is None:
+        if not interactive:
+          continue
+        psw = input("Enter password for root: ")
+      for i, port in enumerate(plist):
+        ret = self.check_ssh(ip_addr, port, psw, contimeout = contimeout)
+        if ret >= 0:
+          self.passw = psw
+          self.ssh_port = port
+          if verbose:
+            print("Detect valid SSH server on port {} (auth OK)".format(port))
+          return port
+        if ret == -3 and passw and psw == passw:
+          if verbose:
+            print("Set SSH password = None")
+          self.passw = None
+    if verbose >= 2:
+      print("Can't found valid SSH server on IP {}".format(ip_addr))
+    return -1  
+
   def set_timeout(self, timeout):
     self.timeout = timeout
     if self.use_ssh and self.ssh:
@@ -567,7 +653,7 @@ class Gateway():
 if __name__ == "__main__":
   if len(sys.argv) > 1:
     ip_addr = sys.argv[1]
-    gw = Gateway(detect_device = False)
+    gw = Gateway(detect_device = False, detect_ssh = False)
     gw.ip_addr = ip_addr
     print("Device IP-address changed to {}".format(ip_addr))
     
