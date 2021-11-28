@@ -446,9 +446,10 @@ class Gateway():
           if verbose:
             print("Set SSH password = None")
           self.passw = None
+          passw = None
     if verbose >= 2:
       print("Can't found valid SSH server on IP {}".format(ip_addr))
-    return -1  
+    return -2  
 
   def set_timeout(self, timeout):
     self.timeout = timeout
