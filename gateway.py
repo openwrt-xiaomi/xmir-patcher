@@ -72,7 +72,6 @@ class Gateway():
   socket = None  # TCP socket for SSH 
   ssh = None     # SSH session
   login = 'root' # default username
-  passw = 'root' # password for def user
   
   def __init__(self, timeout = 4, verbose = 2, detect_device = True, load_cfg = True):
     self.verbose = verbose
@@ -317,6 +316,14 @@ class Gateway():
   @ssh_port.setter
   def ssh_port(self, value):
     self.set_memcfg_param('ssh_port', value)
+
+  @property
+  def passw(self):
+    return self.get_memcfg_param('passw', None)  # password for root user
+
+  @passw.setter
+  def passw(self, value):
+    self.set_memcfg_param('passw', value)
 
   @property
   def webpassword(self):
