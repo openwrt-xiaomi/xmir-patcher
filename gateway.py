@@ -252,27 +252,16 @@ class Gateway():
 
   #===============================================================================
   def shutdown(self):
-    if self.use_ssh:
-      try:
-        self.ssh.disconnect()
-      except Exception:
-        pass
-      try:
-        self.socket.close()
-      except Exception:
-        pass
-    else:  
-      try:
-        self.ftp.quit()
-      except Exception:
-        pass
-      try:
-        self.ftp.close()
-      except Exception:
-        pass
+    self.ssh_close()
+    try:
+      self.ftp.quit()
+    except Exception:
+      pass
+    try:
+      self.ftp.close()
+    except Exception:
+      pass
     self.ftp = None
-    self.ssh = None
-    self.socket = None
 
   #===============================================================================
   def init_memcfg(self, load_cfg = True):
@@ -463,6 +452,18 @@ class Gateway():
     if verbose >= 2:
       print("Can't found valid SSH server on IP {}".format(ip_addr))
     return -2  
+
+  def ssh_close(self):
+    try:
+      self.ssh.disconnect()
+    except Exception:
+      pass
+    try:
+      self.socket.close()
+    except Exception:
+      pass
+    self.ssh = None
+    self.socket = None
 
   def set_timeout(self, timeout):
     self.timeout = timeout
