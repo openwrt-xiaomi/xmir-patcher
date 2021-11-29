@@ -51,8 +51,8 @@ def menu1_process(id):
 def menu2_show():
   print(get_header('-', '(extended functions)'))
   print(' 1 - Set default device IP-address')
-  print(' 2 - Read dmesg and syslog')
-  print(' 3 - ')
+  print(' 2 - Change root password')
+  print(' 3 - Read dmesg and syslog')
   print(' 4 - Create a backup of the specified partition')
   print(' 5 - Uninstall EN/RU languages')
   print(' 6 - Set kernel boot address')
@@ -63,8 +63,8 @@ def menu2_show():
 
 def menu2_process(id):
   if id == 1: return "set_def_ipaddr.by"
-  if id == 2: return "read_dmesg.py"
-  if id == 3: return None
+  if id == 2: return "passw.py"
+  if id == 3: return "read_dmesg.py"
   if id == 4: return [ "create_backup.py", "part" ]
   if id == 5: return [ "install_lang.py", "uninstall" ]
   if id == 6: return "activate_boot.py"
