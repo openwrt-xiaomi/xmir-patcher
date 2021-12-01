@@ -185,17 +185,39 @@ class Gateway():
   def apiurl(self):
     return "http://{ip_addr}/cgi-bin/luci/;stok={stok}/api/".format(ip_addr = self.ip_addr, stok = self.stok)
 
-  def get_factory_info(self, timeout = 5):
-    self.facinfo = {}
-    if not self.stok:
-      self.web_login()
+  def get_pub_info(self, api_name, timeout = 5):
+    subsys = 'xqsystem'
+    if api_name == 'router_info' or api_name == 'topo_graph':
+      subsys = 'misystem'
     try:
-      res = requests.get(self.apiurl + 'xqsystem/fac_info', timeout = timeout)
+      url = "http://{ip_addr}/cgi-bin/luci/api/{subsys}/{api_name}".format(ip_addr = self.ip_addr, subsys = subsys, api_name = api_name)
+      res = requests.get(url, timeout = timeout)
       res.raise_for_status()
     except Exception:      
       return {}
-    self.facinfo = json.loads(res.text)
+    return json.loads(res.text)
+
+  def get_init_info(self, timeout = 5):
+    return self.get_pub_info('init_info', timeout = timeout)
+
+  def get_factory_info(self, timeout = 5):
+    self.facinfo = self.get_pub_info('fac_info', timeout = timeout)
     return self.facinfo
+
+  def get_bdata_info(self, timeout = 5):
+    return self.get_pub_info('bdata', timeout = timeout)
+
+  def get_ip_info(self, timeout = 5):
+    return self.get_pub_info('get_ip', timeout = timeout)
+
+  def get_upgrade_status(self, timeout = 5):
+    return self.get_pub_info('upgrade_status', timeout = timeout)
+
+  def get_router_info(self, timeout = 5):
+    return self.get_pub_info('router_info', timeout = timeout)
+
+  def get_topo_graph_info(self, timeout = 5):
+    return self.get_pub_info('topo_graph', timeout = timeout)
 
   def wait_shutdown(self, timeout, verbose = 1):
     if verbose:
