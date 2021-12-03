@@ -18,9 +18,9 @@ from envbuffer import EnvBuffer
 
 class RootFS():
   num = None       # 0 / 1
-  dev = None       # "/dev/mtd10"
-  mtd_name = None  # "mtd10" / "mtd11"
-  partition = None # "rootfs0" / "rootfs1"
+  mtd_num = None   # 10 / 11
+  mtd_dev = None   # "/dev/mtd10"
+  partition = None # "rootfs0" / "rootfs1" / "rootfs_1"
 
 class Bootloader():
   type = None      # 'uboot' / 'breed' / 'pandora'
@@ -179,27 +179,44 @@ class DevInfo():
     self.rootfs = RootFS()
     if not self.dmesg:
       return self.rootfs
+    # flag_boot_rootfs=0 mounting /dev/mtd10 
+    x = re.search(r'flag_boot_rootfs=([0-9]) mounting (\S+)', self.dmesg)
+    if x:
+      self.rootfs.num = int(x.group(1))
+      self.rootfs.mtd_dev = x.group(2)
+    # UBI: attached mtd10 (name "rootfs0", size 32 MiB) to ubi0 
+    x = re.search(r'attached mtd([0-9]+) \(name "(.*?)", size', self.dmesg)
+    if x and x.group(2).lower().startswith('rootfs'):
+      self.rootfs.mtd_num = int(x.group(1))
+      self.rootfs.partition = x.group(2).strip()
+    # mtd: device 11 (rootfs) set to be root filesystem
+    x = re.search(r'mtd: device ([0-9]+) \(rootfs\) set to be root filesystem', self.dmesg)
+    if x:
+      self.rootfs.mtd_num = int(x.group(1))
+    if self.rootfs.num is None:
+      k = re.search(r'Kernel command line:(.*?) ubi\.mtd=(\S+)', self.dmesg)   # ([^\s]+)
+      if k:
+        self.rootfs.partition = k.group(2)
+    if self.rootfs.num is None:
+      k = re.search(r'Kernel command line:(.*?) firmware=([0-9])', self.dmesg)
+      if k:
+        self.rootfs.num = int(k.group(2))
+    if self.rootfs.num is None and self.rootfs.mtd_num is None:
+      x = re.search(r'Kernel command line:(.*?) root=(\S+)', self.dmesg)
+      if x and x.group(2).startswith('/dev/mtdblock'):
+        self.rootfs.mtd_dev = x.group(2) 
+        self.rootfs.mtd_num = int(self.rootfs.mtd_dev.replace('/dev/mtdblock', ''))
+    if self.rootfs.num is None and self.rootfs.partition:
+      if self.rootfs.partition.lower().startswith('rootfs'):
+        self.rootfs.num = 0
+        if self.rootfs.partition.endswith('1'):
+          self.rootfs.num = 1
     if verbose:
       print('RootFS info:')
-    # flag_boot_rootfs=0 mounting /dev/mtd10 
-    res = re.findall(r'flag_boot_rootfs=(.*?) mounting (.*?)\n', self.dmesg)
-    if len(res) > 0:
-      res = res[0]
-      if verbose:
-        print('  num = {}'.format(res[0]))
-        print('  dev = "{}"'.format(res[1]))
-      self.rootfs.num = int(res[0]) if res[0] else None
-      self.rootfs.dev = res[1]
-    # UBI: attached mtd10 (name "rootfs0", size 32 MiB) to ubi0 
-    res = re.findall(r'attached (.*?) \(name "(.*?)", size', self.dmesg)
-    if len(res) > 0:
-      res = res[0]
-      self.rootfs.mtd_name = res[0]
-      self.rootfs.partition = res[1]
-      if verbose:
-        print('  mtd_name = {}'.format(res[0]))
-        print('  partition = "{}"'.format(res[1]))
-    if verbose:
+      print('  num = {}'.format(self.rootfs.num))
+      print('  mtd_num = {}'.format(self.rootfs.mtd_num))
+      print('  mtd_dev = "{}"'.format(self.rootfs.mtd_dev))
+      print('  partition = "{}"'.format(self.rootfs.partition))
       print(" ")
     return self.rootfs
     
@@ -213,7 +230,8 @@ class DevInfo():
       print('Base info:')
     # Linux version 3.10.14 (jenkins@cefa8cf504dc) (gcc version 4.8.5 (crosstool-NG crosstool-ng-1.22.0) ) 
     x = re.search(r'Linux version (.*?) ', self.dmesg)
-    ret.linux_ver = x.group(1).strip() if x else None
+    if x:
+      ret.linux_ver = x.group(1).strip()
     if verbose:
       print('  Linux version: {}'.format(ret.linux_ver))
     # MIPS secondary cache 256kB, 8-way, linesize 32 bytes.
@@ -221,18 +239,27 @@ class DevInfo():
     if x:
       ret.cpu_arch = 'mips'
     # CPU: ARMv7 Processor [512f04d0] revision 0 (ARMv7), cr=10c5387d
-    x = re.search(r'CPU: ARMv7 Processor(.*?)revision ', self.dmesg)
+    # Boot CPU: AArch64 Processor [410fd034]
+    x = re.search(r'CPU: (.*?) Processor \[([0-9a-f]+)\]', self.dmesg)
     if x:
-      ret.cpu_arch = 'armv7'
+      ret.cpu_arch = x.group(1).strip().lower()
+      if ret.cpu_arch == 'aarch64':
+        ret.cpu_arch = 'arm64'
     if verbose:
       print('  CPU arch: {}'.format(ret.cpu_arch))
     # start MT7621 PCIe register access
     x = re.search(r'start (.*?) PCIe register access', self.dmesg)
     if x:
-      ret.cpu_name = x.group(1).strip().lower() if x else None
+      ret.cpu_name = x.group(1).strip().lower()
     x = self.dmesg.find("acpuclk-ipq806x acpuclk-ipq806x: ")
     if x > 0:
       ret.cpu_name = 'ipq806x'
+    x = self.dmesg.find("cpr4_ipq807x_apss_read_fuse_data: apc_corner: speed bin =")
+    if x > 0:
+      ret.cpu_name = 'ipq807x'
+    x = self.dmesg.find('mt7622_pa_lna_set():')
+    if x > 0:
+      ret.cpu_name = 'mt7622'
     if verbose:
       print('  CPU name: {}'.format(ret.cpu_name))
     # spi-mt7621 1e000b00.spi: sys_freq: 50000000  
@@ -803,8 +830,8 @@ if __name__ == "__main__":
   file.write("\n")  
   file.write("_RootFS_current_:\n")
   file.write('  num = {}\n'.format(info.rootfs.num))
-  file.write('  dev = "{}"\n'.format(info.rootfs.dev))
-  file.write('  mtd_name = "{}"\n'.format(info.rootfs.mtd_name))
+  file.write('  mtd_num = {}\n'.format(info.rootfs.mtd_num))
+  file.write('  mtd_dev = "{}"\n'.format(info.rootfs.mtd_dev))
   file.write('  partition = "{}"\n'.format(info.rootfs.partition))
   file.write("\n")
   #file.write('Board name: "{}" \n\n'.format(info.board_name))
