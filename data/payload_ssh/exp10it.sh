@@ -1,5 +1,8 @@
 # enable UART
-nvram set bootdelay=5; nvram set uart_en=1; nvram commit
+nvram set boot_wait=on
+nvram set bootdelay=3
+nvram set uart_en=1
+nvram commit
 
 # change password for root
 echo -e "root\nroot" | (passwd root) 
