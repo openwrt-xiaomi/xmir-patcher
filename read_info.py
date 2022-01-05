@@ -636,6 +636,7 @@ class SysLog():
   verbose = 1
   timeout = 10
   files = []
+  skiplogs = True
   mtdlist = []
   bdata = None    # EnvBuffer()
 
@@ -673,7 +674,7 @@ class SysLog():
       die("Xiaomi Mi Wi-Fi device not found (IP: {})".format(gw.ip_addr))
     if self.verbose > 0:
       print("Start generating syslog...")
-    r2 = requests.get(gw.apiurl + "misystem/sys_log", timeout = self.timeout)
+    r2 = requests.get(gw.apiurl + "misystem/sys_log", timeout = timeout)
     if r2.text.find('"code":0') < 0:
       die("SysLog not generated!")
     try:
@@ -685,7 +686,7 @@ class SysLog():
     if self.verbose > 0:
       print('Downloading SysLog from file "{}" ...'.format(url))
     zip = b''
-    with requests.get(url, stream=True, timeout = self.timeout) as r3:
+    with requests.get(url, stream=True, timeout = timeout) as r3:
       r3.raise_for_status()
       for chunk in r3.iter_content(chunk_size=8192): 
         zip += chunk
@@ -698,7 +699,7 @@ class SysLog():
     for member in tar.getmembers():
       if not member.isfile() or not member.name:
         continue 
-      if member.name.find('usr/log/') >= 0:  # skip raw syslog files
+      if self.skiplogs and member.name.find('usr/log/') >= 0:  # skip raw syslog files
         continue
       item = types.SimpleNamespace()
       item.name = member.name
@@ -724,7 +725,7 @@ class SysLog():
   def parse_baseinfo(self, fatal_error = False):
     self.device_sn = ""
     file = self.get_file_by_name('xiaoqiang.log', fatal_error)
-    txt = file.data.decode('ascii')
+    txt = file.data.decode('latin_1')
     sn = re.search('====SN\n(.*?)\n====', txt)
     if not sn:
       if fatal_error:
@@ -739,7 +740,7 @@ class SysLog():
   def parse_mtdlist(self):
     self.mtdlist = []
     file = self.get_file_by_name('xiaoqiang.log', fatal_error = True)
-    txt = file.data.decode('ascii')
+    txt = file.data.decode('latin_1')
     x = txt.find("\nMTD  table:\n")
     if x <= 0:
       die('MTD table not found into syslog!')
@@ -788,7 +789,7 @@ if __name__ == "__main__":
     gw = gateway.Gateway(timeout = 4, detect_ssh = False)
     if gw.status < 1:
       die("Xiaomi Mi Wi-Fi device not found (IP: {})".format(gw.ip_addr))
-    slog = SysLog(gw, timeout = 17, verbose = 1, infolevel = 2)
+    slog = SysLog(gw, timeout = 22, verbose = 1, infolevel = 2)
     sys.exit(0)
   
   fn_dir    = ''

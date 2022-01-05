@@ -14,6 +14,8 @@ import requests
 import atexit
 
 import socket
+
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 import ssh2
 from ssh2.error_codes import LIBSSH2_ERROR_EAGAIN
 from ssh2.utils import wait_socket
@@ -598,7 +600,8 @@ class Gateway():
         return False
     return True
 
-  def run_cmd(self, cmd, msg = None, timeout = None):
+  def run_cmd(self, cmd, msg = None, timeout = None, die_on_error = True):
+    ret = True
     if self.use_ssh:
       ssh = self.get_ssh(self.verbose)
     else:
@@ -622,7 +625,10 @@ class Gateway():
         try:
           channel.wait_eof()
         except ssh2.exceptions.Timeout:
-          die("SSH execute command timed out! CMD: \"{}\"".format(cmd))
+          ssh.set_timeout(100)
+          ret = False
+          if die_on_error:
+            die("SSH execute command timed out! CMD: \"{}\"".format(cmd))
         if timeout is not None:
           ssh.set_timeout(saved_timeout)
         try:
@@ -631,13 +637,15 @@ class Gateway():
         except Exception:
           pass
         #status = channel.get_exit_status()
+        if not ret:
+          break
       else:
         cmd = (cmd + '\n').encode('ascii')
         tn.write(cmd)
         tn.read_until(tn.prompt, timeout = 4 if timeout is None else timeout)
     if not self.use_ssh:
       tn.write(b"exit\n")
-    return True
+    return ret
 
   def download(self, fn_remote, fn_local, verbose = 1):
     if verbose and self.verbose:

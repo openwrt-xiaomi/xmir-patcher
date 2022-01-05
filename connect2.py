@@ -46,7 +46,7 @@ def exec_cmd(cmd):
   res = requests.get(gw.apiurl + ext_name, params = params)
   return res.text
 
-res = exec_cmd('nvram set bootdelay=5; nvram set ssh_en=1; nvram commit;')
+res = exec_cmd('nvram set bootdelay=3; set boot_wait=on; nvram set ssh_en=1; nvram commit;')
 if res != '{"code":0}':
   die('Extension "/api/{}" not working!'.format(ext_name))
 
