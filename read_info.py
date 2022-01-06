@@ -82,7 +82,7 @@ class DevInfo():
       self.get_rootfs()
       self.get_baseinfo()
       if not self.info.cpu_arch:
-        die("Can't detect CPU arch!")
+        die("Can't detect CPU arch! Try to reboot device.")
     if infolevel >= 2:
       self.get_ver()
     if infolevel >= 3:

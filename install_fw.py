@@ -6,6 +6,7 @@ import sys
 import types
 import tarfile
 import lzma
+import ctypes
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 import gateway
@@ -73,8 +74,9 @@ if c_rootfs and c_factory == 0:
   die('Kernel image not found! (only rootfs is present)')
 
 dev = read_info.DevInfo(verbose = 0, infolevel = 1)
-if dev.info.cpu_arch != 'mips':
-  die("Currently support only MIPS arch!")
+cpuarch = dev.info.cpu_arch
+if cpuarch != 'mips' and cpuarch != 'armv7':
+  die("Currently support only MIPS and ARMv7 arch!")
 
 class ImgHeader():
   size = None      # Image Data Size
@@ -88,6 +90,7 @@ class Image():
   ostype = None    # 'stock', 'openwrt', 'padavan', 'pandorabox', etc
   hdr = ImgHeader()
   addr = None
+  addr2 = None     # for kernel_stok/kernel_dup
   fn_local = None
   fn_remote = None
   data = None
@@ -216,7 +219,7 @@ def parse_factory(data, offset = 0):
       return 1
     if rootfs.data:
       die('Found two RootFS images!')
-    rootfs.data = data
+    rootfs.data = data[rootfs_offset:]
     return 2
   return 0
 
@@ -288,13 +291,72 @@ if not rootfs.data:
   die('RootFS data not found!')
 
 if kernel.data[:4] == b"\xD0\x0D\xFE\xED":
-  die('ARM images not supported!')
+  die('FIT images not supported!')
+
+class fdt_header(ctypes.BigEndianStructure):
+  _fields_ = [("magic",             ctypes.c_uint),
+              ("totalsize",         ctypes.c_uint),
+              ("off_dt_struct",     ctypes.c_uint),
+              ("off_dt_strings",    ctypes.c_uint),
+              ("off_mem_rsvmap",    ctypes.c_uint),
+              ("version",           ctypes.c_uint),
+              ("last_comp_version", ctypes.c_uint),
+              ("boot_cpuid_phys",   ctypes.c_uint),
+              ("size_dt_strings",   ctypes.c_uint),
+              ("size_dt_struct",    ctypes.c_uint)]
+
+def find_dtb(img, pos=0):
+  k = pos
+  while True:
+    k = img.find(b"\xD0\x0D\xFE\xED", k)
+    if k < 0:
+      break
+    hdrsize = ctypes.sizeof(fdt_header)
+    fdt = fdt_header.from_buffer_copy(img[k:k+hdrsize])
+    k += 1
+    if fdt.totalsize > hdrsize + 128 and fdt.totalsize < 32000:
+      if fdt.off_dt_struct > hdrsize and fdt.off_dt_struct < fdt.totalsize:
+        if fdt.off_dt_strings > hdrsize and fdt.off_dt_strings < fdt.totalsize:
+          if fdt.version == 17 and fdt.last_comp_version == 16:
+            if fdt.boot_cpuid_phys == 0:
+              if fdt.size_dt_strings < fdt.totalsize and fdt.size_dt_struct < fdt.totalsize:
+                return k - 1, fdt.totalsize
+  return None, None
+
+def get_dtb(img, pos=0):
+  pos, size = find_dtb(img, pos)
+  return img[pos:pos+size] if pos is not None else None
+
+def get_dtb_part_info(dtb, part_name):
+  k = dtb.find(b'fixed-partitions\x00')
+  if k <= 0:
+    return None
+  while True:
+    k = dtb.find(b"partition@", k)
+    if k < 0:
+      break
+    k = dtb.find(b"\x00", k) + 1
+    k = (k + 3) & 0xFFFFFFFC
+    k += 12
+    n = dtb.find(b"\x00", k)
+    name = dtb[k:n]
+    name_len = len(name)
+    name = name.decode('latin_1')
+    if name != part_name:
+      continue
+    k += name_len + 1
+    k = (k + 3) & 0xFFFFFFFC
+    k += 12
+    addr = int.from_bytes(dtb[k:k+4], byteorder='big')
+    size = int.from_bytes(dtb[k+4:k+8], byteorder='big')    
+    return {'addr': addr, 'size': size, 'name': name}
+  return None
 
 if kernel.data[:4] == b"\x27\x05\x19\x56":
   data2 = kernel.data[0x40:]
   img_comp = kernel.hdr.comp
   if img_comp == 0:
-    loader_data = data2[:0x4000]
+    loader_data = data2[:0x8000]
     x1 = loader_data.find(b'Incorrect LZMA stream properties!') # b'OpenWrt kernel loader for MIPS based SoC'
     x2 = loader_data.find(b'XZ-compressed data is corrupt')
     if x1 < 0 and x2 < 0:
@@ -326,41 +388,39 @@ if kernel.data[:4] == b"\x27\x05\x19\x56":
     with open(dn_tmp + 'kernel_unpacked.bin', "wb") as file:
       file.write(kernel.data2)
   if kernel.ostype == 'openwrt':
-    if not kernel.data2:
-      die("Can't unpack OpenWrt kernel image!")
-    k = kernel.data2.find(b'\x00mediatek,mt7621-soc\x00')
-    if k < 0:
-      die("Can't found DTB section!")
-    k = kernel.data2.find(b'kernel_stock\x00', k)
-    if k < 0:
-      die("Can't found 'kernel_stock' partition in DTB!")
-    if k > 0:
-      k += 0x1C
-      addr = int.from_bytes(kernel.data2[k:k+4], byteorder='big')
-      size = int.from_bytes(kernel.data2[k+4:k+8], byteorder='big')
-      print('part kernel_stock = 0x%X (size: 0x%X)' % (addr, size))
-      k = kernel.data2.find(b'kernel\x00', k)
-      if k < 0:
-        die("Can't found 'kernel' partition in DTB!")
-      k += 0x14
-      addr = int.from_bytes(kernel.data2[k:k+4], byteorder='big')
-      size = int.from_bytes(kernel.data2[k+4:k+8], byteorder='big')
-      print('part kernel = 0x%X (size: 0x%X)' % (addr, size))
-      part = dev.get_part_by_addr(addr)
-      if not part:
-        die("Can't support flashing kernel to addr 0x%X" % addr)      
-      kernel.addr = addr
-      k = kernel.data2.find(b'ubi\x00', k)
-      if k < 0:
-        die("Can't found 'ubi' partition in DTB!")
-      k += 0x10
-      addr = int.from_bytes(kernel.data2[k:k+4], byteorder='big')
-      size = int.from_bytes(kernel.data2[k+4:k+8], byteorder='big')
-      print('part ubi = 0x%X (size: 0x%X)' % (addr, size))
-      part = dev.get_part_by_addr(addr)
-      if not part:
-        die("Can't support flashing rootfs to addr 0x%X" % addr)
-      rootfs.addr = addr
+    dtb = get_dtb(kernel.data, 32)
+    if not dtb and kernel.data2:
+      dtb = get_dtb(kernel.data2, 0)
+    if not dtb:
+      die("Can't found FDT (flattened device tree)")
+    kernel_part = get_dtb_part_info(dtb, "kernel")
+    if not kernel_part:
+      die('Cannot found "kernel" partition in DTB!')
+    print('part kernel = 0x%X (size: 0x%X)' % (kernel_part['addr'], kernel_part['size']))
+    kernel.addr = kernel_part['addr']
+    part = dev.get_part_by_addr(kernel.addr)
+    if not part:
+      die("Can't support flashing kernel to addr 0x%X" % kernel.addr)      
+    kernel2_part = get_dtb_part_info(dtb, "kernel_dup")
+    if not kernel2_part:
+      kernel2_part = get_dtb_part_info(dtb, "kernel_stock")
+    if not kernel2_part:
+      die('Cannot found "kernel_dup"/"kernel_stock" partition in DTB!')
+    print('part kernel2 = 0x%X (size: 0x%X)' % (kernel2_part['addr'], kernel2_part['size']))
+    kernel.addr2 = kernel2_part['addr']
+    part = dev.get_part_by_addr(kernel.addr2)
+    if not part:
+      die("Can't support flashing kernel to addr 0x%X" % kernel.addr2)      
+    ubi_part = get_dtb_part_info(dtb, "ubi")
+    if not ubi_part:
+      die('Cannot found "ubi" partition in DTB!')
+    print('part ubi = 0x%X (size: 0x%X)' % (ubi_part['addr'], ubi_part['size']))
+    rootfs.addr = ubi_part['addr']
+    part = dev.get_part_by_addr(rootfs.addr)
+    if not part:
+      die("Can't support flashing ubi to addr 0x%X" % rootfs.addr)
+    if len(rootfs.data) + 0x8000 >= part['size']:
+      die("Partition '%s' is too small (data size: 0x%X, part size: 0x%X)" % (part['name'], len(rootfs.data), part['size']))
   if kernel.ostype == 'padavan':
     kernel.addr = 0x600000
     part = dev.get_part_by_addr(kernel.addr)
@@ -435,6 +495,13 @@ if kernel.ostype == 'openwrt' or kernel.ostype == 'padavan':
     die('Partition size is too small!')
   kernel.partname = part['name']
   kernel.cmd = 'mtd -e "{part}" write "{bin}" "{part}"'.format(part=kernel.partname, bin=kernel.fn_remote)
+  if kernel.addr2:
+    part = dev.get_part_by_addr(kernel.addr2)
+    if not part:
+      die('Partition for addr {} not found'.format("0x%X" % kernel.addr2))
+    if part['size'] < len(kernel.data):
+      die('Partition size is too small!')
+    kernel.cmd += ' ; mtd -e "{part}" write "{bin}" "{part}"'.format(part=part['name'], bin=kernel.fn_remote)
   part = dev.get_part_by_addr(rootfs.addr)
   if not part:
     die('Partition for addr {} not found'.format("0x%X" % rootfs.addr))
@@ -474,13 +541,22 @@ if not kernel.cmd or not rootfs.cmd:
 gw.set_timeout(12)
 gw.upload(kernel.fn_local, kernel.fn_remote)
 gw.upload(rootfs.fn_local, rootfs.fn_remote)
+
+cmd = "nvram set bootdelay=3; set boot_wait=on; nvram set ssh_en=1; nvram commit;"
+gw.run_cmd(cmd, timeout = 8)
+
 print('Writing kernel image to addr {} ...'.format("0x%08X" % kernel.addr))
 print("  " + kernel.cmd)
-gw.run_cmd(kernel.cmd, timeout = 12)
+gw.run_cmd(kernel.cmd, timeout = 22)
+
 print('Writing rootfs image to addr {} ...'.format("0x%08X" % rootfs.addr))
 print("  " + rootfs.cmd)
-gw.run_cmd(rootfs.cmd, timeout = 40)
+gw.run_cmd(rootfs.cmd, timeout = 60)
+
 print("The firmware has been successfully flashed!")
+
+gw.run_cmd("sync ; umount -a", timeout = 12)
+
 
 
 
