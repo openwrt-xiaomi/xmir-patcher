@@ -287,8 +287,19 @@ if c_stock:
 if not kernel.data:
   die('Kernel data not found!')
 
+kernel.fn_remote = '/tmp/kernel.bin'
+kernel.fn_local = fn_kernel
+with open(kernel.fn_local, "wb") as file:
+  file.write(kernel.data)
+
 if not rootfs.data:
   die('RootFS data not found!')
+
+rootfs.fn_remote = '/tmp/rootfs.bin'
+rootfs.fn_local = fn_rootfs
+with open(rootfs.fn_local, "wb") as file:
+  file.write(rootfs.data)
+
 
 if kernel.data[:4] == b"\xD0\x0D\xFE\xED":
   die('FIT images not supported!')
@@ -306,21 +317,20 @@ class fdt_header(ctypes.BigEndianStructure):
               ("size_dt_struct",    ctypes.c_uint)]
 
 def find_dtb(img, pos=0):
-  k = pos
+  hdrsize = ctypes.sizeof(fdt_header)
   while True:
-    k = img.find(b"\xD0\x0D\xFE\xED", k)
+    k = img.find(b"\xD0\x0D\xFE\xED\x00", pos)
     if k < 0:
       break
-    hdrsize = ctypes.sizeof(fdt_header)
     fdt = fdt_header.from_buffer_copy(img[k:k+hdrsize])
-    k += 1
-    if fdt.totalsize > hdrsize + 128 and fdt.totalsize < 32000:
+    pos = k + 4
+    if fdt.totalsize > hdrsize + 128 and fdt.totalsize < 256000:
       if fdt.off_dt_struct > hdrsize and fdt.off_dt_struct < fdt.totalsize:
         if fdt.off_dt_strings > hdrsize and fdt.off_dt_strings < fdt.totalsize:
           if fdt.version == 17 and fdt.last_comp_version == 16:
             if fdt.boot_cpuid_phys == 0:
               if fdt.size_dt_strings < fdt.totalsize and fdt.size_dt_struct < fdt.totalsize:
-                return k - 1, fdt.totalsize
+                return k, fdt.totalsize
   return None, None
 
 def get_dtb(img, pos=0):
