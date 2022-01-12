@@ -1,0 +1,7 @@
+charset_normalizer
+idna
+urllib3
+certifi
+requests
+pyftpdlib
+ssh2-python
