@@ -56,7 +56,7 @@ xqModelList = [
   "R2200",
   "R2350",   # 27
   "IR1200G",
-  "R1800",
+  "RM1800",
   "R2100D",  # 30
   "RA67",
   "RA69",
@@ -75,8 +75,8 @@ xqModelList = [
   "RA82",
   "RA83",
   "RA74",
-  "<unk48>",    
-  "YY01",    
+  "<unk48>",
+  "YY01",
   "RB01",    # 50
   "RB03"     # 51
 ]
@@ -91,26 +91,17 @@ def get_modelid_by_name(name):
 class XQImage():
   model = None
   type = 0
-  header = XQImgHdr()
   version = None
   files = []  # list of files
   
-  def __init__(self, model = None, type = 0):
-    self.model = None
-    self.type = 0
+  def __init__(self, model, type = 0):
+    self.model = model.upper()
+    self.type = type
     self.header = XQImgHdr()
     self.version = None
     self.files = []
-    if model is None:
-      self.model = None
-    else:
-      if isinstance(model, int):
-        self.model = model
-      else:
-        self.model = get_modelid_by_name(model)
-    self.type = type
 
-  def add_version(self, version, hardware = 0, channel = 'release'):
+  def add_version(self, version, channel = 'release'):
     self.version = None
     if version is None:
       return
@@ -118,14 +109,8 @@ class XQImage():
     data += "\t" + "option ROM '{}'\n".format(version)
     if channel:
       data += "\t" + "option CHANNEL '{}'\n".format(channel.lower())
-    if hardware is not None:
-      if isinstance(hardware, int):
-        if hardware == 0 and self.model:
-          hardware = xqModelList[self.model]
-        else:
-          hardware = xqModelList[hardware]
-      data += "\t" + "option HARDWARE '{}'\n".format(hardware.upper())
-    self.version = data.encode('ascii')
+    data += "\t" + "option HARDWARE '{}'\n".format(self.model)
+    self.version = data.encode('latin_1')
     if len(self.version) & 3 != 0:
       self.version += b'\x00' * (4 - len(self.version) & 3)
     self.add_file(self.version, 'xiaoqiang_version')
@@ -140,36 +125,69 @@ class XQImage():
     file.header.size = len(data)
     file.header.mtd = 0xFFFF if mtd is None else mtd
     file.header.dummy = 0
-    file.header.name = name.encode('ascii')
+    file.header.name = name.encode('latin_1')
     self.files.append(file)
   
-  def get_image(self, sign):
+  def build_image(self, sign = None):
     buf = bytearray()
     self.header = XQImgHdr()
     self.header.magic = int.from_bytes(b'HDR1', byteorder='little')
     self.header.sign = 0
     self.header.crc32 = 0
     self.header.type = self.type
-    self.header.model = self.model
+    self.header.model = get_modelid_by_name(self.model)
     buf += bytes(self.header)
     for i, f in enumerate(self.files):
       self.header.files[i] = len(buf)
       buf += bytes(f.header)
       buf += f.data
     self.header.sign = len(buf)
-    buf += sign
-    for i in range(ctypes.sizeof(self.header)):
-      buf[i] = bytes(self.header)[i]
+    if sign:    
+      buf += sign
+    else:
+      buf += self.build_sign()
+    self.header.crc32 = 0
+    buf[:ctypes.sizeof(self.header)] = bytes(self.header)
     self.header.crc32 = 0xFFFFFFFF - binascii.crc32(buf[12:])  # JAMCRC
-    for i in range(12):
-      buf[i] = bytes(self.header)[i]
+    buf[:ctypes.sizeof(self.header)] = bytes(self.header)
     return buf
   
-  def save_image(self, sign, filename):
+  def save_image(self, filename, sign = None):
     self.outfilename = filename
-    buf = self.get_image(sign)
+    buf = self.build_image(sign)
     with open(filename, 'wb') as file:
       file.write(buf)
-  
-  
-  
+
+  def build_sign(self):
+    def i2b(value):
+      return value.to_bytes(4, byteorder='little')
+    payload = None
+    if self.model == "R3G":
+      poffset = 0x1058
+      payload = i2b(0x416078) + i2b(0) + i2b(0) + i2b(0x402810)
+    if self.model == "R3600":  # AX3600
+      poffset = 0x1070
+      payload = i2b(0x415290) + i2b(0) + i2b(0x402634) + i2b(0)
+    if self.model == "RA69":   # AX6
+      poffset = 0x1070
+      payload = i2b(0x4152A8) + i2b(0) + i2b(0x402634) + i2b(0)
+    if self.model == "RA70":   # AX9000
+      poffset = 0x1078
+      payload = i2b(0x4152D0) + i2b(0) + i2b(0x40265C) + i2b(0)
+    if self.model == "RA72":   # AX6000
+      poffset = 0x1078
+      payload = i2b(0x4152E0) + i2b(0) + i2b(0x402630) + i2b(0)
+    if not payload:
+      raise OSError('HDR1 Payload is not defined for device "{}".'.format(self.model))
+    # add header of sign section (16 bytes)
+    sign = i2b(poffset) + (b'\x00' * 12)
+    # add fake sign 
+    size = poffset - len(payload)
+    for i in range(0, size, 4):
+      sign += (0xEAA00000 + i).to_bytes(4, byteorder='little')
+    # add payload
+    sign += payload
+    return sign
+
+
+
