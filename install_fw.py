@@ -552,7 +552,7 @@ gw.set_timeout(12)
 gw.upload(kernel.fn_local, kernel.fn_remote)
 gw.upload(rootfs.fn_local, rootfs.fn_remote)
 
-cmd = "nvram set bootdelay=3; set boot_wait=on; nvram set ssh_en=1; nvram commit;"
+cmd = "nvram set bootdelay=3; nvram set boot_wait=on; nvram set ssh_en=1; nvram commit;"
 gw.run_cmd(cmd, timeout = 8)
 
 print('Writing kernel image to addr {} ...'.format("0x%08X" % kernel.addr))
