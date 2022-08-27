@@ -108,7 +108,7 @@ class DevInfo():
       return None
     if os.path.getsize(fn_local) <= 1:
       return None
-    with open(fn_local, "r") as file:
+    with open(fn_local, "r", encoding="latin_1") as file:
       self.dmesg = file.read()
     return self.dmesg
 
@@ -287,7 +287,7 @@ class DevInfo():
       return self.kcmdline
     if os.path.getsize(fn_local) <= 1:
       return self.kcmdline
-    with open(fn_local, "r") as file:
+    with open(fn_local, "r", encoding="latin_1") as file:
       data = file.read()
     if verbose:
       print("Kernel command line:")
@@ -298,7 +298,7 @@ class DevInfo():
     data = data.replace("\n", ' ')
     data = data.replace("\x00", ' ')
     data = data.strip()
-    env = EnvBuffer(data, ' ', crc_prefix = False, encoding = 'ascii')
+    env = EnvBuffer(data, ' ', crc_prefix = False, encoding = 'latin_1')
     self.kcmdline = env.var
     #self.kcmdline = type("Names", [object], self.kcmdline)
     return self.kcmdline
@@ -318,13 +318,13 @@ class DevInfo():
       return self.nvram
     if os.path.getsize(fn_local) <= 1:
       return self.nvram
-    with open(fn_local, "r") as file:
+    with open(fn_local, "r", encoding="latin_1") as file:
       data = file.read()
     if not retdict:
       return data
     if verbose:
       print("NVRam params:")
-    env = EnvBuffer(data, '\n', crc_prefix = False, encoding = 'ascii')
+    env = EnvBuffer(data, '\n', crc_prefix = False, encoding = 'latin_1')
     self.nvram = env.var
     if verbose and self.nvram:
       for i, (k, v) in enumerate(self.nvram.items()): 

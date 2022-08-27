@@ -15,11 +15,11 @@ class EnvBuffer():
   len = 0
   max_size = None
   var = {}         # key=value
-  encoding = 'ascii'
+  encoding = 'latin_1'
   crc_prefix = True
   delim = '\x00'
   
-  def __init__(self, data = None, delim = '\x00', crc_prefix = True, encoding = 'ascii'):    
+  def __init__(self, data = None, delim = '\x00', crc_prefix = True, encoding = 'latin_1'):    
     self.encoding = encoding
     self.delim = delim
     self.crc_prefix = crc_prefix
@@ -34,10 +34,10 @@ class EnvBuffer():
           data = data[prefix_len:end+1]
           self.var = self.parse_env_b(data, delim, encoding)
   
-  def parse_env_b(self, data, delim, encoding = 'ascii'):
+  def parse_env_b(self, data, delim, encoding = 'latin_1'):
     dict = {}
     self.len = len(data)
-    data = data.split(delim.encode('ascii'))
+    data = data.split(delim.encode('latin_1'))
     for i, s in enumerate(data): 
       s = s.strip()
       if len(s) < 1:
