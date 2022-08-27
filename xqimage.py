@@ -73,11 +73,11 @@ xqModelList = [
   "<unk40>", # 40
   "<unk41>",
   "<unk42>",
-  "RA80",
-  "RA81",
-  "RA82",
+  "RA80",           # AX3000
+  "RA81",           # Redmi AX3000
+  "RA82",           # AX3000
   "RA83",
-  "RA74",
+  "RA74",           # AX5400
   "<unk48>",
   "YY01",
   "RB01",    # 50
@@ -102,6 +102,7 @@ def buf_align(buf, align, padfill = b'\x00'):
 
 
 class XQImage():
+  testmode = False
   model = None
   type = 0
   version = None
@@ -109,7 +110,8 @@ class XQImage():
   padfill = b'\xFF'
   files = []  # list of files
   
-  def __init__(self, model, type = 0):
+  def __init__(self, model, type = 0, testmode = False):
+    self.testmode = testmode
     self.model = model.upper()
     self.type = type
     self.header = XQImgHdr()
@@ -187,6 +189,9 @@ class XQImage():
     if self.model == "R3G":
       poffset = 0x1058
       payload = i2b(0x416078) + i2b(0) + i2b(0) + i2b(0x402810)   # 2.25.124, 2.28.44
+    if self.model == "R3P":
+      poffset = 0x1058
+      payload = i2b(0x416078) + i2b(0) + i2b(0) + i2b(0x402810)   # 2.16.29
     if self.model == "R3600":  # AX3600
       poffset = 0x1070
       payload = i2b(0x415290) + i2b(0) + i2b(0x402634) + i2b(0)   # 1.0.17 ... 1.1.19
@@ -205,15 +210,19 @@ class XQImage():
     sign = i2b(poffset) + (b'\x00' * 12)
     # add fake sign 
     size = poffset - len(payload)
-    for i in range(0, size, 4):
-      sign += (0xEAA00000 + i).to_bytes(4, byteorder='little')
+    if self.testmode:
+      for i in range(0, size, 4):
+        sign += (0xEAA00000 + i).to_bytes(4, byteorder='little')
+    else:
+      sign += b'\xFF' * size
     # add payload
     sign += payload
     return sign
 
 
 def create_xqimage(model, name, mtd, size, data, outfilename = None):
-  img = XQImage(model)
+  testmode = True if os.getenv('XQTEST', default = '0') == '1' else False
+  img = XQImage(model, testmode = testmode)
   if data is None:
     data = b''
   if len(data) > size:
