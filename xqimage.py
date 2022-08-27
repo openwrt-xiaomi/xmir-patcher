@@ -314,8 +314,8 @@ def build_xq_openwrt(fwdir, model, outfilename):
       rootfs = types.SimpleNamespace()
       rootfs.data = fdata
   if bl and not kernel:
-    pass
-  else:
+    kernel = types.SimpleNamespace()
+    kernel.ostype = 'BL'
     if not kernel and not rootfs:
       DIE('The firmware was not found in the "{}" folder!'.format(fwdir))
     if not rootfs:
@@ -332,9 +332,9 @@ def build_xq_openwrt(fwdir, model, outfilename):
       if not bl or (bl and bl.type != 'breed'):
         DIE('Padavan firmware supported only with Breed bootloader')      
   if bl:
-    BREED_ENV_SIZE = 0x20000
     BREED_ENV_ADDR = 0x60000
     BREED_ENV_OFFSET = BREED_ENV_ADDR
+    BREED_ENV_SIZE = 0x20000
     if bl.type == 'breed':
       if len(bl.data) > BREED_ENV_OFFSET:
         data = bl.data[:BREED_ENV_OFFSET]
@@ -352,6 +352,7 @@ def build_xq_openwrt(fwdir, model, outfilename):
       if model == 'R3P' and len(bl.data) > 2*ERASE_SIZE:
         DIE('Router R3P have small bootloader partition')
   img = XQImage(model)
+  #img.add_version("1.1.1")
   mtd = None
   if fit:
     if model == 'R3600':
@@ -364,7 +365,7 @@ def build_xq_openwrt(fwdir, model, outfilename):
     mtd = { 'bootloader': 1, 'kernel0': 8, 'kernel1': 9, 'rootfs0': 10, 'rootfs1': 11, 'overlay': 12 }
     if bl:
       img.add_file(bl.data, 'bootloader.bin', mtd['bootloader'])
-    if kernel:
+    if kernel.ostype != 'BL':
       img.add_file(kernel.data, 'kernel0.bin', mtd['kernel0'])
       img.add_file(kernel.data, 'kernel1.bin', mtd['kernel1'])
       img.add_file(rootfs.data, 'rootfs.bin', mtd['rootfs0'])
