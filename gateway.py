@@ -393,19 +393,26 @@ class Gateway():
       json.dump(config, file, indent=4, sort_keys=True)
 
   #===============================================================================
-  def check_ssh(self, ip, port, password, contimeout = 2, timeout = 3):    
+  def check_ssh(self, ip, port, password, contimeout = 2, timeout = 3):
     err = 0
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock = None
     ssh = None
-    try:
-      sock.settimeout(contimeout)
-      sock.connect((ip, port))
-      sock.settimeout(timeout)
-    except Exception as e:
+    start_time = datetime.datetime.now()
+    while datetime.datetime.now() - start_time <= datetime.timedelta(seconds = contimeout):
+      try:
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.settimeout(0.5)
+        sock.connect((ip, port))
+        break
+      except Exception as e:
+        sock = None
+        pass
+    if not sock:
       err = -1
     if password and err == 0:
       try:
         ssh = ssh2.session.Session()
+        sock.settimeout(timeout)
         ssh.handshake(sock)
       except Exception as e:
         err = -2
@@ -503,10 +510,19 @@ class Gateway():
         pass
     self.shutdown()
     try:
-      self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-      if contimeout is not None:
-        self.socket.settimeout(contimeout)
-      self.socket.connect((self.ip_addr, self.ssh_port))
+      contimeout = 1 if contimeout is None else contimeout
+      start_time = datetime.datetime.now()
+      while datetime.datetime.now() - start_time <= datetime.timedelta(seconds = contimeout):
+        try:
+          self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+          self.socket.settimeout(0.5)
+          self.socket.connect((self.ip_addr, self.ssh_port))
+          break
+        except Exception as e:
+          self.socket = None
+          pass
+      if not self.socket:
+        raise Exception('')
       self.socket.settimeout(None)  # enable blocking mode
       self.ssh = ssh2.session.Session()
       self.ssh.handshake(self.socket)
