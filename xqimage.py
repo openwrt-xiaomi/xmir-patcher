@@ -80,8 +80,22 @@ xqModelList = [
   "RA74",           # AX5400
   "<unk48>",
   "YY01",
-  "RB01",    # 50
-  "RB03"     # 51
+  "RB01",    # 50   # AX3200 (INT)
+  "RB03",    # 51   # AX6S
+  "<unk52>",
+  "<unk53>",
+  "RB04",    # 54   # Redmi AX5400
+  "<unk55>",
+  "<unk56>",
+  "<unk57>",
+  "RB08",    # 58   # HomeWiFi
+  "<unk59>",
+  "<unk60>",
+  "RB06",    # 61   # Redmi AX6000
+  "<unk62>",
+  "<unk63>",
+  "CB04",    # 64
+  "CB0401",  # 65
 ]
 
 def get_modelid_by_name(name):

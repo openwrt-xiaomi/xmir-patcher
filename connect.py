@@ -31,7 +31,7 @@ if gw.status < 1:
 
 dn = gw.device_name
 
-if dn == 'R2100' or dn == 'R2350' or dn == 'RM1800' or dn == 'RM2100' or dn == 'RA67':
+if dn in 'R2100 R2350 RM1800 RM2100 RA67':
   import connect2
   sys.exit(0)
 
@@ -39,8 +39,12 @@ if dn == 'R3600' and gw.rom_version == '1.0.17':
   import connect2
   sys.exit(0)
 
-if dn == 'R3600' or dn == 'RA69' or dn == 'RA70' or dn == 'RA72' or dn == 'RB03':
+if dn in 'R3600 RA69 RA70 RA72':
   import connect3
+  sys.exit(0)
+
+if dn in 'RB01 RB03 RB06 RB08':
+  import connect4
   sys.exit(0)
 
 print("device_name =", gw.device_name)
