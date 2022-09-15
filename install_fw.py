@@ -33,6 +33,7 @@ fn_local = None
 dn_tmp = 'tmp/fw/'
 fn_kernel = dn_tmp + 'kernel.bin'
 fn_rootfs = dn_tmp + 'rootfs.bin'
+fn_fitubi = dn_tmp + 'fitubi.bin'
 
 os.makedirs(dn_dir, exist_ok = True)
 os.makedirs(dn_tmp, exist_ok = True)
@@ -104,6 +105,7 @@ class Image():
   fn_remote = None
   data = None
   data2 = None     # unpacked image
+  fit = False
   dtb = None       # device-tree
   cmd = None
 
@@ -136,6 +138,53 @@ if c_sysupgrade:
   # TODO: insert hsqs to UBI FS !!!
   '''
 
+def parse_fit(data, offset = 0):
+  if data[offset:offset+4] != FIT_MAGIC:
+    die('FIT: Incorrect image (0)')
+  hdrsize = ctypes.sizeof(fdt_header)
+  fit_hdr = fdt_header.from_buffer_copy(data[offset:offset+hdrsize])
+  fit_size = fit_hdr.totalsize
+  if fit_size < 1*1024*1024:
+    die('FIT: Incorrect image (1)')
+  if kernel.data:
+    die('FIT: Found second "kernel" section')
+  kernel.data = data[offset:offset + fit_size]
+  print('FIT size = 0x%X (%d KiB)' % (fit_size, fit_size // 1024))
+  fit_dt = fdt.parse_dtb(kernel.data)
+  #if fit_dt.root.nodes[0]._name != 'images':
+  #  die('FIT: Incorrect image (4)')
+  fit_name = fit_dt.get_property('description').value
+  print('FIT name = "{}"'.format(fit_name))
+  kernel.fit = True
+  if 'OpenWrt FIT' in fit_name:
+    kernel.ostype = 'openwrt'    
+  if not kernel.ostype:
+    die('FIT: Currently supported only OpenWrt FIT images!')
+  '''
+  fdt1 = dt.get_node('/images/fdt-1')
+  print('FDT desc = "{}"'.format(fdt1.get_property('description').value))
+  print('FDT type = "{}"'.format(fdt1.get_property('type').value))
+  print('FDT arch = "{}"'.format(fdt1.get_property('arch').value))
+  print('FDT compression = "{}"'.format(fdt1.get_property('compression').value))
+  if fdt1.get_property('type').value != 'flat_dt':
+    die('FIT: Incorrect image (6)')
+  kernel.hdr.arch = fdt1.get_property('arch').value
+  '''
+  if kernel.ostype == 'openwrt':
+    if len(data) - offset - fit_size < 1024:
+      return 1
+    rootfs_offset = data.find(UBIv1_MAGIC, offset + fit_size)
+    if rootfs_offset < 0:
+      return 1
+    rootfs_offset -= offset
+    print('FIT UBI offset = 0x%X' % rootfs_offset)
+    if rootfs.data:
+      die('FIT: Found two RootFS images')
+    rootfs.data = data[offset+rootfs_offset:]
+    rootfs.addr = rootfs_offset
+    return 2
+  return 1
+
 def parse_factory(data, offset = 0):
   if offset + 512 > len(data):
     return -1
@@ -150,7 +199,7 @@ def parse_factory(data, offset = 0):
     if kernel_size > len(kernel.data):
       die("Kernel header is incorrect!")
   if data[offset:offset+4] == FIT_MAGIC:  # factory squashfs image
-    die('ARM images not supported!')
+    return parse_fit(data, offset)
   if kernel_size == 0:
     die("Kernel header is incorrect!")
   if kernel_size < 1*1024*1024:
@@ -311,7 +360,22 @@ with open(rootfs.fn_local, "wb") as file:
 
 
 if kernel.data[:4] == FIT_MAGIC:
-  die('FIT images not supported!')
+  part_fw = dev.get_part('firmware')
+  part_fw1 = dev.get_part('firmware1')
+  if part_fw and part_fw1:
+    kernel.addr = part_fw['addr']
+    if not rootfs.addr:
+      die("FIT: Can't found addr for UBI image")
+    kernel_size = len(kernel.data)
+    kernel.data += (b"\x00" * (rootfs.addr - kernel_size)) + rootfs.data
+    rootfs.addr = None
+    kernel.fn_remote = '/tmp/fitubi.bin'
+    kernel.fn_local = fn_fitubi
+    with open(kernel.fn_local, "wb") as file:
+      file.write(kernel.data)
+    kernel.partname = "firmware"  # kernel0
+  if not kernel.addr:
+    die("FIT: Can't found partition for flashing FIT image")
 
 if kernel.data[:4] == UIMAGE_MAGIC:
   data2 = kernel.data[0x40:]
@@ -406,13 +470,9 @@ if kernel.data[:4] == UIMAGE_MAGIC:
       rootfs.data = b'\x00' * part2_size
 
 
-kernel.fn_remote = '/tmp/kernel.bin'
-kernel.fn_local = fn_kernel
 with open(kernel.fn_local, "wb") as file:
   file.write(kernel.data)
 
-rootfs.fn_remote = '/tmp/rootfs.bin'
-rootfs.fn_local = fn_rootfs
 with open(rootfs.fn_local, "wb") as file:
   file.write(rootfs.data)
 
@@ -446,7 +506,15 @@ if c_stock:
   rootfs.addr = dev.partlist[rp]['addr']
   rootfs.cmd = 'mtd -e "{part}" write "{bin}" "{part}"'.format(part=rootfs.partname, bin=rootfs.fn_remote)
 
-if kernel.ostype == 'openwrt' or kernel.ostype == 'padavan':
+if kernel.fit is True:
+  if not kernel.addr or not kernel.partname:
+    die('FIT: Unknown addr for flashing!')
+  fw_num = 0
+  kernel.cmd = 'mtd -e "{part}" write "{bin}" "{part}"'.format(part=kernel.partname, bin=kernel.fn_remote)
+  rootfs.cmd = None
+
+elif kernel.ostype == 'openwrt' or kernel.ostype == 'padavan':
+  fw_addr = 0
   if not kernel.addr or not rootfs.addr:
     die('Unknown addr for flashing!')
   part = dev.get_part_by_addr(kernel.addr)
@@ -490,35 +558,44 @@ if dev.bl.type == 'breed':
       fw_addr = activate_boot.breed_boot_change(gw, dev, None, kernel.addr, None)
     pass
 
-if fw_num is not None:
-  print("Run scripts for change NVRAM params...")
-  activate_boot.uboot_boot_change(gw, fw_num)
-  print('Boot from partition "kernel{}" activated.'.format(fw_num))
 
-
-if not kernel.cmd or not rootfs.cmd:
+if not kernel.cmd or (not kernel.fit and not rootfs.cmd):
   die("Flashing recipe unknown!")
 
 gw.set_timeout(12)
 gw.upload(kernel.fn_local, kernel.fn_remote)
-gw.upload(rootfs.fn_local, rootfs.fn_remote)
+if rootfs.cmd:
+  gw.upload(rootfs.fn_local, rootfs.fn_remote)
 
-cmd = "nvram set bootdelay=3; nvram set boot_wait=on; nvram set ssh_en=1; nvram commit;"
+cmd = []
+cmd.append("nvram set bootdelay=3")
+cmd.append("nvram set boot_wait=on")
+cmd.append("nvram set bootmenu_delay=30")
+cmd.append("nvram set ssh_en=1")
+cmd.append("nvram set uart_en=1")
+cmd.append("nvram commit")
 gw.run_cmd(cmd, timeout = 8)
+
+if fw_num is not None:
+  print("Run scripts for change NVRAM params...")
+  activate_boot.uboot_boot_change(gw, fw_num)
+  print('Boot from partition "{}" activated.'.format(kernel.partname))
 
 print('Writing kernel image to addr {} ...'.format("0x%08X" % kernel.addr))
 print("  " + kernel.cmd)
-gw.run_cmd(kernel.cmd, timeout = 22)
+gw.run_cmd(kernel.cmd, timeout = 34)
 
-print('Writing rootfs image to addr {} ...'.format("0x%08X" % rootfs.addr))
-print("  " + rootfs.cmd)
-gw.run_cmd(rootfs.cmd, timeout = 60)
+if rootfs.cmd:
+  print('Writing rootfs image to addr {} ...'.format("0x%08X" % rootfs.addr))
+  print("  " + rootfs.cmd)
+  gw.run_cmd(rootfs.cmd, timeout = 60)
 
 print("The firmware has been successfully flashed!")
 
-gw.run_cmd("sync ; umount -a", timeout = 12)
-
-
-
-
+if kernel.fit:
+  print('Send command "reboot" via SSH ...')
+  gw.run_cmd("reboot -f")
+  print("Force REBOOT activated!")
+else:
+  gw.run_cmd("sync ; umount -a", timeout = 12)
 
