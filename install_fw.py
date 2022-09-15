@@ -13,6 +13,15 @@ import gateway
 from gateway import die
 import read_info
 import activate_boot
+from devtree import *
+import fdt
+
+
+UIMAGE_MAGIC = b"\x27\x05\x19\x56"
+FIT_MAGIC    = FDT_MAGIC
+HSQS_MAGIC   = b"hsqs"
+UBI_MAGIC    = b"UBI#"
+UBIv1_MAGIC  = UBI_MAGIC + b"\x01\x00\x00\x00"
 
 
 gw = gateway.Gateway()
@@ -44,11 +53,11 @@ for i, fname in enumerate(fn_list):
     img.type = 'stock'
   if data[:10] == b"sysupgrade":  # TAR
     img.type = 'sysupgrade'
-  if data[:4] == b"\x27\x05\x19\x56":  # uImage 
+  if data[:4] == UIMAGE_MAGIC:    # uImage 
     img.type = 'factory'
-  if data[:4] == b"\xD0\x0D\xFE\xED":  # factory squashfs image  
+  if data[:4] == FIT_MAGIC:       # factory squashfs image  
     img.type = 'factory'
-  if data[:8] == b"UBI#\x01\x00\x00\x00":  # rootfs_ubi
+  if data[:8] == UBIv1_MAGIC:     # rootfs_ubi
     img.type = 'rootfs'
   if img.type:
     if len(imglist) == 0:
@@ -75,8 +84,8 @@ if c_rootfs and c_factory == 0:
 
 dev = read_info.DevInfo(verbose = 0, infolevel = 1)
 cpuarch = dev.info.cpu_arch
-if cpuarch != 'mips' and cpuarch != 'armv7':
-  die("Currently support only MIPS and ARMv7 arch!")
+if cpuarch not in 'mips armv7 arm64':
+  die("Currently support only MIPS, ARMv7, ARM64 arch!")
 
 class ImgHeader():
   size = None      # Image Data Size
@@ -131,7 +140,7 @@ def parse_factory(data, offset = 0):
   if offset + 512 > len(data):
     return -1
   kernel_size = 0
-  if data[offset:offset+4] == b"\x27\x05\x19\x56":  # uImage
+  if data[offset:offset+4] == UIMAGE_MAGIC:  # uImage
     pos = offset + 0x0C
     kernel_size = int.from_bytes(data[pos:pos+4], byteorder='big')
     kernel_size += 0x40
@@ -140,7 +149,7 @@ def parse_factory(data, offset = 0):
     kernel.data = data[offset:offset+kernel_size]
     if kernel_size > len(kernel.data):
       die("Kernel header is incorrect!")
-  if data[offset:offset+4] == b"\xD0\x0D\xFE\xED":  # factory squashfs image
+  if data[offset:offset+4] == FIT_MAGIC:  # factory squashfs image
     die('ARM images not supported!')
   if kernel_size == 0:
     die("Kernel header is incorrect!")
@@ -158,7 +167,7 @@ def parse_factory(data, offset = 0):
   if kernel.hdr.arch == 5 and dev.info.cpu_arch != 'mips':
     die('Kernel arch is not MIPS!')  
   if kernel.hdr.arch == 2 and dev.info.cpu_arch != 'armv7':
-    die('Kernel arch is not ARMv7!')  
+    die('Kernel arch is not ARMv7!')
   try:
     iname = kernel.hdr.name.decode('ascii')    
   except Exception:
@@ -175,7 +184,7 @@ def parse_factory(data, offset = 0):
           iname = None
         kernel_size = ksize
         #kernel.hdr.size = kernel_size
-        if kernel.data[ksize:ksize+4] != b'hsqs':
+        if kernel.data[ksize:ksize+4] != HSQS_MAGIC:
           die('Incorrect padavan kernel image! RootFS not found!')
         rootfs.data = kernel.data[ksize:]
   if iname is None:        
@@ -207,8 +216,8 @@ def parse_factory(data, offset = 0):
     if len(data) < 1024:
       return 1
     offlist = []  
-    offlist.append(data.find(b'UBI#\x01\x00\x00\x00'))  # UBI version 1
-    offlist.append(data.find(b'hsqs'))
+    offlist.append(data.find(UBIv1_MAGIC))
+    offlist.append(data.find(HSQS_MAGIC))
     if len(offlist) == 0:
       return 1
     rootfs_offset = 0xFFFFFFFF
@@ -267,15 +276,15 @@ if c_stock:
   for i, img in enumerate(imglst):
     if len(img.data) < 1*1024*1024:  # skip uboot and other files
       continue
-    if img.data[:4] == b"\x27\x05\x19\x56":
+    if img.data[:4] == UIMAGE_MAGIC:
       if kernel.data:
         die('Incorrect stock image! (6)')
       kernel.data = img.data
-    if img.data[:4] == b"UBI#" or img.data[:4] == b"hsqs":
+    if img.data[:4] == UBI_MAGIC or img.data[:4] == HSQS_MAGIC:
       if rootfs.data:
         die('Incorrect stock image! (7)')
       rootfs.data = img.data
-    if img.data[:4] == b"\xD0\x0D\xFE\xED":
+    if img.data[:4] == FDT_MAGIC:
       if kernel.data or rootfs.data:
         die('Incorrect stock image! (8)')
       ret = parse_factory(img.data)
@@ -301,68 +310,10 @@ with open(rootfs.fn_local, "wb") as file:
   file.write(rootfs.data)
 
 
-if kernel.data[:4] == b"\xD0\x0D\xFE\xED":
+if kernel.data[:4] == FIT_MAGIC:
   die('FIT images not supported!')
 
-class fdt_header(ctypes.BigEndianStructure):
-  _fields_ = [("magic",             ctypes.c_uint),
-              ("totalsize",         ctypes.c_uint),
-              ("off_dt_struct",     ctypes.c_uint),
-              ("off_dt_strings",    ctypes.c_uint),
-              ("off_mem_rsvmap",    ctypes.c_uint),
-              ("version",           ctypes.c_uint),
-              ("last_comp_version", ctypes.c_uint),
-              ("boot_cpuid_phys",   ctypes.c_uint),
-              ("size_dt_strings",   ctypes.c_uint),
-              ("size_dt_struct",    ctypes.c_uint)]
-
-def find_dtb(img, pos=0):
-  hdrsize = ctypes.sizeof(fdt_header)
-  while True:
-    k = img.find(b"\xD0\x0D\xFE\xED\x00", pos)
-    if k < 0:
-      break
-    fdt = fdt_header.from_buffer_copy(img[k:k+hdrsize])
-    pos = k + 4
-    if fdt.totalsize > hdrsize + 128 and fdt.totalsize < 256000:
-      if fdt.off_dt_struct > hdrsize and fdt.off_dt_struct < fdt.totalsize:
-        if fdt.off_dt_strings > hdrsize and fdt.off_dt_strings < fdt.totalsize:
-          if fdt.version == 17 and fdt.last_comp_version == 16:
-            if fdt.boot_cpuid_phys == 0:
-              if fdt.size_dt_strings < fdt.totalsize and fdt.size_dt_struct < fdt.totalsize:
-                return k, fdt.totalsize
-  return None, None
-
-def get_dtb(img, pos=0):
-  pos, size = find_dtb(img, pos)
-  return img[pos:pos+size] if pos is not None else None
-
-def get_dtb_part_info(dtb, part_name):
-  k = dtb.find(b'fixed-partitions\x00')
-  if k <= 0:
-    return None
-  while True:
-    k = dtb.find(b"partition@", k)
-    if k < 0:
-      break
-    k = dtb.find(b"\x00", k) + 1
-    k = (k + 3) & 0xFFFFFFFC
-    k += 12
-    n = dtb.find(b"\x00", k)
-    name = dtb[k:n]
-    name_len = len(name)
-    name = name.decode('latin_1')
-    if name != part_name:
-      continue
-    k += name_len + 1
-    k = (k + 3) & 0xFFFFFFFC
-    k += 12
-    addr = int.from_bytes(dtb[k:k+4], byteorder='big')
-    size = int.from_bytes(dtb[k+4:k+8], byteorder='big')    
-    return {'addr': addr, 'size': size, 'name': name}
-  return None
-
-if kernel.data[:4] == b"\x27\x05\x19\x56":
+if kernel.data[:4] == UIMAGE_MAGIC:
   data2 = kernel.data[0x40:]
   img_comp = kernel.hdr.comp
   if img_comp == 0:
