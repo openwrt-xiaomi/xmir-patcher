@@ -5,3 +5,4 @@ certifi
 requests
 pyftpdlib
 ssh2-python
+fdt
