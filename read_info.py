@@ -144,10 +144,14 @@ class DevInfo():
         if part['addr'] == 0 and part['size'] > 0x00800000:
           continue  # skip "ALL" part
         addr = name_or_addr
-        if addr >= part['addr'] and addr < part['addr'] + part['size']:
-          return i
+        if comptype and comptype == '#':  # range
+          if addr >= part['addr'] and addr < part['addr'] + part['size']:
+            return i
+        else:
+          if addr == part['addr']:
+            return i
       else:   
-        if comptype and comptype[0] == 'e':
+        if comptype and comptype[0] == 'e':  # endswith
           if part['name'].lower().endswith(name_or_addr.lower()):
             return i
         if part['name'].lower() == name_or_addr.lower():
@@ -164,15 +168,14 @@ class DevInfo():
         lst.append(p)
     return lst
 
-  def get_part_by_addr(self, addr):
-    if not self.partlist:
+  def get_part(self, name_or_addr, comptype = None):
+    i = self.get_part_num(name_or_addr, comptype)
+    if i < 0:
       return None
-    for i, part in enumerate(self.partlist):
-      if part['addr'] == 0 and part['size'] > 0x00800000:
-        continue  # skip "ALL" part
-      if part['addr'] == addr:
-        return part
-    return None
+    return self.partlist[i]  
+
+  def get_part_by_addr(self, addr):
+    return get_part(addr, None)
 
   def get_rootfs(self, verbose = None):
     verbose = verbose if verbose is not None else self.verbose
@@ -516,7 +519,7 @@ class DevInfo():
       return ret
     env_breed_addr = 0x60000  # breed env addr for r3g
     env_breed_size = 0x20000
-    pb = self.get_part_num(env_breed_addr)  
+    pb = self.get_part_num(env_breed_addr, '#')  
     if pb >= 0:
       plst.append(1000 + pb)
     for i, p in enumerate(plst):
@@ -848,7 +851,7 @@ if __name__ == "__main__":
   file.write("\n")
   file.write("_Bootloader_info_:\n")
   for i, bl in enumerate(info.bl_list):
-    p = info.get_part_num(bl.addr)
+    p = info.get_part_num(bl.addr, '#')
     name = info.partlist[p]['name'] if p >= 0 else "<unknown_name>"
     file.write("  {}:\n".format(name))
     file.write("    addr: 0x%08X \n" % (bl.addr if bl.addr else 0))
@@ -858,7 +861,7 @@ if __name__ == "__main__":
   file.write("\n")  
   file.write("_ENV_info_:\n")
   for i, env in enumerate(info.env_list):
-    p = info.get_part_num(env.addr)
+    p = info.get_part_num(env.addr, '#')
     name = info.partlist[p]['name'] if p >= 0 else "<unknown_name>"
     file.write("  {}:\n".format(name))
     file.write("    addr: 0x%08X \n" % (env.addr if env.addr else 0))

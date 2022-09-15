@@ -48,7 +48,7 @@ def breed_boot_change(gw, dev, fw_num, fw_addr, fw_name):
   with open(fn_local, "wb") as file:
     file.write(data)
   gw.upload(fn_local, fn_remote)
-  pe = dev.get_part_num(env.addr)
+  pe = dev.get_part_num(env.addr, '#')
   if pe < 0:
     die('Partition for writing ENV {} not found!'.format("0x%08X" % env.addr))
   part_addr = dev.partlist[pe]['addr']
