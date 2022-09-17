@@ -56,7 +56,7 @@ def menu2_show():
   print(' 4 - Create a backup of the specified partition')
   print(' 5 - Uninstall EN/RU languages')
   print(' 6 - Set kernel boot address')
-  print(' 7 - ')
+  print(' 7 - Install permanent SSH')
   print(' 8 - __test__')
   print(' 9 - [[ Reboot device ]]')
   print(' 0 - Return to main menu')
@@ -68,7 +68,7 @@ def menu2_process(id):
   if id == 4: return [ "create_backup.py", "part" ]
   if id == 5: return [ "install_lang.py", "uninstall" ]
   if id == 6: return "activate_boot.py"
-  if id == 7: return None
+  if id == 7: return "install_ssh.py"
   if id == 8: return "test.py"
   if id == 9: return "reboot.py"
   if id == 0: return "__menu1" 
