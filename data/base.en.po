@@ -5,6 +5,47 @@ msgstr ""
 "After turning it on, the router's USB interface will work in 3.0 mode."
 " (USB3.0 will have some impact on 2.4G Wi-Fi)"
 
+msgid "Redmi路由器"
+msgstr "Redmi router"
+
+msgid "开启后，2.4G和5G将合并显示为同一个名称，路由器将优先为终端选择5G网络。合并名称后部分终端可能离线，需重新连接。"
+msgstr ""
+"After it is turned on, 2.4G and 5G will be combined and displayed as the"
+" same name, and the router will preferentially select the 5G network for"
+" the terminal. After the names are merged, some terminals may be offline"
+" and need to be reconnected."
+
+msgid ""
+"某些老设备对Wi-Fi6支持不好，可能扫描不到信号或者连接不上等。开启此开关后，将会切"
+"换到Wi-Fi5模式，解决兼容问题。但同时会关闭Wi-Fi6的相关功能，如OFDMA，BSS Coloring等。
+                "
+msgstr ""
+"Some older devices do not support Wi-Fi 6 (802.11ax) properly and may not"
+" scan the signal or connect, etc. Once enabled, it will switch to Wi-Fi 5"
+" (802.11ac) mode to solve any compatibility issues. However, it will also"
+" disable Wi-Fi 6 (802.11ax) related functions, such as OFDMA, BSS coloring,"
+" etc."
+
+msgid "时区设置"
+msgstr "Time zone settings"
+
+msgid "
+            当前系统时间："
+msgstr "Current system time:"
+
+msgid "启用此功能后，Redmi路由器将开启IPv6上网功能（使用前请咨询网络运营商是否支持IPv6"
+msgstr ""
+"With this function enabled, the Redmi router will enable the IPv6 Internet"
+" connection function (please contact the network provider to verify that it"
+" supports IPv6 before use)"
+
+msgid "Mesh模式下不支持切换为中继模式。"
+"To ensure the best possible user experience, switching to Repeater mode is"
+" not supported in Mesh mode."
+
+msgid "Mesh模式下不支持切换为路由模式。"
+msgstr "To ensure user experience, switching to Relay mode is not supported in Mesh mode"
+
 # ========================================================================= #
 #     Data from Xiaomi LMO files                                            #
 # ========================================================================= #
