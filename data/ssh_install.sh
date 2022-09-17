@@ -1,19 +1,21 @@
 #!/bin/sh
 
+DIR_PATCH=/etc/crontabs/patches
+
 if [ "$( grep 'ssh_patch.sh' /etc/crontabs/root )" != "" ]; then
 	if [ -e "/tmp/ssh_uninstall.sh" ]; then
 		sh /tmp/ssh_uninstall.sh
 	fi
 fi
 
-if [ ! -d /etc/crontabs/patches/ ]; then
-	mkdir /etc/crontabs/patches/
-	chown root /etc/crontabs/patches/
-	chmod 0755 /etc/crontabs/patches/
+if [ ! -d $DIR_PATCH ]; then
+	mkdir $DIR_PATCH
+	chown root $DIR_PATCH
+	chmod 0755 $DIR_PATCH
 fi
 
-mv -f /tmp/ssh_patch.sh /etc/crontabs/patches/
-chmod +x /etc/crontabs/patches/ssh_patch.sh
+mv -f /tmp/ssh_patch.sh $DIR_PATCH/
+chmod +x $DIR_PATCH/ssh_patch.sh
 
 nvram set ssh_en=1
 nvram commit
