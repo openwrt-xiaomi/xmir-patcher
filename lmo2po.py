@@ -68,14 +68,38 @@ class Lmo:
           break
     return count
 
+  def dup_search2(self):
+    count = 0
+    for i, ent in enumerate(self.entries):
+      if ent.dup != 1:
+        continue    # skip unique entry
+      val = ent.val.decode('utf-8')
+      for k, ek in enumerate(self.entries):
+        if ek.key_id != ent.key_id:
+          continue
+        if ek.offset == ent.offset:
+          continue  # skip self
+        if ek.dup == 1:
+          vk = ek.val.decode('utf-8')
+          if vk == val:
+            ek.dup = 2
+            count += 1
+    return count
+
   def save_to_text(self, filename = None):
     txt = ""    
     if 'k' in self.options:
       entries = sorted(self.entries, key=lambda x: x.key_id)
     else:
       entries = sorted(self.entries, key=lambda x: x.offset)
+    for i, ent in enumerate(self.entries):
+      ent.dup = 0
     self.dup_search()
+    if 'z' in self.options:
+      self.dup_search2()
     for i, ent in enumerate(entries):
+      if ent.dup == 2:
+        continue  # skip dup2
       val = ent.val.decode('utf-8')
       val = val.replace('\\', '\\\\')
       val = val.replace('"', r'\"')      
@@ -160,7 +184,7 @@ if __name__ == "__main__":
         break
     if not dup:
       lmo.entries.append(ent)
-  lmo.options = 'k'
+  lmo.options = 'kz'
   lmo.save_to_text(fn_out)
   print('\nMerged PO-file saved to "{}"'.format(fn_out))
   

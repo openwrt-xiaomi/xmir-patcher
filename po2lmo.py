@@ -274,6 +274,7 @@ class Lmo:
 
 
 if __name__ == "__main__":
+  sys.stdout.reconfigure(encoding='utf-8')
   fn_inp = sys.argv[1]
   fn_out = sys.argv[2]
   lmo = Lmo(verbose = 99)
