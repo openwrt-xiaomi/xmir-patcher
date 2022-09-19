@@ -64,6 +64,7 @@ class Gateway():
   rom_version = None
   rom_channel = None
   mac_address = None
+  encryptmode = 0     # 0: sha1, 1: sha256
   nonce_key = None
   stok = None    # HTTP session token
   status = -2
@@ -95,6 +96,7 @@ class Gateway():
     self.rom_version = None
     self.rom_channel = None
     self.mac_address = None
+    self.encryptmode = 0
     self.nonce_key = None
     self.status = -2
     try:
@@ -138,6 +140,20 @@ class Gateway():
     if (x > 10):
       die("You need to make the initial configuration in the WEB of the device!")
     self.status = 1
+    ''' ==== get init_info ====
+      {"code":0,"isSupportMesh":1,"secAcc":1,"inited":1,"connect":0,
+       "modules":{"replacement_assistant":"1"},
+       "hardware":"RB03","language":"en","server":"AP","romversion":"1.0.54","countrycode":"DE",
+       "id":"36418/J1VT25382","routername":"Redmi_A141","displayName":"Redmi router AX6S","maccel":"1",
+       "model":"xiaomi.router.rb03","bound":0,"isRedmi":1,
+       "routerId":"a4aa1022-57a2-a530-d568-7905f1685a57"}    
+    '''
+    info = self.get_init_info()
+    if info and info["code"] == 0:
+      if info["inited"] != 1:
+        die("You need to make the initial configuration in the WEB of the Device!")
+      if "newEncryptMode" in info:
+        self.encryptmode = int(info["newEncryptMode"])
     return self.status
 
   def web_ping(self, timeout, wait_timeout = 0):
@@ -158,6 +174,12 @@ class Gateway():
         time.sleep(dt / 1000 / 1000)
     return ret
 
+  def xqhash(self, string):
+    if self.encryptmode == 0:
+      return hashlib.sha1(string).hexdigest()
+    else:
+      return hashlib.sha256(string).hexdigest()
+
   def web_login(self):
     self.stok = None
     if not self.nonce_key or not self.mac_address:
@@ -167,9 +189,9 @@ class Gateway():
     if not web_pass:
       web_pass = input("Enter device WEB password: ")
     account_str = (web_pass + self.nonce_key).encode('utf-8')
-    account_str = hashlib.sha1(account_str).hexdigest()
+    account_str = self.xqhash(account_str)
     password = (nonce + account_str).encode('utf-8')
-    password = hashlib.sha1(password).hexdigest()
+    password = self.xqhash(password)
     username = 'admin'
     data = "username={username}&password={password}&logtype=2&nonce={nonce}".format(username = username, password = password, nonce = nonce)
     requrl = "http://{ip_addr}/cgi-bin/luci/api/xqsystem/login".format(ip_addr = self.ip_addr)
@@ -178,7 +200,7 @@ class Gateway():
       stok = re.findall(r'"token":"(.*?)"', res.text)[0]
     except Exception:
       self.webpassword = ""
-      die("WEB password is not correct!")
+      die("WEB password is not correct! (encryptmode = {})".foarmat(self.encryptmode))
     self.webpassword = web_pass
     self.stok = stok
     return stok
