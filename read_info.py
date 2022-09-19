@@ -248,8 +248,8 @@ class DevInfo():
       ret.cpu_arch = x.group(1).strip().lower()
       if ret.cpu_arch == 'aarch64':
         ret.cpu_arch = 'arm64'
-    if verbose:
-      print('  CPU arch: {}'.format(ret.cpu_arch))
+    #if verbose:
+    #  print('  CPU arch: {}'.format(ret.cpu_arch))
     # start MT7621 PCIe register access
     x = re.search(r'start (.*?) PCIe register access', self.dmesg)
     if x:
@@ -260,10 +260,25 @@ class DevInfo():
     x = self.dmesg.find("cpr4_ipq807x_apss_read_fuse_data: apc_corner: speed bin =")
     if x > 0:
       ret.cpu_name = 'ipq807x'
+      ret.cpu_arch = 'arm64'
     x = self.dmesg.find('mt7622_pa_lna_set():')
     if x > 0:
       ret.cpu_name = 'mt7622'
+      ret.cpu_arch = 'arm64'
+    # Machine model: MediaTek MT7986a RFB
+    x = re.search(r'] Machine model: (.*?)\n', self.dmesg)
+    if x:
+      vendor_cpu = x.group(1).strip().lower()
+      if vendor_cpu.startswith("mediatek"):
+        cpu = vendor_cpu.split(" ")[1]
+        if not ret.cpu_name:
+          ret.cpu_name = cpu
+        if cpu and len(cpu) >= 4:
+          cpu = cpu[:6]
+        if cpu in 'mt7622 mt7981 mt7986 mt7988':
+          ret.cpu_arch = 'arm64'
     if verbose:
+      print('  CPU arch: {}'.format(ret.cpu_arch))
       print('  CPU name: {}'.format(ret.cpu_name))
     # spi-mt7621 1e000b00.spi: sys_freq: 50000000  
     x = re.search(r'spi-mt(.*?) (.*?).spi: sys_freq: ', self.dmesg)
