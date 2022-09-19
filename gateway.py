@@ -184,7 +184,9 @@ class Gateway():
     self.stok = None
     if not self.nonce_key or not self.mac_address:
       die("Xiaomi Mi Wi-Fi device is wrong model or not the stock firmware in it.")
-    nonce = "0_" + self.mac_address + "_" + str(int(time.time())) + "_" + str(random.randint(1000, 10000))
+    dtype = 0 # 0: Web, 1: Android, 2: iOS, 3: Mac, 4: PC 
+    device = self.mac_address
+    nonce = "{}_{}_{}_{}".format(dtype, device, int(time.time()), random.randint(1000, 10000))
     web_pass = self.webpassword
     if not web_pass:
       web_pass = input("Enter device WEB password: ")

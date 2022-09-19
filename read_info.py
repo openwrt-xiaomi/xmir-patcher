@@ -98,12 +98,14 @@ class DevInfo():
     self.dmesg = None
     fn_local  = 'outdir/dmesg.log'
     fn_remote = '/tmp/dmesg.log'
+    if os.path.exists(fn_local):
+      os.remove(fn_local)
     try:
       self.gw.run_cmd("dmesg > " + fn_remote)
       self.gw.download(fn_remote, fn_local)
       self.gw.run_cmd("rm -f " + fn_remote)
     except Exception:
-      return self.kcmdline
+      return None
     if not os.path.exists(fn_local):
       return None
     if os.path.getsize(fn_local) <= 1:
@@ -227,65 +229,76 @@ class DevInfo():
     verbose = verbose if verbose is not None else self.verbose
     self.info = BaseInfo()
     ret = self.info
-    if not self.dmesg:
-      return ret
     if verbose:
       print('Base info:')
-    # Linux version 3.10.14 (jenkins@cefa8cf504dc) (gcc version 4.8.5 (crosstool-NG crosstool-ng-1.22.0) ) 
-    x = re.search(r'Linux version (.*?) ', self.dmesg)
-    if x:
-      ret.linux_ver = x.group(1).strip()
+    if self.dmesg:
+      # Linux version 3.10.14 (jenkins@cefa8cf504dc) (gcc version 4.8.5 (crosstool-NG crosstool-ng-1.22.0) ) 
+      x = re.search(r'Linux version (.*?) ', self.dmesg)
+      if x:
+        ret.linux_ver = x.group(1).strip()
     if verbose:
       print('  Linux version: {}'.format(ret.linux_ver))
-    # MIPS secondary cache 256kB, 8-way, linesize 32 bytes.
-    x = re.search(r'MIPS secondary cache (.*?) linesize ', self.dmesg)
-    if x:
-      ret.cpu_arch = 'mips'
-    # CPU: ARMv7 Processor [512f04d0] revision 0 (ARMv7), cr=10c5387d
-    # Boot CPU: AArch64 Processor [410fd034]
-    x = re.search(r'CPU: (.*?) Processor \[([0-9a-f]+)\]', self.dmesg)
-    if x:
-      ret.cpu_arch = x.group(1).strip().lower()
-      if ret.cpu_arch == 'aarch64':
-        ret.cpu_arch = 'arm64'
-    #if verbose:
-    #  print('  CPU arch: {}'.format(ret.cpu_arch))
-    # start MT7621 PCIe register access
-    x = re.search(r'start (.*?) PCIe register access', self.dmesg)
-    if x:
-      ret.cpu_name = x.group(1).strip().lower()
-    x = self.dmesg.find("acpuclk-ipq806x acpuclk-ipq806x: ")
-    if x > 0:
-      ret.cpu_name = 'ipq806x'
-    x = self.dmesg.find("cpr4_ipq807x_apss_read_fuse_data: apc_corner: speed bin =")
-    if x > 0:
-      ret.cpu_name = 'ipq807x'
-      ret.cpu_arch = 'arm64'
-    x = self.dmesg.find('mt7622_pa_lna_set():')
-    if x > 0:
-      ret.cpu_name = 'mt7622'
-      ret.cpu_arch = 'arm64'
-    # Machine model: MediaTek MT7986a RFB
-    x = re.search(r'] Machine model: (.*?)\n', self.dmesg)
-    if x:
-      vendor_cpu = x.group(1).strip().lower()
-      if vendor_cpu.startswith("mediatek"):
-        cpu = vendor_cpu.split(" ")[1]
-        if not ret.cpu_name:
-          ret.cpu_name = cpu
-        if cpu and len(cpu) >= 4:
-          cpu = cpu[:6]
-        if cpu in 'mt7622 mt7981 mt7986 mt7988':
-          ret.cpu_arch = 'arm64'
+    fn_local  = 'outdir/openwrt_release.txt'
+    fn_remote = '/etc/openwrt_release'
+    if os.path.exists(fn_local):
+      os.remove(fn_local)
+    try:
+      self.gw.download(fn_remote, fn_local, verbose=0)
+    except Exception:
+      if verbose:
+        print('  File "{}" cannot download!'.format(fn_remote))
+      return ret
+    if not os.path.exists(fn_local):
+      return ret
+    if os.path.getsize(fn_local) <= 1:
+      return ret
+    with open(fn_local, "r", encoding="latin_1") as file:
+      txt = file.read()
+    x = re.search("DISTRIB_TARGET='(.*?)'", txt)
+    if not x:
+      return ret
+    if verbose:
+      print("  DISTRIB_TARGET =", x.group(1))
+    target = x.group(1).strip().lower()
+    board = target.split(r'/')[0]
+    subtarget = target.split(r'/')[1]
+    cpu_arch = None
+    cpu_name = ''
+    if board == 'ramips':
+      cpu_arch = 'mips'
+      cpu_name = subtarget
+    if board == 'mediatek':
+      cpu_arch = 'arm64'
+      cpu_name = subtarget[:6]
+    if board.startswith('ar71'):  # Atheros
+      cpu_arch = 'mips'
+      cpu_name = board[:6]
+    if board == 'ipq' and subtarget.startswith('ipq'):
+      cpu_name = subtarget[:7]
+    elif board.startswith('ipq') and len(board) >= 7:
+      cpu_name = board[:7]
+    if cpu_name.startswith('ipq401'):
+      cpu_arch = 'armv7'
+    if cpu_name.startswith('ipq806'):
+      cpu_arch = 'armv7'
+    if cpu_name.startswith('ipq807'):
+      cpu_arch = 'arm64'
+    if cpu_name.startswith('ipq50'):
+      cpu_arch = 'arm64'
+    if cpu_name.startswith('ipq60'):
+      cpu_arch = 'arm64'
+    ret.cpu_arch = cpu_arch
+    ret.cpu_name = cpu_name if cpu_name is not None else None
     if verbose:
       print('  CPU arch: {}'.format(ret.cpu_arch))
       print('  CPU name: {}'.format(ret.cpu_name))
-    # spi-mt7621 1e000b00.spi: sys_freq: 50000000  
-    x = re.search(r'spi-mt(.*?) (.*?).spi: sys_freq: ', self.dmesg)
-    if x:
-      ret.spi_rom = True
-      if verbose:
-        print('  SPI rom: {}'.format(ret.spi_rom))
+    if board == 'ramips' and self.dmesg:
+      # spi-mt7621 1e000b00.spi: sys_freq: 50000000  
+      x = re.search(r'spi-mt(.*?) (.*?).spi: sys_freq: ', self.dmesg)
+      if x:
+        ret.spi_rom = True
+        if verbose:
+          print('  SPI rom: {}'.format(ret.spi_rom))
     if verbose:
       print(" ")
     return ret
