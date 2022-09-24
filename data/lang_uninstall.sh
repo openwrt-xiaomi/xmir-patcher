@@ -19,6 +19,7 @@ mv /etc/crontabs/root.new /etc/crontabs/root
 rm -f /etc/rc.lang
 rm -f /etc/lang_patch.sh
 rm -f $DIR_PATCH/lang_patch.sh
+rm -f $DIR_PATCH/lang_patch1.sh
 rm -f $DIR_PATCH/base.*.lmo
 rm -f /tmp/lang_patch.log
 

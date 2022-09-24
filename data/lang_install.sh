@@ -28,6 +28,10 @@ fi
 mv -f /tmp/base.*.lmo $DIR_PATCH/
 mv -f /tmp/lang_patch.sh $DIR_PATCH/
 chmod +x $DIR_PATCH/lang_patch.sh
+if [ -e "/tmp/lang_patch1.sh" ]; then
+	mv -f /tmp/lang_patch1.sh $DIR_PATCH/
+	chmod +x $DIR_PATCH/lang_patch1.sh
+fi
 
 INSTALL_METHOD=1
 if [ -e "/usr/lib/os-release" ]; then

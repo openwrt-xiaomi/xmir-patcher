@@ -35,6 +35,10 @@ sed -i 's/ and features\["system"\]\["i18n"\] == "1" //' /usr/lib/lua/luci/view/
 # unlock change luci.main.lang
 sed -i "s/option CHANNEL 'stable'/option CHANNEL 'release'/g" /usr/share/xiaoqiang/xiaoqiang_version
 
+if [ -e "$DIR_PATCH/lang_patch1.sh" ]; then
+	sh $DIR_PATCH/lang_patch1.sh
+fi
+
 echo "lang patched" > /tmp/lang_patch.log
 
 MAIN_LANG=$( uci -q get luci.main.lang )
