@@ -27,13 +27,13 @@ msgstr ""
 " etc."
 
 msgid "时区设置"
-msgstr "Time zone settings"
+msgstr "Time settings"
 
-msgid "
-            当前系统时间："
+# msgid 0x602D46E9
+msgid "当前系统时间："
 msgstr "Current system time:"
 
-msgid "启用此功能后，Redmi路由器将开启IPv6上网功能（使用前请咨询网络运营商是否支持IPv6"
+msgid "启用此功能后，Redmi路由器将开启IPv6上网功能（使用前请咨询网络运营商是否支持IPv6）"
 msgstr ""
 "With this function enabled, the Redmi router will enable the IPv6 Internet"
 " connection function (please contact the network provider to verify that it"
@@ -45,6 +45,187 @@ msgid "Mesh模式下不支持切换为中继模式。"
 
 msgid "Mesh模式下不支持切换为路由模式。"
 msgstr "To ensure user experience, switching to Relay mode is not supported in Mesh mode"
+
+# ============= data from www files ==============
+
+# msgid 0xE6817811
+msgid "Wi-Fi密码："
+msgstr "Wi-Fi password: "
+
+# msgid 0x8F09C395
+msgid "连接设备数量 --"
+msgstr "Number of connected devices --"
+
+# msgid 0xCB48B8E3
+msgid "Wi-Fi名称："
+msgstr "Wi-Fi name: "
+
+# msgid 0x28A2D339
+msgid "Wi-Fi密码: 未设置"
+msgstr "Wi-Fi password: not set"
+
+# msgid 0x14400DAE
+msgid "连接设备数量："
+msgstr "Number of connected devices: "
+
+# msgid 0x45F4D8A1
+msgid "检测到Mesh网络均为有线组网，"
+msgstr "It is detected that the Mesh networks are all wired networks."
+
+# msgid 0x52A8742A
+msgid "您可以开放专有回程频段以获得更好的Wi-Fi体验"
+msgstr "You can open up dedicated backhaul bands for a better Wi-Fi experience"
+
+# msgid 0xF8499002
+msgid "此时5G网络已关闭"
+msgstr "5G network is turned off at this time"
+
+# msgid 0x34011096
+msgid "此时5G网络已打开"
+msgstr "5G network is turned on at this time"
+
+# msgid 0xD00B13F6
+msgid "正在扩展Mesh节点(1-2分钟)..."
+msgstr "Scaling Mesh nodes (1-2 minutes)..."
+
+# msgid 0x502C362D
+msgid "正在同步Mesh节点配置..."
+msgstr "Synchronizing Mesh node configuration..."
+
+# msgid 0x77E732D0
+msgid "搜索并添加Mesh节点"
+msgstr "Search and add Mesh nodes"
+
+# msgid 0xF1B8FC7F
+msgid "没有搜索到可用的mesh节点"
+msgstr "No Mesh nodes found available"
+
+# msgid 0x91F1F04C
+msgid "知道了"
+msgstr "understood"
+
+# msgid 0x9B7BD06B
+msgid "搜索Mesh子路由..."
+msgstr "Search for Mesh sub-routes..."
+
+# msgid 0xE5AFB325
+msgid "可以尝试以下方法："
+msgstr "You can try the following methods: "
+
+# msgid 0x5B994F9D
+msgid "1、确认主路由与待添加的子路由均支持小米Mesh组网功能："
+msgstr ""
+"1. Confirm that both the main routeк and the sub-routeк to"
+" be added support the Xiaomi Mesh networking function:"
+
+# msgid 0xEE1B4A8B
+msgid "支持小米Mesh组网的路由产品"
+msgstr "Routers that support Xiaomi Mesh networking"
+
+# msgid 0x0DBB1237
+msgid "2、确保待添加的子路由处于未配置状态（长按Reset按钮5秒后即可恢复成未配置状态）;"
+msgstr ""
+"2. Make sure that the sub-route to be added is in the unconfigured"
+" state (press and hold the Reset button for 5 seconds to restore"
+" the unconfigured state);"
+
+# msgid 0xA762DE57
+msgid "3、将待添加的子路由靠近主路由并重试（注意保持1米以外的距离以免干扰）；"
+msgstr ""
+"3. Move the sub-route to be added close to the main route and try"
+" again (keep a distance of 1 meter away to avoid interference);"
+
+# msgid 0x63EA2194
+msgid "4、将待添加的子路由升至最新固件，并重置后重试"
+msgstr "4. Upgrade the sub-router to be added to the latest firmware, reset it and try again"
+
+# msgid 0xD712B61B
+msgid "1、将待添加的子路由靠近主路由并重试（注意保持1米以外的距离以免干扰）；"
+msgstr ""
+"1. Move the sub-route to be added close to the main route and try"
+" again (keep a distance of 1 meter to avoid interference);"
+
+# msgid 0x93616EE3
+msgid "2、将主路由升至最新固件版本；"
+msgstr "2. Upgrade the main router to the latest firmware version;"
+
+# msgid 0x5E0B9FEC
+msgid "3、将待添加的子路由升至最新固件，并重置后重试（长按Reset按钮5秒后即可重置）"
+msgstr ""
+"3. Upgrade the sub-route to be added to the latest firmware, reset it"
+" and try again (press and hold the Reset button for 5 seconds to reset)"
+
+# msgid 0x69A2AD60
+msgid "请选择网口"
+msgstr "Please select a network port"
+
+# msgid 0x0DCF73A9
+msgid "确认是否关闭IPTV功能"
+msgstr "Confirm whether to turn off the IPTV function"
+
+# msgid 0x22F83390
+msgid "请选择一个网口作为IPTV口"
+msgstr "Please select a network port as IPTV port"
+
+# msgid 0x39632C1F
+msgid "当前系统时区："
+msgstr "Current system time zone:"
+
+# msgid 0x02B06026
+msgid "*如需修改时区，请切换到主Mesh路由进行修改，会自动同步到子Mesh路由"
+msgstr ""
+"*If you need to modify the time zone, please switch to the main Mesh route"
+" to modify, it will be automatically synchronized to the sub-Mesh route"
+
+# msgid 0xF52AD490
+msgid "当前Wi-Fi的加密方式为超强加密（WPA3），在该模式下部分型号手机可能存在兼容性问题"
+msgstr ""
+"The current Wi-Fi encryption method is super encryption (WPA3), and some"
+" models of mobile phones may have compatibility problems in this mode"
+
+# msgid 0xF68D282B
+msgid "1. NFC功能开启"
+msgstr "1. NFC function on"
+
+# msgid 0xB73301CC
+msgid "2. 屏幕处于亮屏解锁的状态"
+msgstr "2. The screen is in a bright screen unlocked state"
+
+# msgid 0xE8590A21
+msgid "接入到运营商宽带的网线可以插在任意网口"
+msgstr "The network cable connected to the operator's broadband can be plugged into any network port"
+
+# msgid 0x3A9A6E52
+msgid "聚合口"
+msgstr "Aggregate port"
+
+# msgid 0x2406B809
+msgid "智能选择WAN口（推荐）"
+msgstr "Smart selection of WAN port (recommended)"
+
+# msgid 0x59A52F31
+msgid "固定WAN口"
+msgstr "Fixed WAN port"
+
+# msgid 0xF1807E93
+msgid "确认是否关闭LAN口聚合功能"
+msgstr "Confirm whether to disable the LAN port aggregation function"
+
+# msgid 0xA386BFE2
+msgid "未检测到宽带网线接入，请将网线连接到任意网口"
+msgstr "No broadband network cable access is detected, please connect the network cable to any network port"
+
+# msgid 0x93F9B492
+msgid "智能识别网口“"
+msgstr "Intelligent identification of network ports “"
+
+# msgid 0x26CFD986
+msgid "”作为WAN口"
+msgstr "” as WAN port"
+
+# msgid 0x03FCC83A
+msgid "请选择WAN口"
+msgstr "Please select WAN port"
 
 # ========================================================================= #
 #     Data from Xiaomi LMO files                                            #
