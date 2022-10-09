@@ -597,5 +597,6 @@ if kernel.fit:
   gw.run_cmd("reboot -f")
   print("Force REBOOT activated!")
 else:
-  gw.run_cmd("sync ; umount -a", timeout = 12)
+  gw.run_cmd("sync ; umount -a", timeout = 5)
+  print("Please, reboot router!")
 

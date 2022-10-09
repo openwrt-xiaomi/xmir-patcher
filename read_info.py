@@ -177,7 +177,7 @@ class DevInfo():
     return self.partlist[i]  
 
   def get_part_by_addr(self, addr):
-    return get_part(addr, None)
+    return self.get_part(addr, None)
 
   def get_rootfs(self, verbose = None):
     verbose = verbose if verbose is not None else self.verbose
@@ -254,7 +254,7 @@ class DevInfo():
       return ret
     with open(fn_local, "r", encoding="latin_1") as file:
       txt = file.read()
-    x = re.search("DISTRIB_TARGET='(.*?)'", txt)
+    x = re.search("DISTRIB_TARGET=['\"](.*?)['\"]", txt)
     if not x:
       return ret
     if verbose:
@@ -287,8 +287,8 @@ class DevInfo():
       cpu_arch = 'arm64'
     if cpu_name.startswith('ipq60'):
       cpu_arch = 'arm64'
-    ret.cpu_arch = cpu_arch
-    ret.cpu_name = cpu_name if cpu_name is not None else None
+    ret.cpu_arch = cpu_arch if cpu_arch else None
+    ret.cpu_name = cpu_name if cpu_name else None
     if verbose:
       print('  CPU arch: {}'.format(ret.cpu_arch))
       print('  CPU name: {}'.format(ret.cpu_name))
