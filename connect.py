@@ -43,7 +43,7 @@ if dn in 'R3600 RA69 RA70 RA72':
   import connect3
   sys.exit(0)
 
-if dn in 'RB01 RB03 RB06 RB08':
+if dn in 'RA80 RA82 RB01 RB03 RB06 RB08':
   import connect4
   sys.exit(0)
 

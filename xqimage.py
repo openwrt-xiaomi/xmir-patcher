@@ -73,9 +73,9 @@ xqModelList = [
   "<unk40>", # 40
   "<unk41>",
   "<unk42>",
-  "RA80",           # AX3000
+  "RA80",           # AX3000 (CN)
   "RA81",           # Redmi AX3000
-  "RA82",           # AX3000
+  "RA82",           # AX3000 (INT)
   "RA83",
   "RA74",           # AX5400
   "<unk48>",
