@@ -6,7 +6,7 @@ Firmware patcher for Xiaomi routers
 
 ### Windows
 
-Run `run.bat`
+* Run `run.bat`
 
 ### Linux / Mac OS
 
