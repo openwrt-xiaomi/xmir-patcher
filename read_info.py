@@ -81,13 +81,17 @@ class DevInfo():
       if not self.partlist or len(self.partlist) <= 1:
         die("Partition list is empty!")
       self.get_rootfs()
+      self.get_kernel_cmdline()
+      if self.rootfs.num is None:
+        if 'firmware' in self.kcmdline:
+          self.rootfs.num = int(self.kcmdline['firmware'])
+          print(f'rootfs.num = {self.rootfs.num}\n')
       self.get_baseinfo()
       if not self.info.cpu_arch:
         die("Can't detect CPU arch! Try to reboot device.")
     if infolevel >= 2:
       self.get_ver()
     if infolevel >= 3:
-      self.get_kernel_cmdline()
       self.get_nvram()
     if infolevel >= 4:
       self.get_bootloader()
