@@ -6,6 +6,7 @@ import sys
 import re
 import types
 import binascii
+import random
 import tarfile
 import io
 import requests
@@ -93,25 +94,32 @@ class DevInfo():
     if infolevel >= 5:
       self.get_env_list()
 
-  def get_dmesg(self, verbose = None):
-    verbose = verbose if verbose is not None else self.verbose
-    self.dmesg = None
-    fn_local  = 'outdir/dmesg.log'
-    fn_remote = '/tmp/dmesg.log'
+  def run_command(self, cmd, fn = None, encoding = "latin_1", binary = False, verbose = 1):
+    if not fn:
+      fn = hex(random.getrandbits(64)) + '.txt'
+      fn = fn[1:]
+    fn_local  = f'outdir/{fn}'
+    fn_remote = f'/tmp/{fn}'
     if os.path.exists(fn_local):
       os.remove(fn_local)
     try:
-      self.gw.run_cmd("dmesg > " + fn_remote)
-      self.gw.download(fn_remote, fn_local)
+      self.gw.run_cmd(cmd + " > " + fn_remote)
+      self.gw.download(fn_remote, fn_local, verbose = verbose)
       self.gw.run_cmd("rm -f " + fn_remote)
     except Exception:
       return None
     if not os.path.exists(fn_local):
       return None
-    if os.path.getsize(fn_local) <= 1:
+    if os.path.getsize(fn_local) <= 0:
       return None
-    with open(fn_local, "r", encoding="latin_1") as file:
-      self.dmesg = file.read()
+    openmode = 'rb' if binary else 'r'
+    with open(fn_local, openmode, encoding = encoding) as file:
+      output = file.read()
+    return output    
+  
+  def get_dmesg(self, verbose = None):
+    verbose = verbose if verbose is not None else self.verbose
+    self.dmesg = self.run_command('dmesg', 'dmesg.log')
     return self.dmesg
 
   def get_part_table(self, verbose = None):
@@ -121,7 +129,7 @@ class DevInfo():
       return self.partlist
     x = self.dmesg.find(" MTD partitions on ")
     if x <= 0:
-      return self.partlist
+      return self.get_part_table2(verbose)
     parttbl = re.findall(r'0x0000(.*?)-0x0000(.*?) : "(.*?)"', self.dmesg)
     if len(parttbl) <= 0:
       return self.partlist
@@ -138,6 +146,33 @@ class DevInfo():
       print(" ")
     return self.partlist
 
+  def get_part_table2(self, verbose = None):
+    verbose = verbose if verbose is not None else self.verbose
+    self.partlist = []
+    mtd_list = self.run_command('cat /proc/mtd', 'mtd_list.txt')
+    if not mtd_list or len(mtd_list) <= 0:
+      return []
+    mtdtbl = re.findall(r'mtd([0-9]+): ([0-9a-fA-F]+) ([0-9a-fA-F]+) "(.*?)"', mtd_list)
+    if len(mtdtbl) <= 0:
+      return []
+    mtdlist = []
+    if self.verbose:
+      print("MTD partitions :")
+    for i, mtd in enumerate(mtdtbl):
+      mtdid = int(mtd[0])
+      size = int(mtd[1], 16)
+      name = mtd[3]
+      addr = self.run_command(f'cat /sys/class/mtd/mtd{mtdid}/offset', 'offset.txt', verbose = 0)
+      if addr is None or len(addr) <= 0:
+        return []
+      addr = int(addr)
+      self.partlist.append( {'addr': addr, 'size': size, 'name': name} )
+      if verbose:
+        print('  %2d > addr: 0x%08X  size: 0x%08X  name: "%s"' % (i, addr, size, name))
+    if verbose:
+      print(" ")
+    return self.partlist
+  
   def get_part_num(self, name_or_addr, comptype = None):
     if not self.partlist:
       return -2
