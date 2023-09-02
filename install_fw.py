@@ -28,6 +28,8 @@ gw = gateway.Gateway()
 if not gw.device_name:
   die("Xiaomi Mi Wi-Fi device not found! (IP: {})".format(gw.ip_addr))
 
+img_write = True  # used for testing
+
 dn_dir = 'firmware/'
 fn_local = None
 dn_tmp = 'tmp/fw/'
@@ -172,12 +174,21 @@ def parse_fit(data, offset = 0):
   '''
   if kernel.ostype == 'openwrt':
     if len(data) - offset - fit_size < 1024:
+      print("WARN: FIT: 001")
       return 1
     rootfs_offset = data.find(UBIv1_MAGIC, offset + fit_size)
+    if rootfs_offset >= 0:
+      rootfs_offset -= offset
+      print('FIT: UBI offset = 0x%X' % rootfs_offset)
+    else:
+      rootfs_offset = data.find(HSQS_MAGIC, offset + fit_size)      
+      if rootfs_offset >= 0:
+        rootfs_offset -= offset
+        print('FIT: HSQS offset = 0x%X' % rootfs_offset)
     if rootfs_offset < 0:
+      if not rootfs.data:
+        print("WARN: FIT: rootfs not found")
       return 1
-    rootfs_offset -= offset
-    print('FIT UBI offset = 0x%X' % rootfs_offset)
     if rootfs.data:
       die('FIT: Found two RootFS images')
     rootfs.data = data[offset+rootfs_offset:]
@@ -485,31 +496,37 @@ if not dev.env.fw.data or dev.env.fw.len <= 0:
   die("Can't dump current NVRAM params!")
 
 fw_num = None
+print(f"current flag_boot_rootfs = {dev.rootfs.num}")
+rootfs1_num = dev.get_part_num("rootfs1")
 
 if c_stock:
   if dev.rootfs.num is None or dev.rootfs.num < 0:
     die("Can't detect current booted rootfs!")
-  print("current flag_boot_rootfs = {}".format(dev.rootfs.num))
   fw_num = 1 - dev.rootfs.num
   #if dev.env.fw.var['flag_boot_rootfs'] == str(dev.rootfs.num):
   #  die("First, you should change the number of the boot kernel to {} !!!".format(fw_num))
-  kernel.partname = "kernel{}".format(fw_num)
-  kp = dev.get_part_num(kernel.partname)
-  if kp <= 0:
-    die("Partition {} not found!".format(kernel.partname))
-  kernel.addr = dev.partlist[kp]['addr']
-  kernel.cmd = 'mtd -e "{part}" write "{bin}" "{part}"'.format(part=kernel.partname, bin=kernel.fn_remote)
-  rootfs.partname = "rootfs{}".format(fw_num)
-  rp = dev.get_part_num(rootfs.partname)
-  if rp <= 0:
-    die("Partition {} not found!".format(rootfs.partname))
-  rootfs.addr = dev.partlist[rp]['addr']
-  rootfs.cmd = 'mtd -e "{part}" write "{bin}" "{part}"'.format(part=rootfs.partname, bin=rootfs.fn_remote)
+  if rootfs1_num > 0:
+    kernel.partname = "kernel{}".format(fw_num)
+    kp = dev.get_part_num(kernel.partname)
+    if kp <= 0:
+      die("Partition {} not found!".format(kernel.partname))
+    kernel.addr = dev.partlist[kp]['addr']
+    kernel.cmd = 'mtd -e "{part}" write "{bin}" "{part}"'.format(part=kernel.partname, bin=kernel.fn_remote)
+    rootfs.partname = "rootfs{}".format(fw_num)
+    rp = dev.get_part_num(rootfs.partname)
+    if rp <= 0:
+      die("Partition {} not found!".format(rootfs.partname))
+    rootfs.addr = dev.partlist[rp]['addr']
+    rootfs.cmd = 'mtd -e "{part}" write "{bin}" "{part}"'.format(part=rootfs.partname, bin=rootfs.fn_remote)
 
 if kernel.fit is True:
   if not kernel.addr or not kernel.partname:
     die('FIT: Unknown addr for flashing!')
-  fw_num = 0
+  if c_stock:
+    if fw_num == 1:
+      kernel.partname = 'firmware1'
+  else:  
+    fw_num = 0   # target partition is 'firmware'
   kernel.cmd = 'mtd -e "{part}" write "{bin}" "{part}"'.format(part=kernel.partname, bin=kernel.fn_remote)
   rootfs.cmd = None
 
@@ -551,7 +568,7 @@ if dev.bl.type == 'breed':
         fw_addr = None
   if fw_addr and fw_addr == kernel.addr:
     print("Breed boot address is correct! (addr: 0x%X)" % fw_addr)
-  else:
+  elif img_write:
     if fw_num is not None:
       fw_addr = activate_boot.breed_boot_change(gw, dev, fw_num, None, None)
     else: 
@@ -578,23 +595,32 @@ gw.run_cmd(cmd, timeout = 8)
 
 if fw_num is not None:
   print("Run scripts for change NVRAM params...")
-  activate_boot.uboot_boot_change(gw, fw_num)
+  if img_write:
+    activate_boot.uboot_boot_change(gw, fw_num)
   print('Boot from partition "{}" activated.'.format(kernel.partname))
 
 print('Writing kernel image to addr {} ...'.format("0x%08X" % kernel.addr))
 print("  " + kernel.cmd)
-gw.run_cmd(kernel.cmd, timeout = 34)
+if img_write:
+  gw.run_cmd(kernel.cmd, timeout = 34)
 
 if rootfs.cmd:
   print('Writing rootfs image to addr {} ...'.format("0x%08X" % rootfs.addr))
   print("  " + rootfs.cmd)
-  gw.run_cmd(rootfs.cmd, timeout = 60)
+  if img_write:
+    gw.run_cmd(rootfs.cmd, timeout = 60)
+
+if img_write:
+  die('TEST is over')
 
 print("The firmware has been successfully flashed!")
 
 if kernel.fit:
   print('Send command "reboot" via SSH ...')
-  gw.run_cmd("reboot -f")
+  try:
+    gw.run_cmd("reboot -f")
+  except ssh2.exceptions.SocketRecvError as e:
+    pass
   print("Force REBOOT activated!")
 else:
   gw.run_cmd("sync ; umount -a", timeout = 5)
