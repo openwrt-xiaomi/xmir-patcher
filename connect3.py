@@ -212,24 +212,42 @@ def telnet_connect(xqpass):
   return None
 
 
-flasher = ExFlasher(gw)
-xqpass = calc_xqpassword(flasher.syslog.device_sn)
+flasher = None
+device_sn = None
+
+if dn == 'RB03':
+  if gw.rom_version != '1.2.7':
+    die('First you need to install firmware version 1.2.7 (without saving settings)')
+  info = gw.get_init_info()
+  if not info or info["code"] != 0:
+    die('Cannot get init_info')
+  device_sn = info["id"]
+else:
+  flasher = ExFlasher(gw)
+  device_sn = flasher.syslog.device_sn
+
+print(f'Device Serial Number: {device_sn}')
+xqpass = calc_xqpassword(device_sn)
 print('Default Telnet password: "{}"'.format(xqpass))
 
-if not gw.check_telnet():
-  bdata = flasher.get_bdata_env()
-  if not 'telnet_en' in bdata.var or bdata.var['telnet_en'] != '1':
-    flasher.patch_bdata()
-
-if not gw.check_telnet():
-  die('The Telnet server could not be activated.')
+if flasher:
+  if not gw.check_telnet():
+    bdata = flasher.get_bdata_env()
+    if not 'telnet_en' in bdata.var or bdata.var['telnet_en'] != '1':
+      flasher.patch_bdata()
+  if not gw.check_telnet():
+    die('The Telnet server could not be activated.')
+else:
+  if not gw.check_telnet():
+    die('Telnet server not respond.')
 
 '''
-print('Connect to telnet ...')
-if not telnet_connect(xqpass):
-  print('Can\'t connect to Telnet server.')
-  device_factory_reset()
-  flasher.wait_reboot(75)
+if flasher:
+  print('Connect to telnet ...')
+  if not telnet_connect(xqpass):
+    print('Can\'t connect to Telnet server.')
+    device_factory_reset()
+    flasher.wait_reboot(75)
 '''
 
 print('Connect to Telnet ...')

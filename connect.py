@@ -39,7 +39,7 @@ if dn == 'R3600' and gw.rom_version == '1.0.17':
   import connect2
   sys.exit(0)
 
-if dn in 'R3600 RA69 RA70 RA72':
+if dn in 'R3600 RA69 RA70 RA72 RB03':
   import connect3
   sys.exit(0)
 
