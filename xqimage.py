@@ -67,15 +67,15 @@ xqModelList = [
   "CR6006",  # 34
   "CR6008",
   "CR6009",
-  "RA70",
+  "RA70",           # AX9000
   "RA75",
   "RA72",
   "<unk40>", # 40
   "<unk41>",
   "<unk42>",
-  "RA80",           # AX3000 (CN)
+  "RA80",           # AX3000
   "RA81",           # Redmi AX3000
-  "RA82",           # AX3000 (INT)
+  "RA82",           # AX3000
   "RA83",
   "RA74",           # AX5400
   "<unk48>",
@@ -96,6 +96,14 @@ xqModelList = [
   "<unk63>",
   "CB04",    # 64
   "CB0401",  # 65
+  "RC01",           # AX10000
+  # routers with unknown device number
+  "RB02",           # Xiaomi AC1200 (INT)
+  "R4AV2",          # Xiaomi AC1200 (CN)
+  "RC04",           # RA75 analog
+  "WR30U",          # Xiaomi AX3000NE
+  "RD01",           # ???
+  "RD03",           # Xiaomi AX3000T (CN)
 ]
 
 def get_modelid_by_name(name):
