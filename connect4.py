@@ -35,6 +35,14 @@ ret = gw.detect_ssh(verbose = 1, interactive = True)
 if ret > 0:
     die(0, "SSH server already installed and running")
 
+info = gw.get_init_info()
+if not info or info["code"] != 0:
+    die('Cannot get init_info')
+
+ccode = info["countrycode"]
+if ccode == "CN":
+    print('Current CountryCode = CN')
+
 stok = gw.web_login()
 
 def exec_cmd(cmd = {}, api = 'misystem/set_sys_time'):
@@ -54,7 +62,7 @@ def get_netmode():
 netmode = get_netmode()
 if netmode < 0:
     die('Extension "/api/xqnetwork/get_netmode" not working!')
-    
+
 if netmode != 4:
     print(f"netmode = {netmode}. Attempting to set netmode to 4 ...")
     import ssl
