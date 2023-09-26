@@ -74,7 +74,7 @@ class EnvBuffer():
     return dict  
 
   def set_env(self, key, value):    
-    var[key] = value
+    self.var[key] = value
     
   def pack(self, bufsize, crc_prefix = None, encoding = None):
     crc_prefix = crc_prefix if crc_prefix is not None else self.crc_prefix

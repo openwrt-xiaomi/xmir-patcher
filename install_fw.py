@@ -610,7 +610,7 @@ if rootfs.cmd:
   if img_write:
     gw.run_cmd(rootfs.cmd, timeout = 60)
 
-if img_write:
+if not img_write:
   die('TEST is over')
 
 print("The firmware has been successfully flashed!")
