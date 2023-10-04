@@ -288,7 +288,7 @@ class Gateway():
   def reboot_device(self, wait_timeout = None):
     try:
       params = { 'client': 'web' }
-      res = requests.post(gw.apiurl + "xqsystem/reboot", params = params, timeout=self.timeout)
+      res = requests.post(self.apiurl + "xqsystem/reboot", params = params, timeout=self.timeout)
       if res.text.find('"code":0') < 0:
         return False
       if wait_timeout:
