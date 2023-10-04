@@ -61,6 +61,7 @@ class Gateway():
   timeout = 4
   memcfg = None  # shared memory "XMiR_12345"
   device_name = None
+  device_info = None
   rom_version = None
   rom_channel = None
   mac_address = None
@@ -77,6 +78,8 @@ class Gateway():
     self.verbose = verbose
     self.timeout = timeout
     self.device_name = None
+    self.device_info = None
+    self.xqpassword = None
     self.status = -2
     self.init_memcfg(load_cfg)
     atexit.register(self.shutdown)
@@ -93,6 +96,7 @@ class Gateway():
 
   def detect_device(self):
     self.device_name = None
+    self.device_info = None
     self.rom_version = None
     self.rom_channel = None
     self.mac_address = None
@@ -150,10 +154,12 @@ class Gateway():
     '''
     info = self.get_init_info()
     if info and info["code"] == 0:
+      self.device_info = info
       if info["inited"] != 1:
         die("You need to make the initial configuration in the WEB of the Device!")
       if "newEncryptMode" in info:
         self.encryptmode = int(info["newEncryptMode"])
+    self.xqpassword = self.get_xqpassword()
     return self.status
 
   def web_ping(self, timeout, wait_timeout = 0):
@@ -173,6 +179,19 @@ class Gateway():
       if dt > 0:
         time.sleep(dt / 1000 / 1000)
     return ret
+
+  # default password for Telnet
+  def get_xqpassword(self, sn = None):
+    if sn is None:
+      if not self.device_info:
+        return None
+      if 'id' not in self.device_info:
+        return None
+      sn = self.device_info['id']  # id = SerialNumber
+    guid = 'd44fb0960aa0-a5e6-4a30-250f-6d2df50a'   # finded into mkxqimage
+    salt = '-'.join( reversed(guid.split('-')) )
+    password = hashlib.md5( (sn + salt).encode('utf-8') ).hexdigest()
+    return password[:8]
 
   def xqhash(self, string):
     if self.encryptmode == 0:
@@ -571,7 +590,7 @@ class Gateway():
         die("TELNET not responding (IP: {})".format(self.ip_addr))
     return False
 
-  def get_telnet(self, verbose = 0):
+  def get_telnet(self, verbose = 0, password = None):
     try:
       tn = telnetlib.Telnet(self.ip_addr, timeout=4)
     except Exception as e:
@@ -595,7 +614,9 @@ class Gateway():
       if idx > 0:
         tn.prompt = obj.group()
         return tn
-      tn.write("{}\n".format(self.passw).encode('ascii'))
+      if password is None:
+        password = self.passw
+      tn.write("{}\n".format(password).encode('ascii'))
       idx, obj, output = tn.expect([prompt], timeout=2)
       if idx < 0:
         raise Exception('')
