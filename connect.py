@@ -30,25 +30,31 @@ if gw.status < 1:
   die("Xiaomi Mi Wi-Fi device not found (IP: {})".format(gw.ip_addr))
 
 dn = gw.device_name
+from xqimage import get_modelid_by_name
+model_id = get_modelid_by_name(dn)
 
-if dn in 'R2100 R2350 RM1800 RM2100 RA67':
-  import connect2
-  sys.exit(0)
+#if dn in 'R2100 R2350 RM1800 RM2100 RA67':
+#  import connect2
+#  sys.exit(0)
 
-if dn == 'R3600' and gw.rom_version == '1.0.17':
-  import connect2
-  sys.exit(0)
+#if dn == 'R3600' and gw.rom_version == '1.0.17':
+#  import connect2
+#  sys.exit(0)
 
-if dn == 'RA70' and gw.rom_version.startswith('3.'):
-  import connect4
-  sys.exit(0)
+#if dn == 'RA70' and gw.rom_version.startswith('3.'):
+#  import connect4
+#  sys.exit(0)
 
-if dn in 'R3600 RA69 RA70 RA72 RB03':
-  import connect3
-  sys.exit(0)
+#if dn in 'R3600 RA69 RA70 RA72 RB03':
+#  import connect3
+#  sys.exit(0)
 
-if dn in 'RA80 RA82 RB01 RB03 RB06 RB08':
-  import connect4
+#if dn in 'RA80 RA82 RB01 RB03 RB06 RB08':
+#  import connect4
+#  sys.exit(0)
+
+if model_id < 0 or model_id >= get_modelid_by_name('R2100'):
+  import connect5
   sys.exit(0)
 
 print("device_name =", gw.device_name)
