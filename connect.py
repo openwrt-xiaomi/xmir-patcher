@@ -164,12 +164,13 @@ if gw.use_ssh:
   print("Running SSH server on port {}...".format(gw.ssh_port))
 else:
   print("Running TELNET and FTP servers...")
+  gw.use_ftp = True
 
 requests.get(gw.apiurl + "xqnetdetect/netspeed")
 
 time.sleep(0.5)
 gw.passw = 'root'
-gw.ping(contimeout = 8)
+gw.ping(contimeout = 12)
 
 print("")
 print("#### Connection to device {} is OK ####".format(gw.device_name))

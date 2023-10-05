@@ -58,6 +58,7 @@ def get_http_headers():
 class Gateway():
   def __init_fields(self):
     self.use_ssh = True
+    self.use_ftp = False
     self.verbose = 2
     self.timeout = 4
     self.memcfg = None  # shared memory "XMiR_12345"
@@ -658,9 +659,10 @@ class Gateway():
       tn = self.get_telnet(verbose)
       if not tn:
         return False
-      ftp = self.get_ftp(verbose)
-      if not ftp:
-        return False
+      if self.use_ftp:
+        ftp = self.get_ftp(verbose)
+        if not ftp:
+          return False
     return True
 
   def run_cmd(self, cmd, msg = None, timeout = None, die_on_error = True):
@@ -703,8 +705,8 @@ class Gateway():
         if not ret:
           break
       else:
-        cmd = (cmd + '\n').encode('ascii')
-        tn.write(cmd)
+        cmd += '\n'
+        tn.write(cmd.encode('ascii'))
         tn.read_until(tn.prompt, timeout = 4 if timeout is None else timeout)
     if not self.use_ssh:
       tn.write(b"exit\n")
@@ -727,11 +729,13 @@ class Gateway():
             else:
               file.write(data)
             read_size += size
-    else:
+    elif self.use_ftp:
       ftp = self.get_ftp(self.verbose)
       file = open(fn_local, 'wb')
       ftp.retrbinary('RETR ' + fn_remote, file.write)
       file.close()
+    else:
+      raise RuntimeError('FIXME')
     return True
 
   def upload(self, fn_local, fn_remote, verbose = 1):
@@ -750,9 +754,11 @@ class Gateway():
         channel.write(data)
         size = size + len(data)
       #except ssh2.exceptions.SCPProtocolError as e:
-    else:
+    elif self.use_ftp:
       ftp = self.get_ftp(self.verbose)
       ftp.storbinary('STOR ' + fn_remote, file)
+    else:
+      raise RuntimeError('FIXME')
     file.close()
     return True
 
