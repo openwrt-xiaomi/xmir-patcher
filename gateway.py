@@ -86,6 +86,7 @@ class Gateway():
     self.status = -2
     self.init_memcfg(load_cfg)
     atexit.register(self.shutdown)
+    atexit.register(self.free_memcfg)    
     os.makedirs('outdir', exist_ok = True)
     os.makedirs('tmp', exist_ok = True)
     if detect_device:
@@ -334,6 +335,13 @@ class Gateway():
     self.ftp = None
 
   #===============================================================================
+  def free_memcfg(self):
+    if self.memcfg:
+      try:
+        self.memcfg.close() # https://docs.python.org/3/library/multiprocessing.shared_memory.html
+      except Exception:
+        pass
+  
   def init_memcfg(self, load_cfg = True):
     _env_master_cfg = 'XMiR_cfg'
     _memcfgname = 'XMiR_'
