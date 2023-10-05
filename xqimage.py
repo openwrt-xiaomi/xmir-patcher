@@ -81,13 +81,13 @@ xqModelList = [
   "<unk48>",
   "YY01",
   "RB01",    # 50   # AX3200 (INT)
-  "RB03",    # 51   # AX6S
-  "<unk52>",
-  "<unk53>",
+  "RB03",    # 51   # AX6S    # CR8806 (ChinaMobile)
+  "CR8808",
+  "CR8809",
   "RB04",    # 54   # Redmi AX5400
-  "<unk55>",
-  "<unk56>",
-  "<unk57>",
+  "CR5508",
+  "CR5506",
+  "CR5509",
   "RB08",    # 58   # HomeWiFi
   "<unk59>",
   "<unk60>",
@@ -95,15 +95,25 @@ xqModelList = [
   "<unk62>",
   "<unk63>",
   "CB04",    # 64
-  "CB0401",  # 65
+  "CB0401",  # 65   # Xiaomi 5G CPE Pro, Magenta Internet 5G Box AX5400
   "RC01",           # AX10000
+  "<unk67>"
+  "CB0401V2",       # Xiaomi 5G CPE Pro
+  "<unk69>",
+  "RC06",           # Xiaomi Router 7000
   # routers with unknown device number
+  "RA50",           # Certification: 2022-13063
+  "RB05",           # Certification: 2022-3478
   "RB02",           # Xiaomi AC1200 (INT)
   "R4AV2",          # Xiaomi AC1200 (CN)
   "RC04",           # RA75 analog
   "WR30U",          # Xiaomi AX3000NE
+  "WR30T",          # Certification: 2022-3536
+  "WR30M",          # Certification: 2022-3202   6.0.49
   "RD01",           # ???
+  "RD02",           # Certification: 2023-11107
   "RD03",           # Xiaomi AX3000T (CN)
+  "RD04",           # Certification: 2023-12227
 ]
 
 def get_modelid_by_name(name):
