@@ -56,25 +56,27 @@ def get_http_headers():
 
 
 class Gateway():
-  use_ssh = True
-  verbose = 2
-  timeout = 4
-  memcfg = None  # shared memory "XMiR_12345"
-  device_name = None
-  device_info = None
-  rom_version = None
-  rom_channel = None
-  mac_address = None
-  encryptmode = 0     # 0: sha1, 1: sha256
-  nonce_key = None
-  stok = None    # HTTP session token
-  status = -2
-  ftp = None
-  socket = None  # TCP socket for SSH 
-  ssh = None     # SSH session
-  login = 'root' # default username
+  def __init_fields(self):
+    self.use_ssh = True
+    self.verbose = 2
+    self.timeout = 4
+    self.memcfg = None  # shared memory "XMiR_12345"
+    self.device_name = None
+    self.device_info = None
+    self.rom_version = None
+    self.rom_channel = None
+    self.mac_address = None
+    self.encryptmode = 0     # 0: sha1, 1: sha256
+    self.nonce_key = None
+    self.stok = None    # HTTP session token
+    self.status = -2
+    self.ftp = None
+    self.socket = None  # TCP socket for SSH 
+    self.ssh = None     # SSH session
+    self.login = 'root' # default username
   
   def __init__(self, timeout = 4, verbose = 2, detect_device = True, detect_ssh = True, load_cfg = True):
+    self.__init_fields()
     self.verbose = verbose
     self.timeout = timeout
     self.device_name = None
