@@ -30,8 +30,6 @@ if gw.status < 1:
   die("Xiaomi Mi Wi-Fi device not found (IP: {})".format(gw.ip_addr))
 
 dn = gw.device_name
-from xqmodel import get_modelid_by_name
-model_id = get_modelid_by_name(dn)
 
 #if dn in 'R2100 R2350 RM1800 RM2100 RA67':
 #  import connect2
@@ -53,7 +51,7 @@ model_id = get_modelid_by_name(dn)
 #  import connect4
 #  sys.exit(0)
 
-if model_id < 0 or model_id >= get_modelid_by_name('R2100'):
+if gw.model_id < 0 or gw.model_id >= gw.get_modelid_by_name('R2100'):
   import connect5
   sys.exit(0)
 

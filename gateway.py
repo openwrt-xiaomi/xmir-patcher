@@ -28,6 +28,7 @@ if sys.version_info < (3,8,0):
   sys.exit(1)
 
 from multiprocessing import shared_memory
+import xqmodel
 
 
 def die(*args):
@@ -62,6 +63,7 @@ class Gateway():
     self.verbose = 2
     self.timeout = 4
     self.memcfg = None  # shared memory "XMiR_12345"
+    self.model_id = -2
     self.device_name = None
     self.device_info = None
     self.rom_version = None
@@ -84,6 +86,8 @@ class Gateway():
     self.device_info = None
     self.xqpassword = None
     self.status = -2
+    self.xqModelList = xqmodel.xqModelList
+    self.get_modelid_by_name = xqmodel.get_modelid_by_name
     self.init_memcfg(load_cfg)
     atexit.register(self.shutdown)
     atexit.register(self.free_memcfg)    
@@ -99,6 +103,7 @@ class Gateway():
         die("Can't found valid SSH server on IP {}".format(self.ip_addr))
 
   def detect_device(self):
+    self.model_id = -2
     self.device_name = None
     self.device_info = None
     self.rom_version = None
@@ -143,6 +148,7 @@ class Gateway():
       pass
     if not self.device_name:
       die("You need to make the initial configuration in the WEB of the device!")
+    self.model_id = self.get_modelid_by_name(self.device_name, unk = True)
     self.status = -1
     x = r0.text.find('a href="/cgi-bin/luci/web/init/hello')
     if (x > 10):
