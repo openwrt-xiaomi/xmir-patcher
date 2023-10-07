@@ -326,6 +326,19 @@ class DevInfo():
       cpu_arch = 'arm64'
     if cpu_name.startswith('ipq60'):
       cpu_arch = 'arm64'
+    if cpu_name.startswith('ipq95'):
+      cpu_arch = 'arm64'
+    x = re.search("DISTRIB_ARCH=['\"](.*?)['\"]", txt)
+    if x:
+      if verbose:
+        print("  DISTRIB_ARCH =", x.group(1))
+      arch = x.group(1)
+      if arch.startswith("mips_") or arch.startswith("mipsel_") or arch.startswith("ramips_"):
+        cpu_arch = 'mips'
+      if arch.startswith("arm_"):
+        cpu_arch = 'armv7'
+      if arch.startswith("aarch64_"):
+        cpu_arch = 'arm64'      
     ret.cpu_arch = cpu_arch if cpu_arch else None
     ret.cpu_name = cpu_name if cpu_name else None
     if verbose:
