@@ -453,20 +453,25 @@ class Gateway():
       json.dump(config, file, indent=4, sort_keys=True)
 
   #===============================================================================
-  def check_ssh(self, ip, port, password, contimeout = 2, timeout = 3):
-    err = 0
+  def check_tcp_connect(self, ip, port, contimeout = 2, retobj = False):
     sock = None
-    ssh = None
     start_time = datetime.datetime.now()
     while datetime.datetime.now() - start_time <= datetime.timedelta(seconds = contimeout):
       try:
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sock.settimeout(0.5)
         sock.connect((ip, port))
+        if retobj:
+          return sock
         break
-      except Exception as e:
+      except Exception:
         sock = None
-        pass
+    return True if sock else False
+
+  def check_ssh(self, ip, port, password, contimeout = 2, timeout = 3):
+    err = 0
+    ssh = None
+    sock = self.check_tcp_connect(ip, port, contimeout, retobj = True)
     if not sock:
       err = -1
     if password and err == 0:
@@ -491,9 +496,11 @@ class Gateway():
       pass
     return err
 
-  def detect_ssh(self, verbose = 1, interactive = True, contimeout = 2, aux_port = 122):
+  def _detect_ssh(self, verbose = 1, interactive = True, contimeout = 2, aux_port = 0):
     ip_addr = self.ip_addr
     ssh_port = self.ssh_port
+    if aux_port == 0 and self.model_id > 0 and self.model_id < 22:
+      aux_port = 122  # exploit for "misystem/c_upload" (connect.py)
     if ssh_port == aux_port:
       aux_port = 22
     passw = self.passw
@@ -503,10 +510,11 @@ class Gateway():
         return ssh_port  # OK
       if ret == -1:
         ssh_port = 0
+    portlist = []
     if ssh_port:
-      portlist = [ ssh_port, aux_port ]
-    else:
-      portlist = [ aux_port ]
+      portlist.append(ssh_port)
+    if aux_port and aux_port != ssh_port:
+      portlist.append(aux_port)
     plist = []
     for i, port in enumerate(portlist):
       ret = self.check_ssh(ip_addr, port, None, contimeout = contimeout)
@@ -526,7 +534,7 @@ class Gateway():
       if psw is None:
         if not interactive:
           continue
-        psw = input("Enter password for root: ")
+        psw = input('Enter password for "root" user: ')
       for i, port in enumerate(plist):
         ret = self.check_ssh(ip_addr, port, psw, contimeout = contimeout)
         if ret >= 0:
@@ -542,7 +550,29 @@ class Gateway():
           passw = None
     if verbose >= 2:
       print("Can't found valid SSH server on IP {}".format(ip_addr))
-    return -2  
+    return -2
+
+  def detect_ssh(self, verbose = 1, interactive = True, contimeout = 2, aux_port = 0):
+    ssh_port = self._detect_ssh(verbose, interactive, contimeout, aux_port)
+    if ssh_port > 0:
+      return ssh_port
+    err = ssh_port
+    telnet_en = self.check_telnet(timeout = contimeout, verbose = 0)
+    if not telnet_en:
+      return err
+    passw = 'root'
+    tn = self.get_telnet(verbose = 0, password = passw)
+    if not tn and self.xqpassword:
+      passw = self.xqpassword
+      tn = self.get_telnet(verbose = 0, password = passw)
+    if not tn:
+      return err
+    self.use_ssh = False
+    self.passw = passw
+    ftp_en = self.check_tcp_connect(self.ip_addr, 21, contimeout = 1)
+    if ftp_en:
+      self.use_ftp = True
+    return 23
 
   def ssh_close(self):
     try:
