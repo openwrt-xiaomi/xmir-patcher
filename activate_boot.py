@@ -34,6 +34,14 @@ def breed_boot_change(gw, dev, fw_num, fw_addr, fw_name):
   if env.data is None or env.max_size is None:
     die("Can't found breed env address!")
   env.var['autoboot.command'] = "boot flash 0x%X" % fw_addr
+  cmdline = 'uart_en=1'
+  if 'linux.cmdline' in env.var:
+    cmdline = env.var['linux.cmdline']    
+    if 'uart_en=' in cmdline:
+      cmdline = cmdline.replace('uart_en=0', 'uart_en=1')
+    else:
+      cmdline += ' uart_en=1'
+  env.var['linux.cmdline'] = cmdline
   print("Breed ENV params for update:")
   for i, (k, v) in enumerate(env.var.items()):
     v = '' if (v is None) else ('=' + v)
