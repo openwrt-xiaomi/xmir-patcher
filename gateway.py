@@ -431,6 +431,14 @@ class Gateway():
   def ip_addr(self, value):
     self.set_config_param('device_ip_addr', value)
 
+  @property
+  def img_write(self):
+    return self.get_config_param('img_write', True)
+
+  @img_write.setter
+  def img_write(self, value):
+    self.set_config_param('img_write', value)
+
   #===============================================================================
   def load_config(self):
     config = {}
