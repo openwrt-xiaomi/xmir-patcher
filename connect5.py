@@ -340,7 +340,7 @@ print("")
 time.sleep(0.5)
 gw.use_ssh = True
 gw.passw = 'root'
-ssh_en = gw.ping(verbose = 0, contimeout = 18)   # RSA host key generate slowly!
+ssh_en = gw.ping(verbose = 0, contimeout = 30)   # RSA host key generate slowly!
 if ssh_en:
     print('#### SSH server are activated! ####')
 else:

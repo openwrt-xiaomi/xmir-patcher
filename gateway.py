@@ -500,9 +500,8 @@ class Gateway():
     ip_addr = self.ip_addr
     ssh_port = self.ssh_port
     if aux_port == 0 and self.model_id > 0 and self.model_id < 22:
-      aux_port = 122  # exploit for "misystem/c_upload" (connect.py)
-    if ssh_port == aux_port:
-      aux_port = 22
+      if ssh_port != 122:
+        aux_port = 122  # exploit for "misystem/c_upload" (connect.py)
     passw = self.passw
     if passw:
       ret = self.check_ssh(ip_addr, ssh_port, passw, contimeout = contimeout)
