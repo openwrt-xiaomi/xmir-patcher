@@ -124,6 +124,8 @@ class DevInfo():
   def get_dmesg(self, verbose = None):
     verbose = verbose if verbose is not None else self.verbose
     self.dmesg = self.run_command('dmesg', 'dmesg.log')
+    if self.dmesg is None:
+      print(f'ERROR on downloading "/tmp/dmesg.log"')
     return self.dmesg
 
   def get_part_table(self, verbose = None):
@@ -148,6 +150,7 @@ class DevInfo():
         print('  %2d > addr: 0x%08X  size: 0x%08X  name: "%s"' % (i, addr, size, name))
     if verbose:
       print(" ")
+    self.get_part_readonly()
     return self.partlist
 
   def get_part_table2(self, verbose = None):
@@ -175,7 +178,21 @@ class DevInfo():
         print('  %2d > addr: 0x%08X  size: 0x%08X  name: "%s"' % (i, addr, size, name))
     if verbose:
       print(" ")
+    self.get_part_readonly()
     return self.partlist
+
+  def get_part_readonly(self, verbose = None):
+    verbose = verbose if verbose is not None else self.verbose
+    if self.partlist:
+      for i, mtd in enumerate(self.partlist):
+        readonly = self.run_command(f'cat /sys/class/mtd/mtd{i}/mtdblock{i}/ro', 'mtd_ro.txt', verbose = 0)
+        if readonly is None:
+          return False
+        if readonly.startswith('0'):
+          self.partlist[i]['ro'] = False
+        if readonly.startswith('1'):
+          self.partlist[i]['ro'] = True
+    return True
   
   def get_part_num(self, name_or_addr, comptype = None):
     if not self.partlist:
@@ -886,13 +903,17 @@ if __name__ == "__main__":
     os.rename(fn_local, fn_old)
 
   info = DevInfo(verbose = 1, infolevel = 99)
-  #if not info.partlist:
-  #  die("В ядерном логе не обнаружена информация о разметке NAND")
 
   file = open(fn_local, "w")
   file.write("_MTD_partitions_:\n")
   for i, part in enumerate(info.partlist):
-    file.write("  %2d > addr: %08X  size: %08X  name: \"%s\" \n" % (i, part['addr'], part['size'], part['name']))
+    name = part['name']
+    addr = "%08X" % part['addr']
+    size = "%08X" % part['size']
+    ro = "?"
+    if 'ro' in part:
+      ro = '1' if part['ro'] else '0'
+    file.write(f'  {"%2d" % i} > addr: {addr}  size: {size}  ro: {ro}  name: "{name}" \n')
   file.write("\n")  
   file.write("_Base_info_:\n")
   file.write('  Linux version: {}\n'.format(info.info.linux_ver))
