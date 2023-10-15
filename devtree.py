@@ -49,21 +49,31 @@ FDT_V16_SIZE = FDT_V3_SIZE
 FDT_V17_SIZE = FDT_V16_SIZE + 4
 
 
-def find_dtb(img, pos=0, maxsize = 256000):
+def get_dtb_totalsize(img, pos = 0, check = True):
+  if img[pos:pos+4] != FDT_MAGIC:
+    return -1
   hdrsize = ctypes.sizeof(fdt_header)
+  dt = fdt_header.from_buffer_copy(img[pos:pos+hdrsize])
+  if not check and dt.totalsize > hdrsize + 128:
+    return dt.totalsize
+  if dt.totalsize > hdrsize + 128:
+    if dt.off_dt_struct > hdrsize and dt.off_dt_struct < dt.totalsize:
+      if dt.off_dt_strings > hdrsize and dt.off_dt_strings < dt.totalsize:
+        if dt.version == 17 and dt.last_comp_version == 16:
+          if dt.boot_cpuid_phys == 0:
+            if dt.size_dt_strings < dt.totalsize and dt.size_dt_struct < dt.totalsize:
+              return dt.totalsize
+  return -1
+
+def find_dtb(img, pos=0, maxsize = 256000):
   while True:
     k = img.find(FDT_MAGIC + b"\x00", pos)
     if k < 0:
       break
-    dt = fdt_header.from_buffer_copy(img[k:k+hdrsize])
     pos = k + 4
-    if dt.totalsize > hdrsize + 128 and dt.totalsize <= maxsize:
-      if dt.off_dt_struct > hdrsize and dt.off_dt_struct < dt.totalsize:
-        if dt.off_dt_strings > hdrsize and dt.off_dt_strings < dt.totalsize:
-          if dt.version == 17 and dt.last_comp_version == 16:
-            if dt.boot_cpuid_phys == 0:
-              if dt.size_dt_strings < dt.totalsize and dt.size_dt_struct < dt.totalsize:
-                return k, dt.totalsize
+    totalsize = get_dtb_totalsize(img, k, check = True)
+    if totalsize > 0 and totalsize <= maxsize:
+      return k, totalsize
   return None, None
 
 def get_dtb(img, pos=0):
