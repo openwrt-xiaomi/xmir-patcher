@@ -6,3 +6,4 @@ requests
 pyftpdlib
 ssh2-python
 fdt
+ubi-reader
