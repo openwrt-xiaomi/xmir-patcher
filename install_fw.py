@@ -661,6 +661,10 @@ class XqFlash():
             fw_img.cmd = 'mtd -e "{part}" write "{bin}" "{part}"'.format(part=fw_img.partname, bin=fw_img.fn_remote)
             kernel.cmd = None
             rootfs.cmd = None
+            if 'ro' not in fw_part:
+                die(f'Cannot get readonly flag for partition "{fw_img.partname}"')
+            if fw_part['ro']
+                die(f'Target partition "{fw_img.partname}" has readonly flag')
 
         self.save_image_to_disk(fw_img)
         self.save_image_to_disk(kernel)
