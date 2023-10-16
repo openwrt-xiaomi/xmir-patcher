@@ -80,7 +80,7 @@ class BaseItem:
             node = node.parent
         return path if path else '/'
 
-    def __init__(self, name: str):
+    def __init__(self, name: str, label=None):
         """ 
         BaseItem constructor
         
@@ -89,7 +89,7 @@ class BaseItem:
         assert isinstance(name, str)
         assert all(c in printable for c in name), "The value must contain just printable chars !"
         self._name = name
-        self._label = None
+        self._label = label
         self._parent = None
 
     def __str__(self):
@@ -522,14 +522,14 @@ class Node(BaseItem):
     def empty(self):
         return False if self.nodes or self.props else True
 
-    def __init__(self, name, *args):
+    def __init__(self, name, *args, label=None):
         """ 
         Node constructor
         
         :param name: Node name
         :param args: List of properties and subnodes
         """
-        super().__init__(name)
+        super().__init__(name, label=label)
         self._props = []
         self._nodes = []
         for item in args:
@@ -557,7 +557,7 @@ class Node(BaseItem):
 
     def copy(self):
         """ Create a copy of Node object """
-        node = Node(self.name)
+        node = Node(self.name, label=self.label)
         for p in self.props:
             node.append(p.copy())
         for n in self.nodes:

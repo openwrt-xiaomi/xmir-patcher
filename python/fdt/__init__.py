@@ -509,11 +509,29 @@ def parse_dts(text: str, root_dir: str = '') -> FDT:
                     raise NotImplementedError("Not implemented property value: /bits/")
                 else:
                     prop_obj = PropStrings(prop_name)
-                    for prop in prop_value.split('",'):
-                        prop = prop.replace('"', "")
-                        prop = prop.strip()
-                        if len(prop) > 0:
+                    expect_open = True
+                    in_prop = False
+                    prop = ''
+                    for c in prop_value:
+                        if c == '"' and not in_prop and expect_open:
+                            prop = ''
+                            in_prop = True
+                        elif c == '"' and in_prop:
+                            if not len(prop) > 0:
+                                raise ValueError('Empty string')
                             prop_obj.append(prop)
+                            in_prop = False
+                            expect_open = False
+                        elif in_prop:
+                            prop += c
+                        elif c == ',' and not expect_open:
+                            expect_open = True
+                        elif c == ' ':
+                            continue
+                        else:
+                            raise ValueError(f'Invalid char: {c}')
+                    if expect_open:
+                        raise ValueError('Expected string after ,')
             if curnode is not None:
                 curnode.append(prop_obj)
 
