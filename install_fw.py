@@ -91,6 +91,15 @@ class XqFlash():
         self.kernel.fn_local = self.dn_tmp + 'kernel.bin'
         self.rootfs.fn_remote = '/tmp/rootfs.bin'
         self.rootfs.fn_local = self.dn_tmp + 'rootfs.bin'
+        self.clear_dir(self.dn_tmp)
+
+    def clear_dir(self, dirname):
+        if os.path.isdir(dirname):
+            for fn in os.listdir(dirname):
+                try:
+                    os.remove(dirname + '/' + fn)
+                except Exception:
+                    pass
 
     def found_all_images(self):
         self.imglist = [ ]
@@ -439,7 +448,7 @@ class XqFlash():
             kernel.data2 = lzma.decompress(data2, lzma.FORMAT_XZ)
         if kernel.data2:
             print(f'File "kernel_unpacked.bin" saved! (size: {len(kernel.data2)})')
-            with open(self.dn_tmp + 'kernel_unpacked.bin', "wb") as file:
+            with open(self.dn_tmp + '_kernel_unpacked.bin', "wb") as file:
                 file.write(kernel.data2)
         else:
             print(f'WARNING: cannot unpack kernel image (comp = {img_comp})')
@@ -608,6 +617,8 @@ class XqFlash():
                 if self.install_method == 100:
                     self.prepare_for_openwrt_100()
 
+        self.save_all_images(req_cmd = False, prefix = "_")
+
         print("--------- prepare command lines -----------")
         
         if self.install_method == 100:
@@ -663,22 +674,23 @@ class XqFlash():
             rootfs.cmd = None
             if 'ro' not in fw_part:
                 die(f'Cannot get readonly flag for partition "{fw_img.partname}"')
-            if fw_part['ro']
+            if fw_part['ro']:
                 die(f'Target partition "{fw_img.partname}" has readonly flag')
 
-        self.save_image_to_disk(fw_img)
-        self.save_image_to_disk(kernel)
-        self.save_image_to_disk(rootfs)
+        self.save_all_images(req_cmd = True, prefix = "")
     
-    def save_image_to_disk(self, image, req_cmd = True):
-        if (image.data and image.cmd) or (not req_cmd and image.data):
-            with open(image.fn_local, "wb") as file:
+    def save_image_to_disk(self, image, req_cmd = True, prefix = ""):
+        if image.data:
+            if req_cmd and not image.cmd:
+                return
+            dname = os.path.dirname(image.fn_local)
+            fname = os.path.basename(image.fn_local)
+            with open(f'{dname}/{prefix}{fname}', "wb") as file:
                 file.write(image.data)
-        else:
-            try:
-                os.remove(image.fn_local)
-            except Exception:
-                pass
+                
+    def save_all_images(self, req_cmd = True, prefix = ""):
+        for i, (iname, img) in enumerate(self.imglst.items()):
+            self.save_image_to_disk(img, req_cmd, prefix)
     
     def process_bootloader_env(self, fw_num):
         global gw
