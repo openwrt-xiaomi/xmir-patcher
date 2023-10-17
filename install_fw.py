@@ -41,6 +41,8 @@ class ImgHeader():
 class Image():
     type = None      # fw_img / kernel / rootfs
     ostype = None    # 'stock', 'openwrt', 'padavan', 'pandorabox', etc
+    into_ubi = False
+    initrd = False
     hdr = ImgHeader()
     addr = None
     addr2 = None     # for kernel_stok/kernel_dup
@@ -150,12 +152,15 @@ class XqFlash():
         self.img_stock_names = { }
         print('Parse all images...')
         for img in self.imglist:
+            self.current_image_fn = img.fn
+            self.current_image_pos = 0
             with open(img.fn, "rb") as file:
                 image = file.read()
             if img.type == 'stock':
                 self.parse_stock_image(image)
             else:
                 self.parse_image(image, None)
+        self.current_image_fn = None
         pass
 
     def init_image(self, image, data, err_msg):
@@ -190,12 +195,24 @@ class XqFlash():
             if img_name:
                 self.img_stock_names[img_name] = len(image)
         if image[:8] == UBIv1_MAGIC:
-            hr = self.parse_ubifs(image)
-            print(f'parse_ubifs = {hr}')
-            if hr >= 2:
-                self.init_image(self.fw_img, image, 'Incorrect image! (401)')
+            ubivol = self.parse_ubifs(image)
+            print(f'parse_ubifs = {len(ubivol)}')
+            kk = 0
+            if 'kernel' in ubivol:
+                self.kernel.into_ubi = True
+                kk = self.parse_fit(ubivol['kernel'], footer = False)
+                if kk <= 0:
+                    die('FIT: Incorrect image! (401)')
+                hr += kk
+            if 'rootfs' in ubivol:
+                self.init_image(self.rootfs, ubivol['rootfs'], 'Incorrect image! (402)')
+                self.rootfs.into_ubi = True
+                hr += 1
+            if 'kernel' in ubivol and ('rootfs' in ubivol or kk == 2):
+                self.init_image(self.fw_img, image, 'Incorrect image! (403)')
             if img_name:
                 self.img_stock_names[img_name] = len(image)
+            self.save_all_images(req_cmd = False, prefix = "_ubi_")
         return hr
         
     def parse_stock_image(self, image):
@@ -217,6 +234,7 @@ class XqFlash():
             img.data = data[img.offset+hdr_size:img.offset+hdr_size+img.size]
             if len(img.data) != img.size:
                 die('Incorrect stock image! (4)')
+            self.current_image_pos = img.offset + hdr_size
             #print('offset = {}  header = {}'.format("%08X" % (img.offset + hdr_size), img.data[:4]))
             imglst.append(img)
         
@@ -343,6 +361,8 @@ class XqFlash():
         return 1
     
     def parse_fit(self, image, offset = 0, footer = True):
+        kernel = self.kernel
+        rootfs = self.rootfs
         data = image
         if image is None:
             data = self.kernel.data
@@ -359,7 +379,6 @@ class XqFlash():
             self.init_image(self.kernel, data, 'FIT: Found second "kernel" section!')
         else:
             self.kernel.data = data
-        kernel = self.kernel
         kernel.ostype = None
         print('FIT size = 0x%X (%d KiB)' % (fit_size, fit_size // 1024))
         fit_dt = fdt.parse_dtb(kernel.data)
@@ -375,6 +394,18 @@ class XqFlash():
                 kernel.ostype = 'openwrt'
         if not kernel.ostype:
             die('FIT: Currently supported only OpenWrt FIT images!')
+        if kernel.into_ubi:
+            x1 = kernel.data.find(b'ARM64 OpenWrt xiaomi', 1*1024*1024)
+            if x1 > 0:
+                iname = extract_str(kernel.data, x1, maxlen = 256)
+                print(f'FIT: Found rootfs image: "{iname}"')
+                self.init_image(rootfs, kernel.data[x1:], 'FIT: Found second "rootfs" section!')
+                if ' initrd' in iname:
+                    kernel.initrd = True                    
+                    rootfs.initrd = True
+                    if kernel.into_ubi:
+                        rootfs.into_ubi = True
+                return 2
         if footer:
             hr = self.parse_footer(image, offset + fit_size)
             if hr >= 1:
@@ -408,10 +439,53 @@ class XqFlash():
             self.rootfs.data = rootfs_data
         return 1
 
-    def parse_ubifs(self, image, init = True):
-        hr = 1
-        self.init_image(self.rootfs, image, 'UBIFS: Found second "rootfs" section!')
-        return hr
+    def parse_ubifs(self, ubifs_image, init = True):
+        from ubireader.ubi import ubi
+        from ubireader.ubi import ubi_base
+        from ubireader.ubi_io import ubi_file
+        from ubireader import settings
+        from ubireader.ubi.defines import UBI_EC_HDR_MAGIC
+        from ubireader.ubifs.defines import UBIFS_NODE_MAGIC
+        from ubireader.utils import guess_filetype, guess_start_offset, guess_leb_size, guess_peb_size 
+
+        settings.logging_on = False
+        settings.logging_on_verbose = False
+        settings.warn_only_block_read_errors = False
+        settings.ignore_block_header_errors = False
+        settings.uboot_fix = False 
+        path = self.current_image_fn
+        start_offset = self.current_image_pos
+        filetype = guess_filetype(path, start_offset) 
+        print('UBI: filetype:', filetype)
+        if filetype != UBI_EC_HDR_MAGIC:
+            die('UBI: File does not look like UBI data.')
+        block_size = guess_peb_size(path)
+        if not block_size:
+            die('UBI: Block size could not be determined.')  
+        ufile_obj = ubi_file(path, block_size, start_offset)
+        #ubi_obj = ubi_base(ufile_obj) 
+        ubi_obj = ubi(ufile_obj) 
+        print('UBI: Decoding UBIFS...')
+        kernel_volume = None
+        rootfs_volume = None
+        for image in ubi_obj.images:
+            for volume in image.volumes:
+                data = b""
+                vol = image.volumes[volume]
+                for block in vol.reader(ubi_obj):
+                    data += block
+                if volume == 'kernel' and len(data) > 1024:
+                    kernel_volume = data
+                if volume == 'rootfs' and len(data) > 1024:
+                    rootfs_volume = data
+                print(f'UBI:   volume: "{volume}" \t size: {len(data)} ')
+        ufile_obj.close()
+        out = { }
+        if kernel_volume:
+            out['kernel'] = kernel_volume
+        if rootfs_volume:
+            out['rootfs'] = rootfs_volume
+        return out
 
     def unpack_kernel(self):
         kernel = self.kernel
@@ -592,7 +666,13 @@ class XqFlash():
         ubi1_num = dev.get_part_num('ubi1')
         if ubi0_num > 0 and ubi1_num > 0 and kernel_num < 0:
             self.install_method = 400
-            die("Unsupported install method 400")
+            if not fw_img.data or not kernel.data or not rootfs.data:
+                die('Cannot firmware image! (400)')
+            if not kernel.into_ubi:
+                die('Kernel image must be into UBIFS (400)')
+            if kernel.ostype == 'openwrt':
+                if not kernel.initrd:
+                    die('OpenWRT: Supported only InitRamFS images (400)')
 
         print(f'install_method = {self.install_method}')
         if self.install_method <= 0:
@@ -666,6 +746,22 @@ class XqFlash():
             if self.img_stock:
                 if self.install_fw_num == 1:
                     fw_img.partname = 'firmware1'
+
+            fw_part = dev.get_part(fw_img.partname)
+            fw_img.addr = fw_part['addr']
+            fw_img.cmd = 'mtd -e "{part}" write "{bin}" "{part}"'.format(part=fw_img.partname, bin=fw_img.fn_remote)
+            kernel.cmd = None
+            rootfs.cmd = None
+            if 'ro' not in fw_part:
+                die(f'Cannot get readonly flag for partition "{fw_img.partname}"')
+            if fw_part['ro']:
+                die(f'Target partition "{fw_img.partname}" has readonly flag')
+
+        if self.install_method == 400:
+            fw_img.partname = 'ubi'
+            if self.img_stock:
+                if self.install_fw_num == 1:
+                    fw_img.partname = 'ubi1'
 
             fw_part = dev.get_part(fw_img.partname)
             fw_img.addr = fw_part['addr']
