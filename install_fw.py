@@ -148,7 +148,17 @@ class XqFlash():
         self.cpuarch = self.dev.info.cpu_arch
         if self.cpuarch not in 'mips armv7 arm64':
             die("Currently support only MIPS, ARMv7, ARM64 arch!")
-
+        '''
+        if True:
+            for part in self.dev.partlist:
+                if part['name'] == 'firmware':
+                    part['name'] = 'ubi'
+                if part['name'] == 'firmware1':
+                    part['name'] = 'ubi1'
+                if part['name'] == 'kernel':
+                    part['name'] = '_kernel'
+            print('=== device partlist patched ===')
+        '''
         self.img_stock_names = { }
         print('Parse all images...')
         for img in self.imglist:
@@ -212,7 +222,7 @@ class XqFlash():
                 self.init_image(self.fw_img, image, 'Incorrect image! (403)')
             if img_name:
                 self.img_stock_names[img_name] = len(image)
-            self.save_all_images(req_cmd = False, prefix = "_ubi_")
+            #self.save_all_images(req_cmd = False, prefix = "_ubi_")
         return hr
         
     def parse_stock_image(self, image):
@@ -360,6 +370,55 @@ class XqFlash():
                 return 2
         return 1
     
+    def get_fdt_node(self, dt, path):        
+        plist = [ path ]
+        if '*' in path:
+            plist = [ ]
+            plist.append(path.replace('*', '-'))
+            plist.append(path.replace('*', '@'))
+        for npath in plist:
+            try:
+                node = dt.get_node(npath)
+                return node
+            except ValueError:
+                pass
+        return None
+        
+    def get_fdt_node_by_name(self, dt, name, compatible = None):
+        res = [ ]
+        for path, nodes, props in dt.walk():
+            nodename = os.path.basename(path)
+            if nodename == name:
+                if compatible:
+                    try:
+                        compat = dt.get_property('compatible', path)
+                    except ValueError:
+                        continue  # go to next node
+                    if compat.value != compatible:
+                        continue  # go to next node
+                res.append(path)
+        return res
+        
+    def get_fdt_part_list(self, dt, partlist):
+        res = [ ]
+        if isinstance(partlist, str):
+            partlist = dt.get_node(partlist)
+        for node in partlist.nodes:
+            name = node.get_property('label').value
+            addr = node.get_property('reg')[0]
+            size = node.get_property('reg')[1]
+            readonly = False
+            if node.get_property('read-only'):
+                readonly = True
+            res.append( { 'addr': addr, 'size': size, 'name': name, 'ro': readonly } )
+        return res
+        
+    def get_dtb_part_info(self, partlist, name):
+        for i, part in enumerate(partlist):
+            if part['name'] == name:
+                return part
+        return None
+    
     def parse_fit(self, image, offset = 0, footer = True):
         kernel = self.kernel
         rootfs = self.rootfs
@@ -382,30 +441,69 @@ class XqFlash():
         kernel.ostype = None
         print('FIT size = 0x%X (%d KiB)' % (fit_size, fit_size // 1024))
         fit_dt = fdt.parse_dtb(kernel.data)
+        #print(fit_dt.info(props = True))
         #if fit_dt.root.nodes[0]._name != 'images':
         #    die('FIT: Incorrect image (4)')
         fit_name = fit_dt.get_property('description').value
         print(f'FIT: name = "{fit_name}"')
+        self.fit_dt = fit_dt
+        fdt1 = self.get_fdt_node(fit_dt, '/images/fdt*1')
+        print('FDT: desc = "{}"'.format(fdt1.get_property('description').value))
+        print('FDT: type = "{}"'.format(fdt1.get_property('type').value))
+        print('FDT: arch = "{}"'.format(fdt1.get_property('arch').value))
+        if fdt1.get_property('type').value != 'flat_dt':
+            die('FIT: Incorrect image (6)')
+        if fdt1.get_property('compression').value != 'none':
+            die('FIT: Incorrect image (7)')
+        kernel.hdr.arch = fdt1.get_property('arch').value
+        krn1 = self.get_fdt_node(fit_dt, '/images/kernel*1')
+        print('KRN: desc = "{}"'.format(krn1.get_property('description').value))
+        print('KRN: type = "{}"'.format(krn1.get_property('type').value))
+        print('KRN: arch = "{}"'.format(krn1.get_property('arch').value))
+        print('KRN: compression = "{}"'.format(krn1.get_property('compression').value))
+        print(f'KRN: len(data) = {len(krn1.get_property("data"))} bytes')
+        
+        krn_dt_data = fdt1.get_property('data').data
+        dt = fdt.parse_dtb(krn_dt_data)
+        self.krn_dt = dt
+        dt_tree = dt.info(props = True)
+        #with open('dt_tree.txt', "w") as file:
+        #    file.write(dt_tree)
+        dt_compat = dt.get_property('compatible').value
+        print(f'FDT: compatible = "{dt_compat}"')
+        dt_model = dt.get_property('model').value
+        print(f'FDT: model = "{dt_model}"')
+        
+        dt_part = self.get_fdt_node_by_name(dt, 'partitions', 'fixed-partitions')
+        print(f'FDT: dt_part: {dt_part}')
+        
         kernel.fit = True
         if self.img_stock:
-            kernel.ostype = 'stock'  # aka OpenWRT
+            kernel.ostype = 'stock'
         else:
             if 'OpenWrt FIT' in fit_name:
                 kernel.ostype = 'openwrt'
         if not kernel.ostype:
             die('FIT: Currently supported only OpenWrt FIT images!')
-        if kernel.into_ubi:
-            x1 = kernel.data.find(b'ARM64 OpenWrt xiaomi', 1*1024*1024)
-            if x1 > 0:
-                iname = extract_str(kernel.data, x1, maxlen = 256)
-                print(f'FIT: Found rootfs image: "{iname}"')
-                self.init_image(rootfs, kernel.data[x1:], 'FIT: Found second "rootfs" section!')
-                if ' initrd' in iname:
-                    kernel.initrd = True                    
-                    rootfs.initrd = True
-                    if kernel.into_ubi:
-                        rootfs.into_ubi = True
-                return 2
+        
+        rootfs1 = self.get_fdt_node(fit_dt, '/images/rootfs*1')
+        if rootfs1:
+            die('FIT: Founded "rootfs-1" node. Not supported!')
+        
+        initrd1 = self.get_fdt_node(fit_dt, '/images/initrd*1')
+        if initrd1:
+            print('FIT: Founded "initrd-1" node')
+            iname = initrd1.get_property('description').value
+            print(f'FIT: initrd image name: "{iname}"')
+            if self.img_stock:
+                die('FIT: Error (4566)')
+            initrd1_data = initrd1.get_property('data')
+            self.init_image(rootfs, initrd1.get_property('data').data, 'FIT: Found second "rootfs" section!')
+            kernel.initrd = True                    
+            rootfs.initrd = True
+            if kernel.into_ubi:
+                rootfs.into_ubi = True
+            return 2
         if footer:
             hr = self.parse_footer(image, offset + fit_size)
             if hr >= 1:
@@ -569,7 +667,23 @@ class XqFlash():
             dtb = get_dtb(kernel.data2, 0)
         if not dtb:
             die("Can't found FDT (flattened device tree)")
-        kernel_part = get_dtb_part_info(dtb, "kernel")
+        dt = fdt.parse_dtb(dtb)
+        #print(dt.info(props = True))
+        dt_compat = dt.get_property('compatible').value
+        print(f'FDT: compatible = "{dt_compat}"')
+        dt_model = dt.get_property('model').value
+        print(f'FDT: model = "{dt_model}"')
+        self.dt = dt
+        dt_part = self.get_fdt_node_by_name(dt, 'partitions', 'fixed-partitions')
+        print(f'FDT: dt_part: {dt_part}')
+        if len(dt_part) == 0:
+            die("Cannot found fixed-partitions node into FDT")
+        if len(dt_part) > 1:
+            die("Several nodes were found with fixed-partition info")
+        dt_part = dt_part[0]
+        partlist = self.get_fdt_part_list(dt, dt_part)
+        #print(partlist)
+        kernel_part = self.get_dtb_part_info(partlist, "kernel")
         if not kernel_part:
             die('Cannot found "kernel" partition in DTB!')
         print('part kernel = 0x%X (size: 0x%X)' % (kernel_part['addr'], kernel_part['size']))
@@ -577,9 +691,9 @@ class XqFlash():
         part = dev.get_part_by_addr(kernel.addr)
         if not part:
             die("Can't support flashing kernel to addr 0x%X" % kernel.addr)
-        kernel2_part = get_dtb_part_info(dtb, "kernel_dup")
+        kernel2_part = self.get_dtb_part_info(partlist, "kernel_dup")
         if not kernel2_part:
-            kernel2_part = get_dtb_part_info(dtb, "kernel_stock")
+            kernel2_part = self.get_dtb_part_info(partlist, "kernel_stock")
         if not kernel2_part:
             die('Cannot found "kernel_dup"/"kernel_stock" partition in DTB!')
         print('part kernel2 = 0x%X (size: 0x%X)' % (kernel2_part['addr'], kernel2_part['size']))
@@ -587,7 +701,7 @@ class XqFlash():
         part = dev.get_part_by_addr(kernel.addr2)
         if not part:
             die("Can't support flashing kernel to addr 0x%X" % kernel.addr2)
-        ubi_part = get_dtb_part_info(dtb, "ubi")
+        ubi_part = self.get_dtb_part_info(partlist, "ubi")
         if not ubi_part:
             die('Cannot found "ubi" partition in DTB!')
         print('part ubi = 0x%X (size: 0x%X)' % (ubi_part['addr'], ubi_part['size']))
