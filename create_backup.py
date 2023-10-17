@@ -39,7 +39,7 @@ if len(sys.argv) > 1:
       if p < 0 or p >= len(dev.partlist):
         die('Partition "mtd{}" not found!'.format(a_part))
     else:
-      p = dev.get_part_num(a_part, comptype = 'ends')
+      p = dev.get_part_num(a_part)
       if p < 0:
         die('Partition "{}" not found!'.format(a_part))
     name = dev.partlist[p]['name']

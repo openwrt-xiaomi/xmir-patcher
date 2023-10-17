@@ -197,22 +197,27 @@ class DevInfo():
   def get_part_num(self, name_or_addr, comptype = None):
     if not self.partlist:
       return -2
-    for i, part in enumerate(self.partlist):
-      if isinstance(name_or_addr, int):
+    if isinstance(name_or_addr, int):
+      addr = name_or_addr
+      for i, part in enumerate(self.partlist):
         if part['addr'] == 0 and part['size'] > 0x00800000:
           continue  # skip "ALL" part
-        addr = name_or_addr
         if comptype and comptype == '#':  # range
           if addr >= part['addr'] and addr < part['addr'] + part['size']:
             return i
         else:
           if addr == part['addr']:
             return i
-      else:   
+    if isinstance(name_or_addr, str):
+      name = name_or_addr.lower()
+      for i, part in enumerate(self.partlist):
+        partname = part['name'].lower()
+        if len(partname) > 2 and partname[1:2] == ':':
+          partname = partname[2:]
         if comptype and comptype[0] == 'e':  # endswith
-          if part['name'].lower().endswith(name_or_addr.lower()):
+          if partname.endswith(name):
             return i
-        if part['name'].lower() == name_or_addr.lower():
+        elif partname == name:
           return i
     return -1
 
@@ -534,7 +539,8 @@ class DevInfo():
     ret = self.bl
     if verbose:
       print("Bootloader info:")
-    plst = self.get_part_list(['bootloader', 'uboot', 'SBL1', 'APPSBL', 'SBL2', 'SBL3'], comptype = 'ends')
+    blist = ['bootloader', 'uboot', 'SBL1', 'APPSBL', 'SBL2', 'SBL3', 'BL2', 'FIP']
+    plst = self.get_part_list(blist)
     if not plst:
       return ret
     for i, p in enumerate(plst):  
@@ -611,7 +617,8 @@ class DevInfo():
     ret = self.env.fw
     if verbose:
       print("ENV info:")
-    plst = self.get_part_list(['config', 'nvram', 'APPSBLENV', 'bdata'], comptype = 'ends')
+    envlist = ['config', 'nvram', 'APPSBLENV', 'bdata']
+    plst = self.get_part_list(envlist)
     if not plst:
       return ret
     env_breed_addr = 0x60000  # breed env addr for r3g
