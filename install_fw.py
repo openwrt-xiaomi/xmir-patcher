@@ -394,7 +394,7 @@ class XqFlash():
                         compat = dt.get_property('compatible', path)
                     except ValueError:
                         continue  # go to next node
-                    if compat.value != compatible:
+                    if not compat or compat.value != compatible:
                         continue  # go to next node
                 res.append(path)
         return res
@@ -447,7 +447,13 @@ class XqFlash():
         fit_name = fit_dt.get_property('description').value
         print(f'FIT: name = "{fit_name}"')
         self.fit_dt = fit_dt
-        fdt1 = self.get_fdt_node(fit_dt, '/images/fdt*1')
+        cfg_list = fit_dt.get_node('/configurations')
+        def_cfg_name = cfg_list.get_property('default').value
+        print(f'FIT: def_cfg: "{def_cfg_name}"')
+        def_cfg = fit_dt.get_node(f'/configurations/{def_cfg_name}')
+        def_fdt_name = def_cfg.get_property('fdt').value
+        print(f'FIT: def_fdt: "{def_fdt_name}"')
+        fdt1 = self.get_fdt_node(fit_dt, f'/images/{def_fdt_name}')
         print('FDT: desc = "{}"'.format(fdt1.get_property('description').value))
         print('FDT: type = "{}"'.format(fdt1.get_property('type').value))
         print('FDT: arch = "{}"'.format(fdt1.get_property('arch').value))
@@ -461,16 +467,17 @@ class XqFlash():
         print('KRN: type = "{}"'.format(krn1.get_property('type').value))
         print('KRN: arch = "{}"'.format(krn1.get_property('arch').value))
         print('KRN: compression = "{}"'.format(krn1.get_property('compression').value))
-        print(f'KRN: len(data) = {len(krn1.get_property("data"))} bytes')
-        
+        krn_size = len(krn1.get_property("data"))
+        print(f'KRN: data = {krn_size} bytes')
+
         krn_dt_data = fdt1.get_property('data').data
         dt = fdt.parse_dtb(krn_dt_data)
         self.krn_dt = dt
         dt_tree = dt.info(props = True)
         #with open('dt_tree.txt', "w") as file:
         #    file.write(dt_tree)
-        dt_compat = dt.get_property('compatible').value
-        print(f'FDT: compatible = "{dt_compat}"')
+        dt_compat = dt.get_property('compatible')
+        print('FDT:', dt_compat)
         dt_model = dt.get_property('model').value
         print(f'FDT: model = "{dt_model}"')
         
@@ -498,12 +505,22 @@ class XqFlash():
             if self.img_stock:
                 die('FIT: Error (4566)')
             initrd1_data = initrd1.get_property('data')
-            self.init_image(rootfs, initrd1.get_property('data').data, 'FIT: Found second "rootfs" section!')
-            kernel.initrd = True                    
+            self.init_image(rootfs, initrd1_data.data, 'FIT: Found second "rootfs" section! (initrd)')
+            kernel.initrd = True
             rootfs.initrd = True
             if kernel.into_ubi:
                 rootfs.into_ubi = True
             return 2
+            
+        if not footer and krn_size > 6*1024*1024 and kernel.ostype == 'openwrt':
+            print(f'FIT: detect initrd into kernel image')
+            self.init_image(rootfs, b'0' * 1024, 'FIT: Found Second "rootfs" section! (InitRD)')
+            kernel.initrd = True
+            rootfs.initrd = True
+            if kernel.into_ubi:
+                rootfs.into_ubi = True
+            return 2
+            
         if footer:
             hr = self.parse_footer(image, offset + fit_size)
             if hr >= 1:
@@ -575,6 +592,8 @@ class XqFlash():
                 if volume == 'kernel' and len(data) > 1024:
                     kernel_volume = data
                 if volume == 'rootfs' and len(data) > 1024:
+                    rootfs_volume = data
+                if volume == 'ubi_rootfs' and len(data) > 1024:
                     rootfs_volume = data
                 print(f'UBI:   volume: "{volume}" \t size: {len(data)} ')
         ufile_obj.close()
@@ -741,6 +760,7 @@ class XqFlash():
         self.install_fw_num = None
 
         self.install_method = 0
+        
         kernel_num  = dev.get_part_num("kernel")
         kernel0_num = dev.get_part_num("kernel0")
         kernel1_num = dev.get_part_num("kernel1")
@@ -749,17 +769,32 @@ class XqFlash():
         rootfs1_num = dev.get_part_num("rootfs1")
         if kernel0_num > 0 and kernel1_num > 0 and rootfs1_num > 0:
             self.install_method = 100
+            self.install_parts = [ ]
 
         osl_num = dev.get_part_num("OS1")
         os2_num = dev.get_part_num("OS2")
         if osl_num > 0 and os2_num > 0 and rootfs_num > 0:
-            self.install_method = 200
-            die("Unsupported install method 200")
+            self.install_method = 50
+            self.install_parts = [ 'OS1', 'OS2' ]
+            die("Unsupported install method 50")
+
+        rootfs_1_num = dev.get_part_num("rootfs_1")
+        if kernel_num < 0 and rootfs_num > 0 and rootfs_1_num > 0:
+            self.install_method = 200  # qcom ipq807x
+            self.install_parts = [ 'rootfs', 'rootfs_1' ]
+            if not fw_img.data or not kernel.data or not rootfs.data:
+                die('Cannot firmware image! (200)')
+            if not kernel.into_ubi:
+                die('Kernel image must be into UBIFS (200)')
+            if kernel.ostype == 'openwrt':
+                if not kernel.initrd:
+                    die('OpenWRT: Supported only InitRamFS images (200)')
 
         firmware0_num = dev.get_part_num('firmware')
         firmware1_num = dev.get_part_num('firmware1')
         if firmware0_num > 0 and firmware1_num > 0 and kernel_num > 0 and rootfs_num > 0:
             self.install_method = 300
+            self.install_parts = [ 'firmware', 'firmware1' ]
             if not kernel.data:
                 die('Cannot kernel image! (300)')
             if not rootfs.data:
@@ -779,7 +814,8 @@ class XqFlash():
         ubi0_num = dev.get_part_num('ubi')
         ubi1_num = dev.get_part_num('ubi1')
         if ubi0_num > 0 and ubi1_num > 0 and kernel_num < 0:
-            self.install_method = 400
+            self.install_method = 400  # mtk filogic
+            self.install_parts = [ 'ubi', 'ubi1' ]
             if not fw_img.data or not kernel.data or not rootfs.data:
                 die('Cannot firmware image! (400)')
             if not kernel.into_ubi:
@@ -855,28 +891,11 @@ class XqFlash():
                 rootfs.partname = part['name']
                 rootfs.cmd = 'mtd -e "{part}" write "{bin}" "{part}"'.format(part=rootfs.partname, bin=rootfs.fn_remote)
 
-        if self.install_method == 300:
-            fw_img.partname = 'firmware'
+        if self.install_method in [ 200, 300, 400 ]:
+            fw_img.partname = self.install_parts[0]
             if self.img_stock:
                 if self.install_fw_num == 1:
-                    fw_img.partname = 'firmware1'
-
-            fw_part = dev.get_part(fw_img.partname)
-            fw_img.addr = fw_part['addr']
-            fw_img.cmd = 'mtd -e "{part}" write "{bin}" "{part}"'.format(part=fw_img.partname, bin=fw_img.fn_remote)
-            kernel.cmd = None
-            rootfs.cmd = None
-            if 'ro' not in fw_part:
-                die(f'Cannot get readonly flag for partition "{fw_img.partname}"')
-            if fw_part['ro']:
-                die(f'Target partition "{fw_img.partname}" has readonly flag')
-
-        if self.install_method == 400:
-            fw_img.partname = 'ubi'
-            if self.img_stock:
-                if self.install_fw_num == 1:
-                    fw_img.partname = 'ubi1'
-
+                    fw_img.partname = self.install_parts[1]
             fw_part = dev.get_part(fw_img.partname)
             fw_img.addr = fw_part['addr']
             fw_img.cmd = 'mtd -e "{part}" write "{bin}" "{part}"'.format(part=fw_img.partname, bin=fw_img.fn_remote)
