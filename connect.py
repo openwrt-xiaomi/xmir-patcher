@@ -51,7 +51,7 @@ dn = gw.device_name
 #  import connect4
 #  sys.exit(0)
 
-if gw.model_id < 0 or gw.model_id >= gw.get_modelid_by_name('R2100'):
+if gw.model_id <= 0 or gw.model_id >= gw.get_modelid_by_name('R2100'):
   import connect5
   sys.exit(0)
 
