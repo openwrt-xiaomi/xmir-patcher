@@ -13,6 +13,7 @@ import gateway
 from gateway import die
 import read_info
 import activate_boot
+import xqmodel
 from devtree import *
 import fdt
 
@@ -82,6 +83,7 @@ class XqFlash():
 
     def __init__(self):
         global gw
+        self.gw = gw
         os.makedirs(self.dn_dir, exist_ok = True)
         os.makedirs(self.dn_tmp, exist_ok = True)
         if gw.img_write == False:
@@ -230,6 +232,11 @@ class XqFlash():
         data = image
         if data[:4] == b'HDR2':
             die(f'HDR2 stock image not supported!')
+        hdr_model_id = int.from_bytes(data[14:16], byteorder='little')
+        model_id = xqmodel.get_modelid_by_name(gw.device_name)
+        if model_id > 0:
+            if hdr_model_id != model_id:
+                die(f'Loaded stock firmware not compatible with "{gw.device_name}" !!!')
         imglst = [ ]
         for i in range(8):
             p = 0x10 + i * 4
@@ -483,6 +490,10 @@ class XqFlash():
         print('FDT:', dt_compat)
         dt_model = dt.get_property('model').value
         print(f'FDT: model = "{dt_model}"')
+        if not self.img_stock:
+            cm = self.check_model(dt_compat, dt_model)
+            if cm < 0:
+                die(f'FIT: Loaded firmware not compatible with "{gw.device_name}" !!!')
         
         dt_part = self.get_fdt_node_by_name(dt, 'partitions', 'fixed-partitions')
         print(f'FDT: dt_part: {dt_part}')
@@ -678,6 +689,27 @@ class XqFlash():
                 part2_size = 8*1024*1024
             rootfs.data = b'\x00' * part2_size
 
+    def check_model(self, compat, model):
+        if not compat:
+            return 0  # unknown
+        compat_list = compat
+        if isinstance(compat, str):
+            compat_list = [ x.strip() for x in compat.split(',') ]
+        dn = gw.device_name
+        if dn not in xqmodel.xqModelList:
+            return 0  # unknown
+        model = xqmodel.xqModelList[dn]
+        altname = model['altname']
+        if not altname:
+            return 0  # unknown
+        for compat in compat_list:
+            sep = compat.find(',')
+            if sep >= 0:
+                compat = compat[sep+1:]
+            if compat.startswith(altname):
+                return 1  # compatiple firmware
+        return -1  # NOT COMPATIBLE !!!
+
     def prepare_for_openwrt_100(self):
         dev = self.dev
         kernel = self.kernel
@@ -691,10 +723,13 @@ class XqFlash():
             die("Can't found FDT (flattened device tree)")
         dt = fdt.parse_dtb(dtb)
         #print(dt.info(props = True))
-        dt_compat = dt.get_property('compatible').value
-        print(f'FDT: compatible = "{dt_compat}"')
+        dt_compat = dt.get_property('compatible')
+        print('FDT:', dt_compat)
         dt_model = dt.get_property('model').value
         print(f'FDT: model = "{dt_model}"')
+        cm = self.check_model(dt_compat, dt_model)
+        if cm < 0:
+            die(f'Loaded OpenWRT firmware not compatible with "{gw.device_name}" !!!')
         self.dt = dt
         dt_part = self.get_fdt_node_by_name(dt, 'partitions', 'fixed-partitions')
         print(f'FDT: dt_part: {dt_part}')
