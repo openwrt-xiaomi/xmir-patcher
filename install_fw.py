@@ -7,6 +7,7 @@ import types
 import tarfile
 import lzma
 import ctypes
+import re
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 import gateway
@@ -233,10 +234,20 @@ class XqFlash():
         if data[:4] == b'HDR2':
             die(f'HDR2 stock image not supported!')
         hdr_model_id = int.from_bytes(data[14:16], byteorder='little')
-        model_id = xqmodel.get_modelid_by_name(gw.device_name)
-        if model_id > 0:
-            if hdr_model_id != model_id:
-                die(f'Loaded stock firmware not compatible with "{gw.device_name}" !!!')
+        while True:
+            model_id = xqmodel.get_modelid_by_name(gw.device_name)
+            if model_id > 0:
+                if model_id == hdr_model_id:
+                    break
+            if gw.device_name in xqmodel.xqModelList:
+                sim_model = xqmodel.xqModelList[gw.device_name]['similar']
+                if sim_model:
+                    sim_model_id = xqmodel.get_modelid_by_name(sim_model)
+                    if sim_model_id > 0:
+                        if sim_model_id == hdr_model_id:
+                            break
+            die(f'Loaded stock firmware not compatible with "{gw.device_name}" !!!')
+            break
         imglst = [ ]
         for i in range(8):
             p = 0x10 + i * 4
@@ -270,6 +281,12 @@ class XqFlash():
         self.img_stock_names = { }
         for i, img in enumerate(imglst):
             #print(img.data[:4], '   0x%x' % len(img.data))
+            if img.name == 'xiaoqiang_version':
+                txt = img.data.decode('latin_1')
+                x = re.search(r"option HARDWARE '(.*?)'", txt)
+                if x:
+                    self.img_stock_model = x.group(1)
+                    print(f'Parse HDR image for "{self.img_stock_model}" router')
             if len(img.data) < 1*1024*1024:  # skip uboot and other files
                 continue
             hr = self.parse_image(img.data, img.name)
