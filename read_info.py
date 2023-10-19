@@ -103,8 +103,10 @@ class DevInfo():
     fn_remote = f'/tmp/{fn}'
     if os.path.exists(fn_local):
       os.remove(fn_local)
+    if '>' not in cmd:
+      cmd += " > " + fn_remote
     try:
-      self.gw.run_cmd(cmd + " > " + fn_remote)
+      self.gw.run_cmd(cmd)
       self.gw.download(fn_remote, fn_local, verbose = verbose)
       self.gw.run_cmd("rm -f " + fn_remote)
     except Exception:
@@ -125,14 +127,14 @@ class DevInfo():
       print(f'ERROR on downloading "/tmp/dmesg.log"')
     return self.dmesg
 
-  def get_part_table(self, verbose = None):
+  def get_part_table_dmesg(self, verbose = None):
     verbose = verbose if verbose is not None else self.verbose
     self.partlist = []
     if not self.dmesg:
       return self.partlist
     x = self.dmesg.find(" MTD partitions on ")
     if x <= 0:
-      return self.get_part_table2(verbose)
+      return self.partlist
     parttbl = re.findall(r'0x0000(.*?)-0x0000(.*?) : "(.*?)"', self.dmesg)
     if len(parttbl) <= 0:
       return self.partlist
@@ -150,33 +152,59 @@ class DevInfo():
     self.get_part_readonly()
     return self.partlist
 
-  def get_part_table2(self, verbose = None):
+  def get_part_table(self, verbose = None):
     verbose = verbose if verbose is not None else self.verbose
     self.partlist = []
     mtd_list = self.run_command('cat /proc/mtd', 'mtd_list.txt')
-    if not mtd_list or len(mtd_list) <= 0:
-      return []
+    if not mtd_list or len(mtd_list) <= 1:
+      return self.get_part_table_dmesg(verbose)
     mtdtbl = re.findall(r'mtd([0-9]+): ([0-9a-fA-F]+) ([0-9a-fA-F]+) "(.*?)"', mtd_list)
-    if len(mtdtbl) <= 0:
-      return []
+    if len(mtdtbl) <= 1:
+      return self.get_part_table_dmesg(verbose)
+    addr_list = self.get_part_addr_table(len(mtdtbl) - 1, verbose)
+    if not addr_list or addr_list[0] < 0:
+      return self.get_part_table_dmesg(verbose)
     mtdlist = []
     if self.verbose:
       print("MTD partitions :")
     for i, mtd in enumerate(mtdtbl):
       mtdid = int(mtd[0])
+      if mtdid != i:
+        raise ValueError("Incorrect mtd id")
       size = int(mtd[1], 16)
       name = mtd[3]
-      addr = self.run_command(f'cat /sys/class/mtd/mtd{mtdid}/offset', 'offset.txt', verbose = 0)
-      if addr is None or len(addr) <= 0:
-        return []
-      addr = int(addr)
+      addr = addr_list[mtdid]
       self.partlist.append( {'addr': addr, 'size': size, 'name': name} )
       if verbose:
         print('  %2d > addr: 0x%08X  size: 0x%08X  name: "%s"' % (i, addr, size, name))
+      if addr < 0:
+        return []
     if verbose:
       print(" ")
     self.get_part_readonly()
     return self.partlist
+
+  def get_part_addr_table(self, mtd_max_num, verbose = None):
+    verbose = verbose if verbose is not None else self.verbose
+    fn = 'mtd_addr.txt'
+    cmd  = f'rm -f /tmp/{fn} ;'
+    cmd += f'for i in $(seq 0 {mtd_max_num}) ; do'
+    cmd += f'  echo "" >> /tmp/{fn} ;'
+    cmd += f'  echo -n $i= >> /tmp/{fn} ;'
+    cmd += f'  cat /sys/class/mtd/mtd$i/offset >> /tmp/{fn} ;'
+    cmd += f'done'
+    addr_table = self.run_command(cmd, fn)
+    if not addr_table:
+      return [ ]
+    addr_list = [ -1 ] * (mtd_max_num + 1)
+    for line in addr_table.split('\n'):
+      line = line.strip()
+      if '=' in line:
+        data = line.split('=')
+        mtd_num = int(data[0])
+        if len(data[1]) >= 1:
+          addr_list[mtd_num] = int(data[1])
+    return addr_list    
 
   def get_part_readonly(self, verbose = None):
     verbose = verbose if verbose is not None else self.verbose
