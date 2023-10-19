@@ -86,6 +86,7 @@ class XqFlash():
         os.makedirs(self.dn_tmp, exist_ok = True)
         if gw.img_write == False:
             self.img_write = False
+        print(f'device: "{gw.device_name}"')
         print(f'img_write = {gw.img_write}')
         self.fw_img.fn_remote = '/tmp/fw_img.bin'
         self.fw_img.fn_local = self.dn_tmp + 'fw_img.bin'
@@ -227,6 +228,8 @@ class XqFlash():
         
     def parse_stock_image(self, image):
         data = image
+        if data[:4] == b'HDR2':
+            die(f'HDR2 stock image not supported!')
         imglst = [ ]
         for i in range(8):
             p = 0x10 + i * 4
@@ -779,7 +782,7 @@ class XqFlash():
             die("Unsupported install method 50")
 
         rootfs_1_num = dev.get_part_num("rootfs_1")
-        if kernel_num < 0 and rootfs_num > 0 and rootfs_1_num > 0:
+        if rootfs_num > 0 and rootfs_1_num > 0:
             self.install_method = 200  # qcom ipq807x
             self.install_parts = [ 'rootfs', 'rootfs_1' ]
             if not fw_img.data or not kernel.data or not rootfs.data:
@@ -792,7 +795,7 @@ class XqFlash():
 
         firmware0_num = dev.get_part_num('firmware')
         firmware1_num = dev.get_part_num('firmware1')
-        if firmware0_num > 0 and firmware1_num > 0 and kernel_num > 0 and rootfs_num > 0:
+        if firmware0_num > 0 and firmware1_num > 0:
             self.install_method = 300
             self.install_parts = [ 'firmware', 'firmware1' ]
             if not kernel.data:
@@ -813,7 +816,7 @@ class XqFlash():
 
         ubi0_num = dev.get_part_num('ubi')
         ubi1_num = dev.get_part_num('ubi1')
-        if ubi0_num > 0 and ubi1_num > 0 and kernel_num < 0:
+        if ubi0_num > 0 and ubi1_num > 0:
             self.install_method = 400  # mtk filogic
             self.install_parts = [ 'ubi', 'ubi1' ]
             if not fw_img.data or not kernel.data or not rootfs.data:
