@@ -895,10 +895,10 @@ class XqFlash():
                 rootfs.cmd = 'mtd -e "{part}" write "{bin}" "{part}"'.format(part=rootfs.partname, bin=rootfs.fn_remote)
 
         if self.install_method in [ 200, 300, 400 ]:
-            fw_img.partname = self.install_parts[0]
-            if self.img_stock:
-                if self.install_fw_num == 1:
-                    fw_img.partname = self.install_parts[1]
+            if dev.rootfs.num is None or dev.rootfs.num < 0:
+                die("Cannot detect current booted rootfs! (X)")
+            self.install_fw_num = 1 - dev.rootfs.num
+            fw_img.partname = self.install_parts[self.install_fw_num]
             fw_part = dev.get_part(fw_img.partname)
             fw_img.addr = fw_part['addr']
             fw_img.cmd = 'mtd -e "{part}" write "{bin}" "{part}"'.format(part=fw_img.partname, bin=fw_img.fn_remote)
