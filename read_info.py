@@ -52,6 +52,7 @@ class DevInfo():
   dmesg = None     # text
   info = BaseInfo()
   partlist = []    # list of {addr, size, name}
+  kcmdline_s = ""  # original kernel command line
   kcmdline = {}    # key=value
   nvram = {}       # key=value
   rootfs = RootFS()
@@ -80,12 +81,8 @@ class DevInfo():
       self.get_part_table()
       if not self.partlist or len(self.partlist) <= 1:
         die("Partition list is empty!")
-      self.get_rootfs()
       self.get_kernel_cmdline()
-      if self.rootfs.num is None:
-        if 'firmware' in self.kcmdline:
-          self.rootfs.num = int(self.kcmdline['firmware'])
-          print(f'rootfs.num = {self.rootfs.num}\n')
+      self.get_rootfs()
       self.get_baseinfo()
       if not self.info.cpu_arch:
         die("Can't detect CPU arch! Try to reboot device.")
@@ -243,39 +240,42 @@ class DevInfo():
   def get_rootfs(self, verbose = None):
     verbose = verbose if verbose is not None else self.verbose
     self.rootfs = RootFS()
-    if not self.dmesg:
+    if not self.kcmdline_s and not self.dmesg:
       return self.rootfs
-    # flag_boot_rootfs=0 mounting /dev/mtd10 
-    x = re.search(r'flag_boot_rootfs=([0-9]) mounting (\S+)', self.dmesg)
-    if x:
-      self.rootfs.num = int(x.group(1))
-      self.rootfs.mtd_dev = x.group(2)
-    # UBI: attached mtd10 (name "rootfs0", size 32 MiB) to ubi0 
-    x = re.search(r'attached mtd([0-9]+) \(name "(.*?)", size', self.dmesg)
-    if x and x.group(2).lower().startswith('rootfs'):
-      self.rootfs.mtd_num = int(x.group(1))
-      self.rootfs.partition = x.group(2).strip()
-    # mtd: device 11 (rootfs) set to be root filesystem
-    x = re.search(r'mtd: device ([0-9]+) \(rootfs\) set to be root filesystem', self.dmesg)
-    if x:
-      self.rootfs.mtd_num = int(x.group(1))
+    kcmdline = f'Kernel command line: {self.kcmdline_s} \n'
+    if self.dmesg:
+      # flag_boot_rootfs=0 mounting /dev/mtd10 
+      x = re.search(r'flag_boot_rootfs=([0-9]) mounting (\S+)', self.dmesg)
+      if x:
+        self.rootfs.num = int(x.group(1))
+        self.rootfs.mtd_dev = x.group(2)
+      # UBI: attached mtd10 (name "rootfs0", size 32 MiB) to ubi0 
+      x = re.search(r'attached mtd([0-9]+) \(name "(.*?)", size', self.dmesg)
+      if x and x.group(2).lower().startswith('rootfs'):
+        self.rootfs.mtd_num = int(x.group(1))
+        self.rootfs.partition = x.group(2).strip()
+      # mtd: device 11 (rootfs) set to be root filesystem
+      x = re.search(r'mtd: device ([0-9]+) \(rootfs\) set to be root filesystem', self.dmesg)
+      if x:
+        self.rootfs.mtd_num = int(x.group(1))
     if self.rootfs.num is None:
-      k = re.search(r'Kernel command line:(.*?) ubi\.mtd=(\S+)', self.dmesg)   # ([^\s]+)
+      k = re.search(r'Kernel command line:(.*?) ubi\.mtd=(\S+)', kcmdline)   # ([^\s]+)
       if k:
         self.rootfs.partition = k.group(2)
     if self.rootfs.num is None:
-      k = re.search(r'Kernel command line:(.*?) firmware=([0-9])', self.dmesg)
+      k = re.search(r'Kernel command line:(.*?) firmware=([0-9])', kcmdline)
       if k:
         self.rootfs.num = int(k.group(2))
     if self.rootfs.num is None and self.rootfs.mtd_num is None:
-      x = re.search(r'Kernel command line:(.*?) root=(\S+)', self.dmesg)
+      x = re.search(r'Kernel command line:(.*?) root=(\S+)', kcmdline)
       if x and x.group(2).startswith('/dev/mtdblock'):
         self.rootfs.mtd_dev = x.group(2) 
         self.rootfs.mtd_num = int(self.rootfs.mtd_dev.replace('/dev/mtdblock', ''))
     if self.rootfs.num is None and self.rootfs.partition:
-      if self.rootfs.partition.lower().startswith('rootfs'):
+      pname = self.rootfs.partition.lower()
+      if pname.startswith('rootfs') or pname.startswith('firmware') or pname.startswith('ubi'):
         self.rootfs.num = 0
-        if self.rootfs.partition.endswith('1'):
+        if pname.endswith('1'):
           self.rootfs.num = 1
     if verbose:
       print('RootFS info:')
@@ -379,6 +379,7 @@ class DevInfo():
 
   def get_kernel_cmdline(self, verbose = None, retdict = True):
     verbose = verbose if verbose is not None else self.verbose
+    self.kcmdline_s = ""
     self.kcmdline = {} if retdict else None
     fn_local  = 'outdir/kcmdline.log'
     fn_remote = '/tmp/kcmdline.log'
@@ -392,17 +393,18 @@ class DevInfo():
       return self.kcmdline
     if os.path.getsize(fn_local) <= 1:
       return self.kcmdline
-    with open(fn_local, "r", encoding="latin_1") as file:
+    with open(fn_local, "rb") as file:
       data = file.read()
+    data = data.replace(b"\n", b' ')
+    data = data.replace(b"\x00", b' ')
+    data = data.decode('latin_1')
+    data = data.strip()
+    self.kcmdline_s = data
     if verbose:
       print("Kernel command line:")
       print(" ", data)
     if not retdict:
       return data
-    data = data.strip()
-    data = data.replace("\n", ' ')
-    data = data.replace("\x00", ' ')
-    data = data.strip()
     env = EnvBuffer(data, ' ', crc_prefix = False, encoding = 'latin_1')
     self.kcmdline = env.var
     #self.kcmdline = type("Names", [object], self.kcmdline)
