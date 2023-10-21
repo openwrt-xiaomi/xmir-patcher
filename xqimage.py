@@ -8,7 +8,7 @@ import platform
 import ctypes
 import binascii
 
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+import xmir_base
 from envbuffer import *
 
 

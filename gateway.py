@@ -15,7 +15,7 @@ import atexit
 
 import socket
 
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+import xmir_base
 import ssh2
 from ssh2.error_codes import LIBSSH2_ERROR_EAGAIN
 from ssh2.utils import wait_socket

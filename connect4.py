@@ -12,7 +12,7 @@ import requests
 import urllib
 import json
 
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+import xmir_base
 from gateway import *
 
 # Devices:

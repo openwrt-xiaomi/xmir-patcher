@@ -6,7 +6,7 @@ import sys
 import types
 import re
 
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+import xmir_base
 import ssh2
 import gateway
 from gateway import die

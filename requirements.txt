@@ -5,5 +5,5 @@ certifi
 requests
 pyftpdlib
 ssh2-python
-fdt
-ubi-reader
+#fdt
+#ubi-reader

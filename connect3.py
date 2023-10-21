@@ -12,7 +12,7 @@ import binascii
 import re
 import requests
 
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+import xmir_base
 from xqimage import *
 from gateway import *
 from read_info import *
