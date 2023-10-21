@@ -78,11 +78,14 @@ class FDT:
         """ String representation """
         return self.info()
 
-    def info(self):
+    def info(self, props = False):
         """ Return object info in human readable format """
         msg = "FDT Content:\n"
         for path, nodes, props in self.walk():
-            msg += "{} [{}N, {}P]\n".format(path, len(nodes), len(props))
+            txt = "{} ({},{})".format(path, len(nodes), len(props))
+            if props:
+                txt += ' : ' + ", ".join(x.name for x in props)
+            msg += txt + "\n"
         return msg
 
     def get_node(self, path: str, create: bool = False) -> Node:
@@ -242,7 +245,7 @@ class FDT:
         node = self.get_node(path)
         while True:
             all_nodes += node.nodes
-            current_path = "{}/{}".format(node.path, node.name)
+            current_path = node.path
             current_path = current_path.replace('///', '/')
             current_path = current_path.replace('//', '/')
             if path and relative:
@@ -302,7 +305,7 @@ class FDT:
                 if node.path == '/':   
                     phandle_value = self.add_label(node.name)
                 else:
-                    phandle_value = self.add_label(node.path+'/'+node.name)
+                    phandle_value = self.add_label(node.path)
                 node.set_property('linux,phandle', phandle_value)
                 node.set_property('phandle', phandle_value)
 

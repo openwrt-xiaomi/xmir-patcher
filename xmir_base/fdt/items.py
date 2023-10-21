@@ -39,7 +39,7 @@ def new_property(name: str, raw_value: bytes) -> object:
                 obj.append(st)
         return obj
 
-    elif len(raw_value) and len(raw_value) % 4 == 0:
+    elif len(raw_value) > 0 and len(raw_value) <= 256*1024 and len(raw_value) % 4 == 0:
         obj = PropWords(name)
         # Extract words from raw value
         obj.data = [BIGENDIAN_WORD.unpack(raw_value[i:i + 4])[0] for i in range(0, len(raw_value), 4)]
@@ -48,8 +48,7 @@ def new_property(name: str, raw_value: bytes) -> object:
     elif len(raw_value):
         return PropBytes(name, data=raw_value)
 
-    else:
-        return Property(name)
+    return Property(name)
 
 
 ########################################################################################################################
@@ -509,6 +508,10 @@ class PropIncBin(PropBytes):
 
 class Node(BaseItem):
     """Node representation"""
+
+    @property
+    def path(self):
+        return super().path + '/' + self.name
 
     @property
     def props(self):
