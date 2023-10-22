@@ -231,7 +231,7 @@ class Gateway():
       stok = re.findall(r'"token":"(.*?)"', res.text)[0]
     except Exception:
       self.webpassword = ""
-      die("WEB password is not correct! (encryptmode = {})".foarmat(self.encryptmode))
+      die("WEB password is not correct! (encryptmode = {})".format(self.encryptmode))
     self.webpassword = web_pass
     self.stok = stok
     return stok

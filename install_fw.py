@@ -453,7 +453,16 @@ class XqFlash():
         if image is None:
             data = self.kernel.data
             offset = 0
-        if data[offset:offset+4] != FDT_MAGIC:
+        dtb_offset = 0
+        magic = data[offset:offset+4]
+        if magic == b'\x17\x00\x00\x00':
+            dtb_offset, fir_size = find_dtb(data, offset, maxsize = 90*1024*1024)
+            if not dtb_offset:
+                die('FIT: Incorrect image header (0)')
+            data = data[dtb_offset:]
+            offset = 0
+        magic = data[offset:offset+4]
+        if magic != FDT_MAGIC:
             die('FIT: Incorrect image (0)')
         fit_size = get_dtb_totalsize(data, offset)
         if fit_size <= 0:
@@ -497,7 +506,11 @@ class XqFlash():
         krn_size = len(krn1.get_property("data"))
         print(f'KRN: data = {krn_size} bytes')
 
-        krn_dt_data = fdt1.get_property('data').data
+        krn_dt_data = fdt1.get_property('data')
+        if hasattr(krn_dt_data, 'raw_value'):
+            krn_dt_data = krn_dt_data.raw_value
+        else:
+            krn_dt_data = krn_dt_data.data
         dt = fdt.parse_dtb(krn_dt_data)
         self.krn_dt = dt
         dt_tree = dt.info(props = True)

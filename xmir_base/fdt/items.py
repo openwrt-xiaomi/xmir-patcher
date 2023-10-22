@@ -43,6 +43,7 @@ def new_property(name: str, raw_value: bytes) -> object:
         obj = PropWords(name)
         # Extract words from raw value
         obj.data = [BIGENDIAN_WORD.unpack(raw_value[i:i + 4])[0] for i in range(0, len(raw_value), 4)]
+        obj.raw_value = raw_value
         return obj
 
     elif len(raw_value):
