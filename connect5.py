@@ -274,6 +274,9 @@ else:
 
 # get device orig system time
 dst = get_dev_systime()
+if 'timezone' in dst:
+    if "'" in dst['timezone'] or ";" in dst['timezone']:
+        dst['timezone'] = "GMT0"
 
 print('Enable smartcontroller scene executor ...')
 # echo "OK" > /tmp/ntp.status
