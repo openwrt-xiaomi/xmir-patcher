@@ -31,7 +31,9 @@ print("mac address = {}".format(gw.mac_address))
 dn = gw.device_name
 gw.ssh_port = 22
 ret = gw.detect_ssh(verbose = 1, interactive = True)
-if ret > 0:
+if ret == 23 and gw.use_ftp == False:
+    print("Telnet server already running, but FTP server not respond")
+elif ret > 0:
     die(0, "SSH server already installed and running")
 
 ccode = gw.device_info["countrycode"]
