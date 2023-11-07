@@ -31,7 +31,9 @@ print("mac address = {}".format(gw.mac_address))
 dn = gw.device_name
 gw.ssh_port = 22
 ret = gw.detect_ssh(verbose = 1, interactive = True)
-if ret == 23 and gw.use_ftp == False:
+if ret == 23:
+    if gw.use_ftp:
+        die("Telnet and FTP servers already running!")
     print("Telnet server already running, but FTP server not respond")
 elif ret > 0:
     die(0, "SSH server already installed and running")
@@ -367,6 +369,8 @@ if not ssh_en:
     print('#### TelNet server are activated! ####')
     #print("")
     #print('Run FTP server on port 21 ...')
+    gw.run_cmd(r"rm -f /etc/inetd.conf")
+    gw.run_cmd(r"sed -i 's/\\tftpd\\t/\\tftpd -w\\t/g' /etc/init.d/inetd")
     gw.run_cmd('/etc/init.d/inetd enable')
     gw.run_cmd('/etc/init.d/inetd restart')
     gw.use_ftp = True
