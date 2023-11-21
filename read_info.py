@@ -753,8 +753,12 @@ class DevInfo():
       data = data[4:end+1]
       env.delim = '\x00'
       env.crc_prefix = False
-      env.encoding = 'ascii'
-      env.var = env.parse_env_b(data, env.delim, encoding = env.encoding)
+      try:
+        env.encoding = 'UTF-8'
+        env.var = env.parse_env_b(data, env.delim, encoding = env.encoding)
+      except Exception:
+        env.encoding = 'latin_1'
+        env.var = env.parse_env_b(data, env.delim, encoding = env.encoding)
       env.crc_prefix = True
       if verbose >= 2 and env.var:
         for i, (k, v) in enumerate(env.var.items()):
@@ -911,7 +915,11 @@ class SysLog():
     file = self.get_file_by_name('bdata.txt', fatal_error)
     if not file:
       return None
-    env = EnvBuffer(file.data.decode('ascii'), '\n')
+    try:
+      data = file.data.decode('UTF-8')
+    except Exception:
+      data = file.data.decode('latin_1')
+    env = EnvBuffer(data, '\n')
     if self.verbose >= 2:
       print('SysLog BData List:')
       for i, (k, v) in enumerate(env.var.items()):
