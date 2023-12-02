@@ -80,7 +80,7 @@ class DevInfo():
       self.get_dmesg()
       self.get_part_table()
       if not self.partlist or len(self.partlist) <= 1:
-        die("Partition list is empty!")
+        die("Partition list is empty! (solution: disable all WiFi modules and reboot device)")
       self.get_kernel_cmdline()
       self.get_rootfs()
       self.get_baseinfo()
