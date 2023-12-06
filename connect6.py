@@ -101,5 +101,6 @@ if not ssh_en:
         print(f"WARNING: FTP server not responding (IP: {gw.ip_addr})")
 
 if ssh_en or telnet_en:
-    gw.run_cmd('nvram set uart_en=1; nvram set boot_wait=on; nvram set bootdelay=3; nvram commit')
+    gw.run_cmd('nvram set uart_en=1; nvram set boot_wait=on; nvram commit')
+    gw.run_cmd('nvram set bootdelay=3; nvram set bootmenu_delay=5; nvram commit')
 

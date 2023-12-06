@@ -1042,7 +1042,7 @@ class XqFlash():
             cmd = [ ]
             cmd.append("nvram set bootdelay=3")
             cmd.append("nvram set boot_wait=on")
-            cmd.append("nvram set bootmenu_delay=30")
+            cmd.append("nvram set bootmenu_delay=5")
             cmd.append("nvram set ssh_en=1")
             cmd.append("nvram set uart_en=1")
             cmd.append("nvram commit")
