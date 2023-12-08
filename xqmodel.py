@@ -57,7 +57,7 @@ mi(47, "RA74")          # AX5400
 
 mi(49, "YY01")
 mi(50, "RB01", "RB03", "redmi-router-ax6s")  # AX3200 (INT)
-mi(51, "RB03", "RB01", "redmi-router-ax6s")  # AX6S    # CR8806 (ChinaMobile)
+mi(51, "RB03", "RB01", "redmi-router-ax6s")  # AX6S    # CR8806 (China Mobile)
 mi(52, "CR8808")
 mi(53, "CR8809")
 mi(54, "RB04")          # Redmi AX5400
@@ -72,27 +72,27 @@ mi(62, "RB07")          # mediatek_mt7981
 
 mi(64, "CB04")
 mi(65, "CB0401")        # Xiaomi 5G CPE Pro, Magenta Internet 5G Box AX5400
-mi(66, "RC01")          # AX10000
+mi(66, "RC01")          # AX10000    (WanGiga)   (BE10000)
 mi(0,  "RC04")          # RA75 analog
 mi(68, "CB0401V2")      # Xiaomi 5G CPE Pro
 
-mi(70, "RC06")          # Xiaomi Router 7000
+mi(70, "RC06")          # Xiaomi Router 7000 (BE7000)
 mi(71, "RD01")          # Xiaomi 全屋路由  # https://www.mi.com/xiaomi-routers/whole-room
-mi(72, "WR30")          # ???
+mi(72, "WR30", "WR30U", "mi-router-wr30u")  # Xiaomi AX3000NE   WR30U/WR30T/WR30M
+mi(0,  "WR30U", "WR30", "mi-router-wr30u")  # China Unicom
+mi(0,  "WR30T", "WR30", "mi-router-wr30u")  # China Telecom  # Certification: 2022-3536
+mi(0,  "WR30M", "WR30", "mi-router-wr30u")  # China Mobile   # Certification: 2022-3202   6.0.49
 mi(73, "RD02")          # Xiaomi 全屋路由 子路由 (Whole house routing sub-routing) # ipq5018  # Certification: 2023-11107
 mi(74, "CR8818")
-mi(75, "RD03")          # Xiaomi AX3000T (CN)
+mi(75, "RD03", "", "mi-router-ax3000t")     # Xiaomi AX3000T (CN)
 mi(76, "RD04")          # Certification: 2023-12227
 mi(77, "RD05")
 mi(78, "RD06")
 mi(79, "CR8816")
 mi(80, "CR8819")
-mi(81, "RD08")
+mi(81, "RD08")          # Xiaomi Router BE6500 Pro
 
 # routers with unknown device number
-mi(0, "WR30U", "", "mi-router-wr30u")  # Xiaomi AX3000NE
-mi(0, "WR30T")          # mediatek_mt7981   # Certification: 2022-3536
-mi(0, "WR30M")          # Certification: 2022-3202   6.0.49
 
 
 
