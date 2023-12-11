@@ -177,6 +177,7 @@ class DevInfo():
       if partlist[0]['name']:
         if partlist[0]['size'] > 0x00800000:  # 8MiB
           addr_list[0] = 0  # detect "ALL" part
+    ro_list = self.get_part_readonly(mtd_max_num)
     if self.verbose:
       print("MTD partitions:")
     err_addr = -1
@@ -187,9 +188,13 @@ class DevInfo():
       if i == 0 and addr == 0 and size > 0x00800000:  # 8MiB
         self.allpartnum = 0  # detect "ALL" part
       part['addr'] = addr
+      if ro_list and ro_list[i] >= 0:
+        part['ro'] = False if ro_list[i] == 0 else True
       if verbose:
         xaddr = ("0x%08X" % addr) if addr >= 0 else "??????????"
         ro = '?'
+        if 'ro' in part:
+          ro = '0' if part['ro'] == False else '1'
         print('  %2d > addr: %s  size: 0x%08X  ro:%s  name: "%s"' % (i, xaddr, size, ro, name))
       if addr < 0:
         err_addr = mtdid
@@ -198,7 +203,6 @@ class DevInfo():
     if err_addr >= 0:
       return [ ]
     self.partlist = partlist
-    self.get_part_readonly()
     return self.partlist
 
   def get_part_addr_table(self, mtd_max_num, verbose = None):
@@ -223,18 +227,26 @@ class DevInfo():
           addr_list[mtd_num] = int(data[1])
     return addr_list    
 
-  def get_part_readonly(self, verbose = None):
-    verbose = verbose if verbose is not None else self.verbose
-    if self.partlist:
-      for i, mtd in enumerate(self.partlist):
-        readonly = self.run_command(f'cat /sys/class/mtd/mtd{i}/mtdblock{i}/ro', 'mtd_ro.txt', verbose = 0)
-        if readonly is None:
-          return False
-        if readonly.startswith('0'):
-          self.partlist[i]['ro'] = False
-        if readonly.startswith('1'):
-          self.partlist[i]['ro'] = True
-    return True
+  def get_part_readonly(self, mtd_max_num):
+    fn = 'mtd_ro.txt'
+    cmd  = f'rm -f /tmp/{fn} ;'
+    cmd += f'for i in $(seq 0 {mtd_max_num}) ; do'
+    cmd += f'  echo "" >> /tmp/{fn} ;'
+    cmd += f'  echo -n $i= >> /tmp/{fn} ;'
+    cmd += f'  cat /sys/class/mtd/mtd$i/mtdblock$i/ro >> /tmp/{fn} ;'
+    cmd += f'done'
+    ro_table = self.run_command(cmd, fn)
+    if not ro_table:
+      return [ ]
+    ro_list = [ -1 ] * (mtd_max_num + 1)
+    for line in ro_table.split('\n'):
+      line = line.strip()
+      if '=' in line:
+        data = line.split('=')
+        mtd_num = int(data[0])
+        if len(data[1]) >= 1:
+          ro_list[mtd_num] = int(data[1])
+    return ro_list    
   
   def get_part_num(self, name_or_addr, comptype = None):
     if not self.partlist:
