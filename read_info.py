@@ -52,6 +52,7 @@ class DevInfo():
   dmesg = None     # text
   info = BaseInfo()
   partlist = []    # list of {addr, size, name}
+  allpartnum = -1  # "ALL" partition number
   kcmdline_s = ""  # original kernel command line
   kcmdline = {}    # key=value
   nvram = {}       # key=value
@@ -127,60 +128,76 @@ class DevInfo():
       print(f'ERROR on downloading "/tmp/dmesg.log"')
     return self.dmesg
 
-  def get_part_table_dmesg(self, verbose = None):
-    verbose = verbose if verbose is not None else self.verbose
-    self.partlist = []
+  def get_part_addr_dmesg(self, partlist):
     if not self.dmesg:
-      return self.partlist
+      return [ ]
     x = self.dmesg.find(" MTD partitions on ")
     if x <= 0:
-      return self.partlist
+      return [ ]
     parttbl = re.findall(r'0x0000(.*?)-0x0000(.*?) : "(.*?)"', self.dmesg)
     if len(parttbl) <= 0:
-      return self.partlist
-    if verbose:
-      print("MTD partitions:")
+      return [ ]
+    addr_list = [ -1 ] * len(partlist)
     for i, part in enumerate(parttbl):
       addr = int(part[0], 16)
       size = int(part[1], 16) - addr
       name = part[2]
-      self.partlist.append({'addr': addr, 'size': size, 'name': name})
-      if verbose:
-        print('  %2d > addr: 0x%08X  size: 0x%08X  name: "%s"' % (i, addr, size, name))
-    if verbose:
-      print(" ")
-    self.get_part_readonly()
-    return self.partlist
+      for p, data in enumerate(partlist):
+        if data['name'] == name:
+          addr_list[p] = addr
+          if size != data['size']:
+            raise ValueError(f"Incorrect size into partition table ({name})")
+    return addr_list
 
   def get_part_table(self, verbose = None):
     verbose = verbose if verbose is not None else self.verbose
-    self.partlist = []
+    self.partlist = [ ]
+    self.allpartnum = -1
     mtd_list = self.run_command('cat /proc/mtd', 'mtd_list.txt')
     if not mtd_list or len(mtd_list) <= 1:
-      return self.get_part_table_dmesg(verbose)
+      return [ ]
     mtdtbl = re.findall(r'mtd([0-9]+): ([0-9a-fA-F]+) ([0-9a-fA-F]+) "(.*?)"', mtd_list)
     if len(mtdtbl) <= 1:
-      return self.get_part_table_dmesg(verbose)
-    addr_list = self.get_part_addr_table(len(mtdtbl) - 1, verbose)
-    if not addr_list or addr_list[0] < 0:
-      return self.get_part_table_dmesg(verbose)
-    mtdlist = []
-    if self.verbose:
-      print("MTD partitions :")
+      return [ ]
+    partlist = [ ]
     for i, mtd in enumerate(mtdtbl):
       mtdid = int(mtd[0])
       if mtdid != i:
         raise ValueError("Incorrect mtd id")
       size = int(mtd[1], 16)
       name = mtd[3]
-      addr = addr_list[mtdid]
-      self.partlist.append( {'addr': addr, 'size': size, 'name': name} )
+      partlist.append( {'addr': -1, 'size': size, 'name': name} )
+    mtd_max_num = len(mtdtbl) - 1
+    addr_list = self.get_part_addr_table(mtd_max_num, verbose)
+    if not addr_list or len(addr_list) <= 1 or addr_list[1] < 0:
+      addr_list = self.get_part_addr_dmesg(partlist)
+      if not addr_list or len(addr_list) <= 1 or addr_list[1] < 0:
+        return [ ]
+    if addr_list and addr_list[0] < 0:
+      if partlist[0]['name']:
+        if partlist[0]['size'] > 0x00800000:  # 8MiB
+          addr_list[0] = 0  # detect "ALL" part
+    if self.verbose:
+      print("MTD partitions:")
+    err_addr = -1
+    for i, part in enumerate(partlist):
+      size = part['size']
+      name = part['name']
+      addr = addr_list[i]
+      if i == 0 and addr == 0 and size > 0x00800000:  # 8MiB
+        self.allpartnum = 0  # detect "ALL" part
+      part['addr'] = addr
       if verbose:
-        print('  %2d > addr: 0x%08X  size: 0x%08X  name: "%s"' % (i, addr, size, name))
+        xaddr = ("0x%08X" % addr) if addr >= 0 else "??????????"
+        ro = '?'
+        print('  %2d > addr: %s  size: 0x%08X  ro:%s  name: "%s"' % (i, xaddr, size, ro, name))
       if addr < 0:
-        return []
+        err_addr = mtdid
     if verbose:
       print(" ")
+    if err_addr >= 0:
+      return [ ]
+    self.partlist = partlist
     self.get_part_readonly()
     return self.partlist
 
@@ -225,7 +242,7 @@ class DevInfo():
     if isinstance(name_or_addr, int):
       addr = name_or_addr
       for i, part in enumerate(self.partlist):
-        if part['addr'] == 0 and part['size'] > 0x00800000:
+        if self.allpartnum >= 0 and i == self.allpartnum:
           continue  # skip "ALL" part
         if comptype and comptype == '#':  # range
           if addr >= part['addr'] and addr < part['addr'] + part['size']:
@@ -673,7 +690,7 @@ class DevInfo():
       else:
         env.addr = part['addr']
         data_size = part['size']
-      env.max_size = data_size  
+      env.max_size = data_size
       fn_local  = 'outdir/mtd{id}_{name}.bin'.format(id=p, name=name)
       fn_remote = '/tmp/env_{name}.bin'.format(name=name)
       if part['size'] < 128*1024:
