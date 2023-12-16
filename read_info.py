@@ -130,24 +130,31 @@ class DevInfo():
 
   def get_part_addr_dmesg(self, partlist):
     if not self.dmesg:
-      return [ ]
+      return -1
     x = self.dmesg.find(" MTD partitions on ")
     if x <= 0:
-      return [ ]
+      return -2
     parttbl = re.findall(r'0x0000(.*?)-0x0000(.*?) : "(.*?)"', self.dmesg)
     if len(parttbl) <= 0:
-      return [ ]
-    addr_list = [ -1 ] * len(partlist)
+      return -3
+    k = 0
     for i, part in enumerate(parttbl):
       addr = int(part[0], 16)
       size = int(part[1], 16) - addr
       name = part[2]
       for p, data in enumerate(partlist):
         if data['name'] == name:
-          addr_list[p] = addr
+          #print(f"{name:12S}: {addr:08X} {size:08X}")
           if size != data['size']:
-            raise ValueError(f"Incorrect size into partition table ({name})")
-    return addr_list
+            x = re.findall(f'mtd: partition "{name}" extends beyond the end of device "', self.dmesg)
+            if len(parttbl) <= 0:
+              raise ValueError(f"Incorrect size into partition table ({name})")
+          if addr != data['addr'] and data['addr'] >= 0:
+            raise ValueError(f"Incorrect addr for partition ({name})")
+          if data['addr'] < 0:
+            data['addr'] = addr
+            k += 1
+    return k
 
   def get_part_table(self, verbose = None):
     verbose = verbose if verbose is not None else self.verbose
@@ -160,23 +167,27 @@ class DevInfo():
     if len(mtdtbl) <= 1:
       return [ ]
     partlist = [ ]
+    mtd_max_num = len(mtdtbl) - 1
+    addr_list = self.get_part_addr_table(mtd_max_num, verbose)
     for i, mtd in enumerate(mtdtbl):
       mtdid = int(mtd[0])
       if mtdid != i:
-        raise ValueError("Incorrect mtd id")
+        raise ValueError(f"Incorrect mtd id = {mtdid}")
+      addr = -1
       size = int(mtd[1], 16)
       name = mtd[3]
-      partlist.append( {'addr': -1, 'size': size, 'name': name} )
-    mtd_max_num = len(mtdtbl) - 1
-    addr_list = self.get_part_addr_table(mtd_max_num, verbose)
-    if not addr_list or len(addr_list) <= 1 or addr_list[1] < 0:
-      addr_list = self.get_part_addr_dmesg(partlist)
-      if not addr_list or len(addr_list) <= 1 or addr_list[1] < 0:
-        return [ ]
-    if addr_list and addr_list[0] < 0:
+      if addr_list and len(addr_list) > 1:
+        addr = addr_list[i]
+      partlist.append( {'addr': addr, 'size': size, 'name': name} )
+      pass
+    self.get_part_addr_dmesg(partlist)
+    if partlist[0]['addr'] < 0:
       if partlist[0]['name']:
         if partlist[0]['size'] > 0x00800000:  # 8MiB
-          addr_list[0] = 0  # detect "ALL" part
+          partlist[0]['addr'] = 0  # detect "ALL" part
+    if partlist[0]['addr'] == 0:
+      if partlist[0]['size'] > 0x00800000:  # 8MiB:
+        self.allpartnum = 0  # detect "ALL" part
     ro_list = self.get_part_readonly(mtd_max_num)
     if self.verbose:
       print("MTD partitions:")
@@ -184,10 +195,7 @@ class DevInfo():
     for i, part in enumerate(partlist):
       size = part['size']
       name = part['name']
-      addr = addr_list[i]
-      if i == 0 and addr == 0 and size > 0x00800000:  # 8MiB
-        self.allpartnum = 0  # detect "ALL" part
-      part['addr'] = addr
+      addr = part['addr']
       if ro_list and ro_list[i] >= 0:
         part['ro'] = False if ro_list[i] == 0 else True
       if verbose:
