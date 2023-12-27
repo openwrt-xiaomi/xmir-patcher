@@ -146,8 +146,8 @@ class DevInfo():
         if data['name'] == name:
           #print(f"{name:12S}: {addr:08X} {size:08X}")
           if size != data['size']:
-            x = re.findall(f'mtd: partition "{name}" extends beyond the end of device "', self.dmesg)
-            if len(parttbl) <= 0:
+            x = self.dmesg.find(f'mtd: partition "{name}" extends beyond the end of device "')
+            if x <= 0:
               raise ValueError(f"Incorrect size into partition table ({name})")
           if addr != data['addr'] and data['addr'] >= 0:
             raise ValueError(f"Incorrect addr for partition ({name})")
@@ -196,6 +196,13 @@ class DevInfo():
       size = part['size']
       name = part['name']
       addr = part['addr']
+      if addr < 0:
+        if name == "m25p80":
+          addr = 0xFFFFFFFF
+        else:
+          if self.dmesg and re.search(f'mounted UBI device ., volume ., name "{name}"', self.dmesg):
+            addr = 0xFFFFFFFF
+        part['addr'] = addr
       if ro_list and ro_list[i] >= 0:
         part['ro'] = False if ro_list[i] == 0 else True
       if verbose:
