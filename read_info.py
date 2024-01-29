@@ -166,19 +166,24 @@ class DevInfo():
     mtdtbl = re.findall(r'mtd([0-9]+): ([0-9a-fA-F]+) ([0-9a-fA-F]+) "(.*?)"', mtd_list)
     if len(mtdtbl) <= 1:
       return [ ]
-    partlist = [ ]
-    mtd_max_num = len(mtdtbl) - 1
-    addr_list = self.get_part_addr_table(mtd_max_num, verbose)
+    mtd_max_num = -1
     for i, mtd in enumerate(mtdtbl):
       mtdid = int(mtd[0])
-      if mtdid != i:
-        raise ValueError(f"Incorrect mtd id = {mtdid}")
+      if mtdid > mtd_max_num:
+        mtd_max_num = mtdid
+    partlist = [ { 'addr': -1, 'size': -1, 'name': None } for i in range(mtd_max_num + 1) ]
+    mtd_info = self.get_part_info(mtd_max_num, verbose)
+    for i, mtd in enumerate(mtdtbl):
+      mtdid = int(mtd[0])
       addr = -1
       size = int(mtd[1], 16)
       name = mtd[3]
-      if addr_list and len(addr_list) > 1:
-        addr = addr_list[i]
-      partlist.append( {'addr': addr, 'size': size, 'name': name} )
+      if mtd_info and mtdid < len(mtd_info):
+        if mtd_info[mtdid]["addr"] is not None:
+          addr = mtd_info[mtdid]["addr"]
+      partlist[mtdid]['addr'] = addr
+      partlist[mtdid]['size'] = size
+      partlist[mtdid]['name'] = name
       pass
     self.get_part_addr_dmesg(partlist)
     if partlist[0]['addr'] < 0:
@@ -188,7 +193,6 @@ class DevInfo():
     if partlist[0]['addr'] == 0:
       if partlist[0]['size'] > 0x00800000:  # 8MiB:
         self.allpartnum = 0  # detect "ALL" part
-    ro_list = self.get_part_readonly(mtd_max_num)
     if self.verbose:
       print("MTD partitions:")
     err_addr = -1
@@ -203,8 +207,9 @@ class DevInfo():
           if self.dmesg and re.search(f'mounted UBI device ., volume ., name "{name}"', self.dmesg):
             addr = 0xFFFFFFFF
         part['addr'] = addr
-      if ro_list and ro_list[i] >= 0:
-        part['ro'] = False if ro_list[i] == 0 else True
+      if mtd_info and i < len(mtd_info):
+        if mtd_info[i]["ro"] is not None:
+          part['ro'] = False if mtd_info[i]["ro"] == 0 else True
       if verbose:
         xaddr = ("0x%08X" % addr) if addr >= 0 else "??????????"
         ro = '?'
@@ -220,49 +225,43 @@ class DevInfo():
     self.partlist = partlist
     return self.partlist
 
-  def get_part_addr_table(self, mtd_max_num, verbose = None):
+  def get_part_info(self, mtd_max_num, verbose = None):
     verbose = verbose if verbose is not None else self.verbose
-    fn = 'mtd_addr.txt'
+    fn = 'mtd_info.txt'
+    mtd_dev = '/sys/class/mtd/mtd$i'
+    dn = '2>/dev/null'
+    trim = r"tr -d '\n'"
+    a2f = f"tee -ia /tmp/{fn}"  # append to file
+    delim = f"echo -n '|' >> /tmp/{fn}"
     cmd  = f'rm -f /tmp/{fn} ;'
     cmd += f'for i in $(seq 0 {mtd_max_num}) ; do'
     cmd += f'  echo "" >> /tmp/{fn} ;'
     cmd += f'  echo -n $i= >> /tmp/{fn} ;'
-    cmd += f'  cat /sys/class/mtd/mtd$i/offset >> /tmp/{fn} ;'
+    cmd += f"  cat {mtd_dev}/offset {dn} | {trim} | {a2f} ; {delim} ;"
+    cmd += f"  cat {mtd_dev}/type   {dn} | {trim} | {a2f} ; {delim} ;"
+    cmd += f"  cat {mtd_dev}/flags  {dn} | {trim} | {a2f} ; {delim} ;"
+    cmd += f"  cat {mtd_dev}/mtdblock$i/ro  {dn} | {trim} | {a2f} ; {delim} ;"
+    cmd += f"  cat {mtd_dev}/dev    {dn} | {trim} | {a2f} ; {delim} ;"
+    cmd += f"  readlink -f {mtd_dev}/device {dn} | {trim} | {a2f} ; {delim} ;"
     cmd += f'done'
-    addr_table = self.run_command(cmd, fn)
-    if not addr_table:
+    out_text = self.run_command(cmd, fn)
+    if not out_text:
       return [ ]
-    addr_list = [ -1 ] * (mtd_max_num + 1)
-    for line in addr_table.split('\n'):
+    info = [ { "addr": None, "ro": None } for i in range(mtd_max_num + 1) ]
+    for line in out_text.split('\n'):
       line = line.strip()
       if '=' in line:
         data = line.split('=')
         mtd_num = int(data[0])
-        if len(data[1]) >= 1:
-          addr_list[mtd_num] = int(data[1])
-    return addr_list    
+        mtd_info = data[1].split('|')
+        info[mtd_num]["addr"]   = int(mtd_info[0], 0) if len(mtd_info[0]) > 0 else None
+        info[mtd_num]["type"]   = mtd_info[1].strip()
+        info[mtd_num]["flags"]  = int(mtd_info[2], 0) if len(mtd_info[2]) > 0 else None
+        info[mtd_num]["ro"]     = int(mtd_info[3], 0) if len(mtd_info[3]) > 0 else None 
+        info[mtd_num]["dev"]    = mtd_info[4].strip()
+        info[mtd_num]["device"] = mtd_info[5].strip()
+    return info    
 
-  def get_part_readonly(self, mtd_max_num):
-    fn = 'mtd_ro.txt'
-    cmd  = f'rm -f /tmp/{fn} ;'
-    cmd += f'for i in $(seq 0 {mtd_max_num}) ; do'
-    cmd += f'  echo "" >> /tmp/{fn} ;'
-    cmd += f'  echo -n $i= >> /tmp/{fn} ;'
-    cmd += f'  cat /sys/class/mtd/mtd$i/mtdblock$i/ro >> /tmp/{fn} ;'
-    cmd += f'done'
-    ro_table = self.run_command(cmd, fn)
-    if not ro_table:
-      return [ ]
-    ro_list = [ -1 ] * (mtd_max_num + 1)
-    for line in ro_table.split('\n'):
-      line = line.strip()
-      if '=' in line:
-        data = line.split('=')
-        mtd_num = int(data[0])
-        if len(data[1]) >= 1:
-          ro_list[mtd_num] = int(data[1])
-    return ro_list    
-  
   def get_part_num(self, name_or_addr, comptype = None):
     if not self.partlist:
       return -2
