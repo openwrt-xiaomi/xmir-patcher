@@ -166,11 +166,7 @@ class DevInfo():
     mtdtbl = re.findall(r'mtd([0-9]+): ([0-9a-fA-F]+) ([0-9a-fA-F]+) "(.*?)"', mtd_list)
     if len(mtdtbl) <= 1:
       return [ ]
-    mtd_max_num = -1
-    for i, mtd in enumerate(mtdtbl):
-      mtdid = int(mtd[0])
-      if mtdid > mtd_max_num:
-        mtd_max_num = mtdid
+    mtd_max_num = max( [ int(mtd[0]) for i, mtd in enumerate(mtdtbl) ] )
     partlist = [ { 'addr': -1, 'size': -1, 'name': None } for i in range(mtd_max_num + 1) ]
     mtd_info = self.get_part_info(mtd_max_num, verbose)
     for i, mtd in enumerate(mtdtbl):
@@ -193,20 +189,26 @@ class DevInfo():
     if partlist[0]['addr'] == 0:
       if partlist[0]['size'] > 0x00800000:  # 8MiB:
         self.allpartnum = 0  # detect "ALL" part
+    fdt_info = self.get_part_from_fdt(partlist, verbose)
     if self.verbose:
       print("MTD partitions:")
     err_addr = -1
     for i, part in enumerate(partlist):
       size = part['size']
       name = part['name']
-      addr = part['addr']
-      if addr < 0:
+      if part['addr'] < 0:
+        if name in fdt_info:
+          if size == fdt_info[name]['size']:
+            part['addr'] = fdt_info[name]['addr']
+      if part['addr'] < 0:
         if name == "m25p80":
-          addr = 0xFFFFFFFF
+          part['addr'] = 0xFFFFFFFF
         else:
           if self.dmesg and re.search(f'mounted UBI device ., volume ., name "{name}"', self.dmesg):
-            addr = 0xFFFFFFFF
-        part['addr'] = addr
+            part['addr'] = 0xFFFFFFFF
+      if part['addr'] < 0 and fdt_info:
+        part['addr'] = 0xFFFFFFFF
+      addr = part['addr']
       if mtd_info and i < len(mtd_info):
         if mtd_info[i]["ro"] is not None:
           part['ro'] = False if mtd_info[i]["ro"] == 0 else True
@@ -261,6 +263,67 @@ class DevInfo():
         info[mtd_num]["dev"]    = mtd_info[4].strip()
         info[mtd_num]["device"] = mtd_info[5].strip()
     return info    
+
+  def get_part_from_fdt(self, partlist, verbose = None):
+    verbose = verbose if verbose is not None else self.verbose
+    fn = 'mtd_fdt.txt'
+    fdtpath = '/sys/firmware/devicetree/base/**/'
+    execgrep = '-exec grep -l "^fixed-partitions" {} +'
+    hexfmt = "'1/1 \"%02x\"'"
+    trim = r"tr -d '\n'"
+    cmd  = f'fn=/tmp/{fn};'
+    cmd += f'rm -f $fn;'
+    cmd += f'dlist=$( find {fdtpath} -type f -name compatible {execgrep} );'
+    cmd += f'[ -z "$dlist" ] && dlist=$( find {fdtpath} -type f -name nand-bus-width );'
+    cmd += f'for trgfile in $dlist ; do'
+    cmd += f'  bdir=$( dirname $trgfile );'
+    cmd += f'  echo "" >>$fn;'
+    cmd += f'  echo "PARTLIST:$bdir" >>$fn;'
+    cmd += f'  plist=$( find $bdir/**/ -mindepth 1 -maxdepth 1 -type f -name label );'
+    cmd += f'  for label in $plist ; do'
+    cmd += f'    pdir=$( dirname $label );'
+    cmd += f'    preg=$( cat $pdir/reg | hexdump -v -n8 -e {hexfmt} );'  # bigendian
+    cmd +=  '    echo "0x${preg:0:8}|0x${preg:8:8}|$(cat $label | tr -d ''\\n'')" >>$fn;'
+    cmd += f'  done;'
+    cmd += f'done'
+    fdt_text = self.run_command(cmd, fn)
+    if not fdt_text:
+      return { }
+    fdt_dev = [ ]
+    mtd_list = None
+    for line in fdt_text.split('\n'):
+      line = line.strip()
+      if line.startswith('PARTLIST:'):
+        if mtd_list:
+          fdt_dev.append(mtd_list)
+        mtd_list = { }
+      if line.startswith('0x'):
+        data = line.split('|')
+        name = data[2].strip()
+        if name:
+          mtd_list[name] = { 'addr': int(data[0], 0), 'size': int(data[1], 0) }
+    if mtd_list:
+      fdt_dev.append(mtd_list)
+    if not fdt_dev:
+      return { }
+    if len(fdt_dev) == 1:
+      return fdt_dev[0]
+    scores = [ 0 ] * len(fdt_dev)
+    for i, mtd_list in enumerate(fdt_dev):
+      for _, (name, mtd) in enumerate(mtd_list.items()):
+        for part in partlist:
+          if part['name'] == name and part['size'] == mtd['size']:
+            if part['addr'] == mtd['addr']:
+              scores[i] += 1
+            elif part['addr'] < 0:
+              pass #nothing
+            else:
+              scores[i] -= 1
+    max_scores = max(scores)
+    if max_scores <= 0:
+      return { }
+    devnum = scores.index(max_scores)
+    return fdt_dev[devnum]
 
   def get_part_num(self, name_or_addr, comptype = None):
     if not self.partlist:
