@@ -77,20 +77,27 @@ mi(0,  "RC04")          # RA75 analog
 mi(68, "CB0401V2")      # Xiaomi 5G CPE Pro
 
 mi(70, "RC06")          # Xiaomi Router 7000 (BE7000)
-mi(71, "RD01")          # Xiaomi 全屋路由  # https://www.mi.com/xiaomi-routers/whole-room
+mi(71, "RD01")          # Xiaomi Whole-Home Router Combo AX3000  # https://www.mi.com/xiaomi-routers/whole-room
 mi(72, "WR30", "WR30U", "mi-router-wr30u")  # Xiaomi AX3000NE   WR30U/WR30T/WR30M
 mi(0,  "WR30U", "WR30", "mi-router-wr30u")  # China Unicom
 mi(0,  "WR30T", "WR30", "mi-router-wr30u")  # China Telecom  # Certification: 2022-3536
 mi(0,  "WR30M", "WR30", "mi-router-wr30u")  # China Mobile   # Certification: 2022-3202   6.0.49
-mi(73, "RD02")          # Xiaomi 全屋路由 子路由 (Whole house routing sub-routing) # ipq5018  # Certification: 2023-11107
+mi(73, "RD02")          # Xiaomi Whole-Home Router Combo AX3000 (sub-routing) # ipq5018 # Certification: 2023-11107
 mi(74, "CR8818")
-mi(75, "RD03", "", "mi-router-ax3000t")     # Xiaomi AX3000T (CN)
-mi(76, "RD04")          # Certification: 2023-12227
+mi(75, "RD03", "RD23", "mi-router-ax3000t") # Xiaomi AX3000T (CN)
+mi(76, "RD04", "RD12")  # Xiaomi Router AX1500 (CN)
 mi(77, "RD05")
 mi(78, "RD06")
 mi(79, "CR8816")
 mi(80, "CR8819")
 mi(81, "RD08")          # Xiaomi Router BE6500 Pro
+mi(0,  "RD10", "RD10M") # Xiaomi Mi Wi-Fi Range Extender N300 (DVB4398GL)
+mi(0,  "RD11", "")      # Xiaomi AC1200M
+mi(85, "RD15")          # BE3600 #  Certification: 2024-0811
+mi(86, "BE36T")
+mi(87, "RD12", "RD04")  # Xiaomi Router AX1500 (INT)
+mi(88, "RD23", "RD03", "mi-router-ax3000t")  # Xiaomi Router AX3000T (INT)
+mi(89, "RD16")
 
 # routers with unknown device number
 
