@@ -467,7 +467,7 @@ class XqFlash():
         fit_size = get_dtb_totalsize(data, offset)
         if fit_size <= 0:
             die('FIT: Incorrect image (1)')
-        if fit_size < 1*1024*1024:
+        if fit_size < 200*1024:
             die('FIT: Incorrect image (2)')
         data = data[offset:offset+fit_size]
         if image:
@@ -487,46 +487,76 @@ class XqFlash():
         def_cfg_name = cfg_list.get_property('default').value
         print(f'FIT: def_cfg: "{def_cfg_name}"')
         def_cfg = fit_dt.get_node(f'/configurations/{def_cfg_name}')
-        def_fdt_name = def_cfg.get_property('fdt').value
-        print(f'FIT: def_fdt: "{def_fdt_name}"')
-        fdt1 = self.get_fdt_node(fit_dt, f'/images/{def_fdt_name}')
-        print('FDT: desc = "{}"'.format(fdt1.get_property('description').value))
-        print('FDT: type = "{}"'.format(fdt1.get_property('type').value))
-        print('FDT: arch = "{}"'.format(fdt1.get_property('arch').value))
-        if fdt1.get_property('type').value != 'flat_dt':
-            die('FIT: Incorrect image (6)')
-        if fdt1.get_property('compression').value != 'none':
-            die('FIT: Incorrect image (7)')
-        kernel.hdr.arch = fdt1.get_property('arch').value
-        krn1 = self.get_fdt_node(fit_dt, '/images/kernel*1')
-        print('KRN: desc = "{}"'.format(krn1.get_property('description').value))
-        print('KRN: type = "{}"'.format(krn1.get_property('type').value))
-        print('KRN: arch = "{}"'.format(krn1.get_property('arch').value))
-        print('KRN: compression = "{}"'.format(krn1.get_property('compression').value))
-        krn_size = len(krn1.get_property("data"))
-        print(f'KRN: data = {krn_size} bytes')
-
-        krn_dt_data = fdt1.get_property('data')
-        if hasattr(krn_dt_data, 'raw_value'):
-            krn_dt_data = krn_dt_data.raw_value
+        def_cfg_desc = def_cfg.get_property('description').value
+        print(f'FIT: def_cfg desc = "{def_cfg_desc}"')
+        
+        ubi_loader = False
+        fit_model = ''
+        if 'xiaomi_' in def_cfg_desc:
+            x = def_cfg_desc.find('xiaomi_')
+            fit_model = 'xiaomi,' + def_cfg_desc[x+7:]
+            print(f'FIT: model = "{fit_model}"')
+        
+        def_fdt = def_cfg.get_property('fdt')
+        
+        if not def_fdt:
+            krn1 = self.get_fdt_node(fit_dt, '/images/kernel*1')
+            krn1desc = krn1.get_property('description').value
+            print(f'KRN: desc = "{krn1desc}"')
+            if 'Linux-u-boot' not in krn1desc:
+                die('FIT: Incorrect image (5)')
+            print(f'Linux-u-boot image founded! (detect ubi-loader)')
+            ubi_loader = True
+            if not fit_model:
+                die('FIT: Incorrect image (5)(1) ')
         else:
-            krn_dt_data = krn_dt_data.data
-        dt = fdt.parse_dtb(krn_dt_data)
-        self.krn_dt = dt
-        dt_tree = dt.info(props = True)
-        #with open('dt_tree.txt', "w") as file:
-        #    file.write(dt_tree)
-        dt_compat = dt.get_property('compatible')
-        print('FDT:', dt_compat)
-        dt_model = dt.get_property('model').value
-        print(f'FDT: model = "{dt_model}"')
+            def_fdt_name = def_fdt.value
+            print(f'FIT: def_fdt: "{def_fdt_name}"')
+            fdt1 = self.get_fdt_node(fit_dt, f'/images/{def_fdt_name}')
+            print('FDT: desc = "{}"'.format(fdt1.get_property('description').value))
+            print('FDT: type = "{}"'.format(fdt1.get_property('type').value))
+            print('FDT: arch = "{}"'.format(fdt1.get_property('arch').value))
+            if fdt1.get_property('type').value != 'flat_dt':
+                die('FIT: Incorrect image (6)')
+            if fdt1.get_property('compression').value != 'none':
+                die('FIT: Incorrect image (7)')
+            kernel.hdr.arch = fdt1.get_property('arch').value
+            krn1 = self.get_fdt_node(fit_dt, '/images/kernel*1')
+            print('KRN: desc = "{}"'.format(krn1.get_property('description').value))
+            print('KRN: type = "{}"'.format(krn1.get_property('type').value))
+            print('KRN: arch = "{}"'.format(krn1.get_property('arch').value))
+            print('KRN: compression = "{}"'.format(krn1.get_property('compression').value))
+            krn_size = len(krn1.get_property("data"))
+            print(f'KRN: data = {krn_size} bytes')
+
+            krn_dt_data = fdt1.get_property('data')
+            if hasattr(krn_dt_data, 'raw_value'):
+                krn_dt_data = krn_dt_data.raw_value
+            else:
+                krn_dt_data = krn_dt_data.data
+            dt = fdt.parse_dtb(krn_dt_data)
+            self.krn_dt = dt
+            dt_tree = dt.info(props = True)
+            #with open('dt_tree.txt', "w") as file:
+            #    file.write(dt_tree)
+            dt_compat = dt.get_property('compatible')
+            print('FDT:', dt_compat)
+            dt_model = dt.get_property('model').value
+            print(f'FDT: model = "{dt_model}"')
+          
+        if ubi_loader:
+            dt = None
+            dt_compat = [ fit_model ]
+            dt_model = None
+        
         if not self.img_stock:
             cm = self.check_model(dt_compat, dt_model)
             if cm < 0:
                 die(f'FIT: Loaded firmware not compatible with "{gw.device_name}" !!!')
         
-        dt_part = self.get_fdt_node_by_name(dt, 'partitions', 'fixed-partitions')
-        print(f'FDT: dt_part: {dt_part}')
+        if dt:
+            dt_part = self.get_fdt_node_by_name(dt, 'partitions', 'fixed-partitions')
+            print(f'FDT: dt_part: {dt_part}')
         
         kernel.fit = True
         if self.img_stock:
@@ -724,7 +754,7 @@ class XqFlash():
             return 0  # unknown
         compat_list = compat
         if isinstance(compat, str):
-            compat_list = [ x.strip() for x in compat.split(',') ]
+            compat_list = [ x.strip() for x in compat.split(';') ]
         dn = gw.device_name
         if dn not in xqmodel.xqModelList:
             return 0  # unknown
