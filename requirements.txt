@@ -4,6 +4,6 @@ urllib3
 certifi
 requests
 pyftpdlib
-ssh2-python
+ssh2-python312
 #fdt
 #ubi-reader
