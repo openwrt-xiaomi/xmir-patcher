@@ -274,6 +274,43 @@ class Gateway():
   def get_topo_graph_info(self, timeout = 5):
     return self.get_pub_info('topo_graph', timeout = timeout)
 
+  def get_device_systime(self, fix_tz = True):
+    # http://192.168.31.1/cgi-bin/luci/;stok=14b996378966455753104d187c1150b4/api/misystem/sys_time
+    # response: {"time":{"min":32,"day":4,"index":0,"month":10,"year":2023,"sec":7,"hour":6,"timezone":"XXX"},"code":0}
+    res = requests.get(self.apiurl + 'misystem/sys_time')
+    try:
+        dres = json.loads(res.text)
+        code = dres['code']
+    except Exception:
+        raise RuntimeError(f'Error on parse response for command "sys_time" => {res.text}')
+    if code != 0:
+        raise RuntimeError(f'Error on get sys_time => {res.text}')
+    dst = dres['time']
+    if fix_tz and 'timezone' in dst:
+        if "'" in dst['timezone'] or ";" in dst['timezone']:
+            dst['timezone'] = "GMT0"
+    return dst
+
+  def set_device_systime(self, dst, year = 0, month = 0, day = 0, hour = 0, min = 0, sec = 0, timezone = ""):
+    if dst:
+        year     = dst['year']
+        month    = dst['month']
+        day      = dst['day']
+        hour     = dst['hour']
+        min      = dst['min']
+        sec      = dst['sec']
+        timezone = dst['timezone']
+    params = { 'time': f"{year}-{month}-{day} {hour}:{min}:{sec}", 'timezone': timezone }
+    res = requests.get(self.apiurl + 'misystem/set_sys_time', params = params)
+    try:
+        dres = json.loads(res.text)
+        code = dres['code']
+    except Exception:
+        raise RuntimeError(f'Error on parse response for command "set_sys_time" => {res.text}')
+    if code != 0:
+        raise RuntimeError(f'Error on exec command "set_sys_time" => {res.text}')
+    return res.text
+
   def wait_shutdown(self, timeout, verbose = 1):
     if verbose:
       print('Waiting for shutdown: ', end='', flush=True)
