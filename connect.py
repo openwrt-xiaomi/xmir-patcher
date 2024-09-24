@@ -52,7 +52,7 @@ dn = gw.device_name
 #  sys.exit(0)
 
 #if dn in 'RD01 RD02 RD03 CR8818 RD04 RD05 RD06 CR8816 CR8819 RD08 ':
-if dn.startswith('RD') or dn.startswith('BE') or dn.startswith('CR88'):
+if dn.startswith('RD') or dn.startswith('BE') or dn.startswith('CR88') or dn == 'RA80V2':
   import connect6
   sys.exit(0)
 

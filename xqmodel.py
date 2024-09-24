@@ -93,6 +93,7 @@ mi(80, "CR8819")
 mi(81, "RD08")          # Xiaomi Router BE6500 Pro
 mi(0,  "RD10", "RD10M") # Xiaomi Mi Wi-Fi Range Extender N300 (DVB4398GL)
 mi(0,  "RD11", "")      # Xiaomi AC1200M
+mi(84, "RA80V2")        # Xiaomi AX3000 2023
 mi(85, "RD15")          # Xiaomi BE3600 2.5G #  Certification: 2024-0811
 mi(86, "BE36T")         # BE3600T 2.5G
 mi(87, "RD12", "RD04")  # Xiaomi Router AX1500 (INT)
@@ -100,11 +101,11 @@ mi(88, "RD23", "RD03", "mi-router-ax3000t")  # Xiaomi Router AX3000T (INT)
 mi(89, "RD16")          # Xiaomi BE3600 1G
 mi(90, "RD18")          # Xiaomi BE5000
 mi(0,  "RD28")          # Xiaomi Mesh System AX3000 NE
+mi(0,  "RD13")          # Xiaomi Mesh System AC1200
 
 # https://wikidevi.wi-cat.ru/List_of_Xiaomi_Wireless_Devices
 # routers with unknown device number
 
-mi(0,  "RD13")          # Xiaomi Mesh System AC1200
 mi(0, "BE36M")
 mi(0, "BE306")
 
