@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+import datetime
 import os
 import sys
 
@@ -17,13 +18,37 @@ dev.get_dmesg()
 dev.get_part_table()
 if not dev.partlist or len(dev.partlist) <= 1:
   die("Partition list is empty!")
+  
+sn = gw.device_info.get('id', None)
 
-fn_dir    = 'backups/'
+print("device_name =", gw.device_name)
+print("rom_version = {} {}".format(gw.rom_version, gw.rom_channel))
+print("SN = {}".format(sn))
+print("----------------------------------")
+
+# Verificar que el modelo esté disponible
+if not gw.device_name:
+    die("Could not get the router model.")
+    
+if not sn:
+    die("Could not obtain the serial number (SN) of the router.")
+
+
+if gw.device_name and sn:
+    router_model = ''.join(e for e in gw.device_name if e.isalnum())
+    sn_sanitized = sn.replace('/', '_')
+    fn_dir = f'backups/{router_model}/{sn_sanitized}/'
+else:
+    # Si no hay modelo o SN, usa la fecha actual
+    current_date = datetime.now().strftime("%Y%m%d_%H%M%S")
+    fn_dir = f'backups/{current_date}/'
+
 fn_old    = fn_dir + 'full_dump.old'
 fn_local  = fn_dir + 'full_dump.bin'
 fn_remote = '/tmp/mtd_dump.bin'
 a_part = None
 pid = None
+
 if len(sys.argv) > 1:
   for p, part in enumerate(dev.partlist):
     print('  %2d > addr: 0x%08X  size: 0x%08X  name: "%s"' % (p, part['addr'], part['size'], part['name']))
@@ -111,5 +136,3 @@ else:
       print('Backup of "{}" saved to file "./{}"'.format(name, fn_local))
   print(" ")
   print("Completed!")
-
-

@@ -1,0 +1,6879 @@
+
+#: /usr/lib/lua/luci/view/web/inc/header.htm
+msgid "存储功能"
+msgstr "Función de almacenamiento"
+
+msgid "存储设置"
+msgstr "Configuración de almacenamiento"
+
+msgid "系统设置"
+msgstr "Configuración del sistema"
+
+msgid "网口自定义"
+msgstr "Configuración personalizada del puerto de red"
+
+msgid "添加Mesh子路由"
+msgstr "Agregar sub-ruta Mesh"
+
+
+#: /usr/lib/lua/luci/view/web/inc/store.htm
+msgid "开启后，路由器USB接口将工作在3.0模式下。（USB3.0使用时会对2.4G Wi-Fi有些影响）"
+msgstr ""
+"Después de activarlo, la interfaz USB del router funcionará en modo 3.0."
+" (El USB 3.0 tendrá algún impacto en la red Wi-Fi de 2.4G)"
+
+msgid "Redmi路由器"
+msgstr "Router Redmi"
+
+msgid "开启后，2.4G和5G将合并显示为同一个名称，路由器将优先为终端选择5G网络。合并名称后部分终端可能离线，需重新连接。"
+msgstr ""
+"Después de activarlo, las redes de 2.4G y 5G se combinarán y se mostrarán"
+" con el mismo nombre, y el router seleccionará preferentemente la red 5G"
+" para el terminal. Después de combinar los nombres, algunos terminales"
+" pueden quedar desconectados y necesitarán reconectarse."
+
+msgid ""
+"某些老设备对Wi-Fi6支持不好，可能扫描不到信号或者连接不上等。开启此开关后，将会切"
+"换到Wi-Fi5模式，解决兼容问题。但同时会关闭Wi-Fi6的相关功能，如OFDMA，BSS Coloring等。"
+msgstr ""
+"Algunos dispositivos antiguos no son compatibles con Wi-Fi 6 (802.11ax) y"
+" pueden no detectar la señal o no conectarse, etc. Al habilitar este"
+" interruptor, cambiará al modo Wi-Fi 5 (802.11ac) para resolver los problemas"
+" de compatibilidad. Sin embargo, también desactivará las funciones"
+" relacionadas con Wi-Fi 6 (802.11ax), como OFDMA, BSS coloring, etc."
+
+msgid "时区设置"
+msgstr "Configuración de la zona horaria"
+
+msgid "当前系统时间："
+msgstr "Hora actual del sistema: "
+
+msgid "启用此功能后，Redmi路由器将开启IPv6上网功能（使用前请咨询网络运营商是否支持IPv6）"
+msgstr ""
+"Con esta función habilitada, el router Redmi activará la conexión a Internet"
+" IPv6 (por favor, consulte con su proveedor de servicios de red si soporta"
+" IPv6 antes de usarlo)."
+
+msgid "Mesh模式下不支持切换为中继模式。"
+msgstr "Para asegurar la mejor experiencia de usuario, el cambio al modo Repetidor no es compatible en modo Mesh."
+
+msgid "Mesh模式下不支持切换为路由模式。"
+msgstr "Para asegurar la experiencia del usuario, el cambio al modo Router no es compatible en modo Mesh."
+
+msgid "Samba功能"
+msgstr "Samba"
+
+msgid "如何使用Samba功能？"
+msgstr "¿Cómo usar Samba?"
+
+msgid "第一步：支持Samba协议的PC或电视连入此路由提供的网络；"
+msgstr "Paso 1: Conecte una PC o TV que soporte el protocolo Samba a la red proporcionada por este router;"
+
+msgid "第二步：根据接入终端的情况进行文件访问"
+msgstr "Paso 2: Acceda a los archivos según las condiciones del terminal de acceso"
+
+msgid "，回车后即可访问此路由器外接存储器上的文件"
+msgstr ", y presione Enter para acceder a los archivos en el almacenamiento externo de este router."
+
+msgid "电视：找到此电视上的Samba入口，根据电视操作提示进行访问此路由器外接存储器上的共享文件"
+msgstr "TV: Encuentre la entrada de Samba en este televisor y siga las indicaciones para acceder a los archivos compartidos en el almacenamiento externo de este router."
+
+msgid "*注：部分设备在Samba访问时需要额外的网络凭据，请尝试在用户名输入栏处输入guest，密码输入栏留空尝试连接。如问题仍无法解决，请联系客服处理。"
+msgstr "*Nota: Algunos dispositivos requieren credenciales de red adicionales al acceder a Samba. Intente ingresar 'guest' en el campo de nombre de usuario y deje en blanco el campo de contraseña para intentar conectarse. Si el problema persiste, contacte al servicio al cliente."
+
+msgid "开启Samba功能后，可以让所有接入此路由器支持Samba协议的终端设备在局域网中访问路由器或其外接U盘/移动硬盘上的共享文件。"
+msgstr "Después de activar Samba, todos los dispositivos terminales conectados al router que soportan el protocolo Samba podrán acceder a archivos compartidos en el router o en su unidad USB/disco duro externo dentro de la LAN."
+
+msgid "虚拟内存"
+msgstr "Memoria virtual"
+
+msgid "该路由器可通过创建虚拟内存来调用外部存储资源充当内存。"
+msgstr "El router puede utilizar recursos de almacenamiento externo como memoria creando memoria virtual."
+
+msgid "使用方法：将剩余空间大于2GB的U盘或者移动硬盘（推荐NTFS/FAT32/exFAT/EXT4等主流格式）插入此路由USB接口，路由器识别到此存储设备后，选择预扩展内存大小来创建虚拟内存。"
+msgstr "Instrucciones de uso: Inserte una unidad USB o disco duro externo con más de 2GB de espacio libre (se recomiendan formatos como NTFS/FAT32/exFAT/EXT4) en el puerto USB del router. Después de que el router reconozca este dispositivo de almacenamiento, seleccione el tamaño de memoria preextendida para crear la memoria virtual."
+
+msgid "*注：在创建虚拟内存过程中若Docker服务正在运行，Docker服务将会被重启。在虚拟内存使用过程中，请勿直接拔出磁盘，如需拔出磁盘，请使用安全移除磁盘功能。"
+msgstr "*Nota: Si el servicio Docker está en funcionamiento durante la creación de la memoria virtual, se reiniciará. Durante el uso de la memoria virtual, no retire el disco directamente. Si necesita retirarlo, utilice la función de extracción segura."
+
+msgid "当前路由器内存状态"
+msgstr "Estado de la memoria"
+
+msgid "路由器内存容量"
+msgstr "Capacidad total de memoria"
+
+msgid "当前虚拟内存状态"
+msgstr "Estado de la memoria virtual"
+
+msgid "虚拟内存容量"
+msgstr "Capacidad total de la memoria virtual"
+
+msgid "删除虚拟内存"
+msgstr "Eliminar memoria virtual"
+
+#: /usr/lib/lua/luci/view/web/inc/store.js.htm
+msgid "虚拟内存大小"
+msgstr "Tamaño de la memoria virtual"
+
+msgid "创建虚拟内存"
+msgstr "Crear memoria virtual"
+
+msgid "设置成功！请等待一段时间完成虚拟内存创建"
+msgstr "¡Configuración exitosa! Por favor, espere un momento para completar la creación de la memoria virtual"
+
+msgid "1.创建期间请勿断电或拔插存储设备;"
+msgstr "1. No apague ni desconecte los dispositivos de almacenamiento durante la creación;"
+
+msgid "2.使用过程中，如需拔出磁盘请使用安全移除磁盘功能，强行拔出可能会导致路由器工作异常甚至重启;"
+msgstr "2. Durante el uso, si necesitas retirar el disco, por favor utiliza la función de extracción segura. Forzar su retirada puede causar un funcionamiento anormal del router o incluso reiniciarlo;"
+
+msgid "虚拟内存创建中"
+msgstr "Creando memoria virtual"
+
+msgid "执行此操作将删除与路由器直连的存储器中扩展的虚拟内存，如果此时Docker服务正在运行，Docker服务将会被重启"
+msgstr "Realizar esta operación eliminará la memoria virtual extendida en el almacenamiento conectado directamente al router. Si el servicio Docker está en funcionamiento en este momento, el servicio Docker se reiniciará."
+
+msgid "虚拟内存删除成功！"
+msgstr "¡Memoria virtual eliminada exitosamente!"
+
+msgid "虚拟内存创建失败，未检测到可用的外接存储器"
+msgstr "Error al crear la memoria virtual, no se detectó almacenamiento externo disponible"
+
+msgid "存储位置选择"
+msgstr "Seleccionar ubicación de almacenamiento"
+
+msgid "安全移除磁盘"
+msgstr "Quitar disco de forma segura"
+
+msgid "设置成功，请等待"
+msgstr "Configuración exitosa, por favor espera"
+
+msgid "s完成USB模式切换"
+msgstr "s para completar el cambio de modo USB"
+
+msgid "分区名称"
+msgstr "Partición:"
+
+msgid "外接存储器格式"
+msgstr "Sistema de archivos"
+
+#: /usr/lib/lua/luci/view/web/inc/docker.htm
+msgid "运行Docker"
+msgstr "Ejecutar Docker"
+
+msgid "如何使用Docker？"
+msgstr "¿Cómo usar Docker?"
+
+msgid "Docker安装成功后，需要通过安装第三方管理来对它进行使用和管理。"
+msgstr "Después de instalar Docker con éxito, necesitas instalar un gestor de contenedores para usarlo y gestionarlo."
+
+msgid "1.单击安装第三方管理按钮，此时会进行第三方管理工具的安装；"
+msgstr "1. Haz clic en el botón Instalar gestor de contenedores y espera hasta que se complete la instalación;"
+
+msgid "2.管理工具安装成功后，单击管理Docker按钮，网页会跳转至第三方管理工具，此页面集成了容器、镜像的基本操作功能和信息展示、管理等功能。"
+msgstr "2. Después de instalar el gestor de contenedores con éxito, haz clic en el botón Gestionar Docker, y la página web saltará a la interfaz del gestor. Esta página integra funciones básicas de operación y gestión de contenedores e imágenes, así como la visualización de información."
+
+msgid "Docker安装"
+msgstr "Instalación de Docker"
+
+msgid "安装成功！"
+msgstr "¡Instalación exitosa!"
+
+msgid "是否确认卸载？"
+msgstr "¿Confirmar la desinstalación?"
+
+msgid "安装第三方管理"
+msgstr "Instalar gestor de contenedores"
+
+msgid "管理Docker"
+msgstr "Gestionar Docker"
+
+msgid "卸载Docker"
+msgstr "Desinstalar Docker"
+
+msgid "路由器外接存储器检测："
+msgstr "Detección de almacenamiento externo del router:"
+
+msgid "第三方管理工具："
+msgstr "Gestor de contenedores:"
+
+msgid "不可用，请先运行docker并安装第三方管理"
+msgstr "No disponible, primero ejecuta Docker e instala el gestor de contenedores"
+
+#: /usr/lib/lua/luci/view/web/inc/wifi.htm
+msgid "Wi-Fi多频合一"
+msgstr "Wi-Fi multibanda unificada"
+
+msgid "开启后，2.4GHz、5GHz和5GHz-Game将合并显示为同一个名称，路由器将优先为终端选择最佳Wi-Fi网络。合并名称后部分终端可能离线，需重新连接。"
+msgstr "Al activarlo, las bandas de 2.4GHz, 5GHz y 5GHz-Game se combinarán y se mostrarán con el mismo nombre, y el router dará prioridad a la selección de la mejor red Wi-Fi para el dispositivo. Después de combinar los nombres, es posible que algunos dispositivos se desconecten y necesiten reconectarse."
+
+msgid "Wi-Fi模式切换"
+msgstr "Cambio de modo Wi-Fi"
+
+msgid "双频模式：具有更好的覆盖能力，适合大部分的应用场景。"
+msgstr "Modo de doble banda: tiene mejor capacidad de cobertura, adecuado para la mayoría de los escenarios de aplicación."
+
+msgid "三频模式：覆盖弱于双频。可支持WiFi7手机双5G MLO并联，大幅提升带宽。同时可作为独立电竞频段，减少其他设备干扰。"
+msgstr "Modo de triple banda: cobertura más débil que la de doble banda. Puede soportar la conexión en paralelo de doble 5G MLO de teléfonos WiFi 7, aumentando significativamente el ancho de banda. También puede usarse como una banda de frecuencia independiente para juegos, reduciendo la interferencia de otros dispositivos."
+
+msgid "工作模式"
+msgstr "Modo de operación"
+
+msgid "双频模式"
+msgstr "Modo de doble banda"
+
+msgid "三频模式"
+msgstr "Modo de triple banda"
+
+msgid "MLO设置"
+msgstr "Configuración de MLO"
+
+msgid "多频合一情况下，此路由器会默认开启MLO多链路连接，由Wi-Fi7终端自主选择并发频段接入，提高速率降低延迟。"
+msgstr "En el caso de integración de múltiples bandas, este router habilitará por defecto la conexión de múltiples enlaces MLO, permitiendo que el terminal Wi-Fi 7 seleccione de forma autónoma la banda de frecuencia concurrente, mejorando la velocidad y reduciendo la latencia."
+
+msgid "2.4GHz 选项"
+msgstr "Opciones de 2.4GHz"
+
+msgid "5GHz 选项"
+msgstr "Opciones de 5GHz"
+
+msgid "5GHz-Game 选项"
+msgstr "Opciones de 5GHz-Game"
+
+msgid "Wi-Fi 5 兼容模式"
+msgstr "Modo de compatibilidad con Wi-Fi 5"
+
+msgid "某些老设备对Wi-Fi6协议支持不好，可能扫描不到信号或者连接不上等。开启此开关后，将会切换到Wi-Fi5模式，解决兼容问题。但同时会关闭Wi-Fi6的相关功能，如OFDMA、TWT、BSS Coloring等。"
+msgstr "Algunos dispositivos antiguos no soportan bien el protocolo Wi-Fi6 y pueden no detectar la señal o tener problemas de conexión. Al activar este interruptor, el router cambiará al modo Wi-Fi5 para solucionar problemas de compatibilidad. Sin embargo, se desactivarán las funciones relacionadas con Wi-Fi6, como OFDMA, TWT, BSS Coloring, etc."
+
+msgid "TWT节能模式"
+msgstr "Modo de ahorro de energía TWT"
+
+msgid "TWT节能模式兼容性问题解决办法"
+msgstr "Solución al problema de compatibilidad del modo de ahorro de energía TWT"
+
+msgid "如果出现老旧终端在此路由开启TWT节能模式后出现兼容性问题，建议尝试以下方法："
+msgstr "Si los terminales antiguos tienen problemas de compatibilidad después de activar el modo de ahorro de energía TWT en este router, se recomienda probar los siguientes métodos:"
+
+msgid "1. 到相应终端制造商官网下载更新驱动；"
+msgstr "1. Ve al sitio web oficial del fabricante del terminal correspondiente para descargar el controlador actualizado;"
+
+msgid "2. 若最新驱动仍无法解决兼容性问题，建议先关闭该功能。"
+msgstr "2. Si el controlador más reciente aún no resuelve el problema de compatibilidad, se recomienda desactivar esta función."
+
+msgid "开启TWT节能模式后，可通过TWT节能技术降低接入此路由器的Wi-Fi6终端设备功耗，部分老旧终端可能会有兼容性问题。"
+msgstr "Al activar el modo de ahorro de energía TWT, la tecnología de ahorro de energía TWT puede reducir el consumo de energía de los dispositivos terminales Wi-Fi6 conectados a este router. Algunos terminales antiguos pueden presentar problemas de compatibilidad."
+
+#: /usr/lib/lua/luci/view/web/inc/wan.htm
+msgid "IPv4信息"
+msgstr "Información IPv4"
+
+msgid "IPv6信息"
+msgstr "Información IPv6"
+
+#: /usr/lib/lua/luci/view/web/inc/netmod.htm
+msgid "此功能与双WAN功能冲突，若想使用，请您先关闭双WAN功能"
+msgstr "Esta función entra en conflicto con la función de Doble WAN. Si desea usarla, primero desactive la función de Doble WAN."
+
+#: /usr/lib/lua/luci/view/web/inc/led-switch.htm
+msgid "灯效控制"
+msgstr "Control de iluminación"
+
+msgid "如何自定义及定时控制路由器灯效"
+msgstr "Cómo personalizar y programar el control de efectos de luz"
+
+msgid "此页面仅支持对路由器灯效进行简单管理，如需自定义或定时控制灯效请使用米家App绑定此路由器后进行管理"
+msgstr "Esta página solo admite la gestión simple de los efectos de luz del router. Si necesita personalizar o programar los efectos de luz, utilice la aplicación Mijia para vincular este router y gestionarlo."
+
+msgid "状态指示灯"
+msgstr "Luz de estado"
+
+msgid "开启及关闭此路由器的网络/系统状态指示灯"
+msgstr "Encender y apagar el indicador de estado de la red/sistema de este router"
+
+msgid "网口灯"
+msgstr "Luz del puerto WAN"
+
+msgid "开启及关闭此路由器的网口灯"
+msgstr "Encender y apagar la luz del puerto de red de este router"
+
+#: /usr/lib/lua/luci/view/web/inc/sysinfo.js.htm
+msgid "路由器正常工作情况下建议使用系统升级检测进行升级。当系统无法升级时使用手动上传ROM包进行升级。"
+msgstr "Cuando el router esté funcionando normalmente, se recomienda usar la detección de actualización del sistema para actualizar. Cuando el sistema no se pueda actualizar, suba manualmente el paquete ROM para actualizar."
+
+msgid "1.恢复出厂设置操作会抹掉当前路由器的所有设置；"
+msgstr "1. Restaurar los ajustes de fábrica borrará todas las configuraciones actuales del router."
+
+msgid "2.若此前已完成Mesh组网，子路由将会失去连接，待恢复出厂设置后需重新进行组网。"
+msgstr "2. Si ya se completó la red Mesh antes, el sub-router perderá la conexión, y será necesario volver a configurar la red después de restaurar los ajustes de fábrica."
+
+msgid "当安装失败或需要降级到前一版本时使用手动安装插件。"
+msgstr "Use la instalación manual de complementos cuando falle la instalación o cuando necesite degradar a una versión anterior."
+
+#: /usr/lib/lua/luci/view/web/inc/sysinfo.js.htm
+msgid "碰碰连"
+msgstr "NFC"
+
+msgid "该功能可为支持NFC的设备提供一碰入网服务。当前仅支持安卓手机，在使用前请确认："
+msgstr "Esta función puede proporcionar servicios de acceso a la red de un solo toque para dispositivos compatibles con NFC. Actualmente solo es compatible con teléfonos Android, confirme antes de usarlo:"
+
+#: /usr/lib/lua/luci/view/web/inc/dual-wan.htm
+msgid "双WAN设置"
+msgstr "Configuración de Doble WAN"
+
+msgid "请选择网口作为WAN口，并在"
+msgstr "Seleccione el puerto de red como puerto WAN y configure el puerto WAN en "
+
+msgid "带宽聚合"
+msgstr "Agregación de ancho de banda"
+
+msgid "WAN1优先"
+msgstr "WAN1 como principal"
+
+msgid "WAN2优先"
+msgstr "WAN2 como principal"
+
+msgid "WAN1优先，WAN2备份"
+msgstr "WAN1 como principal, WAN2 como respaldo"
+
+msgid "WAN2优先，WAN1备份"
+msgstr "WAN2 como principal, WAN1 como respaldo"
+
+msgid "WAN1口/WAN2口转发比例设置"
+msgstr "Configuración de la proporción de reenvío de WAN1/WAN2"
+
+msgid "WAN口转发规则设置"
+msgstr "Configuración de reglas de reenvío de puerto WAN"
+
+msgid "WAN口转发规则列表："
+msgstr "Lista de reglas de reenvío de puerto WAN:"
+
+msgid "还没有策略加入"
+msgstr "Aún no se ha añadido ninguna regla"
+
+msgid "设备IP"
+msgstr "IP del dispositivo"
+
+#: /usr/lib/lua/luci/view/web/inc/lan_lag.htm
+msgid "LAN口聚合"
+msgstr "Agregación de puertos LAN"
+
+msgid "LAN口聚合注意事项"
+msgstr "Precauciones para la agregación de puertos LAN"
+
+msgid "网口协商速率不同时，将无法聚合成功。对端网卡需开启LACP协议。"
+msgstr "Cuando las tasas de negociación de los puertos de red son diferentes, la agregación no tendrá éxito. La tarjeta de red de la contraparte necesita tener activado el protocolo LACP."
+
+msgid "将两个LAN口聚合，实现网口速率叠加"
+msgstr "Agregue dos puertos LAN para lograr la superposición de velocidad del puerto de red"
+
+#: /usr/lib/lua/luci/view/web/inc/game_port.htm
+msgid "游戏网口"
+msgstr "Puerto de red para juegos"
+
+msgid "游戏网口注意事项"
+msgstr "Precauciones para el puerto de red para juegos"
+
+msgid "请注意，开启以下功能后游戏网口的优先转发功能将会失效："
+msgstr "Tenga en cuenta que la función de reenvío prioritario del puerto de red para juegos se desactivará después de habilitar las siguientes funciones:"
+
+msgid "1. Qos设置；"
+msgstr "1. Configuraciones de QoS;"
+
+msgid "2. VPN服务与智能VPN分流。"
+msgstr "2. Servicio VPN y descarga inteligente de VPN."
+
+msgid "游戏网口传输的数据会被优先转发，使得延迟更低，更适用于游戏和语音场景"
+msgstr "Los datos transmitidos a través del puerto de red para juegos se reenviarán primero, lo que resulta en una menor latencia, más adecuado para escenarios de juegos y voz."
+
+#: /usr/lib/lua/luci/view/web/inc/index.htm
+msgid "双WAN模式下，不支持在此处设置外网带宽"
+msgstr "En el modo de Doble WAN, no se admite configurar el ancho de banda de la red externa aquí."
+
+# ============= data from www files ==============
+
+# msgid 0xE6817811
+msgid "Wi-Fi密码："
+msgstr "Contraseña Wi-Fi:"
+
+# msgid 0x8F09C395
+msgid "连接设备数量 --"
+msgstr "Número de dispositivos conectados --"
+
+# msgid 0xCB48B8E3
+msgid "Wi-Fi名称："
+msgstr "Nombre Wi-Fi:"
+
+# msgid 0x28A2D339
+msgid "Wi-Fi密码: 未设置"
+msgstr "Contraseña Wi-Fi: no configurada"
+
+# msgid 0x14400DAE
+msgid "连接设备数量："
+msgstr "Número de dispositivos conectados:"
+
+# msgid 0x45F4D8A1
+msgid "检测到Mesh网络均为有线组网，"
+msgstr "Se ha detectado que todas las redes Mesh están conectadas por cable."
+
+# msgid 0x52A8742A
+msgid "您可以开放专有回程频段以获得更好的Wi-Fi体验"
+msgstr "Puede abrir bandas de retorno dedicadas para una mejor experiencia Wi-Fi."
+
+# msgid 0xF8499002
+msgid "此时5G网络已关闭"
+msgstr "La red 5G está desactivada en este momento."
+
+# msgid 0x34011096
+msgid "此时5G网络已打开"
+msgstr "La red 5G está activada en este momento."
+
+# msgid 0xD00B13F6
+msgid "正在扩展Mesh节点(1-2分钟)..."
+msgstr "Ampliando nodos Mesh (1-2 minutos)..."
+
+# msgid 0x502C362D
+msgid "正在同步Mesh节点配置..."
+msgstr "Sincronizando la configuración del nodo Mesh..."
+
+# msgid 0x77E732D0
+msgid "搜索并添加Mesh节点"
+msgstr "Buscar y añadir nodos Mesh"
+
+# msgid 0xF1B8FC7F
+msgid "没有搜索到可用的mesh节点"
+msgstr "No se encontraron nodos Mesh disponibles"
+
+# msgid 0x91F1F04C
+msgid "知道了"
+msgstr "Entendido"
+
+# msgid 0x9B7BD06B
+msgid "搜索Mesh子路由..."
+msgstr "Buscando subrutas Mesh..."
+
+# msgid 0xE5AFB325
+msgid "可以尝试以下方法："
+msgstr "Puede intentar los siguientes métodos:"
+
+# msgid 0x5B994F9D
+msgid "1、确认主路由与待添加的子路由均支持小米Mesh组网功能："
+msgstr ""
+"1. Confirme que tanto la ruta principal como la subruta que se va a añadir"
+" son compatibles con la función de red Mesh de Xiaomi:"
+
+# msgid 0xEE1B4A8B
+msgid "支持小米Mesh组网的路由产品"
+msgstr "Routers que soportan la red Mesh de Xiaomi"
+
+# msgid 0x0DBB1237
+msgid "2、确保待添加的子路由处于未配置状态（长按Reset按钮5秒后即可恢复成未配置状态）;"
+msgstr ""
+"2. Asegúrese de que la subruta que se va a añadir esté en estado no"
+" configurado (presione y mantenga presionado el botón Reset durante 5"
+" segundos para restaurar el estado no configurado);"
+
+# msgid 0xA762DE57
+msgid "3、将待添加的子路由靠近主路由并重试（注意保持1米以外的距离以免干扰）；"
+msgstr ""
+"3. Acerque la subruta que se va a añadir a la ruta principal y vuelva a"
+" intentarlo (mantenga una distancia de 1 metro para evitar interferencias);"
+
+# msgid 0x63EA2194
+msgid "4、将待添加的子路由升至最新固件，并重置后重试"
+msgstr "4. Actualice la subruta que se va a añadir al último firmware, restablézcala y vuelva a intentarlo."
+
+# msgid 0xD712B61B
+msgid "1、将待添加的子路由靠近主路由并重试（注意保持1米以外的距离以免干扰）；"
+msgstr ""
+"1. Acerque la subruta que se va a añadir a la ruta principal y vuelva a"
+" intentarlo (mantenga una distancia de 1 metro para evitar interferencias);"
+
+# msgid 0x93616EE3
+msgid "2、将主路由升至最新固件版本；"
+msgstr "2. Actualice la ruta principal a la última versión del firmware;"
+
+# msgid 0x5E0B9FEC
+msgid "3、将待添加的子路由升至最新固件，并重置后重试（长按Reset按钮5秒后即可重置）"
+msgstr ""
+"3. Actualice la subruta que se va a añadir al último firmware, restablézcala"
+" y vuelva a intentarlo (presione y mantenga presionado el botón Reset durante 5 segundos para restablecerla)."
+
+# msgid 0x69A2AD60
+msgid "请选择网口"
+msgstr "Por favor, seleccione un puerto de red"
+
+# msgid 0x0DCF73A9
+msgid "确认是否关闭IPTV功能"
+msgstr "Confirme si desea desactivar la función IPTV"
+
+# msgid 0x22F83390
+msgid "请选择一个网口作为IPTV口"
+msgstr "Por favor, seleccione un puerto de red como puerto IPTV"
+
+# msgid 0x39632C1F
+msgid "当前系统时区："
+msgstr "Zona horaria actual del sistema:"
+
+# msgid 0x02B06026
+msgid "*如需修改时区，请切换到主Mesh路由进行修改，会自动同步到子Mesh路由"
+msgstr ""
+"*Si necesita modificar la zona horaria, cambie al enrutador principal Mesh"
+" para realizar la modificación, se sincronizará automáticamente con la subruta Mesh"
+
+# msgid 0xF52AD490
+msgid "当前Wi-Fi的加密方式为超强加密（WPA3），在该模式下部分型号手机可能存在兼容性问题"
+msgstr ""
+"El método de encriptación Wi-Fi actual es súper encriptación (WPA3), y algunos"
+" modelos de teléfonos móviles pueden tener problemas de compatibilidad en este modo"
+
+# msgid 0xF68D282B
+msgid "1. NFC功能开启"
+msgstr "1. Función NFC activada"
+
+# msgid 0xB73301CC
+msgid "2. 屏幕处于亮屏解锁的状态"
+msgstr "2. La pantalla está en estado de desbloqueo con la pantalla encendida"
+
+# msgid 0xE8590A21
+msgid "接入到运营商宽带的网线可以插在任意网口"
+msgstr "El cable de red conectado a la banda ancha del operador puede enchufarse en cualquier puerto de red"
+
+# msgid 0x3A9A6E52
+msgid "聚合口"
+msgstr "Puerto de agregación"
+
+# msgid 0x2406B809
+msgid "智能选择WAN口（推荐）"
+msgstr "Selección inteligente del puerto WAN (recomendado)"
+
+# msgid 0x59A52F31
+msgid "固定WAN口"
+msgstr "Puerto WAN fijo"
+
+# msgid 0xF1807E93
+msgid "确认是否关闭LAN口聚合功能"
+msgstr "Confirme si desea desactivar la función de agregación del puerto LAN"
+
+# msgid 0xA386BFE2
+msgid "未检测到宽带网线接入，请将网线连接到任意网口"
+msgstr "No se ha detectado acceso al cable de red de banda ancha, por favor conecte el cable de red a cualquier puerto de red"
+
+# msgid 0x93F9B492
+msgid "智能识别网口“"
+msgstr "Identificación inteligente del puerto de red"
+
+# msgid 0x26CFD986
+msgid "”作为WAN口"
+msgstr "” como puerto WAN"
+
+# msgid 0x03FCC83A
+msgid "请选择WAN口"
+msgstr "Por favor, seleccione un puerto WAN"
+
+# ========================================================================= #
+#     Data from Xiaomi LMO files                                            #
+# ========================================================================= #
+
+msgid 0x0005B8BE
+msgstr "El modo repetidor está activado, calidad de repetición: "
+
+msgid 0x00122454
+msgstr "Suspensión del disco duro"
+
+msgid 0x0018014D
+msgstr "¿La velocidad no es precisa?"
+
+msgid 0x005021D9
+msgstr "Modo del puerto Ethernet"
+
+msgid 0x0062ACF2
+msgstr "Atikokan, Cancún, Caimán, Jamaica, Panamá"
+
+msgid 0x00767AFA
+msgstr "¿Eliminar esta regla?"
+
+# DUP
+msgid 0x00772F59
+msgstr "Hora de las Marquesas"
+
+# DUP
+msgid 0x00772F59
+msgstr "Hora de las Islas Marquesas"
+
+msgid 0x007C371D
+msgstr "Pobre"
+
+msgid 0x007CA84F
+msgstr "No se encontró ningún nodo Mesh utilizable"
+
+msgid 0x0080FE49
+msgstr "Error de configuración"
+
+# DUP
+msgid 0x008C7438
+msgstr "Configuraciones de clonación de dirección MAC"
+
+# DUP
+msgid 0x00A49E33
+msgstr "Conflicto de IP detectado, intente cambiar a"
+
+msgid 0x00AE42E1
+msgstr "Dirección IP LAN"
+
+msgid 0x00B1BF32
+msgstr ""
+"Por razones técnicas, la funcionalidad de red Mesh no es compatible en"
+" este momento."
+
+msgid 0x00B86953
+msgstr "El MTU debe estar entre 576...1492 bytes"
+
+msgid 0x00BD620D
+msgstr "No se puede conectar"
+
+msgid 0x00C2A2ED
+msgstr "Usado"
+
+# DUP
+msgid 0x00DBF314
+msgstr "Estas configuraciones se pueden ajustar en \"Configuración del router\""
+
+msgid 0x011884C2
+msgstr "Sitio oficial"
+
+msgid 0x0129E6AE
+msgstr ""
+"Seleccione una red inalámbrica existente para repetir o ingrese el SSID y la contraseña"
+
+msgid 0x014B6561
+msgstr "Servicio de red de banda ancha Tietong"
+
+msgid 0x01614E39
+msgstr "Carga de la CPU: "
+
+msgid 0x0163EAB1
+msgstr ""
+"Esta operación reiniciará el router y todos los dispositivos en esta red"
+" se desconectarán temporalmente."
+
+msgid 0x017BF61B
+msgstr "Configuración de la banda ancha importada."
+
+msgid 0x018BECDD
+msgstr "No se pudo encontrar el archivo"
+
+msgid 0x01996956
+msgstr "Frecuencia central"
+
+msgid 0x01A4B87F
+msgstr "Verifique la dirección de correo electrónico que ingresó"
+
+msgid 0x01B645FA
+msgstr "Configurado con éxito"
+
+msgid 0x01C62527
+msgstr "Velocidad"
+
+msgid 0x01CBB607
+msgstr ""
+"La dirección IP consiste en cuatro números, cada uno en el rango de 0-255,"
+" separados por puntos (por ejemplo, 120.134.33.9)"
+
+msgid 0x01D8A3BE
+msgstr "El nombre del router que ingresó no es válido"
+
+msgid 0x01DC3CC7
+msgstr "Windows"
+
+# DUP
+msgid 0x01DD0857
+msgstr "La región se puede cambiar restableciendo el router"
+
+# DUP
+msgid 0x01DD0857
+msgstr ""
+"La región seleccionada durante la configuración del router no se puede cambiar"
+
+# DUP
+msgid 0x01F04B43
+msgstr "Ajustar velocidad automáticamente"
+
+# DUP
+msgid 0x01F8071E
+msgstr "mesh"
+
+# DUP
+msgid 0x01FF65AE
+msgstr "Puede elegir qué servicios o dispositivos pueden usar el tráfico VPN"
+
+msgid 0x0243B1C9
+msgstr ""
+"El ancho de banda actual no soporta el cambio de canal. El sistema"
+" ha seleccionado automáticamente un ancho de banda aplicable."
+
+msgid 0x0244183B
+msgstr "Dirección IPv6 WAN"
+
+msgid 0x024BB945
+msgstr "Tipo de conexión"
+
+msgid 0x024F73C6
+msgstr "Guam, Saipan"
+
+msgid 0x0257C5C1
+msgstr "¡La condición del disco duro es excelente!"
+
+# DUP
+msgid 0x026CDDE7
+msgstr "{$day}/{$month}/{$year} {$hour}:{$min}:{$sec}"
+
+msgid 0x028B3881
+msgstr "Bangui, Brazzaville, Douala, Kinshasa, Lagos"
+
+msgid 0x029A30B5
+msgstr "Nombre"
+
+# DUP
+msgid 0x02AA05D5
+msgstr ""
+"2. Si no está seguro sobre el tipo de protocolo VPN, elija automáticamente."
+
+msgid 0x02F12573
+msgstr "Verifique la configuración de conexión del router"
+
+msgid 0x02FB386D
+msgstr "Kiritimati"
+
+msgid 0x030711A8
+msgstr "Weibo oficial de Sina"
+
+msgid 0x030E4839
+msgstr "La contraseña que ingresaste es incorrecta"
+
+msgid 0x032134B0
+msgstr "Prefijo"
+
+msgid 0x032A45CC
+msgstr "Error en la cuenta o contraseña del discador de banda ancha"
+
+msgid 0x032BDF78
+msgstr ""
+"La configuración tarda 60 segundos en completarse. Durante la configuración,"
+" cualquier dispositivo conectado al router mediante cable será temporalmente"
+" desconectado de la red. ¿Estás seguro de que deseas guardar estos cambios?"
+
+msgid 0x032CC900
+msgstr "Mi Router ya no es compatible con Internet Explorer 6"
+
+msgid 0x0343328C
+msgstr "Vacío"
+
+# DUP
+msgid 0x0367704B
+msgstr "Ammán"
+
+msgid 0x036FEF73
+msgstr "Contactar con servicio al cliente"
+
+msgid 0x03751186
+msgstr "Restaurar"
+
+msgid 0x03760D05
+msgstr "Conectar el cable Ethernet ahora"
+
+msgid 0x03797855
+msgstr "DHCP"
+
+msgid 0x0382C98E
+msgstr "El router se está actualizando"
+
+msgid 0x03920B47
+msgstr "Velocidad anterior"
+
+msgid 0x03AE48DB
+msgstr "No se puede obtener la información del usuario"
+
+msgid 0x03BFD843
+msgstr ", esperando el reinicio del Wi-Fi, ({$time} segundos)"
+
+msgid 0x03CEC94A
+msgstr "Puerto de inicio"
+
+msgid 0x03DF6E8A
+msgstr "No se puede obtener la información del administrador"
+
+msgid 0x04028365
+msgstr ""
+"Una dirección IPv6 se representa como ocho grupos de cuatro dígitos"
+" hexadecimales, con cada grupo separado por dos puntos (:)"
+
+# DUP
+msgid 0x040A68AD
+msgstr "Corea"
+
+# DUP
+msgid 0x040A68AD
+msgstr "Corea del Sur"
+
+msgid 0x041571C4
+msgstr "Aqtobe, Dushanbe, Samarcanda, Taskent, Ekaterimburgo"
+
+msgid 0x041E8D51
+msgstr "Actualizar router"
+
+msgid 0x04281D43
+msgstr "Liberar"
+
+msgid 0x04416A0C
+msgstr "Verifica el código postal que ingresaste"
+
+msgid 0x04BB46B2
+msgstr "Astana"
+
+msgid 0x04BE2EE7
+msgstr "Contraseña del repetidor"
+
+msgid 0x04C6DF73
+msgstr "Seleccionar dispositivo"
+
+msgid 0x04D13D81
+msgstr "Reiniciar"
+
+msgid 0x04DD4931
+msgstr "Eslovaquia"
+
+msgid 0x05204083
+msgstr "Fuerte (WPA2-personal)"
+
+# DUP
+msgid 0x0539AB56
+msgstr ""
+"Cuando la sesión {$pname} termine, las funciones relacionadas dejarán de"
+" funcionar. Si deseas volver a utilizarlo, deberás iniciar la tarea en esta"
+" página. ¿Terminar {$pname}?"
+
+msgid 0x054B2F9F
+msgstr ""
+"3. Encienda el nodo y espere a que la luz indicadora en el sistema del router"
+" se ponga blanca/azul."
+
+msgid 0x05593C57
+msgstr "Configuraciones adicionales del ISP"
+
+msgid 0x055D5A5C
+msgstr ""
+"2. Después de desactivar el Wi-Fi de 5 GHz, no podrás añadir nodos Mesh."
+
+msgid 0x05C98611
+msgstr "Automático"
+
+msgid 0x05CBDDB1
+msgstr "No se pudo desactivar el complemento"
+
+msgid 0x06930A23
+msgstr "Seleccionar archivos para hacer una copia de seguridad"
+
+msgid 0x06B0943B
+msgstr "Un segundo…"
+
+msgid 0x06C46C91
+msgstr "No se pudo subir el archivo"
+
+msgid 0x06C5C573
+msgstr ""
+"2. Se produjo un error durante la comprobación del sistema de archivos,"
+" intenta solucionarlo con la verificación del estado del disco duro"
+
+# DUP
+msgid 0x06D35FF8
+msgstr "Zona horaria de Oriente Medio A"
+
+msgid 0x06FBBB00
+msgstr "Seleccionar modo"
+
+# DUP
+msgid 0x0706A106
+msgstr "Atención al cliente de Broad Netcom"
+
+msgid 0x070FEA3D
+msgstr "Hora Universal Coordinada+12"
+
+msgid 0x0717ACE7
+msgstr "Sectores inestables"
+
+msgid 0x0736F86D
+msgstr ""
+"Nota: El ID de VLAN de internet proporcionado por el ISP puede ser"
+" configurado. Por favor, ignóralo si no se requiere configuración de VLAN."
+
+msgid 0x073D729B
+msgstr "Paso 3: Conectar el cable Ethernet al Mi Router."
+
+# DUP
+msgid 0x076AC0D9
+msgstr "Los routers pueden comunicarse cuando están conectados a la misma red"
+
+msgid 0x076E2F6B
+msgstr "Valor inválido"
+
+# DUP
+msgid 0x076F66D6
+msgstr ""
+"Se ingresó una contraseña incorrecta varias veces. Los futuros intentos serán bloqueados."
+
+msgid 0x07832829
+msgstr "Excepciones (permitir que estos dispositivos se conecten a la red)"
+
+msgid 0x07866260
+msgstr ""
+"El uso del puerto USB 3.0 del router tendrá cierto impacto en el Wi-Fi de 2.4 GHz."
+" Puedes desactivar el USB 3.0 si es necesario. Cuando se desactiva, el sistema"
+" cambiará automáticamente al modo USB 2.0. (El USB 2.0 no afecta al Wi-Fi de 2.4 GHz.)"
+
+msgid 0x0790DEB2
+msgstr "No se pudo verificar el nombre de usuario o la contraseña"
+
+msgid 0x07C33BFA
+msgstr "Guardado y aplicado"
+
+msgid 0x07D56027
+msgstr "Modo especial para ISP"
+
+msgid 0x081554B7
+msgstr "Siguiente"
+
+msgid 0x0842C74F
+msgstr "El rango que ingresaste es inválido"
+
+msgid 0x08801C60
+msgstr "Adak"
+
+# DUP
+msgid 0x08839A2B
+msgstr "No se pudo actualizar. Ocurrió un error o el almacenamiento del router está lleno."
+
+msgid 0x0887CE16
+msgstr "Funafuti, Kwajalein, Majuro, Nauru"
+
+msgid 0x089BEBB9
+msgstr "IPv6 estática"
+
+msgid 0x08A83598
+msgstr "Mantén el navegador abierto y asegúrate de que el router permanezca conectado"
+
+msgid 0x08AE9E98
+msgstr "Por favor, selecciona el nodo Mesh que estás añadiendo"
+
+msgid 0x08B837A1
+msgstr "Kaliningrado"
+
+msgid 0x08BC2D3C
+msgstr "Yakutsk"
+
+msgid 0x08DB1F70
+msgstr "No se detectaron problemas"
+
+# DUP
+msgid 0x08F3449B
+msgstr "Región y hora"
+
+# DUP
+msgid 0x08F3449B
+msgstr "Ubicación y hora"
+
+msgid 0x09055EA5
+msgstr "Conmutador Ethernet"
+
+msgid 0x090F357D
+msgstr "Cambiar"
+
+msgid 0x09354384
+msgstr "Selección del puerto WAN"
+
+msgid 0x093C7614
+msgstr "Aplicando configuraciones…"
+
+msgid 0x095A411B
+msgstr "Canal inalámbrico"
+
+msgid 0x0972CBC1
+msgstr "No hay dispositivos conectados"
+
+msgid 0x099A5AF0
+msgstr "No se han añadido dispositivos"
+
+msgid 0x09A57645
+msgstr "Configuraciones de internet"
+
+msgid 0x09EBF763
+msgstr "Pionyang, Seúl"
+
+msgid 0x0A12CD0F
+msgstr "Contraseña"
+
+msgid 0x0A2F5FE6
+msgstr "Eliminación fallida"
+
+msgid 0x0A307AD6
+msgstr "La contraseña no puede estar vacía"
+
+# DUP
+msgid 0x0A3F1076
+msgstr "Damasco"
+
+msgid 0x0A56693E
+msgstr "Modo compatible con Wi-Fi 5 (802.11ac)"
+
+msgid 0x0A683187
+msgstr "Esta red puede no soportar DHCP."
+
+msgid 0x0A6F6E0B
+msgstr "Selecciona un dispositivo"
+
+msgid 0x0AAB2AA4
+msgstr "Cocina"
+
+msgid 0x0AB49B54
+msgstr "Mi Router ha creado 2 redes inalámbricas para ti"
+
+msgid 0x0B2F67A5
+msgstr "Prioridad"
+
+msgid 0x0B898339
+msgstr "Los prefijos IPv6 LAN deben terminar con ::"
+
+msgid 0x0BA43397
+msgstr "No se pudo probar"
+
+msgid 0x0BA9ECB3
+msgstr ""
+"Cuando IPTV está habilitado, el puerto 1 se usará como puerto WAN por defecto, por favor verifica"
+" que el cable de red esté conectado correctamente."
+
+msgid 0x0BF3C734
+msgstr "Seleccionar red"
+
+msgid 0x0C666FEA
+msgstr "dispositivos"
+
+msgid 0x0C77449E
+msgstr "Abuja, Argel, Túnez"
+
+msgid 0x0CC5EC18
+msgstr "2. Restaura el nodo Mesh a los valores de fábrica y vuelve a intentarlo."
+
+msgid 0x0D283DBD
+msgstr "Las redes son completamente independientes entre sí."
+
+msgid 0x0D4C45E5
+msgstr "2500 M/1000 M/100 M auto-negociación (recomendado)"
+
+# DUP
+msgid 0x0D502411
+msgstr "Fiyi"
+
+msgid 0x0D7D2CE7
+msgstr "Verifica el código de área que ingresaste"
+
+msgid 0x0D953C3E
+msgstr "Cambiar repetidores"
+
+msgid 0x0DEBCC5B
+msgstr "Seúl"
+
+msgid 0x0E35517C
+msgstr "Apagar router"
+
+msgid 0x0E4126A0
+msgstr "Almacenamiento USB"
+
+msgid 0x0E4B8E6B
+msgstr "Vostok, Almaty, Daca, Omsk, Thimphu"
+
+msgid 0x0E4F1798
+msgstr "Contactar con el proveedor de servicios"
+
+msgid 0x0E689CDB
+msgstr "Modo automático"
+
+msgid 0x0E835E32
+msgstr "Abu Dabi, Mascate"
+
+msgid 0x0EC0197B
+msgstr "Ingresa la contraseña de administrador"
+
+msgid 0x0EE23F07
+msgstr "Ulán Bator"
+
+msgid 0x0EE9B191
+msgstr "Conflicto de dirección IP"
+
+msgid 0x0F345344
+msgstr "Selecciona actualización de firmware:"
+
+msgid 0x0F49156F
+msgstr "No se puede conectar a internet"
+
+msgid 0x0F568CE9
+msgstr "Configuraciones del ISP importadas exitosamente"
+
+msgid 0x0FB96A45
+msgstr "Bajo"
+
+msgid 0x1001537C
+msgstr "Dispositivos conectados"
+
+msgid 0x1043FAED
+msgstr "Filipinas"
+
+msgid 0x1050D9C5
+msgstr "Ámsterdam, Berlín, Berna, Roma, Estocolmo, Viena"
+
+msgid 0x1095F0F3
+msgstr "Krasnoyarsk"
+
+# DUP
+msgid 0x10B62C77
+msgstr "Hora de Afganistán"
+
+msgid 0x10C52CCE
+msgstr ""
+"La Antena Inteligente AIoT Escaneo Automático puede descubrir automáticamente"
+" dispositivos inteligentes Mi que no han sido inicializados y conectarlos rápidamente"
+" a través de la aplicación Mi Home."
+
+msgid 0x10CF065D
+msgstr "Yakarta, Pontianak"
+
+msgid 0x10F03C02
+msgstr "Nombre"
+
+# DUP
+msgid 0x10F6D6B6
+msgstr "Configuraciones de límite de ancho de banda"
+
+msgid 0x111062D2
+msgstr "DumontDUrville, Ust-Nera, Vladivostok, Chuuk, Puerto Moresby"
+
+msgid 0x111F1688
+msgstr "Debido a"
+
+msgid 0x1147341F
+msgstr ""
+"QoS es una forma de limitar la cantidad de ancho de banda que se le da a"
+" dispositivos individuales conectados a esta red"
+
+msgid 0x114A4626
+msgstr "Organizando archivos…"
+
+msgid 0x1150F787
+msgstr "Restaurar configuración de fábrica"
+
+# DUP
+msgid 0x1159D655
+msgstr "Hora de Brasilia"
+
+# DUP
+msgid 0x1159D655
+msgstr "Hora de Brasília"
+
+msgid 0x115ED580
+msgstr "Interfaz VLAN"
+
+msgid 0x116A537D
+msgstr ""
+"Para cambiar la zona horaria, primero cambia al router principal Mesh. Cualquier"
+" cambio en el router principal se sincronizará con las subrutas."
+
+msgid 0x116B7CA8
+msgstr "Mi Router 3C"
+
+msgid 0x11F2ED3A
+msgstr "Brisbane, Lindeman"
+
+# DUP
+msgid 0x11FF007E
+msgstr "Amplificador Mi Wi-Fi"
+
+# DUP
+msgid 0x12074F95
+msgstr "Iniciar prueba de velocidad"
+
+msgid 0x120C8904
+msgstr "Estados Unidos"
+
+msgid 0x120F6144
+msgstr "Dispositivos conectados"
+
+msgid 0x122DF1F7
+msgstr "Emiratos Árabes Unidos"
+
+msgid 0x128F648A
+msgstr "No se requiere solución"
+
+# DUP
+msgid 0x12AFAB80
+msgstr "Error de conexión"
+
+msgid 0x12E826E8
+msgstr "Campo Grande, Caracas, Guyana, La Paz, Porto Velho"
+
+msgid 0x12FAE82D
+msgstr "Problema del disco duro solucionado"
+
+msgid 0x12FCBE3B
+msgstr "Velocidad de carga: "
+
+# DUP
+msgid 0x1318FB46
+msgstr "Soporte técnico de Mi Wi-Fi"
+
+msgid 0x13308CCE
+msgstr "Actualización disponible"
+
+msgid 0x13495001
+msgstr "Restaurar enrutamiento usando actualización OTA"
+
+# DUP
+msgid 0x136A1A16
+msgstr "Conectar automáticamente cuando el dispositivo esté encendido"
+
+msgid 0x13743569
+msgstr ""
+"Actívalo para cambiar al modo USB 3.0. Sin embargo, el uso de USB 3.0 puede afectar"
+" la señal Wi-Fi de 2.4 GHz. A menos que lo necesites, puedes mantener esta función"
+" desactivada y continuar usando USB 2.0."
+
+msgid 0x1374FD9B
+msgstr "Ocultar red"
+
+msgid 0x13E69F6A
+msgstr "Bogotá, Eirunepe, Guayaquil, Lima, Río Branco"
+
+msgid 0x13F236ED
+msgstr "Eliminación exitosa"
+
+msgid 0x13FC2BA0
+msgstr "Caja de mensajes"
+
+msgid 0x1407F884
+msgstr "Error desconocido"
+
+msgid 0x1430B053
+msgstr "No se pudo operar el disco duro desconocido"
+
+msgid 0x145A2311
+msgstr "IP objetivo"
+
+# DUP
+msgid 0x14636B01
+msgstr "MAC es una dirección de multidifusión, ingrésela nuevamente"
+
+msgid 0x14EA85D8
+msgstr "Usado: "
+
+msgid 0x15015B00
+msgstr "1.Asegúrate de que el router que estás añadiendo sea compatible con las funciones Mesh;"
+
+msgid 0x151FDC1C
+msgstr "Ancho de banda de descarga"
+
+msgid 0x15313428
+msgstr "Haz una copia de seguridad de tu disco duro ahora"
+
+msgid 0x154A6FC0
+msgstr "Taipéi"
+
+# DUP
+msgid 0x159CC2DE
+msgstr "Parámetro inválido"
+
+msgid 0x15AB9BAD
+msgstr "Escanea el código QR para descargar la aplicación Mi Home/Xiaomi Home"
+
+msgid 0x15C35EDA
+msgstr "Cuenta Mi: "
+
+msgid 0x15D9AB24
+msgstr "No se pudo hacer una copia de seguridad de la configuración del router"
+
+msgid 0x160983FD
+msgstr "DNS: "
+
+# DUP
+msgid 0x16193337
+msgstr "Esta función solo se puede usar con una conexión VPN activa"
+
+msgid 0x1626D90C
+msgstr "No se puede usar DMZ mientras el reenvío de puertos está activado"
+
+# DUP
+msgid 0x164D1956
+msgstr "Haz clic para probar la velocidad"
+
+msgid 0x164DBA0F
+msgstr "Hacer copia de seguridad"
+
+msgid 0x16908A4F
+msgstr "Ingresar"
+
+msgid 0x1769F5C8
+msgstr "Tiempo de conexión"
+
+# DUP
+msgid 0x176B94B7
+msgstr "Opciones de 2.4G"
+
+# DUP
+msgid 0x177D9D52
+msgstr "Hora estándar del Pacífico D"
+
+# DUP
+msgid 0x17AB0E40
+msgstr "Descargar archivos"
+
+msgid 0x17FC0C48
+msgstr "Cambiar configuraciones de Wi-Fi"
+
+msgid 0x1804BE4A
+msgstr "Selecciona el dispositivo que deseas agregar"
+
+msgid 0x1826B4E0
+msgstr "Versión del sistema"
+
+msgid 0x188A765E
+msgstr ""
+"Para habilitar este ajuste, tu Wi-Fi se reiniciará, y todos los dispositivos"
+" conectados al Wi-Fi se desconectarán. Al deshabilitar la banda actual,"
+" la funcionalidad de meshnet se verá afectada. ¿Estás seguro de que deseas deshabilitar"
+" la banda actual?"
+
+msgid 0x18B22385
+msgstr "No se pudo establecer la contraseña de administrador del router"
+
+msgid 0x18B229DA
+msgstr "Excepciones"
+
+msgid 0x18E48063
+msgstr ""
+"Se ha detectado que el método de encriptación actual para la banda de 2.4 GHz es"
+" WPA3-Personal. Por favor, cambia el método de encriptación y vuelve a intentar."
+
+msgid 0x191E5757
+msgstr "Nombre de la app"
+
+msgid 0x199120B1
+msgstr "El Cairo"
+
+msgid 0x19C81794
+msgstr "Probar el ancho de banda de internet"
+
+# DUP
+msgid 0x1A1CD6A1
+msgstr "día"
+
+# DUP
+msgid 0x1A1F9884
+msgstr "Límite de velocidad de carga"
+
+msgid 0x1A2A5111
+msgstr "Windhoek"
+
+msgid 0x1A798D08
+msgstr "Velocidad de la red"
+
+msgid 0x1AD52528
+msgstr "3. Haz una copia de seguridad de tus datos primero"
+
+msgid 0x1AE25A6F
+msgstr ""
+"2. Una vez que se hayan restaurado los valores de fábrica, los nodos Mesh secundarios"
+" se desconectarán y la red Mesh no estará disponible."
+
+msgid 0x1B14D956
+msgstr "No se pudo establecer el nombre del router"
+
+# DUP
+msgid 0x1B1C99F7
+msgstr ""
+"Solución 2: Conéctate usando una PC o el router antiguo, y luego elige"
+" \"Desconectar\". Intenta conectarte con Mi Wi-Fi después de esto."
+
+# DUP
+msgid 0x1B700BFB
+msgstr "Límite de velocidad de descarga"
+
+msgid 0x1B7B9A8B
+msgstr "Verificar configuraciones del repetidor de red Wi-Fi"
+
+msgid 0x1B87D0F7
+msgstr "Montevideo"
+
+msgid 0x1B92EEB8
+msgstr "El puerto final debe ser mayor que el puerto inicial"
+
+msgid 0x1B9D7E64
+msgstr "Administrar configuraciones del router"
+
+msgid 0x1BBCFAF7
+msgstr "Configuración automática"
+
+# DUP
+msgid 0x1BFB0BD5
+msgstr "Hora estándar de Malasia"
+
+msgid 0x1C160174
+msgstr "Actualizar nombre de dominio e IP"
+
+msgid 0x1C53434E
+msgstr "¿Eliminar este elemento?"
+
+msgid 0x1CC61C59
+msgstr ""
+"El ancho de banda automático (80 MHz) es recomendado para mejor cobertura y"
+" rendimiento anti-interferencias."
+
+msgid 0x1D19CC08
+msgstr "Operar"
+
+msgid 0x1D1D11B4
+msgstr "Repetidor"
+
+msgid 0x1D4399C5
+msgstr "Contacta al operador para verificar si el servicio de banda ancha está en mora"
+
+msgid 0x1D576570
+msgstr "Interfaz LAN"
+
+msgid 0x1D585427
+msgstr "No se pudo verificar la cuenta."
+
+msgid 0x1D64D2C3
+msgstr "Eliminar"
+
+msgid 0x1D9B4BD9
+msgstr "Formateo completado"
+
+msgid 0x1D9EBC48
+msgstr "Un segundo…"
+
+msgid 0x1DA31630
+msgstr "1. La verificación del estado del disco duro tomará un par de minutos"
+
+msgid 0x1DA7D7D4
+msgstr "El Wi-Fi 5G es más rápido y más estable"
+
+msgid 0x1DA7DDCE
+msgstr "Capacidad"
+
+msgid 0x1DB500BF
+msgstr "Actualizar router"
+
+msgid 0x1DE71E99
+msgstr "Configura el nombre y la contraseña del Wi-Fi"
+
+msgid 0x1DFF300A
+msgstr "No se pueden obtener permisos"
+
+msgid 0x1E01F702
+msgstr "Cuenta"
+
+msgid 0x1E04D3FC
+msgstr "Probando…"
+
+msgid 0x1E0B695D
+msgstr "CPU"
+
+msgid 0x1E0EEEBD
+msgstr "Puerto de red 2.5 G (recomendado)"
+
+msgid 0x1E4C8E3F
+msgstr "No se pudo verificar el valor MD5 del archivo"
+
+msgid 0x1EA0CA23
+msgstr "Añadir"
+
+msgid 0x1EB727E0
+msgstr "No se pudo realizar la solicitud"
+
+msgid 0x1ECFCACD
+msgstr "No se pudo verificar el archivo"
+
+# DUP
+msgid 0x1EDAE9B4
+msgstr ""
+"Aviso: Si el router superior no es un Mi Wi-Fi, la dirección IP podría cambiar"
+" por el router superior. Instala la app Miwifi para gestionar tu dispositivo en ese caso."
+
+msgid 0x1EFC6CCA
+msgstr "Pitcairn"
+
+# DUP
+msgid 0x1F16CA2E
+msgstr "México"
+
+msgid 0x1F426224
+msgstr "América Central"
+
+msgid 0x1FAF492E
+msgstr "Verifica el número de cuenta que ingresaste"
+
+msgid 0x1FB62BFD
+msgstr "Baño"
+
+msgid 0x1FCCA2F3
+msgstr "Repetidor con cable"
+
+msgid 0x1FD8FAEC
+msgstr "¿Cómo configurar DDNS?"
+
+msgid 0x1FF3A8D9
+msgstr "Configurando…"
+
+msgid 0x200511E0
+msgstr "Alto"
+
+msgid 0x2035A41B
+msgstr ""
+"La función de extensión Mesh no estará disponible cuando el Wi-Fi de 2.4 GHz esté apagado."
+" ¿Aún quieres continuar?"
+
+# DUP
+msgid 0x203EE00A
+msgstr "Mi Router 4A Versión Giga"
+
+# DUP
+msgid 0x20D1029E
+msgstr "Acceder y compartir archivos"
+
+msgid 0x20F2DD39
+msgstr "Chisináu"
+
+# DUP
+msgid 0x214E8672
+msgstr "hr"
+
+msgid 0x215D8B6A
+msgstr ""
+"2. Atención: Haz una copia de seguridad de tu disco duro usando la app Mi WiFi en caso de daños"
+" en los datos."
+
+msgid 0x21684118
+msgstr ""
+"Durante la optimización, todas las funciones del disco duro se desactivarán"
+" temporalmente"
+
+msgid 0x218CAC06
+msgstr "DHCP recomendado (obtener dirección IP automáticamente)"
+
+# DUP
+msgid 0x218EB9F9
+msgstr "Cambiado a banda ancha"
+
+# DUP
+msgid 0x21938C25
+msgstr ""
+"Contacta con tu proveedor de red para averiguar si hay algún problema con"
+" la red local"
+
+msgid 0x219578CC
+msgstr "No se puede usar DNS personalizado, apaga DNS o cambia la configuración"
+
+msgid 0x21C28353
+msgstr "PubYun.com (3322.org)"
+
+msgid 0x21EB6D31
+msgstr "Xiaomi Router AX3200"
+
+msgid 0x2220DFAB
+msgstr ""
+"días sin verificación del disco duro, realiza una verificación del disco duro una vez al mes para un mejor rendimiento"
+
+msgid 0x224FE427
+msgstr "La contraseña del Wi-Fi debe tener entre 5 y 13 caracteres"
+
+msgid 0x22760CBB
+msgstr "Comedor"
+
+# DUP
+msgid 0x2290339C
+msgstr ""
+"Activa la lista blanca, negará el acceso a todos los demás dispositivos. Cada vez que"
+" la actives, se añadirá tu dispositivo actual a la lista blanca."
+
+msgid 0x2291D7F1
+msgstr "Ático"
+
+msgid 0x2297A4DF
+msgstr "Crear reglas de reenvío de puertos"
+
+msgid 0x229E09EC
+msgstr "CPU"
+
+msgid 0x22A41FD4
+msgstr "República Popular de China"
+
+msgid 0x22BF8DD5
+msgstr "Reglas de reenvío de puertos: "
+
+msgid 0x22C3D4F1
+msgstr "Puedes cambiar las direcciones MAC de estos dispositivos manualmente"
+
+msgid 0x238F8820
+msgstr "Conectado"
+
+msgid 0x2398C025
+msgstr "Puerta de enlace predeterminada"
+
+msgid 0x23A2D122
+msgstr ""
+"Contacta con tu proveedor de servicios de internet para restablecer el nombre de usuario y la contraseña"
+
+msgid 0x240C760E
+msgstr "No tienes permisos para esta acción."
+
+msgid 0x243CA28F
+msgstr "El valor que ingresaste es inválido"
+
+# DUP
+msgid 0x2444C657
+msgstr "Mi Router"
+
+# DUP
+msgid 0x2444C657
+msgstr "Router MiWi-Fi"
+
+msgid 0x24E6AE53
+msgstr "Servidor"
+
+msgid 0x24EECAD6
+msgstr "2. Verifica si el cable de red está dañado"
+
+msgid 0x24F826ED
+msgstr "No se puede detectar esta red Wi-Fi"
+
+# DUP
+msgid 0x25022E49
+msgstr "Mi Router 4"
+
+# DUP
+msgid 0x25022E49
+msgstr "Mi Wi-Fi 4"
+
+msgid 0x25139CCA
+msgstr "Nombre de usuario y contraseña proporcionados por el proveedor de servicios de internet"
+
+msgid 0x2533CD70
+msgstr "Yakutsk"
+
+msgid 0x25728368
+msgstr "Taiwán"
+
+# DUP
+msgid 0x2575A610
+msgstr "Usa la app Mi Wi-Fi para gestionar"
+
+msgid 0x2576CFCF
+msgstr ""
+"Usa el proveedor de servicios DDNS integrado para obtener el nombre de usuario y la contraseña"
+" del sitio web oficial del proveedor de servicios de internet."
+
+msgid 0x25809EDD
+msgstr "Problemas de red detectados"
+
+msgid 0x259769CE
+msgstr "Formato de DNS de respaldo incorrecto"
+
+msgid 0x25BA95CA
+msgstr "Idioma del sistema"
+
+msgid 0x25C4190A
+msgstr "Canberra, Melbourne, Sídney"
+
+msgid 0x25E66659
+msgstr "Protocolo"
+
+msgid 0x2610406E
+msgstr "El archivo a cargar no puede superar los 128MB"
+
+# DUP
+msgid 0x2613A81C
+msgstr "Jerusalén"
+
+# DUP
+msgid 0x261C7AC3
+msgstr "3. Verifica si el puerto WAN del router está dañado"
+
+msgid 0x263F10F8
+msgstr "Se requiere reiniciar para continuar"
+
+msgid 0x26459592
+msgstr ""
+"La dirección IP LAN es inválida. El rango debe ser 10.0.0.0~10.255.255.255,"
+" 172.16.0.0~172.31.255.255 o 192.168.0.0~192.168.255.255."
+
+msgid 0x2684C9B1
+msgstr "Un segundo…"
+
+msgid 0x26A7F1E2
+msgstr "¿Estás seguro de que deseas continuar?"
+
+msgid 0x26B64FAC
+msgstr "Activa primero el ancho de banda QoS"
+
+msgid 0x26C6ADEB
+msgstr "Nombre del dispositivo"
+
+msgid 0x271CE623
+msgstr "Mi Router HD"
+
+msgid 0x2758117C
+msgstr "El código de país es inválido, selecciónalo de nuevo"
+
+msgid 0x277B5D4E
+msgstr "No se pudo iniciar el router. Intenta restaurarlo a los valores de fábrica."
+
+msgid 0x27B094BD
+msgstr "Brisbane"
+
+msgid 0x27BB6830
+msgstr "Contactar con el servicio al cliente"
+
+msgid 0x27C7F00A
+msgstr "Red del router"
+
+msgid 0x27E037A8
+msgstr "¡Felicidades, la cobertura Wi-Fi ha mejorado!"
+
+msgid 0x27F3C200
+msgstr "Berna, Berlín, Copenhague, Madrid, París, Roma"
+
+msgid 0x2820EE21
+msgstr "La red Wi-Fi 5G ya no está activa"
+
+msgid 0x28228FCD
+msgstr ""
+"Ingrese el nombre de usuario y la contraseña proporcionados por su proveedor de servicios de internet"
+
+msgid 0x28335253
+msgstr "No se puede obtener información del administrador"
+
+msgid 0x284445CD
+msgstr "Cambiar manualmente"
+
+msgid 0x2882BA27
+msgstr "3. Haz clic para comenzar la búsqueda"
+
+msgid 0x28D3B364
+msgstr "Acceso a Internet"
+
+msgid 0x29075228
+msgstr "Encender/apagar"
+
+# DUP
+msgid 0x29489009
+msgstr "Darwin"
+
+msgid 0x29E55111
+msgstr "Este puerto no permite acceso WAN"
+
+# DUP
+msgid 0x2A5065C8
+msgstr "Beirut"
+
+# DUP
+msgid 0x2AAAB213
+msgstr ""
+"La conexión a internet supera los 50Mbps. No es necesario activar el gestor de tráfico QoS."
+
+# DUP
+msgid 0x2AAAB213
+msgstr ""
+"La conexión a internet supera los 50Mbps. No es necesario activar el gestor de tráfico QoS."
+
+msgid 0x2AB2EF8C
+msgstr ""
+"2. Enciende el nodo satélite, y el trabajo en red comenzará automáticamente"
+" después de completar el inicio (el indicador de internet del nodo satélite"
+" parpadea durante la conexión en red)."
+
+msgid 0x2AC4E60F
+msgstr "Los puertos del router no están funcionando normalmente."
+
+msgid 0x2AD271D0
+msgstr "Agregar servicio"
+
+msgid 0x2AD77EBB
+msgstr "No se pudo detener el complemento del servicio o desmontar el disco duro"
+
+msgid 0x2AE2A910
+msgstr ""
+"Algunos dispositivos antiguos no son compatibles con Wi-Fi 6 (802.11ax) y pueden no"
+" detectar la señal o no conectarse, etc. Una vez activado, cambiará al modo Wi-Fi 5"
+" (802.11ac) para resolver cualquier problema de compatibilidad. Sin embargo, también"
+" desactivará las funciones relacionadas con Wi-Fi 6 (802.11ax), como OFDMA, BSS coloring,"
+" etc."
+
+# DUP
+msgid 0x2AF5B267
+msgstr "Contraseña"
+
+# DUP
+msgid 0x2AF5B267
+msgstr "Contraseña Wi-Fi"
+
+msgid 0x2B175998
+msgstr "Ampliando la red Mesh (aproximadamente 1 minuto)"
+
+# DUP
+msgid 0x2B270898
+msgstr "Aceptar"
+
+msgid 0x2B46B53D
+msgstr "Actualización disponible (tamaño {$size})"
+
+msgid 0x2BB3C137
+msgstr ""
+"Verifica el número de identificación que ingresaste (Solo se admiten 15 y 18 caracteres)"
+
+msgid 0x2BD53AF7
+msgstr "Verifica el nombre que ingresaste"
+
+msgid 0x2C258A5B
+msgstr "Código de error: "
+
+msgid 0x2C29177C
+msgstr "No se pudo obtener información"
+
+# DUP
+msgid 0x2CD07C92
+msgstr "No se seleccionaron archivos"
+
+# DUP
+msgid 0x2D2ED539
+msgstr "Umbral de velocidad ilimitado, por favor establece un límite de velocidad primero"
+
+# DUP
+msgid 0x2D3253E3
+msgstr "Dar prioridad a garantizar la velocidad de los juegos"
+
+msgid 0x2D365599
+msgstr "Ver detalles"
+
+msgid 0x2D56CDAC
+msgstr "Informe de verificación del estado"
+
+msgid 0x2D8746AE
+msgstr "Cambiar la configuración del relé de red"
+
+msgid 0x2DBA0D84
+msgstr "Dirección MAC actual"
+
+# DUP
+msgid 0x2DFE24B7
+msgstr "Tailandia"
+
+msgid 0x2E1F5E18
+msgstr "El router no tiene conexión a internet."
+
+msgid 0x2E4CCD9D
+msgstr "Conflicto de dirección IP, intenta con otra dirección IP"
+
+msgid 0x2E607F0F
+msgstr "Términos del servicio"
+
+msgid 0x2E77E79B
+msgstr "¿Desemparejar los dispositivos seleccionados?"
+
+msgid 0x2EA341FF
+msgstr "Helsinki, Kiev, Riga, Sofía, Tallin, Vilna"
+
+msgid 0x2ECA7EC8
+msgstr "Hora actual del sistema"
+
+msgid 0x2ECC42D3
+msgstr "Cabo Verde"
+
+msgid 0x2ED72127
+msgstr "Novosibirsk"
+
+# DUP
+msgid 0x2ED79D65
+msgstr "Línea internacional de cambio de fecha"
+
+msgid 0x2F0F19A3
+msgstr "3. Verifica si el puerto WAN del router está dañado"
+
+msgid 0x2F7189BA
+msgstr "Suecia"
+
+# DUP
+msgid 0x2F7932AE
+msgstr "Tráfico por dispositivo"
+
+# DUP
+msgid 0x2F8C0603
+msgstr ""
+"El Protocolo de Túnel Punto a Punto (PPTP) y el Protocolo de Túnel de Capa 2"
+" (L2TP) son dos tipos de protocolos de túnel utilizados para soportar la"
+" implementación de redes privadas virtuales."
+
+msgid 0x2F8D1267
+msgstr "Jayapura"
+
+msgid 0x2F95FDBF
+msgstr "Godthab"
+
+# DUP
+msgid 0x2FA38979
+msgstr "Conéctate a Wi-Fi primero"
+
+msgid 0x2FC9F859
+msgstr "Velocidad máxima de descarga"
+
+msgid 0x302198A4
+msgstr "Sarajevo, Skopie, Varsovia, Zagreb"
+
+msgid 0x303CB0F5
+msgstr "Ya conectado, continuar"
+
+msgid 0x30639E6A
+msgstr "Descargar APP"
+
+msgid 0x30939932
+msgstr "Información incompleta"
+
+msgid 0x30AE554B
+msgstr "No se pudieron aplicar las configuraciones"
+
+msgid 0x30AE71F8
+msgstr "Caracas"
+
+msgid 0x30C5E79B
+msgstr "Editar"
+
+msgid 0x30C9B4D6
+msgstr "Archivo demasiado grande"
+
+# DUP
+msgid 0x30D030F1
+msgstr "Archivos de respaldo"
+
+# DUP
+msgid 0x31439F2B
+msgstr "Mi Wi-Fi no se pudo conectar a la red"
+
+msgid 0x314941A4
+msgstr "Conectado a la red exitosamente."
+
+msgid 0x315D0137
+msgstr "No se pudo descargar"
+
+msgid 0x31629095
+msgstr "La dirección IP/MAC es inválida"
+
+msgid 0x318950A1
+msgstr "Restaurar"
+
+msgid 0x31949EFF
+msgstr "Actualizar"
+
+msgid 0x31B2AE50
+msgstr "La contraseña Wi-Fi debe tener al menos 8 caracteres"
+
+msgid 0x31DDFCBB
+msgstr "Velocidad"
+
+msgid 0x31ED795D
+msgstr "Cancelar"
+
+msgid 0x32150992
+msgstr "3. Algunas funciones y complementos pueden ser bloqueados en modo repetidor"
+
+msgid 0x3264FB51
+msgstr "No se pudo cargar el archivo al servidor"
+
+msgid 0x328B3045
+msgstr "Longitud del prefijo"
+
+msgid 0x32C88E8B
+msgstr "No se puede conectar a esta red"
+
+msgid 0x32F3B0B8
+msgstr ""
+"Haz una copia de seguridad de cualquier dato almacenado en el router e intenta"
+" restaurar el router a sus valores de fábrica."
+
+msgid 0x32F77B21
+msgstr "Editar reglas de reenvío de rango"
+
+msgid 0x333CBF01
+msgstr "Cortafuegos"
+
+msgid 0x33C018CB
+msgstr "Marcado exitoso"
+
+msgid 0x33E7EB3E
+msgstr "Ampliando la red Mesh"
+
+msgid 0x342907A1
+msgstr "Descargar"
+
+msgid 0x3498DCAA
+msgstr "IP y MAC"
+
+msgid 0x34A1EC3E
+msgstr "Prueba"
+
+msgid 0x34BB2F56
+msgstr "Bakú"
+
+msgid 0x34D85C00
+msgstr "Chile"
+
+# DUP
+msgid 0x3520293A
+msgstr "¿Qué es VPN?"
+
+msgid 0x3561E7D7
+msgstr ""
+"Seleccionar esta opción mejorará enormemente la experiencia del usuario en"
+" dispositivos que soportan Wi-Fi 6, pero puede causar problemas de compatibilidad"
+" en algunos dispositivos antiguos, como fallos al detectar o conectar Wi-Fi."
+
+# DUP
+msgid 0x356C25C5
+msgstr "Sin tareas en ejecución"
+
+# DUP
+msgid 0x358F7D50
+msgstr "Servidor DHCP y configuraciones de IP local"
+
+# DUP
+msgid 0x35D53655
+msgstr "Cambiar hora"
+
+msgid 0x35D726CA
+msgstr "¿Borrar configuraciones de QoS para los dispositivos?"
+
+msgid 0x36099F64
+msgstr "Reiniciando router para aplicar configuraciones. Esto toma unos 30 segundos."
+
+msgid 0x36135170
+msgstr "St. Johns"
+
+msgid 0x361B681F
+msgstr "No responde"
+
+msgid 0x362CB653
+msgstr ""
+"1. Esta operación reiniciará el Wi-Fi y provocará la desconexión de todos los"
+" dispositivos conectados a esta red Wi-Fi."
+
+msgid 0x362E53F0
+msgstr "Bueno"
+
+msgid 0x3652C5D8
+msgstr "Aceptar"
+
+msgid 0x369462EA
+msgstr "Configurar manualmente"
+
+msgid 0x36BE5CCA
+msgstr "Leer"
+
+msgid 0x36C8AD32
+msgstr "Descargar app"
+
+# DUP
+msgid 0x36F421B1
+msgstr ""
+"Después de activar esta función, tendrás que volver a conectar el VPN. QoS se"
+" desactivará. Desactiva esta función si la aplicación no funciona correctamente."
+
+# DUP
+msgid 0x3707FB83
+msgstr "Mejor rendimiento, especialmente para dispositivos cercanos"
+
+# DUP
+msgid 0x373B130B
+msgstr "Memoria"
+
+msgid 0x37451B77
+msgstr "Un segundo…"
+
+msgid 0x37694907
+msgstr "No hay dispositivos conectados"
+
+msgid 0x37720F6D
+msgstr "Aplicando configuraciones…"
+
+msgid 0x37726A09
+msgstr "Volver a la primera página"
+
+msgid 0x3799F438
+msgstr "Perth"
+
+msgid 0x37AFABDF
+msgstr "Actualizar"
+
+msgid 0x37E39B7E
+msgstr "Límite de ancho de banda"
+
+msgid 0x37EBE3B5
+msgstr ""
+"La configuración está completada. El router está realizando la detección de radar y"
+" evasión, y la red Wi-Fi se volverá a conectar en 10 minutos."
+" Por favor, espera…"
+
+msgid 0x3801A0D3
+msgstr "1. Coloca el nodo Mesh que estás añadiendo cerca del punto de acceso central."
+
+msgid 0x3814A72F
+msgstr "Confirmar información"
+
+msgid 0x38487BA4
+msgstr "Blanc-Sablon, Granada, Puerto España, Puerto Rico, Santo Domingo"
+
+msgid 0x38540F3B
+msgstr ""
+"Algunos dispositivos antiguos pueden no ser capaces de conectarse al router con el"
+" canal seleccionado"
+
+msgid 0x386FC05C
+msgstr "Error del sistema de servicio Oray"
+
+msgid 0x3870C4A3
+msgstr "No se han añadido dispositivos"
+
+msgid 0x3872A3E1
+msgstr "Configurar ancho de banda"
+
+msgid 0x387F13E4
+msgstr "Hobart"
+
+msgid 0x38971372
+msgstr "Buenos Aires"
+
+msgid 0x38D943BF
+msgstr "Ingresa {$0} caracteres o más"
+
+msgid 0x38FBD40F
+msgstr ""
+"El proceso de actualización toma entre 5 y 8 minutos. Una vez que la luz indicadora"
+" del router se ponga blanca, puedes visitar miwifi.com para acceder a la gestión del sistema"
+
+msgid 0x391933D1
+msgstr "No se puede conectar al servidor"
+
+# DUP
+msgid 0x392AABE7
+msgstr "Se requiere un nombre de dominio dinámico registrado."
+
+msgid 0x392BE2D4
+msgstr "Letonia"
+
+msgid 0x3961CD2B
+msgstr "Estudio"
+
+msgid 0x3A173E33
+msgstr "Algo salió mal. Actualiza la página e intenta de nuevo."
+
+msgid 0x3A2B197C
+msgstr "Dirección IP estática"
+
+msgid 0x3A7FE5C4
+msgstr "El router está actualizado."
+
+msgid 0x3AB86895
+msgstr ""
+"Esto cambiará la frecuencia Wi-Fi del router. Esta configuración tendrá efecto"
+" después de que reinicies tu router."
+
+msgid 0x3AE172EF
+msgstr "¿Eliminar este elemento?"
+
+msgid 0x3AF04851
+msgstr "Configuraciones de conexión a Internet"
+
+msgid 0x3AFF975D
+msgstr ""
+"Para una experiencia meshnet excelente, una red puede soportar hasta 10 routers mesh."
+" Para routers adicionales, recomendamos configurar una red mesh separada y nueva."
+
+msgid 0x3B00C5F6
+msgstr "Volver a conectar"
+
+msgid 0x3B21BA23
+msgstr "No se encontraron conflictos de IP"
+
+msgid 0x3B4D2CBB
+msgstr "Reparar"
+
+# DUP
+msgid 0x3B605D7A
+msgstr "Configuraciones aplicadas. Espera un minuto o dos y actualiza"
+
+msgid 0x3B743EF3
+msgstr "Los clientes deben soportar esta función para mejorar la experiencia Wi-Fi."
+
+msgid 0x3B8D47C7
+msgstr ""
+"Escanea el código QR con tu smartphone para instalar la aplicación Mi Home/Xiaomi Home"
+
+msgid 0x3BBB4FDA
+msgstr "Puerta de enlace WAN IPv6"
+
+msgid 0x3BCD3E80
+msgstr "Registro cargado exitosamente"
+
+msgid 0x3BE39093
+msgstr "Insertar almacenamiento ahora"
+
+msgid 0x3C0CF497
+msgstr "Guernsey, Isla de Man, Jersey, Londres"
+
+msgid 0x3C1AE8ED
+msgstr "Configuraciones de repetidor Wi-Fi"
+
+msgid 0x3C29D0A2
+msgstr "Error del servidor DNS, intenta configurar DNS personalizado como 8.8.8.8 8.8.4.4 en su lugar."
+
+# DUP
+msgid 0x3C39D363
+msgstr "Conectar a la red"
+
+msgid 0x3C43C9C7
+msgstr ""
+"Podrás conectarte a Internet tan pronto como se complete la configuración del router."
+
+msgid 0x3C6F59D3
+msgstr "El SSID de Wi-Fi para invitados debe ser diferente al SSID de 2.4G"
+
+msgid 0x3C8379BE
+msgstr "Reino Unido"
+
+msgid 0x3C956CCD
+msgstr "Configuraciones restauradas. Reinicia el router para aplicar."
+
+msgid 0x3CB09981
+msgstr "Dawson, Los Ángeles, Tijuana, Vancouver, Whitehorse"
+
+msgid 0x3CC114DD
+msgstr "Kenia"
+
+msgid 0x3D047249
+msgstr "Nombre"
+
+msgid 0x3D4AE2C8
+msgstr "Router configurado como repetidor con cable."
+
+msgid 0x3D4E2EF7
+msgstr "Dispositivos"
+
+msgid 0x3D6BBB65
+msgstr "El modo de suspensión HDD pondrá el disco duro en modo de suspensión para su salud"
+
+# DUP
+msgid 0x3D79367C
+msgstr "Ancho de banda Wi-Fi para invitados"
+
+msgid 0x3D877291
+msgstr "Lectura/escritura en disco duro"
+
+msgid 0x3DAF0E83
+msgstr "Apagar el interruptor de Wi-Fi no es compatible en modo Mesh"
+
+msgid 0x3DBF06B0
+msgstr "No se pudo establecer el nombre"
+
+msgid 0x3DDBBA24
+msgstr "No se pudo descomprimir, el archivo está dañado"
+
+msgid 0x3DF594B0
+msgstr "Zona horaria actual"
+
+# DUP
+msgid 0x3E492C35
+msgstr "ID inválido"
+
+msgid 0x3E825DCD
+msgstr "Ocurrió un error en alguna partición"
+
+msgid 0x3E870AD4
+msgstr "Mi Router Mini"
+
+msgid 0x3E98A607
+msgstr ""
+"Con esta función activada, Mi Wi-Fi habilitará la función de conexión a Internet IPv6"
+" (por favor, contacta con el proveedor de red para verificar que soporta IPv6 antes de usarla)"
+
+# DUP
+msgid 0x3EA48055
+msgstr "Demasiados intentos, inténtalo de nuevo en 30 minutos"
+
+# DUP
+msgid 0x3F066C9D
+msgstr "Hora del Meridiano de Greenwich"
+
+msgid 0x3F9697E1
+msgstr "No se pudieron aplicar las configuraciones Wi-Fi"
+
+msgid 0x3FA0FDB5
+msgstr "Estado del límite de velocidad de la aplicación"
+
+# DUP
+msgid 0x3FE362DF
+msgstr "Ancho de banda del dispositivo"
+
+msgid 0x3FF45F42
+msgstr "Apia"
+
+msgid 0x40061445
+msgstr "No se puede forzar la actualización"
+
+msgid 0x4013ED43
+msgstr "El nombre de usuario o la contraseña que ingresaste es inválido"
+
+msgid 0x403FCA44
+msgstr "Cambiar modos"
+
+msgid 0x404BA981
+msgstr "Xunlei"
+
+# DUP
+msgid 0x405462D4
+msgstr "PPPoE desconectado (Error 250)"
+
+msgid 0x40716A1F
+msgstr "Automático"
+
+msgid 0x40916FDE
+msgstr "No se pudo configurar el router"
+
+msgid 0x40D0B8A6
+msgstr "Condición del disco duro: "
+
+msgid 0x411B9BB1
+msgstr "Bueno"
+
+msgid 0x41499288
+msgstr "3. Coloca el nodo Mesh que estás añadiendo cerca del punto de acceso central;"
+
+msgid 0x415B735C
+msgstr "Minsk"
+
+msgid 0x41A72EC1
+msgstr "Apagado"
+
+msgid 0x41B90674
+msgstr "Fuerza de la señal"
+
+# DUP
+msgid 0x41C3B3B5
+msgstr "No se pudo activar el Wi-Fi 5G"
+
+msgid 0x41E96330
+msgstr "2. Actualiza el nodo Mesh a la última versión;"
+
+msgid 0x421A1EA5
+msgstr "Beta"
+
+# DUP
+msgid 0x42258E20
+msgstr "Asignar velocidad según la prioridad de la aplicación"
+
+# DUP
+msgid 0x42258E20
+msgstr "Asignar velocidad por prioridad"
+
+msgid 0x422D768B
+msgstr "Contacta con tu proveedor de servicios de internet"
+
+msgid 0x4232204E
+msgstr ""
+"Parece que hay un \"0\" adicional al comienzo del valor que ingresaste."
+
+msgid 0x426CD50D
+msgstr "Hong Kong"
+
+msgid 0x42784AB1
+msgstr "Instalación manual de complementos"
+
+msgid 0x42872C42
+msgstr "Scoresbysund, Azores"
+
+msgid 0x4303918A
+msgstr "Nueva contraseña"
+
+msgid 0x4308759F
+msgstr ""
+"4. El error del disco duro no afectará las funciones relacionadas con Wi-Fi del router"
+
+msgid 0x43116277
+msgstr "Brasilia"
+
+msgid 0x4315BBFA
+msgstr "Establecer"
+
+msgid 0x43C978E7
+msgstr ""
+"WPA3 es una tecnología de encriptación de nueva generación que mejora"
+" enormemente la seguridad, pero algunos dispositivos antiguos pueden ser"
+" incompatibles y, por lo tanto, no podrán acceder si se selecciona WPA3."
+
+msgid 0x43F6C88B
+msgstr ""
+"El control del protocolo de acceso es un método de mejora de la seguridad"
+" proporcionado por los routers Xiaomi a los usuarios cuando interactúan con"
+" el servidor. Una vez que este servicio esté habilitado, el usuario será"
+" redirigido obligatoriamente al protocolo HTTPS cuando acceda al nombre de"
+" dominio (192.168.31.1) del panel web del router Xiaomi y a la dirección web"
+" (router.miwifi.com)."
+
+msgid 0x442A7E8F
+msgstr "Ubicación"
+
+msgid 0x4449BF5D
+msgstr "Actualizado con éxito"
+
+msgid 0x444B2FED
+msgstr "Cerrar sesión"
+
+msgid 0x446353B6
+msgstr "Atención"
+
+# DUP
+msgid 0x446F1E72
+msgstr ""
+"Puedes agregar descargas a través de la aplicación móvil o el cliente de escritorio en cualquier lugar, en cualquier momento"
+
+# DUP
+msgid 0x448BB755
+msgstr "En línea"
+
+msgid 0x4499F267
+msgstr "Actualización importante"
+
+msgid 0x44DA2B49
+msgstr "Más información de contacto"
+
+msgid 0x44DCF27E
+msgstr "No hay respuesta del servidor"
+
+# DUP
+msgid 0x45141F97
+msgstr "Hora actual"
+
+msgid 0x455440A7
+msgstr ""
+"Atención: Los dispositivos se desconectarán de la red mientras se actualiza"
+" el router. Mantén el router conectado a la fuente de energía durante la actualización."
+
+msgid 0x456CF26A
+msgstr "Dispositivos"
+
+msgid 0x457395F4
+msgstr "Filtrar direcciones MAC inalámbricas"
+
+# DUP
+msgid 0x4580D3B7
+msgstr "Teherán"
+
+msgid 0x45FAFDD4
+msgstr "Seleccionar red Wi-Fi para extender"
+
+msgid 0x461AEA03
+msgstr "Cuiabá"
+
+msgid 0x465011E4
+msgstr "Entorno de desarrollo de complementos"
+
+msgid 0x46B18DA4
+msgstr "Proceso"
+
+msgid 0x46DA5F19
+msgstr "Actualizar manualmente"
+
+msgid 0x46FCEC97
+msgstr "El Cairo, Trípoli, Kaliningrado"
+
+# DUP
+msgid 0x4741F6D7
+msgstr "Banda ancha Fangzheng"
+
+msgid 0x47542B27
+msgstr ", intentando modo de marcado especial…"
+
+# DUP
+msgid 0x47549B85
+msgstr "Hora estándar del Lejano Oriente"
+
+# DUP
+msgid 0x479BB0E5
+msgstr "Direcciones MAC en lista blanca"
+
+msgid 0x47F6E632
+msgstr "Puerto 1 GbE"
+
+msgid 0x48088E5B
+msgstr "Israel"
+
+# DUP
+msgid 0x4815EFDD
+msgstr "Hora Universal Coordinada"
+
+msgid 0x482A209D
+msgstr "El router solo puede cambiar al modo de estación base."
+
+msgid 0x486D21DF
+msgstr "Servicio Oray DDNS (oray.com)"
+
+msgid 0x487A5AC8
+msgstr "Guadalajara, Ciudad de México, Monterrey"
+
+msgid 0x48808FF2
+msgstr "Marcando…"
+
+msgid 0x48A1B9EB
+msgstr "Apagar"
+
+# DUP
+msgid 0x48A792BA
+msgstr "Indonesia"
+
+# DUP
+msgid 0x48BC661A
+msgstr "Modo amplificador con cable"
+
+msgid 0x4912729E
+msgstr "Dirección IP: "
+
+msgid 0x499BFE43
+msgstr "1. Obtén el nombre de dominio y la contraseña usando el proveedor de servicios DDNS;"
+
+msgid 0x499CCEEF
+msgstr "Ucrania"
+
+msgid 0x49F9E8EC
+msgstr "No hay disco duro conectado"
+
+msgid 0x4A133872
+msgstr "1000 M"
+
+# DUP
+msgid 0x4A2BCD86
+msgstr "Solución 4: Ajusta la velocidad del puerto WAN y vuelve a conectar"
+
+msgid 0x4A41304C
+msgstr ""
+"Después de aplicar estas configuraciones, este dispositivo no podrá"
+" conectarse a la red."
+
+msgid 0x4A6777AA
+msgstr "Escaneo Automático de Antena Inteligente AIoT"
+
+msgid 0x4A9307C6
+msgstr "WeChat Oficial"
+
+msgid 0x4A9BDCAC
+msgstr "Activa DMZ para retransmitir la IP de un dispositivo conectado a WAN."
+
+# DUP
+msgid 0x4AB78532
+msgstr "Configuraciones de velocidad del puerto WAN"
+
+# DUP
+msgid 0x4AD4EA0C
+msgstr "Ingresa la dirección MAC del dispositivo"
+
+msgid 0x4AEBDCFD
+msgstr "Modo repetidor inalámbrico (extender red existente)"
+
+# DUP
+msgid 0x4AF2D28E
+msgstr "min"
+
+msgid 0x4B989B15
+msgstr "El router se está actualizando en segundo plano."
+
+msgid 0x4BA34D8A
+msgstr "Conectar"
+
+msgid 0x4BA7183B
+msgstr ""
+"2. Durante la verificación del estado, todas las funciones del disco duro se"
+" desactivarán temporalmente"
+
+# DUP
+msgid 0x4BAE1E06
+msgstr "Encendido"
+
+msgid 0x4BBDB140
+msgstr "Super encriptación (Encriptación híbrida fuerte (WPA3/WPA2 Personal))"
+
+# DUP
+msgid 0x4BC3B589
+msgstr "Estableciendo conexión Wi-Fi"
+
+msgid 0x4BD449C4
+msgstr "Prioridad VLAN de Internet"
+
+msgid 0x4BE650EE
+msgstr "Toca para probar la red"
+
+msgid 0x4C01A2B3
+msgstr "Laos"
+
+msgid 0x4C11A70A
+msgstr "Boise, Cambridge Bay, Denver, Edmonton, Ojinaga"
+
+msgid 0x4C384F5E
+msgstr "Opción de juego 5 GHz"
+
+msgid 0x4C5456E7
+msgstr "Prefijo IPv6 de LAN"
+
+msgid 0x4C7D0D48
+msgstr "Configuración de Wi-Fi (nombre de la red y contraseña)"
+
+msgid 0x4C91D58E
+msgstr "Subir"
+
+# DUP
+msgid 0x4C931D71
+msgstr "Cómo usar tu almacenamiento Mi Wi-Fi"
+
+msgid 0x4CA444EA
+msgstr "Configuración del repetidor"
+
+msgid 0x4CDB6400
+msgstr "Banda ancha"
+
+msgid 0x4CF8FA67
+msgstr "No se pudo formatear el disco duro del router"
+
+msgid 0x4D0B652D
+msgstr "1. Coloca el nuevo nodo Mesh donde necesites cobertura Wi-Fi."
+
+msgid 0x4D1D0D12
+msgstr "Activar en Configuración"
+
+msgid 0x4D5C9456
+msgstr "Ocurrió un error"
+
+msgid 0x4E0CDCF5
+msgstr "Mi Router AX1800"
+
+msgid 0x4E2014BE
+msgstr "No se pudo configurar la copia de seguridad"
+
+msgid 0x4E4BD9E1
+msgstr "Nombre proporcionado por el ISP"
+
+msgid 0x4E790B90
+msgstr "Lituania"
+
+msgid 0x4E838BA9
+msgstr "Navegador"
+
+msgid 0x4E912D85
+msgstr "Configurar DNS automáticamente"
+
+# DUP
+msgid 0x4EABD1AD
+msgstr "Verifica si una red diferente está conectada al puerto WAN"
+
+msgid 0x4EB2D149
+msgstr "Dar más ancho de banda a los dispositivos con mayor prioridad"
+
+msgid 0x4EC1FC03
+msgstr "Tipo de conexión IPv6"
+
+msgid 0x4EDF89F7
+msgstr "Obteniendo actualización…"
+
+msgid 0x4F039D2F
+msgstr "Wi-Fi de tres bandas"
+
+msgid 0x4F20F8EA
+msgstr "Probando la red…"
+
+msgid 0x4F528EA6
+msgstr "IP del cliente"
+
+msgid 0x4F708F87
+msgstr "No se pudo probar el repetidor inalámbrico"
+
+msgid 0x4F709635
+msgstr "Gambier"
+
+msgid 0x4F7E0A6B
+msgstr "Cambiar"
+
+msgid 0x4F88BE52
+msgstr "Información de la red"
+
+msgid 0x4FF0400E
+msgstr "Conteo de migración de datos de la partición"
+
+msgid 0x5021C7C3
+msgstr "El nombre de dominio existe, pero no pertenece al usuario"
+
+msgid 0x5027C773
+msgstr "¿Qué es el control del protocolo de acceso?"
+
+msgid 0x503A51B0
+msgstr "El servicio QoS está desactivado"
+
+msgid 0x50ABD482
+msgstr "Hungría"
+
+msgid 0x50DAC0BE
+msgstr "Detalle del resultado de la verificación del disco duro"
+
+msgid 0x50E2FA72
+msgstr "Inténtalo de nuevo"
+
+msgid 0x50E5788A
+msgstr ""
+"Se actualizó el servidor de América del Sur. Actualiza el firmware y la"
+" aplicación a la última versión."
+
+# DUP
+msgid 0x51093DB1
+msgstr "Ocurrió un error en el servidor"
+
+msgid 0x5134BEE2
+msgstr "Verifica el código de verificación que ingresaste"
+
+msgid 0x51384800
+msgstr "Ancho de banda de subida"
+
+msgid 0x51A7990F
+msgstr "Configuraciones del router"
+
+msgid 0x51C9F802
+msgstr "Un segundo…"
+
+msgid 0x520350C8
+msgstr "Atención"
+
+msgid 0x520F6D27
+msgstr "Intervalo"
+
+msgid 0x521DCB4F
+msgstr "No aplicado"
+
+# DUP
+msgid 0x5220483F
+msgstr "Agregar usando dirección MAC"
+
+msgid 0x5240D212
+msgstr "Error de sistema. Espera un minuto o dos e intenta de nuevo."
+
+msgid 0x5267F82B
+msgstr "Desconectando…"
+
+msgid 0x52B789F3
+msgstr "Verifica los campos de entrada 0-7"
+
+msgid 0x52B9D1B0
+msgstr "Contactar al proveedor de servicios"
+
+msgid 0x52DB0180
+msgstr "Glace Bay, Goose Bay, Halifax, Bermudas"
+
+msgid 0x52E8C633
+msgstr "Proveedor de servicios"
+
+msgid 0x532C4CB4
+msgstr "Detalles y medidas"
+
+# DUP
+msgid 0x53581477
+msgstr "Hora estándar del este de Australia"
+
+msgid 0x53AD3F9A
+msgstr "Apagar"
+
+msgid 0x53DE3951
+msgstr "No se pudieron obtener los complementos"
+
+msgid 0x54498999
+msgstr "Hong Kong"
+
+msgid 0x545C22A1
+msgstr "1000 M/100 M autonegociación (recomendado)"
+
+msgid 0x545FAAE4
+msgstr "La fecha de finalización no puede ser anterior a la fecha de inicio"
+
+msgid 0x546562B1
+msgstr "Selecciona el dispositivo a agregar"
+
+msgid 0x5476B297
+msgstr "Mi Router 4A"
+
+msgid 0x54A6F461
+msgstr "Quitar de forma segura tu disco duro"
+
+# DUP
+msgid 0x54C4A0FE
+msgstr "Video primero"
+
+msgid 0x54CF1FEA
+msgstr "Cierra esta ventana manualmente."
+
+# DUP
+msgid 0x54EFA73D
+msgstr ""
+"2. El nodo debe estar a no más de 3 metros de distancia del punto de acceso central."
+
+# DUP
+msgid 0x54EFA73D
+msgstr ""
+"2. Este nodo debe colocarse a una distancia no mayor de tres metros"
+" del punto de acceso central."
+
+# DUP
+msgid 0x5521AE59
+msgstr "Rusia"
+
+msgid 0x5543E2C2
+msgstr "Seleccionar dispositivo"
+
+msgid 0x554A4C38
+msgstr ""
+"El canal actual no admite el cambio de ancho de banda. El sistema"
+" ha seleccionado automáticamente un canal aplicable."
+
+msgid 0x5592F040
+msgstr "Error de verificación de nonce"
+
+msgid 0x55E9C91C
+msgstr "Error interno del servidor"
+
+msgid 0x55F988B6
+msgstr "No puede exceder los {$0} días"
+
+msgid 0x561FF993
+msgstr "Tiempo de funcionamiento"
+
+msgid 0x562C5B11
+msgstr "Longitud del prefijo IPv6 de LAN"
+
+msgid 0x5671F2BC
+msgstr "Código de error: 691"
+
+msgid 0x56782D73
+msgstr "No se pudo verificar al usuario (contraseña incorrecta)"
+
+msgid 0x5684DEC9
+msgstr "Conteo de errores de partición"
+
+msgid 0x56C7F26B
+msgstr "No se pudo restaurar el disco duro"
+
+msgid 0x56D54653
+msgstr "Wellington, McMurdo, Auckland"
+
+msgid 0x57171BFA
+msgstr "El formato de la fecha que ingresaste es inválido."
+
+msgid 0x57176DCF
+msgstr "Seleccionar ubicación"
+
+msgid 0x5720AAFF
+msgstr "No se detectó cable ethernet"
+
+msgid 0x57563F36
+msgstr "Establecer"
+
+msgid 0x5762E694
+msgstr "Información del repetidor Wi-Fi"
+
+msgid 0x5796A9FB
+msgstr "Mantén el router conectado a la fuente de energía."
+
+# DUP
+msgid 0x57998320
+msgstr "Conectando…"
+
+# DUP
+msgid 0x57998320
+msgstr "Conectando…"
+
+msgid 0x57A0E22D
+msgstr "Eliminar"
+
+msgid 0x57E47044
+msgstr "Estación base primaria (configurar una red Wi-Fi)"
+
+msgid 0x581A01BB
+msgstr "No se pudo escanear el Wi-Fi, asegúrate de que la radio esté encendida"
+
+msgid 0x581C6C25
+msgstr "ID de aplicación inválido"
+
+msgid 0x5853E682
+msgstr "Idioma"
+
+# DUP
+msgid 0x588C44E5
+msgstr "Administrador de tareas"
+
+msgid 0x58B952EC
+msgstr "República Checa"
+
+msgid 0x58C59257
+msgstr "Esta cuenta no tiene privilegios de administrador para este router."
+
+# DUP
+msgid 0x58CD6F68
+msgstr ""
+"Cuando necesites una VPN para conectarte a Internet, activa esta función"
+" para asegurarte de que la aplicación Mi Wi-Fi pueda conectarse al router."
+" En otros casos, desactiva esta función."
+
+# DUP
+msgid 0x58F89278
+msgstr "Algunos dispositivos pueden no soportar caracteres chinos u otros especiales"
+
+msgid 0x590AFFEC
+msgstr "Internet"
+
+msgid 0x5918ECF8
+msgstr "Un segundo…"
+
+msgid 0x5929C4C9
+msgstr "Hora de Moscú"
+
+msgid 0x596A7949
+msgstr "Resultado de la verificación del disco duro"
+
+msgid 0x59A28AFC
+msgstr "Música"
+
+msgid 0x5A7874EC
+msgstr "No se puede configurar el reenvío de puertos mientras DMZ esté activado"
+
+msgid 0x5A83E53A
+msgstr "Contacta con el proveedor de red para restablecer la contraseña"
+
+msgid 0x5A8DE039
+msgstr "Reconexión automática de Wi-Fi"
+
+# DUP
+msgid 0x5A9D65D3
+msgstr "Ancho de banda"
+
+# DUP
+msgid 0x5AA072B7
+msgstr "Zona horaria de Hawái-Aleutianas"
+
+# DUP
+msgid 0x5AA072B7
+msgstr "Zona horaria de Hawái–Aleutianas"
+
+msgid 0x5AC590A8
+msgstr "Nombre de Wi-Fi"
+
+msgid 0x5ACC1C42
+msgstr "Honolulu"
+
+msgid 0x5AEC1009
+msgstr "Tipo"
+
+msgid 0x5B576E57
+msgstr "3. Para ver la configuración del router, ve a miwifi.com"
+
+msgid 0x5B7D018C
+msgstr "¿Borrar todos los datos? Esta es una operación irrecuperable, ¿continuar?"
+
+msgid 0x5C40885F
+msgstr "No se pudo cancelar. La actualización ya ha sido instalada."
+
+# DUP
+msgid 0x5CAB5538
+msgstr ""
+"Si esto está habilitado, Mi router sincronizará automáticamente la configuración de Wi-Fi con"
+" el gateway doméstico del ISP"
+
+# DUP
+msgid 0x5CAB5538
+msgstr ""
+"Si esto está habilitado, Mi router sincronizará automáticamente la configuración de Wi-Fi con"
+" el gateway doméstico del ISP"
+
+msgid 0x5CB2F1EB
+msgstr "No hay suficiente espacio de almacenamiento"
+
+msgid 0x5CC57524
+msgstr "Advertencia de seguridad"
+
+msgid 0x5D200E44
+msgstr "Verifica tu tipo de conexión"
+
+# DUP
+msgid 0x5D7AB352
+msgstr "Configuración de Wi-Fi (nombre de la red y contraseña)"
+
+msgid 0x5D856F58
+msgstr "Suiza"
+
+msgid 0x5DA40E8E
+msgstr "Lista de bloqueos"
+
+msgid 0x5DBABE8A
+msgstr "No se pudo alcanzar la puerta de enlace de la red. Verifica la conexión de red y la configuración."
+
+msgid 0x5E0E05EF
+msgstr "No se pudo encender el router"
+
+msgid 0x5E22CACC
+msgstr "Establecer tipo de límite de velocidad manualmente"
+
+# DUP
+msgid 0x5EB34D43
+msgstr "Contactar con el servicio de atención al cliente de Xiaomi"
+
+# DUP
+msgid 0x5EC7C3C0
+msgstr "Servicio de módem por cable"
+
+msgid 0x5EED2BBB
+msgstr "Velocidad de internet"
+
+# DUP
+msgid 0x5F1106B1
+msgstr "Permisos de acceso"
+
+msgid 0x5F280FFE
+msgstr "Importar"
+
+msgid 0x5F576F53
+msgstr "Dirección de la puerta de enlace"
+
+# DUP
+msgid 0x5FD8353F
+msgstr "Conectado"
+
+msgid 0x5FFD2243
+msgstr "No se puede extender la red."
+
+# DUP
+msgid 0x5FFFA0B4
+msgstr "PPPoE no pudo marcar (Error 678)"
+
+msgid 0x600D43CB
+msgstr "Países Bajos"
+
+msgid 0x60D73076
+msgstr "No se pudo agregar el dispositivo"
+
+msgid 0x60DF8AF3
+msgstr "Configurar DNS manualmente"
+
+msgid 0x6124A047
+msgstr "Un segundo…"
+
+# DUP
+msgid 0x612BB91D
+msgstr ""
+"Esta configuración se aplicará después de que te vuelvas a conectar. La VPN para los servicios de Mi"
+" se desactivará."
+
+# DUP
+msgid 0x614BB86C
+msgstr "Hora estándar de Terranova"
+
+# DUP
+msgid 0x6162B49E
+msgstr "Compra un dispositivo 5G en mi.com"
+
+msgid 0x618F6878
+msgstr "Indiana (Este)"
+
+msgid 0x61995FD4
+msgstr ""
+"Según lo solicitado por las leyes y regulaciones locales, el canal Wi-Fi de 5 GHz seleccionado"
+" necesita realizar una detección y evitación de radar durante 10 minutos, después de lo cual"
+" la red Wi-Fi se volverá a conectar. Por favor, confirma si deseas continuar"
+" la configuración."
+
+msgid 0x61AE1E2D
+msgstr "Puerta de enlace predeterminada: "
+
+msgid 0x6202BF19
+msgstr "La fecha no puede ser posterior a {$0}"
+
+msgid 0x621D4427
+msgstr "Velocidad de subida"
+
+msgid 0x62433604
+msgstr "Encender"
+
+msgid 0x624D782E
+msgstr "Versión"
+
+msgid 0x6251E63A
+msgstr "Instalación manual"
+
+msgid 0x62B51BA1
+msgstr "Puerto interno"
+
+# DUP
+msgid 0x62C9EDE3
+msgstr "Habilitar la sincronización automática de la configuración de Wi-Fi con el gateway inteligente"
+
+msgid 0x63791938
+msgstr "Mi Router debe estar conectado a un dispositivo de almacenamiento."
+
+msgid 0x637C4FAD
+msgstr "Kolkata"
+
+msgid 0x63CBBA89
+msgstr "Se solucionaron algunos errores"
+
+msgid 0x64207D7E
+msgstr ""
+"Por favor, confirma que el Wi-Fi del router principal y el router de repetición están"
+" ambos activados."
+
+msgid 0x644BFAB7
+msgstr "Sala de estar"
+
+msgid 0x64DBA080
+msgstr "Información del dispositivo"
+
+msgid 0x64E596CE
+msgstr "Dispositivos conectados por cable Ethernet"
+
+msgid 0x651BBF08
+msgstr "Polonia"
+
+msgid 0x65257C1E
+msgstr "Intentando reparar los datos del disco duro"
+
+msgid 0x653D8A77
+msgstr "Bytes (No se recomienda modificar si la red está normal)"
+
+msgid 0x65544C7A
+msgstr "Mi Router 3G"
+
+msgid 0x65943A40
+msgstr "No se pueden agregar más de 32 dispositivos"
+
+msgid 0x65E00BDD
+msgstr "Otro dispositivo en la red está usando la dirección IP de tu router"
+
+# DUP
+msgid 0x65F1543A
+msgstr "Hora estándar de la Isla Norfolk"
+
+msgid 0x663354DB
+msgstr "Seleccionar proveedor de servicios"
+
+msgid 0x66352AB1
+msgstr "Acceder a la página de administración del router"
+
+msgid 0x6676907E
+msgstr "Vladivostok"
+
+# DUP
+msgid 0x6692AED9
+msgstr "Tiempo de espera de la solicitud agotado, demasiadas solicitudes o validación fallida."
+
+msgid 0x66996C25
+msgstr "Guía de configuración"
+
+msgid 0x669A8D84
+msgstr "Acércate al router principal"
+
+msgid 0x669FBA01
+msgstr "No se pudo encontrar la imagen"
+
+msgid 0x66AED0F4
+msgstr "Actualizar ahora"
+
+msgid 0x66B367BC
+msgstr "Islamabad, Karachi"
+
+msgid 0x66D0CFEF
+msgstr "Wi-Fi para invitados"
+
+msgid 0x66F2621F
+msgstr "Canarias, Feroe, Madeira, Lisboa"
+
+msgid 0x673EF5DC
+msgstr "Entendido"
+
+msgid 0x674A1D9E
+msgstr "No se pudo actualizar"
+
+msgid 0x675AB75D
+msgstr "Almacenamiento"
+
+msgid 0x677DBC95
+msgstr "No se pudo conectar al servidor"
+
+msgid 0x6802B628
+msgstr ""
+"Si has activado el wifi para invitados, se desactivará después"
+" de cambiar al modo amplificador inalámbrico."
+
+msgid 0x6819EBD5
+msgstr "Configuración mejorada de la aplicación para nuevos modelos de router"
+
+# DUP
+msgid 0x68BA9320
+msgstr "Intenta cambiar al modo amplificador con cable"
+
+msgid 0x68BE7AFD
+msgstr "Conteo de remapeo de particiones"
+
+msgid 0x690221B0
+msgstr "Router principal"
+
+msgid 0x69363CFE
+msgstr "No se pudo aplicar la contraseña"
+
+# DUP
+msgid 0x694840EC
+msgstr "Hora de Europa Central"
+
+msgid 0x69840874
+msgstr ""
+"El Wi-Fi para invitados se desactivará cuando cambies al modo repetidor inalámbrico"
+
+msgid 0x6986CAC5
+msgstr "Estado"
+
+msgid 0x69F066E5
+msgstr ""
+"\"1. Mueve el nodo Mesh que estás añadiendo cerca del router Mesh principal;\"\". Mueve"
+" el nodo Mesh que estás añadiendo cerca del router Mesh principal;\""
+
+msgid 0x69FA9B54
+msgstr "Noronha, Georgia del Sur"
+
+msgid 0x6A7117EF
+msgstr "Chihuahua, La Paz, Mazatlán"
+
+msgid 0x6A9C4710
+msgstr "Los valores de IP deben estar entre 2 y 254"
+
+msgid 0x6AE17BA7
+msgstr "Bagdad"
+
+msgid 0x6AEDDD7C
+msgstr "Aceptar"
+
+msgid 0x6B03124B
+msgstr "No se pudieron importar las configuraciones del ISP desde el router existente"
+
+# DUP
+msgid 0x6B1EEC8B
+msgstr "Alto"
+
+# DUP
+msgid 0x6B56FD95
+msgstr "Zona horaria del Este"
+
+msgid 0x6B595A04
+msgstr "Automático (recomendado)"
+
+# DUP
+msgid 0x6B6A458D
+msgstr "Italia"
+
+msgid 0x6B83DF3B
+msgstr ""
+"El ancho de banda de 160 MHz solo es aplicable a los canales 36-64 y el sistema"
+" cambiará automáticamente el canal."
+
+msgid 0x6B847C05
+msgstr "Este puerto solo puede ser usado de forma remota"
+
+msgid 0x6B94C9F5
+msgstr "No configurado"
+
+msgid 0x6B9D9C2D
+msgstr "No puede contener caracteres chinos"
+
+msgid 0x6B9E58FA
+msgstr "¿Eliminar este elemento?"
+
+msgid 0x6BA518B7
+msgstr "Clonación de dirección MAC"
+
+# DUP
+msgid 0x6BA9520D
+msgstr "Resolución de problemas"
+
+# DUP
+msgid 0x6BA9520D
+msgstr "Solución de problemas"
+
+msgid 0x6BB06B62
+msgstr "Error de repetidor"
+
+msgid 0x6BB87223
+msgstr "Configuraciones"
+
+msgid 0x6BBCF421
+msgstr "Kuala Lumpur, Singapur"
+
+# DUP
+msgid 0x6BDC62EC
+msgstr "Para realizar esta acción, tu IP cambiará a"
+
+msgid 0x6C124340
+msgstr "El tiempo de concesión DHCP debe ser de 2...2880 minutos (48 horas)"
+
+msgid 0x6CCB70DC
+msgstr "Importar configuraciones del ISP desde el router existente"
+
+msgid 0x6CE288C8
+msgstr "Cambiar configuraciones de DNS ahora"
+
+msgid 0x6CE847B3
+msgstr "Probar de nuevo"
+
+msgid 0x6CEEB378
+msgstr "No se puede detectar el tipo de conexión"
+
+msgid 0x6CF20361
+msgstr "Solo puedes usar 1 servicio DDNS a la vez"
+
+msgid 0x6CF62FF2
+msgstr "El router aún no ha sido inicializado"
+
+msgid 0x6CFD720F
+msgstr "Contraseña de administrador"
+
+msgid 0x6E006FC2
+msgstr "Total subido"
+
+msgid 0x6E791823
+msgstr "El servidor DNS no responde"
+
+msgid 0x6E89FABC
+msgstr "Algunos dispositivos no soportan este SSID"
+
+msgid 0x6EC8390B
+msgstr "Balcón"
+
+msgid 0x6ECCD67D
+msgstr "Verificando…"
+
+msgid 0x6ECCF6F1
+msgstr "Sin permisos"
+
+msgid 0x6EE1773A
+msgstr "El nombre de usuario o la contraseña no pueden estar vacíos"
+
+msgid 0x6EF3689B
+msgstr "Perfil del ISP"
+
+msgid 0x6F2789E3
+msgstr "Guam, Port Moresby"
+
+msgid 0x6F2B51B7
+msgstr "Puerta de enlace predeterminada inválida"
+
+msgid 0x6F2C54E5
+msgstr "Finlandia"
+
+msgid 0x6F602E57
+msgstr "Continuar de todos modos"
+
+msgid 0x6F83358C
+msgstr "Usa el siguiente formato \"{$0}\""
+
+# DUP
+msgid 0x6FA0613C
+msgstr "Ancho de banda del router"
+
+msgid 0x6FA63B21
+msgstr "Islas Salomón, Nueva Caledonia"
+
+# DUP
+msgid 0x6FDE197C
+msgstr "Apagar"
+
+msgid 0x70402CDD
+msgstr "Georgetown, La Paz, Manaos, San Juan"
+
+msgid 0x7044DD76
+msgstr "Configuraciones de LAN"
+
+msgid 0x704F7BD1
+msgstr "Cancelar"
+
+msgid 0x70778E00
+msgstr "Conéctate con dispositivos cercanos (por ejemplo, Mi Box, Mi Router)"
+
+# DUP
+msgid 0x7089C1EA
+msgstr "Descargar registro"
+
+# DUP
+msgid 0x7089C1EA
+msgstr "Descargar el registro"
+
+msgid 0x708C7515
+msgstr "Dispositivos de red Mesh"
+
+msgid 0x70AAC5DF
+msgstr "Puerta de enlace"
+
+msgid 0x711FC92E
+msgstr "Adicional"
+
+msgid 0x7153448A
+msgstr "Estás visitando"
+
+msgid 0x71B6F625
+msgstr "Proveedor de servicios"
+
+# DUP
+msgid 0x71E96256
+msgstr "Desconectado"
+
+# DUP
+msgid 0x71F94738
+msgstr "Santiago"
+
+msgid 0x723F4CEE
+msgstr "Currie, Hobart, Melbourne, Sídney"
+
+msgid 0x7250E115
+msgstr "Estado"
+
+msgid 0x725E7325
+msgstr "Accediendo y habilitando"
+
+# DUP
+msgid 0x72B0C266
+msgstr "Velocidad de descarga en tiempo real"
+
+msgid 0x72C3421E
+msgstr ""
+"Si retrocedes a una versión anterior, se recomienda borrar las configuraciones personalizadas"
+" al mismo tiempo, para evitar fallos causados por la compatibilidad de la versión."
+
+msgid 0x72DEA5FA
+msgstr "Modo de compatibilidad Wi-Fi 5 (802.11ac)"
+
+msgid 0x72F8EF0B
+msgstr "Nombre de usuario"
+
+msgid 0x730EDD35
+msgstr "Mi Router AX3000"
+
+# DUP
+msgid 0x73108AE7
+msgstr "1. Verifica si el cable de red está conectado correctamente"
+
+msgid 0x73650985
+msgstr ""
+"1. Conecta el puerto WAN del Mi Router al router existente mediante un cable ethernet"
+
+msgid 0x737663A9
+msgstr "Marcando…"
+
+msgid 0x7386F0FA
+msgstr "Daca"
+
+# DUP
+msgid 0x73A47D29
+msgstr "No se pueden agregar más de 5 elementos"
+
+msgid 0x73C94F2E
+msgstr "La autorización expiró, vuelve a iniciar sesión"
+
+msgid 0x73F046F4
+msgstr "El router volverá a la configuración anterior."
+
+msgid 0x744471CB
+msgstr "Zona horaria del sistema actual"
+
+msgid 0x744BCF7D
+msgstr "Yangón"
+
+msgid 0x745B87AC
+msgstr ""
+"La función de escaneo automático de la antena inteligente AIoT puede descubrir automáticamente"
+" dispositivos inteligentes Mi no inicializados y acceder rápidamente a la red a través"
+" de la aplicación Mi Home."
+
+msgid 0x74CABD47
+msgstr "Cliente"
+
+msgid 0x74E833B4
+msgstr "Actualización disponible: {$version}"
+
+msgid 0x74EBCA4F
+msgstr "Cambiar objetivos de repetidor"
+
+msgid 0x74EEADAA
+msgstr "Red de invitados dedicada para proteger la seguridad de la Intranet"
+
+msgid 0x7541F5D6
+msgstr "No se puede encontrar información"
+
+# DUP
+msgid 0x76052A5D
+msgstr "Seleccionar dispositivos para conectarse a la VPN"
+
+msgid 0x76082B93
+msgstr "País/Región"
+
+# DUP
+msgid 0x761B2AAB
+msgstr ""
+"2. El proceso de inicialización toma 2-3 minutos. Puedes iniciar sesión en el router"
+" después de que se restablezca y la luz de notificación se ponga azul."
+
+msgid 0x7651D664
+msgstr "No se pudieron aplicar las configuraciones de permisos"
+
+# DUP
+msgid 0x765F7F95
+msgstr "Hora estándar de Myanmar"
+
+msgid 0x7686A980
+msgstr "Configuración de red (tipo de conexión, cuenta de red y contraseña)"
+
+msgid 0x76BFA0D7
+msgstr "IP final"
+
+msgid 0x76CD09F0
+msgstr "Cambia los cables ethernet e inténtalo de nuevo."
+
+msgid 0x76CFA265
+msgstr "Línea internacional de cambio de fecha Oeste"
+
+# DUP
+msgid 0x76E58226
+msgstr ""
+"3. La dirección DNS puede ser un nombre de dominio o una dirección IP y será proporcionada"
+" por el proveedor de servicios."
+
+msgid 0x76EF2A87
+msgstr "Almacenamiento local"
+
+# DUP
+msgid 0x76F0A787
+msgstr "Zona horaria central"
+
+# DUP
+msgid 0x770F1813
+msgstr "Dispositivos conectados (2.4G)"
+
+# DUP
+msgid 0x772BE619
+msgstr "Evitar conflictos de IP"
+
+# DUP
+msgid 0x77724F08
+msgstr ""
+"1. La información, incluido el nombre de usuario de la VPN, contraseña, dirección DNS y"
+" tipo de protocolo debe ser obtenida del proveedor de servicios VPN."
+
+msgid 0x777393AC
+msgstr "Estonia"
+
+msgid 0x777764BF
+msgstr "Estado de ancho de banda de Internet"
+
+msgid 0x7792F3B4
+msgstr "Versión {$romVersion}, {$ret}"
+
+msgid 0x77B93183
+msgstr "No se pudo restaurar el disco duro, puedes"
+
+# DUP
+msgid 0x77EA9DE2
+msgstr ""
+"Usar la aplicación MiWiFi elimina la molestia de tener que recordar una contraseña"
+
+msgid 0x781CC230
+msgstr "Midway, Pago Pago"
+
+# DUP
+msgid 0x78213955
+msgstr "año"
+
+msgid 0x78638178
+msgstr "No actives esta función para usuarios de SSH"
+
+msgid 0x7873C513
+msgstr "Iniciar verificación de salud del disco duro"
+
+msgid 0x7887DBEA
+msgstr "Introducción al control de protocolo de acceso"
+
+msgid 0x788F6D6D
+msgstr "Actualizar manualmente"
+
+# DUP
+msgid 0x78A29B02
+msgstr "Hora de Europa Occidental"
+
+msgid 0x78DD1970
+msgstr "No se pudo probar la velocidad de la red"
+
+msgid 0x78E00E5E
+msgstr ""
+"1. Conecta el puerto WAN del nodo satélite no configurado con el puerto LAN"
+" del punto de acceso central a través del cable de red."
+
+msgid 0x79193443
+msgstr "Todas las configuraciones serán eliminadas."
+
+msgid 0x791F5318
+msgstr "Dispositivos conectados (5G)"
+
+msgid 0x794D22EF
+msgstr "Karachi"
+
+msgid 0x7955454A
+msgstr "Ingresa un número completo con {$0} dígitos"
+
+msgid 0x79A98A10
+msgstr "Monrovia, Reikiavik"
+
+msgid 0x79C00BDE
+msgstr "No se pudo obtener el estado del marcador"
+
+msgid 0x79E47F88
+msgstr "El repetidor solo puede extender redes Wi-Fi de 2.4G."
+
+msgid 0x7A1F7C1A
+msgstr "Descarga la aplicación Mi Home/Xiaomi Home"
+
+msgid 0x7A5CCF05
+msgstr "VPNs: "
+
+msgid 0x7AD84E69
+msgstr "3. El nuevo nodo Mesh tiene la misma configuración Wi-Fi que el anterior."
+
+msgid 0x7B437C69
+msgstr "Seleccionar red existente"
+
+msgid 0x7BC61695
+msgstr "Contraseña"
+
+msgid 0x7BCCD057
+msgstr "China Mobile"
+
+msgid 0x7BE65E23
+msgstr "Verifica tu conexión de red."
+
+# DUP
+msgid 0x7C1984FF
+msgstr "dd/MM/yyyy hh:mm:ss"
+
+msgid 0x7C3AAFFF
+msgstr "No apagues"
+
+msgid 0x7C64B036
+msgstr "El router cambió al modo de estación base."
+
+msgid 0x7C6CCD27
+msgstr ""
+"Una vez habilitado, el protocolo de acceso se redirigirá automáticamente a HTTPS,"
+" y necesitas iniciar sesión en el backstage del sitio web de nuevo. ¿Habilitarlo de todos modos?"
+
+# DUP
+msgid 0x7CF8CA87
+msgstr "min"
+
+# DUP
+msgid 0x7CF8CA87
+msgstr "mins"
+
+msgid 0x7D178F4F
+msgstr "Comenzar restauración"
+
+msgid 0x7D22F93F
+msgstr ""
+"Todas las configuraciones serán eliminadas. Crea una copia de seguridad antes de restaurar"
+" la configuración de fábrica."
+
+# DUP
+msgid 0x7D243A0A
+msgstr "Cambiar zona horaria"
+
+msgid 0x7D4A0DEA
+msgstr "Detroit, Nassau, Nueva York, Puerto Príncipe, Toronto"
+
+msgid 0x7D6C27CB
+msgstr "Mi Router AX9000"
+
+msgid 0x7D7B336C
+msgstr "Dirección MAC"
+
+msgid 0x7D916B3B
+msgstr "Preguntas frecuentes"
+
+msgid 0x7E0A6D0D
+msgstr "Anchorage, Juneau, Metlakatla, Nome, Sitka, Yakutat"
+
+msgid 0x7E0E1DE8
+msgstr "Perú"
+
+msgid 0x7E1397AB
+msgstr "Administra tu router en cualquier momento y lugar"
+
+msgid 0x7E632DE1
+msgstr ""
+"Si tu router está funcionando con normalidad, te recomendamos utilizar la aplicación"
+" Mi Home/Xiaomi Home para instalar tu dispositivo. Si la instalación falla o necesitas"
+" retroceder a una versión anterior, puedes instalar tu dispositivo"
+" mediante el plug-in manual."
+
+msgid 0x7E665AAD
+msgstr ""
+"Algunos dispositivos antiguos no son compatibles con Wi-Fi 6 y pueden tener problemas de compatibilidad"
+" como fallos de escaneo o fallos de conexión a Wi-Fi. Después de activar este interruptor,"
+" el router funcionará en Modo de Compatibilidad Wi-Fi 5 para resolver los problemas"
+" de compatibilidad. También desactivará las funciones relacionadas con Wi-Fi 6, como"
+" OFDMA, BSS Coloring, etc."
+
+msgid 0x7E7BFF9D
+msgstr "Seleccionar un dispositivo"
+
+msgid 0x7E87EB7E
+msgstr "Dublín, Edimburgo, Lisboa, Londres"
+
+# DUP
+msgid 0x7EC5EC99
+msgstr "España"
+
+msgid 0x7EE5F435
+msgstr "Mi Router ha creado una red Wi-Fi para ti"
+
+msgid 0x7F4F27CE
+msgstr ""
+"Las tecnologías MU-MIMO (Multi-User Multiple-Input Multiple-Output) y Beamforming"
+" permiten que el router se comunique con varios terminales al mismo"
+" tiempo para mejorar la eficiencia de la utilización de recursos inalámbricos"
+" y la experiencia Wi-Fi. Tanto el Router como los terminales necesitan usar esta función."
+" Al activarla, también se habilitarán MU-MIMO y Beamforming."
+
+msgid 0x7F82983D
+msgstr "No se pudo verificar la actualización"
+
+msgid 0x7FA203B4
+msgstr "Velocidad del puerto WAN"
+
+msgid 0x7FABC010
+msgstr "La fecha no puede ser anterior a {$0}"
+
+msgid 0x7FE7CE95
+msgstr ""
+"3. Enciende el nodo y espera a que el indicador del sistema del router se vuelva azul."
+
+msgid 0x7FFAF515
+msgstr "Borrar todos los datos en el disco duro"
+
+msgid 0x801F4D1C
+msgstr "Ancho de banda del Wi-Fi doméstico"
+
+msgid 0x8033049E
+msgstr "India"
+
+msgid 0x80397564
+msgstr "Dirección IPv6 LAN"
+
+msgid 0x803B6868
+msgstr "Makassar"
+
+# DUP
+msgid 0x8047D07F
+msgstr "Usa la App MiWiFi para experimentar la funcionalidad del router inteligente"
+
+msgid 0x806DC303
+msgstr ""
+"Se ha realizado recientemente una verificación de la salud del disco duro, no es necesario volver a verificar"
+
+msgid 0x8079CFD2
+msgstr "Hora del Este (EE. UU. y Canadá)"
+
+msgid 0x818DA010
+msgstr "Comenzar la instalación"
+
+msgid 0x8190E3A3
+msgstr "Groenlandia"
+
+msgid 0x81A783B0
+msgstr "La contraseña Wi-Fi debe tener entre 8 y 63 caracteres"
+
+msgid 0x81B2CFA8
+msgstr "Editar servicio"
+
+# DUP
+msgid 0x81C1CE9D
+msgstr ""
+"Si la descarga ralentiza la velocidad de la red del router, puedes tocar \"pausar todas las descargas\" para recuperarte."
+
+msgid 0x81D9F66A
+msgstr "Dirección de inicio"
+
+msgid 0x81E8A529
+msgstr "Modo de control"
+
+msgid 0x81FD2AF0
+msgstr "China Tietong"
+
+msgid 0x81FE1B7D
+msgstr "No se puede configurar el repetidor con cable ahora"
+
+msgid 0x8251E4AE
+msgstr "Conectando el nodo Mesh"
+
+# DUP
+msgid 0x82D42929
+msgstr "Configuración de hora"
+
+msgid 0x82E87DCC
+msgstr "Actualizando…"
+
+msgid 0x82F8606B
+msgstr "Este dispositivo no podrá conectarse a la red."
+
+msgid 0x831AA76E
+msgstr "Si no puede cambiar automáticamente, visita"
+
+msgid 0x831FAA84
+msgstr "Esto supone una amenaza para la seguridad de tu red."
+
+msgid 0x833A90CD
+msgstr "Gestionar automáticamente el ancho de banda para los dispositivos conectados"
+
+msgid 0x834FD120
+msgstr "Programa de Mejora de la Experiencia del Usuario"
+
+msgid 0x836DCA51
+msgstr "Reinicia el módem e inténtalo de nuevo."
+
+msgid 0x83707E3F
+msgstr "Sin respuesta del servidor DHCP"
+
+msgid 0x838C6732
+msgstr "Tipos de archivos"
+
+# DUP
+msgid 0x84553919
+msgstr "Solo los usuarios con cuentas pagas pueden usar funciones fuera de línea"
+
+msgid 0x848A9710
+msgstr "Buscar actualizaciones"
+
+msgid 0x84A89C0F
+msgstr ""
+"Los países/regiones deben configurarse de manera idéntica para conectar un nuevo router a un Mi Router en modo Repetidor"
+
+msgid 0x7E7BFF9D
+msgstr "Seleccionar un dispositivo"
+
+msgid 0x7E87EB7E
+msgstr "Dublín, Edimburgo, Lisboa, Londres"
+
+# DUP
+msgid 0x7EC5EC99
+msgstr "España"
+
+msgid 0x7EE5F435
+msgstr "Mi Router ha creado una red Wi-Fi para ti"
+
+msgid 0x7F4F27CE
+msgstr ""
+"Las tecnologías MU-MIMO (Multi-User Multiple-Input Multiple-Output) y Beamforming"
+" permiten que el router se comunique con varios terminales al mismo"
+" tiempo para mejorar la eficiencia de la utilización de recursos inalámbricos"
+" y la experiencia Wi-Fi. Tanto el Router como los terminales necesitan usar esta función."
+" Al activarla, también se habilitarán MU-MIMO y Beamforming."
+
+msgid 0x7F82983D
+msgstr "No se pudo verificar la actualización"
+
+msgid 0x7FA203B4
+msgstr "Velocidad del puerto WAN"
+
+msgid 0x7FABC010
+msgstr "La fecha no puede ser anterior a {$0}"
+
+msgid 0x7FE7CE95
+msgstr ""
+"3. Enciende el nodo y espera a que el indicador del sistema del router se vuelva azul."
+
+msgid 0x7FFAF515
+msgstr "Borrar todos los datos en el disco duro"
+
+msgid 0x801F4D1C
+msgstr "Ancho de banda del Wi-Fi doméstico"
+
+msgid 0x8033049E
+msgstr "India"
+
+msgid 0x80397564
+msgstr "Dirección IPv6 LAN"
+
+msgid 0x803B6868
+msgstr "Makassar"
+
+# DUP
+msgid 0x8047D07F
+msgstr "Usa la App MiWiFi para experimentar la funcionalidad del router inteligente"
+
+msgid 0x806DC303
+msgstr ""
+"Se ha realizado recientemente una verificación de la salud del disco duro, no es necesario volver a verificar"
+
+msgid 0x8079CFD2
+msgstr "Hora del Este (EE. UU. y Canadá)"
+
+msgid 0x818DA010
+msgstr "Comenzar la instalación"
+
+msgid 0x8190E3A3
+msgstr "Groenlandia"
+
+msgid 0x81A783B0
+msgstr "La contraseña Wi-Fi debe tener entre 8 y 63 caracteres"
+
+msgid 0x81B2CFA8
+msgstr "Editar servicio"
+
+# DUP
+msgid 0x81C1CE9D
+msgstr ""
+"Si la descarga ralentiza la velocidad de la red del router, puedes tocar \"pausar todas las descargas\" para recuperarte."
+
+msgid 0x81D9F66A
+msgstr "Dirección de inicio"
+
+msgid 0x81E8A529
+msgstr "Modo de control"
+
+msgid 0x81FD2AF0
+msgstr "China Tietong"
+
+msgid 0x81FE1B7D
+msgstr "No se puede configurar el repetidor con cable ahora"
+
+msgid 0x8251E4AE
+msgstr "Conectando el nodo Mesh"
+
+# DUP
+msgid 0x82D42929
+msgstr "Configuración de hora"
+
+msgid 0x82E87DCC
+msgstr "Actualizando…"
+
+msgid 0x82F8606B
+msgstr "Este dispositivo no podrá conectarse a la red."
+
+msgid 0x831AA76E
+msgstr "Si no puede cambiar automáticamente, visita"
+
+msgid 0x831FAA84
+msgstr "Esto supone una amenaza para la seguridad de tu red."
+
+msgid 0x833A90CD
+msgstr "Gestionar automáticamente el ancho de banda para los dispositivos conectados"
+
+msgid 0x834FD120
+msgstr "Programa de Mejora de la Experiencia del Usuario"
+
+msgid 0x836DCA51
+msgstr "Reinicia el módem e inténtalo de nuevo."
+
+msgid 0x83707E3F
+msgstr "Sin respuesta del servidor DHCP"
+
+msgid 0x838C6732
+msgstr "Tipos de archivos"
+
+# DUP
+msgid 0x84553919
+msgstr "Solo los usuarios con cuentas pagas pueden usar funciones fuera de línea"
+
+msgid 0x848A9710
+msgstr "Buscar actualizaciones"
+
+msgid 0x84A89C0F
+msgstr ""
+"Los países/regiones deben configurarse de manera idéntica para conectar un nuevo router a un Mi Router en modo Repetidor"
+
+msgid 0x84D75D2A
+msgstr "Atrás"
+
+msgid 0x84D81D20
+msgstr ""
+"1. Si has activado la red Wi-Fi para invitados, se desactivará después"
+" de cambiar al modo amplificador inalámbrico."
+
+msgid 0x85016C3F
+msgstr "Verificar puerto WAN e IP"
+
+msgid 0x8521D2BE
+msgstr "Dr. Peng"
+
+msgid 0x852C0778
+msgstr "El nombre del router que ingresaste es demasiado largo"
+
+msgid 0x853CC582
+msgstr "Mi Router 3A"
+
+msgid 0x8557BB54
+msgstr "No se pudieron aplicar los ajustes. Verifica el nombre de la red y la contraseña."
+
+msgid 0x859A2D06
+msgstr "ID de la aplicación"
+
+msgid 0x86129EB5
+msgstr "Asignación de IP estática por DHCP"
+
+msgid 0x8619F9B2
+msgstr "Cambiar contraseña"
+
+msgid 0x863BEE65
+msgstr "La condición del disco duro es excelente"
+
+# DUP
+msgid 0x864192C6
+msgstr "Hora de Europa del Este"
+
+msgid 0x866AF834
+msgstr "Verificar la conexión del puerto WAN del router"
+
+msgid 0x86C01633
+msgstr "No se pudo iniciar el router. No se detectó almacenamiento."
+
+msgid 0x86C1FB08
+msgstr ""
+"Dirección IP inválida. Tu dirección IP debería estar entre 1.0.0.0~126.0.0.0 o"
+" 128.0.0.0~223.255.255.255."
+
+# DUP
+msgid 0x8718B9C2
+msgstr ""
+"Cuando la función está activada, las redes 2.4G y 5G compartirán un nombre. El router"
+" elegirá la mejor señal disponible. Por ejemplo, cambiará a la red 5G"
+" si el dispositivo está cerca, y a la red 2.4G si está lejos. Pueden ocurrir breves"
+" interrupciones durante el cambio"
+
+msgid 0x8718BFB1
+msgstr "Bienvenido"
+
+msgid 0x87560B3C
+msgstr "No se pudo obtener información"
+
+# DUP
+msgid 0x875EEEE8
+msgstr "Solución 3: Crea un clon de tu dirección MAC e intenta reconectar"
+
+msgid 0x877482A7
+msgstr "Hanói, Bangkok, Barnaul, Ho Chi Minh, Novosibirsk"
+
+msgid 0x87843FE1
+msgstr "Dirección IP interna: "
+
+msgid 0x879BD41B
+msgstr ""
+"PPPoE no permite que una sola cuenta inicie sesión en múltiples lugares al"
+" mismo tiempo."
+
+# DUP
+msgid 0x879CE485
+msgstr ""
+"Solución 1: Reinicia tu módem y router y vuelve a conectar a PPPoE en 5"
+" minutos"
+
+msgid 0x87BDD2A9
+msgstr "Buscando nodos Mesh..."
+
+msgid 0x87C26616
+msgstr "Atlántico Medio"
+
+msgid 0x88A41747
+msgstr "Controles de acceso inalámbricos"
+
+msgid 0x88CF1965
+msgstr "Intensidad de la señal Wi-Fi"
+
+# DUP
+msgid 0x88DE8E3E
+msgstr "2. Verifica si el cable de red está dañado"
+
+msgid 0x89407AD9
+msgstr "No se ha probado"
+
+# DUP
+msgid 0x899FF045
+msgstr "Hora Estándar de Chatham"
+
+msgid 0x89B61F0D
+msgstr "IP estática desconectada"
+
+msgid 0x8A05046A
+msgstr "Formato de dirección MAC inválido"
+
+# DUP
+msgid 0x8A301FC7
+msgstr "Hora Estándar de Irán"
+
+# DUP
+msgid 0x8A5AED33
+msgstr "Configuración recomendada"
+
+msgid 0x8A60DAA2
+msgstr "No se pudo obtener IP"
+
+# DUP
+msgid 0x8AA5B8EE
+msgstr "Alemania"
+
+# DUP
+msgid 0x8AD5FD24
+msgstr "Pausar todas las descargas"
+
+msgid 0x8B12F74E
+msgstr "El servicio del centro de datos funciona de manera anormal"
+
+msgid 0x8B239E45
+msgstr ""
+"Atención: Algunas funciones y complementos pueden estar bloqueados en modo repetidor"
+
+msgid 0x8B4657E4
+msgstr "Chihuahua, Mazatlán"
+
+# DUP
+msgid 0x8B491AF6
+msgstr "Fin"
+
+msgid 0x8B507F30
+msgstr "China Telecom"
+
+msgid 0x8B891A18
+msgstr "Atenas, Bucarest, Helsinki, Kiev, Mariehamn"
+
+msgid 0x8BEFE34A
+msgstr "Perth"
+
+msgid 0x8C2F5622
+msgstr "Hecho"
+
+msgid 0x8C42D2EB
+msgstr "Un momento…"
+
+msgid 0x8C4580D9
+msgstr "Organizando archivos…"
+
+msgid 0x8CE9AC5D
+msgstr ""
+"1. Conecta el puerto WAN del Mi Router al router existente mediante un cable ethernet"
+
+msgid 0x8D58F0B8
+msgstr "No se pudo obtener información de estado"
+
+msgid 0x8D5EB000
+msgstr "Agregar un nodo Mesh"
+
+msgid 0x8D77B967
+msgstr "Puerto WAN del router existente"
+
+msgid 0x8D91ECA8
+msgstr ""
+"El Wi-Fi 5G es más rápido y mejor para tu TV u otros dispositivos que no están lejos del"
+" router"
+
+msgid 0x8DCDB9B1
+msgstr "Modo de invitado está desactivado"
+
+msgid 0x8DCDE153
+msgstr ""
+"1. La condición actual de tu disco duro puede encontrar un error muy pronto"
+
+msgid 0x8E38860D
+msgstr "Error de red"
+
+# DUP
+msgid 0x8E48ED3C
+msgstr "Agregar dirección de servidor"
+
+msgid 0x8E6E0A9D
+msgstr "Puerto de finalización"
+
+msgid 0x8E7055F4
+msgstr "Alaska"
+
+msgid 0x8E9156A3
+msgstr "Troll"
+
+msgid 0x8EB9E086
+msgstr "Dirección IP interna"
+
+# DUP
+msgid 0x8F8AD2D0
+msgstr "Zona horaria de América del Sur"
+
+msgid 0x8F939C22
+msgstr "Introduce el nombre de la red y la contraseña"
+
+msgid 0x8F9B6468
+msgstr ""
+"Espera a que el router aplique la configuración y conéctalo a la siguiente red: "
+
+msgid 0x8FBE3105
+msgstr "Otras excepciones (incompatibilidad de protocolos, etc.)"
+
+# DUP
+msgid 0x8FD9803D
+msgstr ""
+"Solución: Reconecta manualmente desde miwifi.com, o reinicia el router y conéctate"
+" automáticamente."
+
+msgid 0x9007B3EA
+msgstr "Pascua"
+
+msgid 0x9070348B
+msgstr "Servidores: "
+
+msgid 0x907692AD
+msgstr "Casablanca"
+
+msgid 0x907F0827
+msgstr "2. Dirección IP"
+
+msgid 0x9090C8EB
+msgstr "No se puede acceder al contenido. Verifica tu conexión de red e inténtalo de nuevo."
+
+msgid 0x9106754D
+msgstr "Puntuación de la verificación del disco duro"
+
+msgid 0x910B11C3
+msgstr "Este campo no puede estar vacío"
+
+# DUP
+msgid 0x91130E4E
+msgstr "La IP LAN será cambiada a"
+
+msgid 0x9138B5D9
+msgstr "Johannesburgo, Maseru, Mbabane"
+
+msgid 0x91872802
+msgstr "Gaza, Hebrón"
+
+msgid 0x91990C4C
+msgstr "Macquarie, Magadan, Sajalín, Srednekolymsk, Bougainville"
+
+msgid 0x919C2DFE
+msgstr "Cifrado"
+
+msgid 0x91AFB03A
+msgstr "Dakar, Monrovia, Santo Tomé, Danmarkshavn, Reikiavik"
+
+# DUP
+msgid 0x9204C1B8
+msgstr ""
+"Una red privada virtual (VPN) es un tipo de tecnología de acceso remoto que"
+" puede ser utilizada para diversos fines, como permitir a un empleado acceder a"
+" un sistema de intranet de la empresa mientras está de viaje de negocios."
+
+msgid 0x920AF4D9
+msgstr "Bahía Banderas, Mérida, Ciudad de México, Monterrey"
+
+msgid 0x923958A0
+msgstr "Frecuencia"
+
+msgid 0x925F1A36
+msgstr "Manila"
+
+msgid 0x929222B1
+msgstr "{$0} es inválido."
+
+# DUP
+msgid 0x92B5CFE1
+msgstr "2. Agrega los datos requeridos y comienza a usar VPN"
+
+msgid 0x930DF04A
+msgstr ""
+"Se han detectado señales de radar cercanas. En cumplimiento con las leyes"
+" nacionales y regulaciones, y para evitar interferencias con las señales de radar, el ancho de banda de 160 MHz"
+" está desactivado. El ancho de banda se ha cambiado automáticamente a"
+" 80 MHz."
+
+msgid 0x93231C45
+msgstr "Súper cifrado (WPA3-Personal)"
+
+# DUP
+msgid 0x933A9235
+msgstr "Finalizar tarea"
+
+msgid 0x93756B73
+msgstr "Adelaida"
+
+msgid 0x9392696E
+msgstr "Descubriendo"
+
+msgid 0x943C34FF
+msgstr ""
+"Se admiten hasta cuatro routers Mesh en una red para garantizar una buena experiencia de red Mesh. Crea una nueva red para routers Mesh adicionales."
+
+msgid 0x944AC303
+msgstr ""
+"Una vez habilitado, serás redirigido obligatoriamente al protocolo HTTPS cuando accedas al backend web."
+
+msgid 0x945A03A9
+msgstr "Taskent"
+
+msgid 0x946552EC
+msgstr "Ver detalles"
+
+msgid 0x94AFB089
+msgstr "Colombo"
+
+# DUP
+msgid 0x94BA5A04
+msgstr "¡Todo listo! ¡Preparado para empezar! Novedades en esta versión"
+
+msgid 0x94DFAD3D
+msgstr "Brunéi, Irkutsk, Kuala Lumpur, Singapur, Ulán Bator"
+
+msgid 0x9504B536
+msgstr "Configurar QoS"
+
+msgid 0x950FCA68
+msgstr "Conflicto de IP"
+
+msgid 0x951324C3
+msgstr "Desconectado"
+
+msgid 0x9524065E
+msgstr "Conexión a Internet: "
+
+msgid 0x952DD872
+msgstr "Todos los dispositivos serán desconectados del router."
+
+msgid 0x952E405D
+msgstr "1. Ocurrió un error en tu disco duro."
+
+msgid 0x95380DBA
+msgstr "Apagar"
+
+msgid 0x95412C20
+msgstr "La dirección MAC es inválida"
+
+msgid 0x954F1622
+msgstr "El servidor encontró un error"
+
+msgid 0x957DCCD7
+msgstr "Bueno"
+
+msgid 0x958EA72A
+msgstr ""
+"El puerto WAN se cambiará al puerto 1 GbE, y el puerto 2.5 GbE será"
+" utilizado como puerto LAN. La red del router se reiniciará una vez que se complete el cambio (los dispositivos conectados se desconectarán, y se espera que se reconecten en 1 minuto). ¿Cambiar puertos ahora?"
+
+msgid 0x95B85A48
+msgstr "No se pudo encontrar la red repetidora seleccionada"
+
+# DUP
+msgid 0x95D77F4C
+msgstr "Nombre del Wi-Fi"
+
+msgid 0x95E7DDE0
+msgstr "Formateando disco duro"
+
+msgid 0x9610DA5D
+msgstr "Subir registro"
+
+msgid 0x9656796D
+msgstr "Configurado con éxito"
+
+msgid 0x965E709D
+msgstr "Activar Wi-Fi para invitados activará también el Wi-Fi 2.4G"
+
+msgid 0x967642F6
+msgstr "No se pueden seleccionar canales DFS (52-64) cuando el modo Mesh está activado"
+
+msgid 0x96A96916
+msgstr "Nombre de red 2.4G"
+
+msgid 0x96F238C3
+msgstr "Registro del router"
+
+# DUP
+msgid 0x96FCAD6C
+msgstr ""
+"1. Coloca el nodo Mesh que deseas agregar cerca del punto de acceso central."
+
+msgid 0x9709CFC5
+msgstr "Atrás"
+
+msgid 0x971AEE18
+msgstr "Formato"
+
+msgid 0x974C90A8
+msgstr "Probar de nuevo"
+
+msgid 0x9753367B
+msgstr "No se pudo instalar la actualización"
+
+msgid 0x9798F9AC
+msgstr "Iniciar optimización del disco duro"
+
+# DUP
+msgid 0x979C8E4D
+msgstr "Escanea el código QR con tu smartphone para instalar la aplicación"
+
+# DUP
+msgid 0x97D11C65
+msgstr "Hora estándar del Pacífico A"
+
+msgid 0x97EC1663
+msgstr "No hay dispositivos conectados"
+
+msgid 0x97ECDFBB
+msgstr "Error de partición"
+
+msgid 0x98716811
+msgstr "Chennai, Calcuta, Mumbai, Nueva Delhi"
+
+msgid 0x98A3F157
+msgstr "Agregar manualmente"
+
+# DUP
+msgid 0x990A54A6
+msgstr ""
+"Después de activarlo, la interfaz USB del router funcionará en modo 3.0."
+" (USB3.0 tendrá algún impacto en el Wi-Fi 2.4G)"
+
+# DUP
+msgid 0x9913E38C
+msgstr "Almacenamiento USB"
+
+msgid 0x99BC8D4B
+msgstr "Repetidor de red cableada (extender red existente)"
+
+msgid 0x99D82762
+msgstr "Gestionar el ancho de banda de internet manualmente"
+
+msgid 0x99F2D77B
+msgstr "Usando un cable de red:"
+
+# DUP
+msgid 0x99F3F00A
+msgstr "Hora estándar del Pacífico B"
+
+msgid 0x9A12D0FE
+msgstr "Cancelar actualización"
+
+msgid 0x9A3C66C6
+msgstr ""
+"Ver este sitio puede poner en riesgo tu dispositivo y los dispositivos conectados."
+
+# DUP
+msgid 0x9A4C1564
+msgstr "Acceso a unidad flash"
+
+msgid 0x9A65CFED
+msgstr "Selecciona al menos 1 elemento"
+
+msgid 0x9A7C3CC6
+msgstr "El objeto que solicitaste no fue encontrado."
+
+msgid 0x9A8706DA
+msgstr "Conexión a Internet"
+
+msgid 0x9A8DD488
+msgstr "Verificando conexión a internet…"
+
+msgid 0x9A902624
+msgstr "No se pueden seleccionar canales DFS (52-140) cuando el modo Mesh está activado"
+
+msgid 0x9AA16718
+msgstr "Dirección IP inválida"
+
+msgid 0x9ADBD2E9
+msgstr "No se seleccionó archivo"
+
+msgid 0x9AE0D46E
+msgstr "Usa {$0} caracteres o menos"
+
+msgid 0x9AF43464
+msgstr "Addis Abeba, Asmara, Dar es Salaam, Nairobi, Antananarivo"
+
+msgid 0x9AF67F90
+msgstr "Conflicto de puerto"
+
+# DUP
+msgid 0x9AFE8FE3
+msgstr "Agregar manualmente"
+
+msgid 0x9B0A3415
+msgstr ""
+"Después de activar este interruptor, el router funcionará en modo compatible con Wi-Fi 5 para resolver los problemas de compatibilidad. También se desactivarán las funciones relacionadas con Wi-Fi 6, como OFDMA, BSS Coloring, etc."
+
+msgid 0x9B0D0C01
+msgstr "Reiniciar router"
+
+msgid 0x9B108A80
+msgstr "Reglas de reenvío de rango: "
+
+msgid 0x9B47EA0E
+msgstr "Subir {$0}"
+
+msgid 0x9B490F1D
+msgstr "¿Cambiar modo?"
+
+msgid 0x9B537DE5
+msgstr "Nombre del router y contraseña de administrador"
+
+msgid 0x9BD38039
+msgstr "No se pudo formatear, intenta de nuevo."
+
+# DUP
+msgid 0x9BEBBE9C
+msgstr "Configuración de PPPoE"
+
+# DUP
+msgid 0x9BEE9555
+msgstr "Bajo"
+
+# DUP
+msgid 0x9C4084EF
+msgstr "Wi-Fi de doble banda"
+
+# DUP
+msgid 0x9C4084EF
+msgstr "Conexión inteligente"
+
+# DUP
+msgid 0x9CA717BF
+msgstr ""
+"Cuando la velocidad de tu red alcance los 80Mbps o más, puedes activar NAT de hardware para aumentar la velocidad. QoS, limitación de velocidad y velocidad en tiempo real no funcionarán en este caso. Asegúrate de que necesitas NAT de hardware antes de activarlo."
+
+# DUP
+msgid 0x9CB68286
+msgstr ""
+"1. Primero, se debe registrar una cuenta en el sitio web del proveedor del servicio VPN para obtener un nombre de usuario, contraseña, dirección DNS y tipo de protocolo."
+
+msgid 0x9D2DAC02
+msgstr "La contraseña de administrador que ingresaste es inválida"
+
+msgid 0x9D46EF52
+msgstr "Usa {$0} caracteres o más"
+
+msgid 0x9D7C9DC3
+msgstr "Belice, Costa Rica, El Salvador, Guatemala, Managua"
+
+msgid 0x9D892EE1
+msgstr "No se pudo eliminar la dirección MAC"
+
+msgid 0x9D8DBB03
+msgstr "Actualizar ahora"
+
+msgid 0x9DFB0D23
+msgstr "Apagar Wi-Fi 2.4G también apagará Wi-Fi de invitados"
+
+msgid 0x9E017CE0
+msgstr "Resultado de la reparación del disco duro"
+
+# DUP
+msgid 0x9E1406B2
+msgstr "Verifica si el nombre de dominio está ingresado correctamente"
+
+msgid 0x9EB59A0F
+msgstr "Restaurar configuración del router"
+
+msgid 0x9EFD8D9C
+msgstr ""
+"Hay dos métodos para agregar un router satélite a una red mesh, como se indica a continuación"
+
+msgid 0x9F001BD2
+msgstr ""
+"En cumplimiento con las leyes y regulaciones nacionales, el router está realizando detección y evitación de señales de radar. La conexión Wi-Fi se activará en {$time} segundos. Por favor espera"
+
+msgid 0x9F21F03C
+msgstr "Router funcionando en modo seguro"
+
+msgid 0x9F71ECCA
+msgstr "Espacio de almacenamiento insuficiente"
+
+# DUP
+msgid 0x9FF2C1E2
+msgstr "Error 678: Nombre de usuario o contraseña PPPoE incorrectos"
+
+msgid 0x9FFC2113
+msgstr "Agregar"
+
+msgid 0xA000D240
+msgstr "Usa {$0} caracteres o menos"
+
+# DUP
+msgid 0xA012B123
+msgstr "MM/dd/yyyy hh:mm:ss"
+
+msgid 0xA033535E
+msgstr "¿Qué es DDNS?"
+
+msgid 0xA05653B2
+msgstr "Reiniciando router para aplicar configuración. Esto tomará unos 30 segundos."
+
+msgid 0xA05979FC
+msgstr "Magadán"
+
+# DUP
+msgid 0xA06B91C1
+msgstr "Velocidad máxima de carga"
+
+msgid 0xA0FEAA7A
+msgstr "Servidor DHCP"
+
+msgid 0xA1360C81
+msgstr "Información del router"
+
+msgid 0xA19B5804
+msgstr "Contacta a tu proveedor de servicios de Internet para más ayuda"
+
+msgid 0xA1A8911B
+msgstr "Velocidad de descarga"
+
+msgid 0xA1EADE4A
+msgstr "¿Eliminar este dispositivo?"
+
+# DUP
+msgid 0xA24AD91D
+msgstr "o"
+
+# DUP
+msgid 0xA2531011
+msgstr "Kabul"
+
+msgid 0xA2D46FB9
+msgstr "Puede haber problemas con la multidifusión de la cuenta."
+
+msgid 0xA37C165E
+msgstr "Último dígito de la dirección IP"
+
+msgid 0xA3D81A24
+msgstr "Velocidad media"
+
+msgid 0xA4ADEA1C
+msgstr "Total descargado"
+
+msgid 0xA4BEA8D1
+msgstr "Great Wall Broadband"
+
+msgid 0xA4EC9E60
+msgstr "Por favor ingresa números, letras en inglés o símbolos"
+
+msgid 0xA5797896
+msgstr "Ereván"
+
+msgid 0xA57DBC6E
+msgstr "Configuraciones"
+
+msgid 0xA59A28C1
+msgstr "Bélgica"
+
+msgid 0xA5E7C6B6
+msgstr "Probando velocidad de conexión…"
+
+msgid 0xA5E94313
+msgstr "Seguridad"
+
+# DUP
+msgid 0xA6039B3B
+msgstr "Servicio de cable módem de Gehua"
+
+msgid 0xA616EFC3
+msgstr "Prioridad VLAN para IPTV"
+
+msgid 0xA6377C96
+msgstr "¿Qué hay de nuevo?"
+
+msgid 0xA6590D3C
+msgstr "RPM"
+
+msgid 0xA66AA062
+msgstr "DDNS (Servidor de nombres de dominio dinámico)"
+
+msgid 0xA6C5CE3E
+msgstr "Sincronizando la configuración de la red Mesh"
+
+msgid 0xA6CCFC30
+msgstr "La nueva contraseña y la contraseña antigua son idénticas"
+
+# DUP
+msgid 0xA6EBEA9F
+msgstr "Error 691: Nombre de usuario o contraseña PPPoE incorrectos"
+
+msgid 0xA7119D76
+msgstr "No se pudo probar, intenta de nuevo"
+
+msgid 0xA71AED9E
+msgstr "Desconectar"
+
+msgid 0xA7212691
+msgstr "Ubicación"
+
+# DUP
+msgid 0xA7953DF9
+msgstr "Mi Router 4C"
+
+# DUP
+msgid 0xA7953DF9
+msgstr "Mi Wi-Fi 4C"
+
+# DUP
+msgid 0xA7BF6A4F
+msgstr "Servicio de red de banda ancha Great Wall"
+
+# DUP
+msgid 0xA7E5043D
+msgstr "Hora estándar de Bangladesh"
+
+msgid 0xA7EB5AB1
+msgstr "Formato de fecha: AAAA-MM-DD"
+
+msgid 0xA7F871B5
+msgstr "QoS"
+
+msgid 0xA7FA35B0
+msgstr ""
+"Esto tomará aproximadamente 7 minutos. La luz de notificación del router se pondrá azul"
+" cuando se complete la actualización."
+
+msgid 0xA82D2989
+msgstr "Verifica la dirección IP estática"
+
+# DUP
+msgid 0xA82DC1EB
+msgstr "Apagar Wi-Fi también apagará Wi-Fi de invitados"
+
+msgid 0xA83EA4C1
+msgstr ""
+"La dirección IP LAN es inválida. El rango debe ser 10.0.0.0~10.255.255.255,"
+" 172.16.0.0~172.23.255.255 o 192.168.0.0~192.168.255.255."
+
+msgid 0xA84DAF51
+msgstr "No se encontró ningún nodo Mesh utilizable:"
+
+# DUP
+msgid 0xA852DE07
+msgstr "Red Wi-Fi creada, conéctate manualmente"
+
+msgid 0xA8BE3F8D
+msgstr "No se pudo conectar"
+
+msgid 0xA8C8D16D
+msgstr "Bruselas, Copenhague, Madrid, París"
+
+msgid 0xA8D503EC
+msgstr "Usuarios"
+
+msgid 0xA906D1E6
+msgstr ""
+"Atención: Desconecta Mi Router de tu antiguo router, y conecta la LAN del proveedor de servicios de Internet al puerto WAN de Mi Router (azul)"
+
+msgid 0xA9244338
+msgstr "Tokio"
+
+msgid 0xA962105A
+msgstr "Modelo"
+
+msgid 0xA96A8D59
+msgstr "No se pudo marcar (Error"
+
+# DUP
+msgid 0xA96CDCFB
+msgstr "Vietnam"
+
+msgid 0xA97EDAA7
+msgstr "Modo Wi-Fi 6(802.11ax)"
+
+msgid 0xA9817C91
+msgstr "No se pudieron aplicar configuraciones VPN"
+
+msgid 0xA993BBB2
+msgstr "ID de dispositivo inválido"
+
+# DUP
+msgid 0xA9D24D37
+msgstr "Modo amplificador con cable"
+
+msgid 0xA9E66C66
+msgstr "Introduce {$0}."
+
+msgid 0xA9F4AC0A
+msgstr "Tipo de conexión a Internet"
+
+msgid 0xA9F52CFA
+msgstr "Paso 1: Conecta el router a la fuente de alimentación."
+
+msgid 0xAA07D049
+msgstr "No se pudo usar repetidor con cable"
+
+msgid 0xAA286E53
+msgstr "Contacta a tu proveedor de servicios"
+
+msgid 0xAA3FA0AC
+msgstr "Personalizado"
+
+msgid 0xAA8C4D3F
+msgstr ""
+"Con esta función habilitada, el router puede descubrir automáticamente los"
+" dispositivos Wi-Fi no inicializados que admiten una conexión fluida, y configurar rápidamente la red a través de la aplicación Mi Home. Si se cambia la contraseña del router, también se sincronizará automáticamente con los dispositivos que"
+" admiten Xiaomi Easy Connect."
+
+# DUP
+msgid 0xAAA55A69
+msgstr "Conflicto de IP detectado"
+
+msgid 0xAACE57D8
+msgstr "Error del sistema. Espera un minuto o dos e inténtalo de nuevo."
+
+msgid 0xAB68D0D1
+msgstr "El sitio está ocupado. Actualiza e inténtalo de nuevo."
+
+msgid 0xAB8B8B5B
+msgstr "UPnP está apagado"
+
+msgid 0xAB8CB4EC
+msgstr "Límite de velocidad de la aplicación"
+
+msgid 0xABA2F54F
+msgstr "Error de verificación de salud: fallo al desmontar el disco duro"
+
+# DUP
+msgid 0xABABBA39
+msgstr "Configuraciones de red (tipo de conexión, cuenta de red y contraseña)"
+
+# DUP
+msgid 0xABAE4260
+msgstr "No se agregaron direcciones"
+
+# DUP
+msgid 0xABBE988B
+msgstr "2. El proceso de inicialización será"
+
+msgid 0xAC50F23F
+msgstr "Es necesario reiniciar para continuar"
+
+msgid 0xAC51C3AB
+msgstr "Adaptador Ethernet"
+
+msgid 0xAC55ED1B
+msgstr "Un momento…"
+
+msgid 0xAC85CEBD
+msgstr "Modo de asignación de ancho de banda"
+
+msgid 0xAC9E460E
+msgstr "Galápagos"
+
+msgid 0xACAC3C85
+msgstr "Configuraciones de Wi-Fi"
+
+msgid 0xACCC1931
+msgstr "IP de destino: "
+
+msgid 0xAD12B860
+msgstr "Yangon, Cocos"
+
+msgid 0xAD1F9DCF
+msgstr "No se recibió respuesta del servidor PPPoE"
+
+msgid 0xADA293A3
+msgstr "Macao, Shanghái, Taipéi"
+
+msgid 0xADC86B1F
+msgstr "Velocidad"
+
+# DUP
+msgid 0xADDB9E7A
+msgstr "No se pudo conectar al servidor DNS"
+
+msgid 0xADF4A82D
+msgstr "Bagdad, Kuwait, Qatar, Riad, Estambul"
+
+msgid 0xAE28EB4A
+msgstr "Nueva copia de seguridad"
+
+msgid 0xAE46AD5B
+msgstr "No se pudo buscar actualizaciones"
+
+msgid 0xAE555CD7
+msgstr "Cayena, Fortaleza"
+
+msgid 0xAE6F145C
+msgstr "Australia"
+
+msgid 0xAE8D9D71
+msgstr "Compañía"
+
+# DUP
+msgid 0xAEDED05B
+msgstr "El servicio Oray DDNS no ha sido activado"
+
+msgid 0xAF033749
+msgstr "Puente"
+
+msgid 0xAF23C2EA
+msgstr "Mi Router 3"
+
+# DUP
+msgid 0xAF4C5C89
+msgstr "Acceso VPN"
+
+msgid 0xAF4CDE2B
+msgstr "El archivo no existe o ha sido corrompido"
+
+# DUP
+msgid 0xAF696118
+msgstr "Estado de la red en tiempo real"
+
+msgid 0xAF700AF1
+msgstr "QoS"
+
+msgid 0xAF852DCD
+msgstr "No se pudo completar el restablecimiento de fábrica"
+
+msgid 0xAF8C0C4A
+msgstr "Restaurar tu router a la configuración de fábrica."
+
+msgid 0xAFC1D371
+msgstr "No hay dispositivos"
+
+msgid 0xAFE94E92
+msgstr "¿Enviar sin hacer cambios?"
+
+msgid 0xB022538D
+msgstr "Dirección IP estática no válida"
+
+msgid 0xB030E101
+msgstr "Casablanca, El Aaiún"
+
+msgid 0xB0629B19
+msgstr "La fecha de inicio no puede ser posterior a la fecha de finalización."
+
+msgid 0xB073298A
+msgstr "Medio"
+
+msgid 0xB0812C2A
+msgstr "Acceso"
+
+msgid 0xB0841D6D
+msgstr "Paso 2: Conecta el cable ethernet al puerto WAN del router existente."
+
+msgid 0xB09C55DB
+msgstr "Dinamarca"
+
+msgid 0xB0D4AA67
+msgstr "No hay actualizaciones disponibles"
+
+msgid 0xB0EAE75E
+msgstr "Red inalámbrica"
+
+# DUP
+msgid 0xB10B5D0B
+msgstr "Dispositivos conectados a Wi-Fi"
+
+# DUP
+msgid 0xB1144EA4
+msgstr "Europa"
+
+# DUP
+msgid 0xB11B6A6A
+msgstr "Escaneando el almacenamiento, por favor espera"
+
+# DUP
+msgid 0xB11B6A6A
+msgstr "Escaneando el almacenamiento, por favor espera"
+
+# DUP
+msgid 0xB13B36AC
+msgstr "Servicio al cliente de banda ancha de China Telecom"
+
+msgid 0xB15B0B0C
+msgstr ""
+"Si deshabilitas JavaScript, no podrás acceder a miwifi.com para gestionar"
+" tu router."
+
+msgid 0xB175F0F4
+msgstr "No se puede extender la red"
+
+msgid 0xB19B521E
+msgstr "Confirmar contraseña"
+
+msgid 0xB1B0EF86
+msgstr "Desconectado. El puerto WAN no está conectado a la red"
+
+msgid 0xB2003A7E
+msgstr "Usa la contraseña que se indica a continuación"
+
+msgid 0xAD12B860
+msgstr "Yangon, Cocos"
+
+msgid 0xAD1F9DCF
+msgstr "No se recibió respuesta del servidor PPPoE"
+
+msgid 0xADA293A3
+msgstr "Macao, Shanghái, Taipéi"
+
+msgid 0xADC86B1F
+msgstr "Velocidad"
+
+# DUP
+msgid 0xADDB9E7A
+msgstr "No se pudo conectar al servidor DNS"
+
+msgid 0xADF4A82D
+msgstr "Bagdad, Kuwait, Qatar, Riad, Estambul"
+
+msgid 0xAE28EB4A
+msgstr "Nueva copia de seguridad"
+
+msgid 0xAE46AD5B
+msgstr "No se pudo buscar actualizaciones"
+
+msgid 0xAE555CD7
+msgstr "Cayena, Fortaleza"
+
+msgid 0xAE6F145C
+msgstr "Australia"
+
+msgid 0xAE8D9D71
+msgstr "Compañía"
+
+# DUP
+msgid 0xAEDED05B
+msgstr "El servicio Oray DDNS no ha sido activado"
+
+msgid 0xAF033749
+msgstr "Puente"
+
+msgid 0xAF23C2EA
+msgstr "Mi Router 3"
+
+# DUP
+msgid 0xAF4C5C89
+msgstr "Acceso VPN"
+
+msgid 0xAF4CDE2B
+msgstr "El archivo no existe o ha sido corrompido"
+
+# DUP
+msgid 0xAF696118
+msgstr "Estado de la red en tiempo real"
+
+msgid 0xAF700AF1
+msgstr "QoS"
+
+msgid 0xAF852DCD
+msgstr "No se pudo completar el restablecimiento de fábrica"
+
+msgid 0xAF8C0C4A
+msgstr "Restaurar tu router a la configuración de fábrica."
+
+msgid 0xAFC1D371
+msgstr "Sin dispositivos"
+
+msgid 0xAFE94E92
+msgstr "¿Enviar sin hacer cambios?"
+
+msgid 0xB022538D
+msgstr "Dirección IP estática no válida"
+
+msgid 0xB030E101
+msgstr "Casablanca, El Aaiún"
+
+msgid 0xB0629B19
+msgstr "La fecha de inicio no puede ser posterior a la fecha de finalización."
+
+msgid 0xB073298A
+msgstr "Medio"
+
+msgid 0xB0812C2A
+msgstr "Acceso"
+
+msgid 0xB0841D6D
+msgstr "Paso 2: Conecta el cable ethernet al puerto WAN del router existente."
+
+msgid 0xB09C55DB
+msgstr "Dinamarca"
+
+msgid 0xB0D4AA67
+msgstr "No hay actualizaciones disponibles"
+
+msgid 0xB0EAE75E
+msgstr "Red inalámbrica"
+
+# DUP
+msgid 0xB10B5D0B
+msgstr "Dispositivos conectados a Wi-Fi"
+
+# DUP
+msgid 0xB1144EA4
+msgstr "Europa"
+
+# DUP
+msgid 0xB11B6A6A
+msgstr "Escaneando almacenamiento, por favor espera"
+
+# DUP
+msgid 0xB11B6A6A
+msgstr "Escaneando almacenamiento, por favor espera"
+
+# DUP
+msgid 0xB13B36AC
+msgstr "Servicio al cliente de banda ancha de China Telecom"
+
+msgid 0xB15B0B0C
+msgstr ""
+"Si deshabilitas JavaScript, no podrás acceder a miwifi.com para gestionar"
+" tu router."
+
+msgid 0xB175F0F4
+msgstr "No se puede extender la red"
+
+msgid 0xB19B521E
+msgstr "Confirmar contraseña"
+
+msgid 0xB1B0EF86
+msgstr "Desconectado. El puerto WAN no está conectado a la red"
+
+msgid 0xB2003A7E
+msgstr "Usa la contraseña que se indica a continuación"
+
+msgid 0xB2711D33
+msgstr "Desvincular dispositivo"
+
+msgid 0xB2B62428
+msgstr "Verifica el número de teléfono que ingresaste"
+
+msgid 0xB2CEDD95
+msgstr "Organizando archivos…"
+
+msgid 0xB2DD617C
+msgstr "No hay dispositivos disponibles"
+
+msgid 0xB2E1EC07
+msgstr "Valor no válido"
+
+msgid 0xB2EAE041
+msgstr "Dispositivos UPnP: "
+
+msgid 0xB2F3BA72
+msgstr "Tiflis"
+
+msgid 0xB313AECC
+msgstr "Dirección del servidor"
+
+msgid 0xB32FA915
+msgstr "Verifica los campos de entrada 1-4094"
+
+msgid 0xB33DEC7F
+msgstr "Omitir"
+
+msgid 0xB34E464B
+msgstr "Verifica la configuración de DNS"
+
+msgid 0xB35E1D6F
+msgstr "Agregar regla"
+
+msgid 0xB38396FF
+msgstr "Xiaomi Easy Connect"
+
+msgid 0xB3AA0F40
+msgstr "Moscú, Simferópol"
+
+msgid 0xB3ABF558
+msgstr "Grupo de red Mesh"
+
+# DUP
+msgid 0xB3AE343F
+msgstr "Descarga la App MiWiFi para gestionar tu router"
+
+# DUP
+msgid 0xB3B1EC91
+msgstr "Hora estándar de Nepal"
+
+msgid 0xB3BFCBEB
+msgstr "Modo repetidor (extender Wi-Fi existente)"
+
+# DUP
+msgid 0xB3C13D4D
+msgstr "Agregar dispositivo para decidir qué tráfico pasa por la VPN"
+
+msgid 0xB3C8F1D1
+msgstr "El servicio DNS personalizado no responde"
+
+msgid 0xB3CC7218
+msgstr "Mi Router"
+
+msgid 0xB3D2FB8C
+msgstr "La Habana"
+
+msgid 0xB426AAAC
+msgstr "Beta"
+
+msgid 0xB491DC34
+msgstr "Nueva Zelanda"
+
+msgid 0xB4BECFFC
+msgstr "Ingresa contraseña"
+
+msgid 0xB4BEF430
+msgstr "Chatham"
+
+msgid 0xB4CF91F9
+msgstr "África occidental central"
+
+# DUP
+msgid 0xB4D50C08
+msgstr "Velocidad máxima de descarga"
+
+msgid 0xB4F94FCA
+msgstr ""
+"Usar la App MiWiFi elimina la molestia de tener que recordar una contraseña"
+
+msgid 0xB5036796
+msgstr "Arizona"
+
+msgid 0xB5CD9B65
+msgstr "Agregar un nuevo nodo Mesh"
+
+msgid 0xB5E43BC8
+msgstr "Niue"
+
+msgid 0xB610ECAF
+msgstr "Guardar"
+
+msgid 0xB64F84AE
+msgstr "Error del marcador de banda ancha"
+
+msgid 0xB668CFF1
+msgstr "Instalación de complementos"
+
+msgid 0xB67D129F
+msgstr "Bulgaria"
+
+msgid 0xB6C85EA0
+msgstr "Nuku'alofa"
+
+msgid 0xB7016B92
+msgstr ""
+"El escaneo automático de antena inteligente AIoT puede descubrir"
+" automáticamente dispositivos inteligentes Mi que no han sido inicializados y"
+" conectarlos rápidamente a través de la App Mi Home."
+
+msgid 0xB72DB525
+msgstr "No se puede despachar"
+
+msgid 0xB7338E6F
+msgstr "Pekín, Chongqing, Hong Kong, Ürümqi"
+
+msgid 0xB7347B96
+msgstr "Extensión de red Mesh exitosa"
+
+msgid 0xB756FCB5
+msgstr "Gestor de Seguridad de Tencent"
+
+msgid 0xB7656DE9
+msgstr "Modo de lista negra (los dispositivos listados no tienen permisos para conectarse)"
+
+msgid 0xB7BF6D61
+msgstr ""
+"Las mejoras de rendimiento de Wi-Fi 6 (802.11ax) son perceptibles solo en"
+" dispositivos que admiten el protocolo Wi-Fi 6 (802.11ax)"
+
+msgid 0xB7C4DD7C
+msgstr "Banda"
+
+msgid 0xB7C68DF9
+msgstr "No se pudo completar esta acción. Este dispositivo puede estar desconectado."
+
+msgid 0xB7E4D3DC
+msgstr "Las contraseñas no coinciden."
+
+msgid 0xB81C440E
+msgstr ""
+"5. Mantén presionado el botón de reinicio para restaurar el router a la configuración de fábrica y"
+" luego intenta de nuevo."
+
+msgid 0xB8769AF0
+msgstr "Sin limitaciones"
+
+# DUP
+msgid 0xB8CBC134
+msgstr "Hora estándar del oeste de Australia"
+
+msgid 0xB8F93694
+msgstr "Rumanía"
+
+# DUP
+msgid 0xB93BE534
+msgstr "Agregar dirección del servidor VPN"
+
+msgid 0xB9463D12
+msgstr "Verifica la configuración del servidor DNS"
+
+msgid 0xB95CAA52
+msgstr "Nairobi"
+
+msgid 0xB9A9A2DD
+msgstr "Nombre"
+
+msgid 0xB9BF8DFA
+msgstr "Verifica los campos de entrada"
+
+msgid 0xB9E3A1B4
+msgstr "Eucla"
+
+msgid 0xB9F192C7
+msgstr "Colombia"
+
+msgid 0xBA025C1A
+msgstr "Asegúrate de tener el permiso adecuado para usar esta compilación."
+
+msgid 0xBA051B5F
+msgstr "No se pudo cambiar al modo router"
+
+# DUP
+msgid 0xBA0FA3CE
+msgstr ""
+"No desconectes el router mientras se está actualizando, ya que esto podría"
+" causar daños permanentes."
+
+msgid 0xBA299E91
+msgstr "Estado del repetidor"
+
+# DUP
+msgid 0xBA3D4826
+msgstr "Hora de Vanuatu"
+
+msgid 0xBA6BA7A7
+msgstr "Baja California"
+
+# DUP
+msgid 0xBA859BB1
+msgstr "Cómo configurar una VPN"
+
+msgid 0xBAF91F7B
+msgstr ""
+"Esta cuenta Mi ha sido desvinculada del router, puedes iniciar sesión con"
+" la cuenta de administrador y emparejar nuevamente"
+
+msgid 0xBB058743
+msgstr "PPPoE no pudo marcar (Error 691)"
+
+# DUP
+msgid 0xBB3F37C0
+msgstr "Hora estándar del Pacífico C"
+
+# DUP
+msgid 0xBB68EA54
+msgstr "Usa una dirección MAC para agregar un dispositivo"
+
+msgid 0xBB6CBB40
+msgstr "Velocidad máxima"
+
+msgid 0xBBACA77F
+msgstr "Ubicación del almacenamiento de archivos"
+
+# DUP
+msgid 0xBBB0ACC7
+msgstr ""
+"Usar nuestra aplicación móvil es otra forma genial de navegar por tus fotos y videos"
+
+msgid 0xBBDE7E96
+msgstr "IP estática recomendada"
+
+msgid 0xBBF0D150
+msgstr "Dispositivos emparejados"
+
+msgid 0xBC02413C
+msgstr "Copias de seguridad disponibles"
+
+# DUP
+msgid 0xBC3D9B64
+msgstr "Señal fuerte para mayor penetración y cobertura más amplia"
+
+msgid 0xBC749835
+msgstr "Formato de archivo no válido"
+
+msgid 0xBC8FBB0C
+msgstr "Repetidor inalámbrico"
+
+msgid 0xBCBD88DD
+msgstr ""
+"2. Conecta la alimentación del nodo satélite y espera a que el indicador del sistema"
+" se vuelva azul o blanco constante (el color depende del modelo específico)"
+
+# DUP
+msgid 0xBCDD4A54
+msgstr "Hora de Cabo Verde"
+
+# DUP
+msgid 0xBD07243E
+msgstr "Encender"
+
+msgid 0xBD22C112
+msgstr "Tiempo de arrendamiento"
+
+msgid 0xBD520C4E
+msgstr "Opcional"
+
+msgid 0xBE052F3F
+msgstr ""
+"Aplicable a entornos de Internet en los que no se asigna un prefijo IPv6 al"
+" router. Por ejemplo, marcado de módem principal."
+
+msgid 0xBE07C02D
+msgstr "Sótano"
+
+msgid 0xBE621FEE
+msgstr "Ingrese {$0} caracteres o más"
+
+msgid 0xBE6A213F
+msgstr "No se pudo conectar al router automáticamente."
+
+msgid 0xBE8FD973
+msgstr "¡Hola!"
+
+msgid 0xBEC18DE2
+msgstr "Tómate unos minutos para configurar tu router"
+
+msgid 0xBEC2CBE6
+msgstr "Fuente de alimentación del router existente"
+
+msgid 0xBF57A3C1
+msgstr "Port Louis"
+
+# DUP
+msgid 0xBF6BF27C
+msgstr "Dirección"
+
+msgid 0xBFBB3BA9
+msgstr ""
+"1. ¿Estás seguro de que deseas restaurar la configuración de fábrica y restablecer el"
+" router Xiaomi a su estado original?"
+
+msgid 0xBFBFA0CE
+msgstr "Servicio de red de banda ancha Aipu"
+
+msgid 0xBFDD668E
+msgstr "Imagen"
+
+msgid 0xBFF63414
+msgstr "Cambiar configuración de Wi-Fi"
+
+msgid 0xBFFDBF9E
+msgstr ""
+"Espera hasta que la luz de notificación del router se apague antes de desconectar la fuente de"
+" alimentación."
+
+msgid 0xC01470E0
+msgstr "Saskatchewan"
+
+msgid 0xC029C8EF
+msgstr "Clonar"
+
+# DUP
+msgid 0xC02E88B4
+msgstr "Katmandú"
+
+msgid 0xC043DE57
+msgstr "Estado del tráfico"
+
+msgid 0xC0BA046B
+msgstr "No se pudieron aplicar las configuraciones"
+
+msgid 0xC0BB5B48
+msgstr "Camboya"
+
+msgid 0xC0BC6C60
+msgstr ""
+"Para buscar y agregar nodos mesh, primero ve a la página de Configuración de Wi-Fi y"
+" habilita Wi-Fi 5G."
+
+msgid 0xC0CC8743
+msgstr "Grecia"
+
+msgid 0xC1CD21BE
+msgstr "Dirección IP del router"
+
+msgid 0xC216EC7F
+msgstr "Leer"
+
+msgid 0xC2415639
+msgstr "Kiribati"
+
+msgid 0xC285B5F1
+msgstr ""
+"2. Asegúrate de que Mi Router y el router existente estén conectados a la misma"
+" red."
+
+msgid 0xC29F7E0B
+msgstr "Todavía puedes conectarte a Internet cuando el router está en modo seguro."
+
+msgid 0xC2BBF4A6
+msgstr ""
+"El ancho de banda de 160 MHz solo es aplicable a los canales 36-64 y el sistema"
+" cambiará automáticamente el ancho de banda a 80 MHz"
+
+msgid 0xC2D141D7
+msgstr "d"
+
+msgid 0xC2D98B81
+msgstr "Términos del servicio"
+
+msgid 0xC2F256DD
+msgstr "Sistema de archivos"
+
+msgid 0xC378317C
+msgstr "Puerto WAN conectado a la red"
+
+msgid 0xC3A717EC
+msgstr "No se pudo obtener información del desarrollador"
+
+msgid 0xC3CA12EE
+msgstr "Azores"
+
+msgid 0xC3CA59A2
+msgstr "Restaurar elementos"
+
+msgid 0xC3F303CD
+msgstr "Oficina"
+
+msgid 0xC40027EB
+msgstr "Recurso no está listo"
+
+msgid 0xC417360C
+msgstr ""
+"Para asegurar la mejor experiencia de usuario posible, no se admite cambiar a modo repetidor"
+" en modo Mesh."
+
+msgid 0xC4233A0A
+msgstr "IP del router: "
+
+msgid 0xC425F35A
+msgstr "No se detectó conexión en el puerto WAN"
+
+msgid 0xC43129CC
+msgstr "Prueba otro navegador: "
+
+msgid 0xC46BD1CC
+msgstr ""
+"Se detecta que el Wi-Fi de 2,4 GHz está actualmente apagado. Por favor, enciéndelo"
+" y agrégalo nuevamente."
+
+msgid 0xC4A4AA97
+msgstr "Ingresa la URL completa (ej. http://miwifi.com)"
+
+msgid 0xC51E0E49
+msgstr "No se pudo completar esta acción"
+
+msgid 0xC52835CF
+msgstr ""
+"Si tu disco duro aún está bajo la garantía limitada de 1 año, contacta al soporte"
+" al cliente"
+
+msgid 0xC52DBD27
+msgstr "El prefijo de la dirección IPv6 WAN tiene 128 bits de longitud por defecto"
+
+msgid 0xC53EAB66
+msgstr "Ejecutar comprobación de salud"
+
+msgid 0xC5A66961
+msgstr "Error en el centro de datos"
+
+# DUP
+msgid 0xC60BDBFB
+msgstr "Posibles razones"
+
+msgid 0xC613E81E
+msgstr "Disponible"
+
+msgid 0xC65B4484
+msgstr ""
+"Esta función puede causar alguna pérdida de paquetes y retraso en un entorno de red congestionado."
+
+msgid 0xC662C2D8
+msgstr "Mi AIoT Router AX3600"
+
+# DUP
+msgid 0xC6A04C8F
+msgstr "Hora estándar de Corea"
+
+msgid 0xC6AFBB11
+msgstr "Moscú, San Petersburgo, Volgogrado"
+
+msgid 0xC6AFFCBC
+msgstr "La configuración de IPv6 se ha cerrado con éxito"
+
+msgid 0xC6CE404F
+msgstr "Dirección IPv6 de LAN"
+
+msgid 0xC6D88B5E
+msgstr "Capital"
+
+msgid 0xC6E532BC
+msgstr "Tiempo universal coordinado-02"
+
+msgid 0xC7940E52
+msgstr "Hay un problema con el cable ethernet que has conectado."
+
+msgid 0xC7B390E1
+msgstr "Buscando actualizaciones…"
+
+# DUP
+msgid 0xC7F671FB
+msgstr "Priorizar asegurar la velocidad de navegación por las páginas web"
+
+msgid 0xC840FA66
+msgstr "Dispositivo actual"
+
+msgid 0xC9357908
+msgstr "Bangkok, Hanói, Yakarta"
+
+msgid 0xC9380C3E
+msgstr "Documentos"
+
+msgid 0xC93D8AD8
+msgstr "Tipo de conexión: "
+
+msgid 0xC96FD163
+msgstr "El modo de red IPv6 se está configurando. Por favor espera..."
+
+msgid 0xC97D8517
+msgstr "Ocurrió un error"
+
+msgid 0xC99C143A
+msgstr "Omitir este paso"
+
+# DUP
+msgid 0xC9C0AC7F
+msgstr "Instala nuestro cliente para PC o Mac y accede fácilmente al disco duro de Mi Wi-Fi"
+
+msgid 0xC9CB2395
+msgstr "No se puede apagar cuando el modo repetidor Wi-Fi está activado"
+
+msgid 0xC9E25910
+msgstr "La contraseña que ingresaste es incorrecta"
+
+msgid 0xCA1F0D8C
+msgstr "No hay suficiente espacio de almacenamiento"
+
+msgid 0xCA204B59
+msgstr "LAN y WAN no pueden tener el mismo segmento de red."
+
+msgid 0xCA38F4D3
+msgstr "Sácale el máximo provecho a tu router con la APP Mi WiFi"
+
+msgid 0xCA5D86DC
+msgstr ""
+"El puerto de red 2.5G está actualmente operando como puerto LAN. Puedes conectar un dispositivo LAN"
+
+msgid 0xCAA19F30
+msgstr "Error del sistema de archivos"
+
+msgid 0xCABA8AE6
+msgstr "Última verificación de salud"
+
+# DUP
+msgid 0xCAD17FE7
+msgstr "Descargar la app Mi Wi-Fi"
+
+msgid 0xCAE3D874
+msgstr "Finlandia"
+
+msgid 0xCB1FCB92
+msgstr "Nombre del router"
+
+msgid 0xCB38E3DB
+msgstr "No se pudo completar la configuración"
+
+msgid 0xCB5CCC64
+msgstr "Aipu Broadband"
+
+msgid 0xCBA8E50C
+msgstr "Configurar nuevo nombre de red y contraseña"
+
+msgid 0xCC545BEA
+msgstr "Hawái"
+
+msgid 0xCCE7F575
+msgstr "Estado"
+
+msgid 0xCCFA357C
+msgstr ""
+"2. Después de cambiar al modo repetidor, las funciones de Mesh no estarán disponibles."
+
+msgid 0xCD3534FC
+msgstr "Disco duro ya "
+
+msgid 0xCD585ABA
+msgstr "Ciudad"
+
+msgid 0xCD66B4E4
+msgstr "Busca el nodo Mesh que deseas agregar"
+
+msgid 0xCD975F2B
+msgstr "Marquesas"
+
+msgid 0xCDA9D190
+msgstr "Verifica el número de teléfono que ingresaste"
+
+msgid 0xCDAA80DD
+msgstr "WPA3"
+
+msgid 0xCDB07FE7
+msgstr "Hora central (EE.UU. y Canadá)"
+
+msgid 0xCE0F43DF
+msgstr "Verificando disco duro…"
+
+msgid 0xCE36E548
+msgstr "El router está configurado como un repetidor inalámbrico."
+
+# DUP
+msgid 0xCE38F72A
+msgstr "Cómo restablecer la contraseña de la red"
+
+# DUP
+msgid 0xCE545EB0
+msgstr "Hora estándar de Asia Oriental"
+
+msgid 0xCEF7E036
+msgstr "1. Tu disco duro funciona bien."
+
+# DUP
+msgid 0xCF298202
+msgstr "Error de autenticación. Verifica si el nombre de usuario y la contraseña están ingresados correctamente"
+
+msgid 0xCF35B59A
+msgstr "Dubái, Astracán, Saratov, Mahé, Mauricio"
+
+# DUP
+msgid 0xCF54D738
+msgstr "Ver red completa"
+
+msgid 0xCF61329F
+msgstr "Plug and Play universal (UPnP)"
+
+msgid 0xCF6BD868
+msgstr "1. Tu disco duro está en excelentes condiciones."
+
+msgid 0xCF705833
+msgstr "Almacenamiento"
+
+msgid 0xCF7F8702
+msgstr "Tiempo de arrendamiento (min)"
+
+msgid 0xCF8DF29B
+msgstr "Soporte"
+
+msgid 0xCFA9DD8A
+msgstr "Harare, Pretoria"
+
+msgid 0xCFF21B82
+msgstr "Seleccionar país/región"
+
+# DUP
+msgid 0xD00EE777
+msgstr "Brasil"
+
+msgid 0xD035046D
+msgstr "Reenvío de puertos"
+
+msgid 0xD056807A
+msgstr "La contraseña no puede contener caracteres chinos o especiales"
+
+msgid 0xD05A4A39
+msgstr "No se puede detectar Wi-Fi"
+
+msgid 0xD05BB39D
+msgstr "Borrar todas las configuraciones personalizadas"
+
+msgid 0xD06AE6AB
+msgstr "La contraseña que ingresaste es incorrecta"
+
+msgid 0xD0AD492B
+msgstr "Cargando…"
+
+msgid 0xD0B2884E
+msgstr "Configuraciones de red IPv6"
+
+msgid 0xD0B4A205
+msgstr "Kuwait, Riad"
+
+msgid 0xD0B5877A
+msgstr "Los dispositivos que solo admiten seguridad WPA no pueden conectarse"
+
+msgid 0xD106C3D3
+msgstr "Intentando optimizar"
+
+msgid 0xD1699D88
+msgstr "Cargando…"
+
+msgid 0xD1A803F1
+msgstr "La extensión de la red Mesh falló"
+
+msgid 0xD1F3C92D
+msgstr "Configurar nombre de red Wi-Fi y contraseña"
+
+msgid 0xD2031F8B
+msgstr "Sri Jayawardenepura"
+
+msgid 0xD221B345
+msgstr "Contraseña original"
+
+msgid 0xD2AC5F8F
+msgstr "Intervalo de verificación"
+
+# DUP
+msgid 0xD2B56805
+msgstr "Zona horaria de Samoa"
+
+msgid 0xD2BAB1C9
+msgstr "Agregar"
+
+msgid 0xD2BD76D1
+msgstr "Interruptor HTTPS"
+
+msgid 0xD2D4BACD
+msgstr "Inicio"
+
+# DUP
+msgid 0xD2E96560
+msgstr "Dirección IP inválida. Tu dirección IP debe estar dentro de 1.0.0.0~126.255.255.255 o 128.0.0.0~223.255.255.255"
+
+msgid 0xD312A8AA
+msgstr "Enderbury, Fakaofo, Tongatapu"
+
+msgid 0xD328160F
+msgstr "MTU debe estar entre 576...1498 bytes"
+
+msgid 0xD34624A2
+msgstr "Respaldo de dispositivo"
+
+msgid 0xD35CEA34
+msgstr "Hora del Atlántico (Canadá)"
+
+# DUP
+msgid 0xD386753A
+msgstr "Estándar"
+
+# DUP
+msgid 0xD386753A
+msgstr "Medio"
+
+# DUP
+msgid 0xD3ABA16A
+msgstr ""
+"Cuando la función está activada, las redes 2.4G y 5G compartirán un nombre. El router"
+" elegirá la mejor señal disponible. Por ejemplo, cambiará a la red 5G si el dispositivo"
+" está cerca, y a la red 2.4G si está lejos. Puede haber interrupciones breves durante el cambio"
+
+msgid 0xD3BABF27
+msgstr "PPPoE recomendado (se requiere nombre de usuario y contraseña)"
+
+msgid 0xD3D4DEF3
+msgstr "Verificando configuraciones…"
+
+msgid 0xD3EAB0A5
+msgstr "Malta"
+
+msgid 0xD4133496
+msgstr "Restablecimiento de datos de fábrica"
+
+# DUP
+msgid 0xD41680C8
+msgstr "Cambiar configuración de red"
+
+msgid 0xD4B9BAD5
+msgstr "KuaiPan"
+
+msgid 0xD4E29FD7
+msgstr "No se ha realizado ninguna verificación de salud en este disco duro"
+
+msgid 0xD505AE78
+msgstr "Nombre de usuario o contraseña de la cuenta PPPoE incorrectos"
+
+msgid 0xD536BC46
+msgstr "Solo se admiten tipos de archivos jpg, jpeg, png, gif, tif o bmp."
+
+msgid 0xD53B1327
+msgstr "No se pudo detener el complemento del servicio o desmontar el disco duro"
+
+msgid 0xD5EC1657
+msgstr "2. Activa DDNS, agrega un servidor, ingresa la configuración del servidor y guarda."
+
+# DUP
+msgid 0xD61C3475
+msgstr "Probar red"
+
+msgid 0xD6371DC7
+msgstr "1. Nombre de la red"
+
+msgid 0xD654DB9F
+msgstr "Dispositivos 5G no conectados"
+
+msgid 0xD66946EB
+msgstr "Buenos Aires, San Luis, Maceió, Montevideo, Paramaribo"
+
+msgid 0xD690D321
+msgstr "Unirse"
+
+msgid 0xD6C7FACE
+msgstr "Cambiar nombre del router"
+
+msgid 0xD6C8CEEA
+msgstr ""
+"Durante este proceso, la red inalámbrica se reiniciará y habrá una breve caída."
+
+# DUP
+msgid 0xD6CD2E1A
+msgstr "Hora estándar de la India"
+
+msgid 0xD6EA354A
+msgstr "No se pudo detectar el tipo de red. Seleccione el tipo manualmente:"
+
+msgid 0xD71BA6EC
+msgstr "Buscando dispositivos cercanos…"
+
+msgid 0xD71D26BA
+msgstr "Estado UPnP"
+
+# DUP
+msgid 0xD72A636D
+msgstr "Creando Wi-Fi 2.4G & 5G"
+
+msgid 0xD7526E22
+msgstr "Puertos externos"
+
+msgid 0xD77998FD
+msgstr "Cambiar entre el modo router y el modo repetidor"
+
+msgid 0xD7970ABA
+msgstr "Configurar"
+
+# DUP
+msgid 0xD798E39D
+msgstr "Agregar dispositivos de la lista de dispositivos"
+
+msgid 0xD79AF817
+msgstr "Modelo de disco duro"
+
+# DUP
+msgid 0xD7C7130B
+msgstr "VPN para servicios Mi"
+
+msgid 0xD7E17688
+msgstr "Marruecos"
+
+msgid 0xD7E4CEAA
+msgstr "Atención"
+
+# DUP
+msgid 0xD830F970
+msgstr "Agregar dispositivos VPN usando la dirección MAC"
+
+msgid 0xD84EFBF0
+msgstr "Egipto"
+
+msgid 0xD8671243
+msgstr "Reiniciar el router para aplicar la actualización."
+
+msgid 0xD8726A1D
+msgstr "No se puede obtener la información de la cuenta PPPoE"
+
+msgid 0xD87A418B
+msgstr "No se puede obtener la información del dispositivo"
+
+msgid 0xD890C79D
+msgstr "Jordania"
+
+msgid 0xD8A709D9
+msgstr "¡Vaya! Debes permanecer en esta página hasta que el router termine de actualizarse."
+
+# DUP
+msgid 0xD8D12D13
+msgstr "Servicio al cliente de China Unicom"
+
+msgid 0xD8F855D7
+msgstr "Ingresar de nuevo"
+
+msgid 0xD92D36DB
+msgstr "Habitación"
+
+msgid 0xD9E91C4B
+msgstr "El puerto WAN no está conectado"
+
+msgid 0xD9F2BF54
+msgstr "La máscara de subred no es válida"
+
+msgid 0xDA098C2D
+msgstr "Ekaterimburgo"
+
+# DUP
+msgid 0xDA0BAAD5
+msgstr "Primero la página web"
+
+msgid 0xDA1B881C
+msgstr "Máscara de subred"
+
+msgid 0xDA29E3C9
+msgstr "Resultado de la verificación de salud"
+
+msgid 0xDA66C50C
+msgstr "Última actualización"
+
+msgid 0xDAE175AB
+msgstr "Si se modifica el nombre o la contraseña del Wi-Fi, los dispositivos Xiaomi IoT que admiten esta función pueden reconectarse automáticamente a la red del router."
+
+msgid 0xDB2A9E89
+msgstr "El disco duro funciona bien, pero tiene algunos problemas menores"
+
+msgid 0xDB33653A
+msgstr "Los dispositivos se desconectarán de la red mientras el router se reinicia."
+
+# DUP
+msgid 0xDB5FCFE2
+msgstr "Zona horaria de montaña"
+
+msgid 0xDB80A367
+msgstr "Ancho de banda de Internet"
+
+# DUP
+msgid 0xDB904CBF
+msgstr "Hora estándar del Atlántico"
+
+msgid 0xDBA2D024
+msgstr "No se pudo emparejar con el router"
+
+msgid 0xDBB027B3
+msgstr "Dispositivos de conexión de red de juegos de 5 GHz"
+
+msgid 0xDC10C9A7
+msgstr "Ve a la página de configuración de Wi-Fi y habilita todas las bandas de Wi-Fi para buscar y agregar nodos mesh."
+
+msgid 0xDC8B4D0F
+msgstr "Acceder a archivos del disco duro mediante el navegador"
+
+msgid 0xDC957134
+msgstr "No se puede conectar a Internet"
+
+msgid 0xDCA0912B
+msgstr "Canadá"
+
+msgid 0xDCAB2963
+msgstr "Cambiar otros routers como objetivos de repetidor"
+
+msgid 0xDCC2E740
+msgstr "Tipo de protocolo"
+
+msgid 0xDCDFCEB7
+msgstr "Conteo de reintentos del eje del disco duro"
+
+msgid 0xDCEEDA01
+msgstr "Conectar"
+
+msgid 0xDD0C9BF8
+msgstr "El puerto WAN se cambiará al puerto de 2.5 GbE, y el puerto de 1 GbE se utilizará como el puerto LAN, la red del router se reiniciará una vez que se complete el cambio (los dispositivos conectados se desconectarán y se espera que se vuelvan a conectar en 1 minuto). ¿Cambiar puertos ahora?"
+
+# DUP
+msgid 0xDD12AE31
+msgstr "Configuración de velocidad máxima"
+
+msgid 0xDD42F863
+msgstr "Nombre de la red"
+
+msgid 0xDD5BF62D
+msgstr "El archivo no existe o está dañado. Inténtalo descargarlo de nuevo."
+
+msgid 0xDD5EE73D
+msgstr "Ancho de banda"
+
+msgid 0xDD6ED210
+msgstr "Un momento…"
+
+# DUP
+msgid 0xDD9885F2
+msgstr "El nombre de usuario fue bloqueado debido a la cantidad de tráfico de spam saliente"
+
+msgid 0xDDE1C543
+msgstr "Añadido"
+
+# DUP
+msgid 0xDDE5C0F4
+msgstr "NAT de hardware (HwNAT)"
+
+msgid 0xDE0E7EC5
+msgstr "Establecer contraseña de administrador"
+
+msgid 0xDE29CD26
+msgstr "Dispositivos conectados: "
+
+msgid 0xDE3F4EC2
+msgstr "Iniciar búsqueda"
+
+msgid 0xDE579EDA
+msgstr "Ingresar nombre de red manualmente"
+
+msgid 0xDE5BE367
+msgstr "Este idioma aún no es compatible."
+
+# DUP
+msgid 0xDEBBBA27
+msgstr "Wi-Fi de doble banda apagado, el nombre de la red de 5G será similar al de 2.4G (ejemplo_5G). Puedes cambiarlo en Configuración."
+
+# DUP
+msgid 0xDEBBBA27
+msgstr "Smart connect apagado, el nombre de la red de 5G será similar al de 2.4G (ejemplo_5G). Puedes cambiarlo en Configuración."
+
+# DUP
+msgid 0xDED1AF76
+msgstr "Opciones de 5G"
+
+msgid 0xDEF300A8
+msgstr "No se encontró un cable de red"
+
+# DUP
+msgid 0xDF0D5533
+msgstr "Dar prioridad a garantizar la velocidad de ver videos"
+
+msgid 0xDF5D0F8F
+msgstr "China Unicom"
+
+msgid 0xDFFE730B
+msgstr "Creston, Dawson Creek, Fort Nelson, Hermosillo, Phoenix"
+
+# DUP
+msgid 0xE02E6005
+msgstr "Encender Wi-Fi de invitados"
+
+msgid 0xE06A1553
+msgstr "Los dispositivos se desconectarán de la red mientras el router se reinicia."
+
+msgid 0xE06E85BD
+msgstr "Avanzado"
+
+msgid 0xE0920D3F
+msgstr "Este modo te permite cambiar entre"
+
+msgid 0xE0C03B83
+msgstr "Programa de Mejora de la Experiencia del Usuario"
+
+msgid 0xE0E15E01
+msgstr "Mi Router 2"
+
+msgid 0xE0E5D341
+msgstr "No hay actualizaciones disponibles"
+
+# DUP
+msgid 0xE10145DE
+msgstr "Mi Router Nano"
+
+# DUP
+msgid 0xE10145DE
+msgstr "Mi Wi-Fi Nano"
+
+msgid 0xE107B3E5
+msgstr "Noruega"
+
+# DUP
+msgid 0xE165228B
+msgstr "Seleccionar el archivo"
+
+msgid 0xE196763E
+msgstr "Ver detalles"
+
+msgid 0xE1A41FF2
+msgstr "1. Verifica si el cable de red está conectado correctamente"
+
+msgid 0xE1C16872
+msgstr "Las configuraciones de respaldo pueden utilizarse después de flashear o restablecer tu router"
+
+msgid 0xE1E4D982
+msgstr "Dar prioridad a los dispositivos seleccionados"
+
+msgid 0xE2478464
+msgstr "Verificar estado"
+
+# DUP
+msgid 0xE24DAF95
+msgstr "El nombre de dominio no existe o el servicio Oray DDNS no está activo"
+
+msgid 0xE2591190
+msgstr "Nombre del host"
+
+msgid 0xE2DB0C2A
+msgstr "Video"
+
+msgid 0xE2EE33FB
+msgstr "Apagar Wi-Fi de 2.4G también apagará el Wi-Fi de invitados"
+
+msgid 0xE314A512
+msgstr "Osaka, Sapporo, Tokio"
+
+# DUP
+msgid 0xE3188805
+msgstr "Error de servicio ISP"
+
+msgid 0xE3CCC685
+msgstr "Verificando: "
+
+msgid 0xE3E18060
+msgstr "Probar conexión a Internet antes de activar esta función: "
+
+# DUP
+msgid 0xE3E1EA0E
+msgstr "Solución"
+
+msgid 0xE41BEF2B
+msgstr "Belgrado, Bratislava, Budapest, Liubliana, Praga"
+
+msgid 0xE4264CDF
+msgstr "Ninguno"
+
+# DUP
+msgid 0xE449EDE5
+msgstr "VPN desconectado. Conéctate de nuevo para aplicar la configuración."
+
+# DUP
+msgid 0xE4516BE3
+msgstr "Modo router regular"
+
+# DUP
+msgid 0xE489A4F3
+msgstr "Asignación de ancho de banda QoS inteligente"
+
+msgid 0xE49AE5FE
+msgstr "Combina 2.4 GHz, 5 GHz y Wi-Fi de 5 GHz para juegos y cambia automáticamente a la mejor red Wi-Fi disponible."
+
+msgid 0xE4BBA267
+msgstr "No se pudo apagar"
+
+msgid 0xE5375E98
+msgstr "Máscara de subred:"
+
+msgid 0xE5A33909
+msgstr "Actualización del sistema"
+
+msgid 0xE5E9D011
+msgstr "Transmisión de TV en vivo a través de protocolo de Internet"
+
+msgid 0xE5EAF8AE
+msgstr "Si has activado el Wi-Fi de invitados, el Wi-Fi de invitados se apagará después de cambiar a modo amplificador cableado."
+
+msgid 0xE5F87AC3
+msgstr "Esta cuenta no tiene privilegios de administrador para este router"
+
+msgid 0xE62FC187
+msgstr "Configuraciones aplicadas"
+
+msgid 0xE640CF40
+msgstr "Conflicto de dirección IP"
+
+msgid 0xE6515F25
+msgstr "Lectura Samba"
+
+msgid 0xE66CE303
+msgstr "Configuración exitosa. El router se está reiniciando. En cumplimiento con las leyes y regulaciones nacionales, el router está realizando detección y evitación de señales de radar. La conexión Wi-Fi se activará en 10 minutos. Por favor, espera..."
+
+msgid 0xE6B7B7FB
+msgstr "¿Estás seguro de que deseas quitar el disco duro?"
+
+msgid 0xE7013168
+msgstr "Un momento…"
+
+msgid 0xE71F1028
+msgstr "Aplicado"
+
+msgid 0xE72A081B
+msgstr "iOS"
+
+msgid 0xE72F4639
+msgstr "Respaldo de configuraciones del router"
+
+msgid 0xE7407301
+msgstr "Dirección IP LAN"
+
+msgid 0xE7878D05
+msgstr "hr"
+
+msgid 0xE7A20A6F
+msgstr "Dirección IP DMZ"
+
+msgid 0xE7C48D10
+msgstr "DDNS permite el acceso remoto al router utilizando un dominio estático."
+
+msgid 0xE7E36E91
+msgstr "Islas de Cabo Verde"
+
+msgid 0xE7F41CC8
+msgstr "Modo (configurar red Wi-Fi)"
+
+# DUP
+msgid 0xE80F30C9
+msgstr "Velocidad ascendente en tiempo real"
+
+msgid 0xE81EBEC7
+msgstr "100 M"
+
+msgid 0xE85AB00C
+msgstr "Wi-Fi 6 es la nueva generación de tecnología Wi-Fi que admite OFDMA, BSS coloring y otras características novedosas, ofreciendo así mejores experiencias para los dispositivos conectados a Wi-Fi. Sin embargo, cuando se activa la función, algunos dispositivos con versiones de controladores más antiguos pueden tener problemas de compatibilidad y, por lo tanto, es posible que no puedan detectar el Wi-Fi o conectarse a él. Por favor, descarga la última versión del controlador desde el sitio web del fabricante:"
+
+msgid 0xE8627BA1
+msgstr "WPA3/WPA2"
+
+msgid 0xE8898171
+msgstr "Aplicación para Android"
+
+msgid 0xE88FA129
+msgstr "Desconectar"
+
+msgid 0xE8919A82
+msgstr "Aceptar términos"
+
+msgid 0xE8B309DC
+msgstr "No gestionado"
+
+# DUP
+msgid 0xE960E789
+msgstr "Francia"
+
+msgid 0xE97CCD7B
+msgstr "Verifica la configuración de la dirección IP LAN del router"
+
+msgid 0xE9A127A5
+msgstr "Samoa"
+
+msgid 0xE9D49A5D
+msgstr "No se detectó conexión Ethernet."
+
+msgid 0xEA0FDF87
+msgstr "Lord Howe"
+
+msgid 0xEA28FF20
+msgstr "Adaptador inalámbrico"
+
+msgid 0xEA2A3176
+msgstr "¿Restaurar el router a sus configuraciones de fábrica? No puedes revertir esta acción."
+
+# DUP
+msgid 0xEA3321FE
+msgstr "Servicio al cliente de China Mobile"
+
+# DUP
+msgid 0xEA3898A1
+msgstr "Dispositivos no añadidos"
+
+msgid 0xEA4AAC05
+msgstr "Asegúrate de que la contraseña que ingresaste es correcta o pide más información a tu proveedor de servicios de Internet"
+
+msgid 0xEA621B65
+msgstr "Tu router no está emparejado con una cuenta Mi."
+
+msgid 0xEA73B82D
+msgstr "El nombre y la contraseña de la red Wi-Fi son los mismos que los del router de destino"
+
+msgid 0xEA884F50
+msgstr "Añadir dispositivos a la lista de excepciones ahora."
+
+msgid 0xEA95A896
+msgstr "Error en el sistema de archivos, arréglalo ahora"
+
+msgid 0xEAE534B3
+msgstr "Mi Router 3 Pro"
+
+msgid 0xEB09C364
+msgstr "El Wi-Fi de invitados se apagará cuando cambies al modo repetidor cableado"
+
+msgid 0xEB233FE5
+msgstr "Repetidor inalámbrico"
+
+msgid 0xEB26AB0D
+msgstr "Configuración de red"
+
+msgid 0xEB5A7304
+msgstr "Guardando…"
+
+msgid 0xEB7AF845
+msgstr "PPPoE"
+
+msgid 0xEBBEBE99
+msgstr "Blantyre, Bujumbura, Gaborone, Harare"
+
+msgid 0xEC070818
+msgstr "Contraseña de Wi-Fi"
+
+msgid 0xEC0E8BC8
+msgstr "Configurar DMZ"
+
+msgid 0xEC1E4575
+msgstr "Seleccionar {$0}"
+
+msgid 0xEC722850
+msgstr "Bueno"
+
+msgid 0xEC92C9E5
+msgstr "4. Enciende el nodo Mesh que estás agregando;"
+
+msgid 0xECAD0E65
+msgstr "¡Ups! Asegúrate de no haber olvidado ningún campo obligatorio."
+
+# DUP
+msgid 0xECF710C7
+msgstr "Ingresa un {$0} completo"
+
+msgid 0xED380632
+msgstr "Configuraciones de desarrollador"
+
+msgid 0xED3C87C5
+msgstr "Chita, Dili, Khandyga, Yakutsk, Palaos"
+
+msgid 0xED96A2D1
+msgstr "Prefijo IPv6 LAN"
+
+# DUP
+msgid 0xEDB3E4B9
+msgstr "Olvidé mi contraseña"
+
+msgid 0xEDBD1897
+msgstr "No se puede usar DMZ mientras el reenvío de puertos está activado"
+
+# DUP
+msgid 0xEDF4204A
+msgstr "Tráfico por servicio"
+
+# DUP
+msgid 0xEE098F2D
+msgstr "Configuraciones"
+
+# DUP
+msgid 0xEE525C5C
+msgstr "Haz un respaldo automático de fotos desde tu dispositivo móvil a Mi Wi-Fi y olvídate de las preocupaciones sobre el almacenamiento del teléfono o el tráfico"
+
+msgid 0xEEC60FC7
+msgstr "La función de extensión Mesh no estará disponible mientras uses autenticación WPA3-Personal. ¿Aún quieres continuar?"
+
+msgid 0xEECDB5E4
+msgstr "Importar desde el router existente"
+
+msgid 0xEEFDD25A
+msgstr "Verifica la extensión del número de teléfono que ingresaste"
+
+msgid 0xEEFFA81D
+msgstr "Portugal"
+
+msgid 0xEF11A691
+msgstr "Aceptar"
+
+msgid 0xEF37E01E
+msgstr "Interfaz de disco duro"
+
+msgid 0xEF3F4070
+msgstr "Aplicar"
+
+# DUP
+msgid 0xEFF506A5
+msgstr "Restringir el acceso a la configuración de administrador"
+
+msgid 0xF0105F11
+msgstr "El sistema ha cerrado el nombre de dominio. Contacta al proveedor de servicios para obtener asistencia"
+
+msgid 0xF04BFFE3
+msgstr "Dirección IP"
+
+msgid 0xF06510AA
+msgstr "Error del servidor DHCP"
+
+msgid 0xF0A78461
+msgstr "Puerta de enlace IPv6 WAN"
+
+msgid 0xF0C078D1
+msgstr "La red de invitados y el SSID de 2.4G no pueden ser idénticos"
+
+msgid 0xF0D727FF
+msgstr "Si estás al tanto de los riesgos de seguridad, también puedes "
+
+msgid 0xF0EB3CFD
+msgstr "Reinicia tu módem e inténtalo de nuevo."
+
+msgid 0xF0FFBE4A
+msgstr "Desconectar"
+
+msgid 0xF104861F
+msgstr "No se puede alcanzar la puerta de enlace"
+
+msgid 0xF1067E4B
+msgstr "2. Espera a que el nuevo router aparezca en la lista de administración. "
+
+msgid 0xF1247D15
+msgstr "Hora del Pacífico (EE.UU. y Canadá)"
+
+# DUP
+msgid 0xF14A7E09
+msgstr "Cambiar la contraseña del administrador"
+
+# DUP
+msgid 0xF16DB83E
+msgstr "Singapur"
+
+# DUP
+msgid 0xF16EBF0E
+msgstr "Nombre de la tarea"
+
+msgid 0xF172ACA2
+msgstr "No se puede obtener la información de configuración del router"
+
+msgid 0xF18A69F7
+msgstr "Ancho de banda de dispositivos conectados"
+
+msgid 0xF1A5F0CD
+msgstr "Requerido"
+
+msgid 0xF1C97E6D
+msgstr "Atenas, Bucarest"
+
+msgid 0xF1FD1A5A
+msgstr "Estado de DMZ: "
+
+msgid 0xF2125269
+msgstr "Extensión exitosa"
+
+# DUP
+msgid 0xF2350645
+msgstr "Ingresar dirección"
+
+msgid 0xF2630757
+msgstr "Proveedor de Servicios de Internet y nombre del host"
+
+msgid 0xF26DB780
+msgstr "Irlanda"
+
+msgid 0xF28BC0F7
+msgstr "2500 M"
+
+msgid 0xF2E57726
+msgstr "La señal es débil, coloca el router cerca del punto de acceso central"
+
+# DUP
+msgid 0xF315E661
+msgstr "No se pudo encontrar el almacenamiento. Conéctalo a tu Mi Wi-Fi mediante USB."
+
+msgid 0xF31A931D
+msgstr "Dublín"
+
+# DUP
+msgid 0xF32C1B7A
+msgstr "Zona horaria de Alaska"
+
+msgid 0xF3662ACA
+msgstr "El módem no pudo marcar exitosamente"
+
+msgid 0xF381B01D
+msgstr "No encriptado (todos pueden acceder)"
+
+# DUP
+msgid 0xF39199CB
+msgstr "Juego primero"
+
+msgid 0xF3DD2322
+msgstr "Escribir"
+
+msgid 0xF3DFA9EC
+msgstr "Rarotonga, Tahití"
+
+msgid 0xF4265420
+msgstr "Mixto (WPA/WPA2-personal)"
+
+# DUP
+msgid 0xF4602F9D
+msgstr "Turquía"
+
+msgid 0xF4B43EA7
+msgstr "Editar reglas de reenvío de puertos"
+
+msgid 0xF4B78292
+msgstr "TCP y UDP"
+
+msgid 0xF4C4F236
+msgstr "No se pudo instalar la actualización"
+
+msgid 0xF4DF990E
+msgstr "Almacenamiento"
+
+msgid 0xF4FB9360
+msgstr "Error del sistema. Espera un minuto o dos y vuelve a intentarlo."
+
+msgid 0xF529CB04
+msgstr "No se pudo marcar"
+
+msgid 0xF532D56D
+msgstr "OSX"
+
+msgid 0xF53DD352
+msgstr "Verificando: "
+
+msgid 0xF564C4E0
+msgstr "Hogar"
+
+msgid 0xF5654951
+msgstr "Habitación de invitados"
+
+# DUP
+msgid 0xF56B53C9
+msgstr "Mi Router 4CM"
+
+# DUP
+msgid 0xF56B53C9
+msgstr "Mi Wi-Fi 4CM"
+
+msgid 0xF5A06E2D
+msgstr "Interfaz de túnel"
+
+msgid 0xF5CB65B1
+msgstr "Configurar el ancho de banda de la red manualmente"
+
+# DUP
+msgid 0xF60900E1
+msgstr "Hora estándar de Australia central"
+
+msgid 0xF60A8313
+msgstr "Estado"
+
+msgid 0xF6181A3F
+msgstr "Por razones de seguridad, no se permite seleccionar una actualización de firmware con un número de versión inferior al actual"
+
+msgid 0xF635DBB8
+msgstr "Verifica el nombre de la cuenta y la contraseña"
+
+msgid 0xF670A799
+msgstr "Actualizar manualmente"
+
+# DUP
+msgid 0xF683D95E
+msgstr "Descargar cliente"
+
+msgid 0xF68D995D
+msgstr "Selecciona el paquete de instalación del complemento:"
+
+msgid 0xF6F9AF8E
+msgstr "Activar modo de penetración de paredes"
+
+msgid 0xF7129707
+msgstr "Sin información de configuración"
+
+msgid 0xF730B30F
+msgstr "IP no disponible en el rango de direcciones IP. Inténtalo de nuevo. Al configurar, consulta las direcciones IP disponibles del servidor DHCP."
+
+msgid 0xF76275D6
+msgstr "Acceso al disco duro"
+
+# DUP
+msgid 0xF76A76DC
+msgstr "Lista negra de Wi-Fi"
+
+# DUP
+msgid 0xF77797C1
+msgstr "Nombre del router y contraseña de administrador"
+
+msgid 0xF7AA2E30
+msgstr "Un momento…"
+
+msgid 0xF7BDAE03
+msgstr "Velocidad de descarga: "
+
+msgid 0xF7D481B5
+msgstr "Error de conexión"
+
+msgid 0xF804DDEF
+msgstr "Extensión fallida"
+
+# DUP
+msgid 0xF81B88E8
+msgstr "El router se conectará a la red después de reiniciar"
+
+msgid 0xF821E328
+msgstr "Introduce hasta {$0}"
+
+msgid 0xF822652B
+msgstr "No encontrado"
+
+msgid 0xF84143E2
+msgstr "No se pudo iniciar sesión"
+
+msgid 0xF8953D2F
+msgstr "No se pudo obtener información del complemento"
+
+msgid 0xF8E97475
+msgstr "Dispositivos"
+
+msgid 0xF96D6230
+msgstr "Esperando para reiniciar…"
+
+# DUP
+msgid 0xF9942387
+msgstr "Asunción"
+
+msgid 0xF9B86C9A
+msgstr "Japón"
+
+msgid 0xF9D9A570
+msgstr "Hora de la montaña (EE.UU. y Canadá)"
+
+# DUP
+msgid 0xF9EB94CF
+msgstr "Hora estándar de Venezuela"
+
+msgid 0xFA1872ED
+msgstr "Actualizar manualmente"
+
+msgid 0xFA357C36
+msgstr "Algunos dispositivos antiguos no son compatibles con Wi-Fi 6 y pueden tener problemas de compatibilidad, como fallos de escaneo o de conexión Wi-Fi."
+
+msgid 0xFAA34F8B
+msgstr "Verifica la conexión Ethernet del router"
+
+msgid 0xFAAAE92C
+msgstr "Terranova"
+
+msgid 0xFAAE3F8D
+msgstr "Auckland, Wellington"
+
+msgid 0xFB06F733
+msgstr "Configuración del modo de red IPv6"
+
+msgid 0xFB388EE9
+msgstr "Estambul"
+
+msgid 0xFB398EA3
+msgstr "Buscar de nuevo"
+
+# DUP
+msgid 0xFB621BD0
+msgstr "Malasia"
+
+msgid 0xFB89B02A
+msgstr "Adelaida, Broken Hill"
+
+msgid 0xFB8AC03D
+msgstr "Formatear el disco duro del router"
+
+msgid 0xFB8ACEE2
+msgstr "Todos los dispositivos se desconectarán de la red del router."
+
+msgid 0xFB8FA769
+msgstr "No se pudo conectar"
+
+msgid 0xFB98C1BE
+msgstr "AIoT no es compatible actualmente en tu país/región"
+
+msgid 0xFC0B95FC
+msgstr "Crear reglas de reenvío de rango"
+
+msgid 0xFC7297B8
+msgstr "El servidor DHCP no responde"
+
+# DUP
+msgid 0xFC77CEE2
+msgstr "Zona horaria de Medio Oriente B"
+
+msgid 0xFCACC77C
+msgstr "No hay dispositivos UPnP"
+
+msgid 0xFCCB4155
+msgstr "Dirección IPv6 WAN"
+
+msgid 0xFD24EE31
+msgstr "1. Toma el router que no ha sido configurado como un nodo satélite y colócalo en la habitación que necesita señal Wi-Fi"
+
+msgid 0xFD4B11B1
+msgstr "Un momento…"
+
+msgid 0xFD523375
+msgstr "Hilo"
+
+msgid 0xFD5E5AE5
+msgstr "Agregando nodos Mesh"
+
+# DUP
+msgid 0xFD72664B
+msgstr "Esta función solo puede ser utilizada por usuarios con cuentas pagas"
+
+msgid 0xFDCC5C0F
+msgstr "* Asegúrate de que el nodo satélite no haya sido preconfigurado. Si el nodo satélite ya ha sido configurado, mantén presionado el botón de reinicio en el dispositivo durante al menos 5 segundos para restablecerlo"
+
+msgid 0xFDF6EEDD
+msgstr "Croacia"
+
+msgid 0xFE354A9B
+msgstr "Nigeria"
+
+msgid 0xFE7EB4A9
+msgstr "Redes inalámbricas:"
+
+# DUP
+msgid 0xFE7EDFD0
+msgstr "El puerto de red de 1 G está operando actualmente como puerto LAN. Puedes conectar un dispositivo LAN"
+
+msgid 0xFE87D13A
+msgstr "Ingresa ssh plugin@miwifi.com -p 2222 usando una herramienta SSH para iniciar sesión en tu router. Contraseña predeterminada: admin (puede cambiarse después de iniciar sesión)."
+
+msgid 0xFEA376E7
+msgstr "Chicago, Matamoros, New Salem, Rainy River, Winnipeg"
+
+msgid 0xFEA81BC2
+msgstr "Actualiza tu router vía OTA. Si esto no funciona, descarga la actualización y flashea el router manualmente."
+
+msgid 0xFEAFFACF
+msgstr "Cobertura"
+
+msgid 0xFEB16ADF
+msgstr "Puerto WAN del Mi Router"
+
+msgid 0xFEB35F86
+msgstr "No se pudo encender el complemento"
+
+msgid 0xFEB72BE1
+msgstr "Bogotá, Lima, Quito"
+
+msgid 0xFEC6FD06
+msgstr "Activar Wi-Fi para invitados también activará Wi-Fi 2.4G"
+
+# DUP
+msgid 0xFF556106
+msgstr "Agregar dirección de servicio para decidir qué tráfico de dirección pasa por VPN"
+
+# DUP
+msgid 0xFF89F359
+msgstr "VPN inteligente"
+
+msgid 0xFFADF799
+msgstr "Igual que la contraseña de Wi-Fi"
+
+msgid 0xFFBF3E13
+msgstr "Conflicto de configuración del router"
+
+msgid 0xFFDB9B06
+msgstr "Miquelón"
+
+# DUP
+msgid 0xFFEC254B
+msgstr "s"
