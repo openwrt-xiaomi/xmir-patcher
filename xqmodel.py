@@ -100,16 +100,21 @@ mi(87, "RD12", "RD04")  # Xiaomi Router AX1500 (INT)
 mi(88, "RD23", "RD03", "mi-router-ax3000t")  # Xiaomi Router AX3000T (INT)
 mi(89, "RD16")          # Xiaomi BE3600 1G
 mi(90, "RD18")          # Xiaomi BE5000
-mi(0,  "RD28")          # Xiaomi Mesh System AX3000 NE
-mi(0,  "RD13")          # Xiaomi Mesh System AC1200 (INT)
-
-
+mi(91, "RD28")          # Xiaomi Mesh System AX3000 NE
+mi(92, "RD13")          # Xiaomi Mesh System AC1200 (INT)
+mi(93, "BE36U")
+mi(94, "NR50")          # (INT)
 mi(95, "RN02")          # Xiaomi BE6500 (ipq5312)
+mi(96, "BE36M")
+mi(97, "RN07")          # Xiaomi AX3000E (CN)
+mi(98, "RN04")          # CN + INT
+mi(99, "RN01")          # CN + INT
+mi(100,"RN06")          # INT
 
 # https://wikidevi.wi-cat.ru/List_of_Xiaomi_Wireless_Devices
 # routers with unknown device number
 
-mi(0, "BE36M")
+mi(0,  "RN09")          # INT  # https://home.miot-spec.com/s/rn09
 
 
 def get_modelid_by_name(name):
