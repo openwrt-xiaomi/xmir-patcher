@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-
 import os
 import sys
 import json
@@ -12,25 +11,18 @@ import subprocess
 import re
 import requests
 import atexit
-
 import socket
-
 import xmir_base
 import ssh2
 from ssh2.error_codes import LIBSSH2_ERROR_EAGAIN
 from ssh2.utils import wait_socket
-
 import telnetlib
 import ftplib
-
 if sys.version_info < (3,8,0):
   print("ERROR: Requires Python v3.8 or higher!")
   sys.exit(1)
-
 from multiprocessing import shared_memory
 import xqmodel
-
-
 def die(*args):
   err = 1
   prefix = "ERROR: "
@@ -48,14 +40,11 @@ def die(*args):
   print(prefix + msg)
   print(" ")
   sys.exit(err)
-
 def get_http_headers():
   headers = {}
   headers["Content-Type"] = "application/x-www-form-urlencoded; charset=UTF-8"
   headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:65.0) Gecko/20100101 Firefox/65.0"
   return headers
-
-
 class Gateway():
   def __init_fields(self):
     self.use_ssh = True
@@ -101,7 +90,6 @@ class Gateway():
       port = self.detect_ssh(verbose = 1, interactive = interact)
       if port <= 0:
         die("Can't found valid SSH server on IP {}".format(self.ip_addr))
-
   def detect_device(self):
     self.model_id = -2
     self.device_name = None
@@ -171,7 +159,6 @@ class Gateway():
         self.encryptmode = int(info["newEncryptMode"])
     self.xqpassword = self.get_xqpassword()
     return self.status
-
   def web_ping(self, timeout, wait_timeout = 0):
     ret = True
     start_time = datetime.datetime.now()
@@ -189,7 +176,6 @@ class Gateway():
       if dt > 0:
         time.sleep(dt / 1000 / 1000)
     return ret
-
   # default password for Telnet
   def get_xqpassword(self, sn = None):
     if sn is None:
@@ -202,13 +188,11 @@ class Gateway():
     salt = '-'.join( reversed(guid.split('-')) )
     password = hashlib.md5( (sn + salt).encode('utf-8') ).hexdigest()
     return password[:8]
-
   def xqhash(self, string):
     if self.encryptmode == 0:
       return hashlib.sha1(string).hexdigest()
     else:
       return hashlib.sha256(string).hexdigest()
-
   def web_login(self):
     self.stok = None
     if not self.nonce_key or not self.mac_address:
@@ -235,11 +219,9 @@ class Gateway():
     self.webpassword = web_pass
     self.stok = stok
     return stok
-
   @property
   def apiurl(self):
     return "http://{ip_addr}/cgi-bin/luci/;stok={stok}/api/".format(ip_addr = self.ip_addr, stok = self.stok)
-
   def get_pub_info(self, api_name, timeout = 5):
     subsys = 'xqsystem'
     if api_name == 'router_info' or api_name == 'topo_graph':
@@ -251,26 +233,19 @@ class Gateway():
     except Exception:      
       return {}
     return json.loads(res.text)
-
   def get_init_info(self, timeout = 5):
     return self.get_pub_info('init_info', timeout = timeout)
-
   def get_factory_info(self, timeout = 5):
     self.facinfo = self.get_pub_info('fac_info', timeout = timeout)
     return self.facinfo
-
   def get_bdata_info(self, timeout = 5):
     return self.get_pub_info('bdata', timeout = timeout)
-
   def get_ip_info(self, timeout = 5):
     return self.get_pub_info('get_ip', timeout = timeout)
-
   def get_upgrade_status(self, timeout = 5):
     return self.get_pub_info('upgrade_status', timeout = timeout)
-
   def get_router_info(self, timeout = 5):
     return self.get_pub_info('router_info', timeout = timeout)
-
   def get_topo_graph_info(self, timeout = 5):
     return self.get_pub_info('topo_graph', timeout = timeout)
 
@@ -327,7 +302,6 @@ class Gateway():
     if verbose:
       print('timedout', flush=True)
     return False
-
   def wait_reboot(self, timeout, verbose = 1):
     if verbose:
       print('Waiting for reboot: ', end='', flush=True)
@@ -350,7 +324,6 @@ class Gateway():
     if verbose:
       print('timedout', flush=True)
     return False    
-
   def reboot_device(self, wait_timeout = None):
     try:
       params = { 'client': 'web' }
@@ -363,7 +336,6 @@ class Gateway():
       return True
     except Exception as e:
       return False
-
   #===============================================================================
   def shutdown(self):
     self.ssh_close()
@@ -376,7 +348,6 @@ class Gateway():
     except Exception:
       pass
     self.ftp = None
-
   #===============================================================================
   def free_memcfg(self):
     if self.memcfg:
@@ -403,7 +374,6 @@ class Gateway():
       if not _env_master_cfg in os.environ:
         os.environ[_env_master_cfg] = str(os.getpid())
     self.memcfg = sm
-
   def load_memcfg(self):
     cfg = {}
     if not self.memcfg:
@@ -415,16 +385,13 @@ class Gateway():
     data = bytes(self.memcfg.buf[4:4+size])
     cfg = json.loads(data.decode('utf-8'))
     return cfg
-
   def get_memcfg_param(self, key, defvalue = None):
     cfg = self.load_memcfg()    
     return cfg[key] if key in cfg else defvalue
-
   def set_memcfg_param(self, key, value):
     cfg = self.load_memcfg()
     cfg[key] = value.strip() if isinstance(value, str) else value
     self.save_memcfg(cfg)
-
   def save_memcfg(self, cfg):
     data = b''
     if cfg:
@@ -433,49 +400,38 @@ class Gateway():
     self.memcfg.buf[:4] = size.to_bytes(4, byteorder='little', signed=True)
     if size > 0:
       self.memcfg.buf[4:4+len(data)] = data
-
   #===============================================================================
   @property
   def ssh_port(self):
     return self.get_memcfg_param('ssh_port', 22)
-
   @ssh_port.setter
   def ssh_port(self, value):
     self.set_memcfg_param('ssh_port', value)
-
   @property
   def passw(self):
     return self.get_memcfg_param('passw', None)  # password for root user
-
   @passw.setter
   def passw(self, value):
     self.set_memcfg_param('passw', value)
-
   @property
   def webpassword(self):
     return self.get_memcfg_param('webpassword', None)
-
   @webpassword.setter
   def webpassword(self, value):
     self.set_memcfg_param('webpassword', value)
-
   #===============================================================================
   @property
   def ip_addr(self):
     return self.get_config_param('device_ip_addr', '192.168.1.1').strip()
-
   @ip_addr.setter
   def ip_addr(self, value):
     self.set_config_param('device_ip_addr', value)
-
   @property
   def img_write(self):
     return self.get_config_param('img_write', True)
-
   @img_write.setter
   def img_write(self, value):
     self.set_config_param('img_write', value)
-
   #===============================================================================
   def load_config(self):
     config = {}
@@ -483,20 +439,16 @@ class Gateway():
       with open('config.txt', 'r') as file:
         config = json.load(file)
     return config
-
   def get_config_param(self, key, defvalue = None):
     config = self.load_config()    
     return config[key] if key in config else defvalue
-
   def set_config_param(self, key, value):
     config = self.load_config()
     config[key] = value.strip() if isinstance(value, str) else value
     self.save_config(config)
-
   def save_config(self, config):    
     with open('config.txt', 'w') as file:
       json.dump(config, file, indent=4, sort_keys=True)
-
   #===============================================================================
   def check_tcp_connect(self, ip, port, contimeout = 2, retobj = False):
     sock = None
@@ -512,7 +464,6 @@ class Gateway():
       except Exception:
         sock = None
     return True if sock else False
-
   def check_ssh(self, ip, port, password, contimeout = 2, timeout = 3):
     err = 0
     ssh = None
@@ -540,7 +491,6 @@ class Gateway():
     except Exception:
       pass
     return err
-
   def _detect_ssh(self, verbose = 1, interactive = True, contimeout = 2, aux_port = 0):
     ip_addr = self.ip_addr
     ssh_port = self.ssh_port
@@ -595,7 +545,6 @@ class Gateway():
     if verbose >= 2:
       print("Can't found valid SSH server on IP {}".format(ip_addr))
     return -2
-
   def detect_ssh(self, verbose = 1, interactive = True, contimeout = 2, aux_port = 0):
     ssh_port = self._detect_ssh(verbose, interactive, contimeout, aux_port)
     if ssh_port > 0:
@@ -617,7 +566,6 @@ class Gateway():
     if ftp_en:
       self.use_ftp = True
     return 23
-
   def ssh_close(self):
     try:
       self.ssh.disconnect()
@@ -629,12 +577,10 @@ class Gateway():
       pass
     self.ssh = None
     self.socket = None
-
   def set_timeout(self, timeout):
     self.timeout = timeout
     if self.use_ssh and self.ssh:
       self.ssh.set_timeout(int(self.timeout * 1000))
-
   def get_ssh(self, verbose = 0, contimeout = None):
     if self.ssh:
       try:
@@ -670,7 +616,6 @@ class Gateway():
         die("SSH server not responding (IP: {})".format(self.ip_addr))
       self.shutdown()
     return None
-
   def check_telnet(self, timeout = 2, port = 23, verbose = 0):
     try:
       tn = telnetlib.Telnet(self.ip_addr, port=port, timeout=timeout)
@@ -680,7 +625,6 @@ class Gateway():
       if verbose:
         die("TELNET not responding (IP: {})".format(self.ip_addr))
     return False
-
   def get_telnet(self, verbose = 0, password = None):
     try:
       tn = telnetlib.Telnet(self.ip_addr, timeout=4)
@@ -718,7 +662,6 @@ class Gateway():
       if verbose:
         die("Can't login to TELNET (IP: {})".format(self.ip_addr))
     return None
-
   def get_ftp(self, verbose = 0):
     if self.ftp and self.ftp.sock:
       try:
@@ -737,7 +680,6 @@ class Gateway():
         die("ftp not responding (IP: {})".format(self.ip_addr))
       self.shutdown()
     return None
-
   def ping(self, verbose = 2, contimeout = None):
     if self.use_ssh:
       ssh = self.get_ssh(verbose, contimeout)
@@ -752,7 +694,6 @@ class Gateway():
         if not ftp:
           return False
     return True
-
   def run_cmd(self, cmd, msg = None, timeout = None, die_on_error = True):
     ret = True
     if self.use_ssh:
@@ -799,7 +740,6 @@ class Gateway():
     if not self.use_ssh:
       tn.write(b"exit\n")
     return ret
-
   def download(self, fn_remote, fn_local, verbose = 1):
     if verbose and self.verbose:
       print('Download file: "{}" ....'.format(fn_remote))
@@ -825,7 +765,6 @@ class Gateway():
     else:
       raise RuntimeError('FIXME')
     return True
-
   def upload(self, fn_local, fn_remote, verbose = 1):
     try:
       file = open(fn_local, 'rb')
@@ -849,8 +788,6 @@ class Gateway():
       raise RuntimeError('FIXME')
     file.close()
     return True
-
-
 #===============================================================================
 if __name__ == "__main__":
   if len(sys.argv) > 1:

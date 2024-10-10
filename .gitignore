@@ -1,7 +1,7 @@
 venv/
 __pycache__/
 xmir_base/__pycache__/
-data/
+data/*.lmo
 tmp/
 outdir/
 config.txt
