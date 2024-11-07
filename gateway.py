@@ -79,6 +79,7 @@ class Gateway():
     self.login = 'root' # default username
   
   def __init__(self, timeout = 4, verbose = 2, detect_device = True, detect_ssh = True, load_cfg = True):
+    random.seed()
     self.__init_fields()
     self.verbose = verbose
     self.timeout = timeout
@@ -798,6 +799,7 @@ class Gateway():
         tn.read_until(tn.prompt, timeout = 4 if timeout is None else timeout)
     if not self.use_ssh:
       tn.write(b"exit\n")
+      ret = True
     return ret
 
   def download(self, fn_remote, fn_local, verbose = 1):
@@ -826,11 +828,12 @@ class Gateway():
       raise RuntimeError('FIXME')
     return True
 
-  def upload(self, fn_local, fn_remote, verbose = 1):
-    try:
-      file = open(fn_local, 'rb')
-    except Exception:
-      die('File "{}" not found.'.format(fn_local))
+  def upload(self, fn_local, fn_remote, md5chk = True, verbose = 1):
+    if not os.path.exists(fn_local):
+      die(f'File "{fn_local}" not found.')
+    if md5chk:
+      md5_local = self.get_md5_for_local_file(fn_local)
+    file = open(fn_local, 'rb')
     if verbose and self.verbose:
       print('Upload file: "{}" ....'.format(fn_local))
     if self.use_ssh:
@@ -848,7 +851,69 @@ class Gateway():
     else:
       raise RuntimeError('FIXME')
     file.close()
+    if md5chk:
+      md5_remote = self.get_md5_for_remote_file(fn_remote)
+      if md5_remote != md5_local:
+        if md5chk == 2:
+          die(f'File "{fn_local}" uploaded, but MD5 incorrect!')
+        #if verbose:
+        print(f'ERROR: File "{fn_local}" uploaded, but MD5 incorrect!')
+        return False
     return True
+
+  def get_md5_for_remote_file(self, fn_remote):
+    fname = os.path.basename(fn_remote)
+    num = str(random.randint(10000, 1000000))
+    md5_local_fn = f"tmp/{fname}.{num}.md5"
+    md5_remote_fn = f"/tmp/{fname}.{num}.md5"
+    cmd = f'md5sum "{fn_remote}" &> "{md5_remote_fn}" '       
+    rc = self.run_cmd(cmd, timeout = 4)
+    if not rc:
+        return -5
+    os.remove(md5_local_fn) if os.path.exists(md5_local_fn) else None
+    self.download(md5_remote_fn, md5_local_fn)
+    if not os.path.exists(md5_local_fn):
+        return -4
+    with open(md5_local_fn, 'r', encoding = 'latin1') as file:
+        md5 = file.read()
+    os.remove(md5_local_fn)
+    if not md5:
+        return -3
+    if md5.startswith('md5sum:'):
+        return -2
+    md5 = md5.split(' ')[0]
+    md5 = md5.strip()
+    if len(md5) != 32:
+        return -1
+    return md5.lower()
+  
+  def get_md5_for_local_file(self, fn_local, size = None):
+    hasher = hashlib.md5()
+    bs = 512*1024
+    if size is None:
+        with open(fn_local, 'rb') as file:
+            for chunk in iter(lambda: file.read(bs), b''):
+                hasher.update(chunk)
+    elif size > 0:
+        tail_size = 0
+        nsize = size
+        filesize = os.path.getsize(fn_local)
+        if size > filesize:
+            tail_size = size - filesize
+            nsize = filesize
+        readed = 0
+        with open(fn_local, 'rb') as file:
+            while True:
+                if readed + bs > nsize:
+                    bs = nsize - readed
+                chunk = file.read(bs)
+                hasher.update(chunk)
+                readed += bs
+                if readed >= nsize:
+                    break
+        if tail_size:
+            hasher.update(b'\0' * tail_size)
+    return hasher.hexdigest()
 
 
 #===============================================================================

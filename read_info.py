@@ -668,6 +668,48 @@ class DevInfo():
       print("")
     return self.ver
 
+  def get_md5_for_mtd_data(self, partname, offset = 0, size = None):
+    if not self.partlist:
+        return -10
+    mtd_num = self.get_part_num(partname)
+    if mtd_num < 0:
+        return -9 
+    mtd_part = self.partlist[mtd_num]
+    bs = 4096
+    if not size:
+        size = mtd_part['size']
+    if size > mtd_part['size']:
+        return -8
+    if size % bs != 0:
+        return -7
+    if offset % bs != 0:
+        return -6
+    skip = f'skip={offset // bs}' if offset else ''
+    num = str(random.randint(10000, 1000000))
+    md5_local_fn = f"tmp/mtd{mtd_num}_{offset}_{size}_{num}.md5"
+    md5_remote_fn = f"/tmp/mtd{mtd_num}_{offset}_{size}_{num}.md5"
+    count = size // bs
+    cmd = f'dd if=/dev/mtd{mtd_num} bs={bs} count={count} {skip} | md5sum > "{md5_remote_fn}" '
+    try:
+        self.gw.run_cmd(cmd)
+        self.gw.download(md5_remote_fn, md5_local_fn)
+    except Exception:
+        return -5
+    if not os.path.exists(md5_local_fn):
+        return -4
+    with open(md5_local_fn, 'r', encoding = 'latin1') as file:
+        md5 = file.read()
+    os.remove(md5_local_fn)
+    if not md5:
+        return -3
+    if md5.startswith('md5sum:'):
+        return -2
+    md5 = md5.split(' ')[0]
+    md5 = md5.strip()
+    if len(md5) != 32:
+        return -1
+    return md5.lower()
+
   def get_bootloader(self, verbose = None):
     verbose = verbose if verbose is not None else self.verbose
     self.bl = Bootloader()

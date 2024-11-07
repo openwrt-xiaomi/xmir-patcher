@@ -1062,11 +1062,11 @@ class XqFlash():
 
         gw.set_timeout(12)
         if fw_img.cmd:
-            gw.upload(fw_img.fn_local, fw_img.fn_remote)
+            gw.upload(fw_img.fn_local, fw_img.fn_remote, md5chk = 2)
         if kernel.cmd:
-            gw.upload(kernel.fn_local, kernel.fn_remote)
+            gw.upload(kernel.fn_local, kernel.fn_remote, md5chk = 2)
         if rootfs.cmd:
-            gw.upload(rootfs.fn_local, rootfs.fn_remote)
+            gw.upload(rootfs.fn_local, rootfs.fn_remote, md5chk = 2)
 
         if self.img_write:
             cmd = [ ]
@@ -1076,37 +1076,35 @@ class XqFlash():
             cmd.append("nvram set ssh_en=1")
             cmd.append("nvram set uart_en=1")
             cmd.append("nvram commit")
-            gw.run_cmd(cmd, timeout = 8)
-
-        if self.install_fw_num is not None:
-            print("Run scripts for change NVRAM params...")
-            if self.img_write:
-                activate_boot.uboot_boot_change(gw, self.install_fw_num)
-            if hasattr(kernel, 'partname') and kernel.partname:
-                print(f'Boot from partition "{kernel.partname}" activated. ({self.install_fw_num})')
-            else:
-                print(f'Boot from firmware [{self.install_fw_num}] activated.')
+            rc = gw.run_cmd(';'.join(cmd), timeout = 8)
+            if not rc:
+                die(f'Cannot change nvram parameters!')
 
         if fw_img.cmd:
-            print('Writing firmware image to addr {} ...'.format("0x%08X" % fw_img.addr))
-            print("  " + fw_img.cmd)
-            if self.img_write:
-                gw.run_cmd(fw_img.cmd, timeout = 60)
-
+            self.flash_data_to_mtd('firmware', fw_img, timeout = 60)
+        
         if kernel.cmd:
-            print('Writing kernel image to addr {} ...'.format("0x%08X" % kernel.addr))
-            print("  " + kernel.cmd)
-            if self.img_write:
-                gw.run_cmd(kernel.cmd, timeout = 34)
+            self.flash_data_to_mtd('kernel', kernel, timeout = 34)
 
         if rootfs.cmd:
-            print('Writing rootfs image to addr {} ...'.format("0x%08X" % rootfs.addr))
-            print("  " + rootfs.cmd)
-            if self.img_write:
-                gw.run_cmd(rootfs.cmd, timeout = 60)
+            self.flash_data_to_mtd('rootfs', rootfs, timeout = 60)
 
         if not self.img_write:
             die('===== Flash TEST is over =====')
+
+        if self.install_fw_num is not None:
+            print("Run scripts for change NVRAM params...")
+            activate_boot.uboot_boot_change(gw, self.install_fw_num)
+            if hasattr(kernel, 'partname') and kernel.partname:
+                print(f'Boot from partition "{kernel.partname}" activated. [{self.install_fw_num}]')
+            else:
+                print(f'Boot from firmware [{self.install_fw_num}] activated.')
+            nvram = self.dev.get_nvram()
+            if 'flag_boot_rootfs' not in nvram:
+                die(f'Parameter "flag_boot_rootfs" not founeded into nvram')
+            flag_boot_rootfs = int(nvram['flag_boot_rootfs'])
+            if flag_boot_rootfs != self.install_fw_num:
+                die(f'Parameter flag_boot_rootfs = {flag_boot_rootfs} , but expected [{self.install_fw_num}]')
 
         print("The firmware has been successfully flashed!")
 
@@ -1114,13 +1112,29 @@ class XqFlash():
             gw.run_cmd("sync ; umount -a", timeout = 5)
             print("Please, reboot router!")
         else:
-            import ssh2
             print('Send command "reboot" via SSH/Telnet ...')
-            try:
-                gw.run_cmd("reboot -f")
-            except ssh2.exceptions.SocketRecvError as e:
-                pass
+            gw.run_cmd("reboot -f", die_on_error = False)
             print("Forced REBOOT activated!")
+
+    def flash_data_to_mtd(self, img_name, img: Image, timeout, check = True):
+        print(f'Writing {img_name} image to addr 0x{img.addr:08X} ...')
+        print(f"  {img.cmd}")
+        partname = img.partname
+        size = os.path.getsize(img.fn_local)
+        size = (size // 4096) * 4096
+        md5_orig = self.gw.get_md5_for_local_file(img.fn_local, size)
+        if not self.img_write:
+            return True
+        rc = self.gw.run_cmd(img.cmd, timeout = timeout, die_on_error = True)
+        if not rc:
+            print(f'  ERROR: cannot flash data to partition "{partname}"')
+            return False
+        if check:
+            md5 = self.dev.get_md5_for_mtd_data(partname, offset = 0, size = size)
+            if md5 != md5_orig:
+                die(f'Flashed data corrupted! Partition "{partname}" md5: {md5}')
+                return False
+        return True
 
 # =====================================================================
 
