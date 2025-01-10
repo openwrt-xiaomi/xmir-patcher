@@ -86,7 +86,7 @@ mi(73, "RD02")          # Xiaomi Whole-Home Router Combo AX3000 (sub-routing) # 
 mi(74, "CR8818")
 mi(75, "RD03", "RD23", "mi-router-ax3000t") # Xiaomi AX3000T (CN)
 mi(76, "RD04", "RD12")  # Xiaomi Router AX1500 (CN)
-mi(77, "RD05")
+mi(77, "RD05")          # Xiaomi Router 4A Gigabit Edition # RTL8197F # https://forum.openwrt.org/t/214980
 mi(78, "RD06")
 mi(79, "CR8816")
 mi(80, "CR8819")
@@ -109,12 +109,16 @@ mi(96, "BE36M")
 mi(97, "RN07")          # Xiaomi AX3000E (CN)
 mi(98, "RN04")          # Xiaomi Whole House Router WiFi7 (CN)
 mi(99, "RN01")          # BE3600 Pro (CN)
-mi(100,"RN06")          # INT
+mi(100,"RN06")          # Xiaomi Router BE3600 (INT)
+
+
+mi(103,"RN09")          # Xiaomi Mesh System BE3600 Pro (INT)
+mi(104,"RP01")
+mi(0,  "RP02")
+mi(106,"RP03")          # https://home.miot-spec.com/s/rp03
 
 # https://wikidevi.wi-cat.ru/List_of_Xiaomi_Wireless_Devices
 # routers with unknown device number
-
-mi(0,  "RN09")          # INT  # https://home.miot-spec.com/s/rn09
 
 
 def get_modelid_by_name(name):
