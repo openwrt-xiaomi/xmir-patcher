@@ -50,7 +50,7 @@ def menu1_process(id):
 
 def menu2_show():
   print(get_header('-', '(extended functions)'))
-  print(' 1 - Set default device IP-address')
+  print(' 1 - Set IP-address (current value: {})'.format(gw.ip_addr))
   print(' 2 - Change root password')
   print(' 3 - Read dmesg and syslog')
   print(' 4 - Create a backup of the specified partition')
@@ -62,7 +62,9 @@ def menu2_show():
   print(' 0 - Return to main menu')
 
 def menu2_process(id):
-  if id == 1: return "set_def_ipaddr.by"
+  if id == 1:
+    ip_addr = input("Enter device IP-address: ")
+    return [ "gateway.py", ip_addr ]
   if id == 2: return "passw.py"
   if id == 3: return "read_dmesg.py"
   if id == 4: return [ "create_backup.py", "part" ]
