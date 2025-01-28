@@ -381,6 +381,11 @@ class Gateway():
   #===============================================================================
   def free_memcfg(self):
     if self.memcfg:
+      if os.name != "nt":
+        try:
+          self.memcfg.unlink()
+        except Exception:
+          pass
       try:
         self.memcfg.close() # https://docs.python.org/3/library/multiprocessing.shared_memory.html
       except Exception:
