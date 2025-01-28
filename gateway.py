@@ -468,7 +468,7 @@ class Gateway():
   #===============================================================================
   @property
   def ip_addr(self):
-    return self.get_config_param('device_ip_addr', '192.168.1.1').strip()
+    return self.get_config_param('device_ip_addr', '192.168.31.1').strip()
 
   @ip_addr.setter
   def ip_addr(self, value):
