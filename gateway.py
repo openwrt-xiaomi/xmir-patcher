@@ -337,6 +337,31 @@ class Gateway():
         raise RuntimeError(f'Error on exec command "set_sys_time" => {dres}')
     return True
 
+  def get_diag_paras(self):
+    # http://192.168.31.1/cgi-bin/luci/;stok=14b996378966455753104d187c1150b4/api/xqnetwork/diag_get_paras
+    # response: {"code":0,"signal_thr":"-60","usb_read_thr":0,"disk_write_thr":0,"disk_read_thr":0,"iperf_test_thr":"25","usb_write_thr":0}
+    dres = self.api_request('API/xqnetwork/diag_get_paras')
+    if not dres or dres['code'] != 0:
+        raise RuntimeError(f'Error on get diag_get_paras => {dres}')
+    return dres
+
+  def get_diag_iperf_test_thr(self):
+    resp = self.get_diag_paras()
+    return str(resp['iperf_test_thr'])
+
+  def set_diag_iperf_test_thr(self, iperf_test_thr):
+    params = {
+                'iperf_test_thr': str(iperf_test_thr),
+                'usb_read_thr': 0,
+                'usb_write_thr': 0,
+                'disk_read_thr': 0,
+                'disk_write_thr': 0,
+             }
+    dres = self.api_request('API/xqnetwork/diag_set_paras', params)
+    if not dres or dres['code'] != 0:
+        raise RuntimeError(f'Error on exec command "diag_set_paras" => {dres}')
+    return True
+
   def wait_shutdown(self, timeout, verbose = 1):
     if verbose:
       print('Waiting for shutdown: ', end='', flush=True)

