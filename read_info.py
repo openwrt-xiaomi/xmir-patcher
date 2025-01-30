@@ -963,11 +963,11 @@ class SysLog():
       die("Xiaomi Mi Wi-Fi device not found (IP: {})".format(gw.ip_addr))
     if self.verbose > 0:
       print("Start generating syslog...")
-    r2 = requests.get(gw.apiurl + "misystem/sys_log", timeout = timeout)
-    if r2.text.find('"code":0') < 0:
+    r2 = gw.api_request("API/misystem/sys_log", resp = 'text', timeout = timeout)
+    if '"code":0' not in r2:
       die("SysLog not generated!")
     try:
-      path = re.search(r'"path":"(.*?)"', r2.text)
+      path = re.search(r'"path":"(.*?)"', r2)
       path = path.group(1).strip()
     except Exception:
       die("SysLog not generated! (2)")

