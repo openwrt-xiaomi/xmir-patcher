@@ -60,6 +60,52 @@ if pid is None and a_part != 'a':
       size = dev.partlist[p]['size']
       break
 
+def backup_and_download(pid, filename, die_on_error = True):
+    global fn_dir
+    os.remove(filename) if os.path.exists(filename) else None
+    with open(filename, 'wb') as file:
+        pass
+    part_size = dev.partlist[pid]["size"]
+    fn_remote = f'/tmp/dump_mtd.bin'
+    blk_size = 20*1024*1024
+    dump_size = 0
+    while dump_size < part_size:
+        skip = dump_size // blk_size
+        fn_local = fn_dir + f'dump_mtd{pid}_{skip}.bin'
+        os.remove(fn_local) if os.path.exists(fn_local) else None
+        cmd = f"rm -f {fn_remote} ; dd if=/dev/mtd{pid} of={fn_remote} bs={blk_size} count=1 skip={skip}"
+        ret = gw.run_cmd(cmd, timeout = 25, die_on_error = False)
+        if not ret:
+            print(f'ERROR on execute command: "{cmd}"')
+            if die_on_error:
+                sys.exit(1)
+            return False
+        print(f'Download file "./{fn_local}"...')
+        try:
+            ret = gw.download(fn_remote, fn_local, verbose = 0)
+        except Exception:
+            print(f'ERROR: Remote file "{fn_remote}" not found!')
+            if die_on_error:
+                sys.exit(1)
+            return False
+        if not os.path.exists(fn_local):
+            print(f'ERROR: File "{fn_local}" not found!')
+            if die_on_error:
+                sys.exit(1)
+            return False
+        chunk_size = os.path.getsize(fn_local)
+        if chunk_size:
+            with open(fn_local, 'rb') as file:
+                data = file.read()
+            with open(filename, 'ab+') as file:
+                file.write(data)
+        dump_size += chunk_size
+        os.remove(fn_local)
+        pass
+    gw.run_cmd("rm -f " + fn_remote)
+    print(f'File "{filename}" created!"')
+    return True
+
 if pid is not None:
   if os.path.exists(fn_dir): 
     if os.path.exists(fn_local): 
@@ -68,12 +114,7 @@ if pid is not None:
       os.rename(fn_local, fn_old)
   if a_part is None:
     print("Full backup creating...")
-  gw.run_cmd("dd if=/dev/mtd{id} of={o}".format(id=pid, o=fn_remote))
-  print('Dump of partition "{}" created!'.format(name))
-  print('Download dump to file "./{}"...'.format(fn_local))
-  gw.download(fn_remote, fn_local, verbose = 0)
-  print("Completed!")
-  gw.run_cmd("rm -f " + fn_remote)
+  backup_and_download(pid, fn_local)
   print(" ")
   if a_part is None:
     print('Full backup saved to file "./{}"'.format(fn_local))
