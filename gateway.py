@@ -322,7 +322,7 @@ class Gateway():
             dst['timezone'] = "GMT0"
     return dst
 
-  def set_device_systime(self, dst, year = 0, month = 0, day = 0, hour = 0, min = 0, sec = 0, timezone = ""):
+  def set_device_systime(self, dst, year = 0, month = 0, day = 0, hour = 0, min = 0, sec = 0, timezone = "", wait = True):
     if dst:
         year     = dst['year']
         month    = dst['month']
@@ -335,6 +335,8 @@ class Gateway():
     dres = self.api_request('API/misystem/set_sys_time', params)
     if not dres or dres['code'] != 0:
         raise RuntimeError(f'Error on exec command "set_sys_time" => {dres}')
+    if wait:
+        time.sleep(3.1) # because internal code exec: "echo 'ok,xiaoqiang' > /tmp/ntp.status; sleep 3; date -s \""..time.."\""
     return True
 
   def get_diag_paras(self):
