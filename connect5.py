@@ -70,6 +70,11 @@ max_cmd_len = 100 - 1 - len(vuln_cmd)
 hackCheck = False
 
 def exec_smart_cmd(cmd, timeout = 7, api = 'API/xqsmarthome/request_smartcontroller'):
+    ######
+    # vuln/exploit author: Julien R. (SoEasY), Marin Duroyon
+    # reg_code: CVE-2023-26319
+    # publication: https://blog.thalium.re/posts/rooting-xiaomi-wifi-routers/
+    ######
     sc_command = cmd['command']
     payload = json.dumps(cmd, separators = (',', ':'))
     try:
