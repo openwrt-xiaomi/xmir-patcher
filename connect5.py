@@ -75,14 +75,18 @@ def exec_smart_cmd(cmd, timeout = 7, api = 'API/xqsmarthome/request_smartcontrol
     # reg_code: CVE-2023-26319
     # publication: https://blog.thalium.re/posts/rooting-xiaomi-wifi-routers/
     ######
+    saved_con_timeout = gw.con_timeout
+    gw.con_timeout = timeout
     sc_command = cmd['command']
     payload = json.dumps(cmd, separators = (',', ':'))
     try:
         data = { "payload": payload }
         res = gw.api_request(api, data, resp = 'text', post = 'x-www-form', timeout = timeout)
     except Exception as e:
+        gw.con_timeout = saved_con_timeout
         msg = getattr(e, 'message', str(e))
         raise ExploitError(f'Cannot send POST-request "{sc_command}" to SmartController service. {msg}')
+    gw.con_timeout = saved_con_timeout
     return res
 
 def exec_smart_command(cmd, timeout = 7, ignore_err_code = 0):
