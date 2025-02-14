@@ -923,8 +923,8 @@ class Gateway():
     num = str(random.randint(10000, 1000000))
     md5_local_fn = f"tmp/{fname}.{num}.md5"
     md5_remote_fn = f"/tmp/{fname}.{num}.md5"
-    cmd = f'md5sum "{fn_remote}" &> "{md5_remote_fn}" '       
-    rc = self.run_cmd(cmd, timeout = 4)
+    cmd = f'md5sum "{fn_remote}" > "{md5_remote_fn}" 2>&1'
+    rc = self.run_cmd(cmd, timeout = 5)
     if not rc:
         return -5
     os.remove(md5_local_fn) if os.path.exists(md5_local_fn) else None
