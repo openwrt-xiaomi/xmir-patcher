@@ -51,14 +51,25 @@ dn = gw.device_name
 #  import connect4
 #  sys.exit(0)
 
-#if dn in 'RD01 RD02 RD03 CR8818 RD04 RD05 RD06 CR8816 CR8819 RD08 ':
-if dn[:2] in ['RD','BE','RN'] or dn.startswith('CR88') or dn == 'RA80V2':
-  import connect6
-  sys.exit(0)
-
 if gw.model_id <= 0 or gw.model_id >= gw.get_modelid_by_name('R2100'):
-  import connect5
-  sys.exit(0)
+    # init gw and check ssh
+    gw = create_gateway(timeout = 4, die_if_sshOk = True, die_if_ftpOk = True, web_login = True)
+
+    exp_modules = [
+        'connect6',  # arn_switch/start_binding
+        'connect5',  # smartcontroller
+    ]
+    for mod_name in exp_modules:
+        try:
+            import_module(mod_name, gw)
+            break  # Ok
+        except ExploitNotWorked as e:
+            print('WARN:', str(e))
+            continue  # try next module
+        except Exception:
+            raise
+
+    sys.exit(0)
 
 # ===============================================================================
 

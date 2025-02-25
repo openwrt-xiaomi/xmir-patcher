@@ -10,33 +10,10 @@ import xmir_base
 from gateway import *
 
 
-gw = Gateway(timeout = 4, detect_ssh = False)
-if gw.status < 1:
-    die(f"Xiaomi Mi Wi-Fi device not found (IP: {gw.ip_addr})")
-
-print(f"device_name = {gw.device_name}")
-print(f"rom_version = {gw.rom_version} {gw.rom_channel}")
-print(f"mac address = {gw.mac_address}")
-
-dn = gw.device_name
-gw.ssh_port = 22
-ret = gw.detect_ssh(verbose = 1, interactive = True)
-if ret == 23:
-    if gw.use_ftp:
-        die("Telnet and FTP servers already running!")
-    print("Telnet server already running, but FTP server not respond")
-elif ret > 0:
-    #die(0, "SSH server already installed and running")
-    pass
-
-info = gw.get_init_info()
-if not info or info["code"] != 0:
-    die('Cannot get init_info')
-
-ccode = info["countrycode"]
-print(f'Current CountryCode = {ccode}')
-
-stok = gw.web_login()
+try:
+    gw = inited_gw
+except NameError:
+    gw = create_gateway(die_if_sshOk = False)
 
 
 def exploit_1(cmd, api = 'API/misystem/arn_switch'):
@@ -79,7 +56,7 @@ for idx, exp_func in enumerate(exp_list):
 gw.set_diag_iperf_test_thr(20)
 
 if not exec_cmd:
-    die('Exploits arn_switch/start_binding not working!!!')
+    raise ExploitNotWorked('Exploits arn_switch/start_binding not working!!!')
 
 if exec_cmd == exploit_1:
     print('Exploit "arn_switch" detected!') 
