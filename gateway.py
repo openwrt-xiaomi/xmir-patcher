@@ -121,7 +121,8 @@ class Gateway():
         url += f';stok={self.stok}/api' + path[3:]
     else:
         url += path
-    t_timeout = (self.con_timeout, timeout)
+    t_timeout = (self.con_timeout, timeout) if timeout is not None else (self.con_timeout, self.timeout)
+    #print(f'{t_timeout=}')
     if post:
         response = requests.post(url,  data = params, stream = stream, headers = headers, timeout = t_timeout)
     else:
@@ -337,26 +338,26 @@ class Gateway():
         sec      = dst['sec']
         timezone = dst['timezone']
     params = { 'time': f"{year}-{month}-{day} {hour}:{min}:{sec}", 'timezone': timezone }
-    dres = self.api_request('API/misystem/set_sys_time', params)
+    dres = self.api_request('API/misystem/set_sys_time', params, timeout = self.timeout)
     if not dres or dres['code'] != 0:
         raise RuntimeError(f'Error on exec command "set_sys_time" => {dres}')
     if wait:
         time.sleep(3.1) # because internal code exec: "echo 'ok,xiaoqiang' > /tmp/ntp.status; sleep 3; date -s \""..time.."\""
     return True
 
-  def get_diag_paras(self):
+  def get_diag_paras(self, timeout = None):
     # http://192.168.31.1/cgi-bin/luci/;stok=14b996378966455753104d187c1150b4/api/xqnetwork/diag_get_paras
     # response: {"code":0,"signal_thr":"-60","usb_read_thr":0,"disk_write_thr":0,"disk_read_thr":0,"iperf_test_thr":"25","usb_write_thr":0}
-    dres = self.api_request('API/xqnetwork/diag_get_paras')
+    dres = self.api_request('API/xqnetwork/diag_get_paras', timeout = timeout)
     if not dres or dres['code'] != 0:
         raise RuntimeError(f'Error on get diag_get_paras => {dres}')
     return dres
 
-  def get_diag_iperf_test_thr(self):
-    resp = self.get_diag_paras()
+  def get_diag_iperf_test_thr(self, timeout = None):
+    resp = self.get_diag_paras(timeout = timeout)
     return str(resp['iperf_test_thr'])
 
-  def set_diag_iperf_test_thr(self, iperf_test_thr):
+  def set_diag_iperf_test_thr(self, iperf_test_thr, timeout = None):
     params = {
                 'iperf_test_thr': str(iperf_test_thr),
                 'usb_read_thr': 0,
@@ -364,7 +365,7 @@ class Gateway():
                 'disk_read_thr': 0,
                 'disk_write_thr': 0,
              }
-    dres = self.api_request('API/xqnetwork/diag_set_paras', params)
+    dres = self.api_request('API/xqnetwork/diag_set_paras', params, timeout = timeout)
     if not dres or dres['code'] != 0:
         raise RuntimeError(f'Error on exec command "diag_set_paras" => {dres}')
     return True
