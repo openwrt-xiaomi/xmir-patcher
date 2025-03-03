@@ -924,17 +924,18 @@ class Gateway():
         return False
     return True
 
-  def get_md5_for_remote_file(self, fn_remote):
+  def get_md5_for_remote_file(self, fn_remote, timeout = 8):
     fname = os.path.basename(fn_remote)
     num = str(random.randint(10000, 1000000))
     md5_local_fn = f"tmp/{fname}.{num}.md5"
     md5_remote_fn = f"/tmp/{fname}.{num}.md5"
     cmd = f'md5sum "{fn_remote}" > "{md5_remote_fn}" 2>&1'
-    rc = self.run_cmd(cmd, timeout = 5)
+    rc = self.run_cmd(cmd, timeout = timeout)
     if not rc:
         return -5
     os.remove(md5_local_fn) if os.path.exists(md5_local_fn) else None
     self.download(md5_remote_fn, md5_local_fn)
+    self.run_cmd(f'rm -f "{md5_remote_fn}"', timeout = 3)
     if not os.path.exists(md5_local_fn):
         return -4
     with open(md5_local_fn, 'r', encoding = 'latin1') as file:
