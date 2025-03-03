@@ -3,51 +3,39 @@
 
 import os
 import sys
+import time
 
 import xmir_base
-import gateway
-from gateway import die
+from gateway import *
 
+gw = Gateway()
 
-gw = gateway.Gateway()
-
-fn_dir      = 'data/'
-fn_local    = 'data/ssh_patch.sh'
-fn_remote   = '/tmp/ssh_patch.sh'
-fn_local_i  = 'data/ssh_install.sh'
-fn_remote_i = '/tmp/ssh_install.sh'
-fn_local_u  = 'data/ssh_uninstall.sh'
-fn_remote_u = '/tmp/ssh_uninstall.sh'
+FN_patch     = 'data/ssh_patch.sh'
+fn_patch     = '/tmp/ssh_patch.sh'
+FN_install   = 'data/ssh_install.sh'
+fn_install   = '/tmp/ssh_install.sh'
+FN_uninstall = 'data/ssh_uninstall.sh'
+fn_uninstall = '/tmp/ssh_uninstall.sh'
 
 action = 'install'
 if len(sys.argv) > 1:
-  if sys.argv[1].startswith('u') or sys.argv[1].startswith('r'):
-    action = 'uninstall'
+    if sys.argv[1].startswith('u') or sys.argv[1].startswith('r'):
+        action = 'uninstall'
 
 if action == 'install':
-  gw.upload(fn_local, fn_remote)
-  gw.upload(fn_local_i, fn_remote_i)
+    gw.upload(FN_patch, fn_patch)
+    gw.upload(FN_install, fn_install)
 
-gw.upload(fn_local_u, fn_remote_u)
+gw.upload(FN_uninstall, fn_uninstall)
 
 print("All files uploaded!")
-'''
-if action == 'install':
-  gw.ssh_close()
-  import passw
-  gw = gateway.Gateway()
-  if not gw.ping():
-    die('SSH not active!')
-'''
 
 print("Run scripts...")
-if action == 'install':
-  gw.run_cmd("sh " + fn_remote_i)
-else:
-  gw.run_cmd("sh " + fn_remote_u)
+run_script = fn_install if action == 'install' else fn_uninstall
+gw.run_cmd(f"chmod +x {run_script} ; {run_script}")
 
-gw.run_cmd("rm -f " + fn_remote)
-gw.run_cmd("rm -f " + fn_remote_i)
-gw.run_cmd("rm -f " + fn_remote_u)
+time.sleep(1.5)
 
-print("Ready! The SSH patch installed.")
+gw.run_cmd(f"rm -f {fn_patch} ; rm -f {fn_install} ; rm -f {fn_uninstall}")
+
+print("Ready! The Permanent SSH patch installed.")
