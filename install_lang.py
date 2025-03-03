@@ -3,13 +3,13 @@
 
 import os
 import sys
+import time
 import types
 import re
 
 import xmir_base
 import ssh2
-import gateway
-from gateway import die
+from gateway import *
 
 
 class www_lmo():
@@ -119,7 +119,7 @@ class www_lmo():
       v.sed = "sed -i '{}s/{}/{}/g' {}".format(prefix, orig, new, w.fn_remote) 
 
 
-gw = gateway.Gateway()
+gw = Gateway()
 
 fn_dir      = 'data/'
 fn_local    = 'data/lang_patch.sh'
@@ -128,11 +128,16 @@ fn_local_i  = 'data/lang_install.sh'
 fn_remote_i = '/tmp/lang_install.sh'
 fn_local_u  = 'data/lang_uninstall.sh'
 fn_remote_u = '/tmp/lang_uninstall.sh'
-fn_www_local  = 'data/lang_patch1.sh'
-fn_www_remote = '/tmp/lang_patch1.sh'
+fn_www_local  = f'tmp/lang_patch_www.sh'
+fn_www_remote = '/tmp/lang_patch_www.sh'
 
+os.makedirs('tmp', exist_ok = True)
+
+full_install = False
 action = 'install'
 if len(sys.argv) > 1:
+  if sys.argv[1] == 'full':
+    full_install = True
   if sys.argv[1].startswith('u') or sys.argv[1].startswith('r'):
     action = 'uninstall'
 
@@ -143,17 +148,25 @@ if action == 'install':
 gw.upload(fn_local_u, fn_remote_u)
 
 if action == 'install':
-  patch1_installed = True
-  fn = 'data/lang_patch.log'
+  patch_installed = 0
+  fn = 'tmp/lang_patch.log'
   if os.path.exists(fn):
     os.remove(fn)
   try:
     gw.download('/tmp/lang_patch.log', fn, verbose = 0)
   except ssh2.exceptions.SCPProtocolError:
-    patch1_installed = False
-  if patch1_installed:
-    print("Uninstall lang_patch...")
-    gw.run_cmd("sh " + fn_remote_u)
+    patch_installed = 0
+  txt = ''
+  if os.path.exists(fn):
+    with open(fn, 'r') as file:
+      txt = file.read()
+  if txt:
+    patch_installed = 2 if 'www_patch' in txt else 1
+  if patch_installed >= 2:
+    die("Full lang patch already installed!")
+  #if patch_installed:
+  #  print("Uninstall lang_patch...")
+  #  gw.run_cmd(f"chmod +x {fn_remote_u} ; {fn_remote_u}")
 
 if action == 'install':
   import po2lmo
@@ -167,6 +180,7 @@ if action == 'install':
     lmo.save_to_bin(fn_dir + lmo_fname)
     gw.upload(fn_dir + lmo_fname, '/tmp/' + lmo_fname)
 
+if action == 'install' and full_install:
   dn_www = "tmp/www"
   os.makedirs(dn_www, exist_ok = True)
   wwwlst = [ "/usr/lib/lua/luci/view/web/index.htm",
@@ -205,14 +219,13 @@ if action == 'install':
 print("All files uploaded!")
 
 print("Run scripts...")
-if action == 'install':
-  gw.run_cmd("sh " + fn_remote_i)
-else:
-  gw.run_cmd("sh " + fn_remote_u)
+run_script = fn_remote_i if action == 'install' else fn_remote_u
+gw.run_cmd(f"chmod +x {run_script} ; {run_script}", timeout = 17)
 
-gw.run_cmd("rm -f " + fn_remote)
-gw.run_cmd("rm -f " + fn_remote_i)
-gw.run_cmd("rm -f " + fn_remote_u)
-gw.run_cmd("rm -f " + fn_www_remote)
+time.sleep(1.5)
+
+gw.run_cmd(f"rm -f {fn_remote} ; rm -f {fn_remote_i} ; rm -f {fn_remote_u}")
+if full_install:
+    gw.run_cmd(f"rm -f {fn_www_remote}")
 
 print("Ready! The language files are installed.")
