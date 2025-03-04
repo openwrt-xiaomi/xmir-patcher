@@ -1010,6 +1010,8 @@ def create_gateway(timeout = 4, die_if_sshOk = True, die_if_ftpOk = True, web_lo
     ccode = gw.device_info["countrycode"]
     print(f'CountryCode = {ccode}')
     if web_login:
+        if isinstance(web_login, str):
+            gw.webpassword = web_login
         gw.web_login()
     return gw
 

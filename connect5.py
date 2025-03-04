@@ -17,11 +17,17 @@ import json
 import xmir_base
 from gateway import *
 
+die_if_sshOk = True
+web_password = True
+if len(sys.argv) > 1 and sys.argv[0].endswith('connect5.py'):
+    if sys.argv[1]:
+        web_password = sys.argv[1]
+        die_if_sshOk = False
 
 try:
     gw = inited_gw
 except NameError:
-    gw = create_gateway(die_if_sshOk = True)
+    gw = create_gateway(die_if_sshOk = die_if_sshOk, web_login = web_password)
 
 ccode = gw.device_info["countrycode"]
 

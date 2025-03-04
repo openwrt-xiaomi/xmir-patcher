@@ -9,11 +9,15 @@ import requests
 import xmir_base
 from gateway import *
 
+web_password = True
+if len(sys.argv) > 1 and sys.argv[0].endswith('connect6.py'):
+    if sys.argv[1]:
+        web_password = sys.argv[1]
 
 try:
     gw = inited_gw
 except NameError:
-    gw = create_gateway(die_if_sshOk = False)
+    gw = create_gateway(die_if_sshOk = False, web_login = web_password)
 
 
 def exploit_1(cmd, api = 'API/misystem/arn_switch'):
