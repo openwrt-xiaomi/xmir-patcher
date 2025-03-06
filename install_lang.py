@@ -228,4 +228,5 @@ gw.run_cmd(f"rm -f {fn_remote} ; rm -f {fn_remote_i} ; rm -f {fn_remote_u}")
 if full_install:
     gw.run_cmd(f"rm -f {fn_www_remote}")
 
-print("Ready! The language files are installed.")
+prefix = '' if action == 'install' else 'un'
+print(f"Ready! The language files are {prefix}installed.")

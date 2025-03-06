@@ -1,7 +1,18 @@
 #!/bin/sh
 
+INST_FLAG_FN=/tmp/lang_patch.log
+
 DIR_PATCH=/etc/crontabs/patches
 DIR_BACKUP=$DIR_PATCH/lang_backup
+
+TARGET1_DIR=/usr/share/xiaoqiang
+MIRROR1_DIR=/tmp/_usr_share_xiaoqiang
+SYNCOBJECT1=$MIRROR1_DIR.sync
+
+TARGET2_DIR=/usr/lib/lua/luci
+MIRROR2_DIR=/tmp/_usr_lib_lua_luci
+SYNCOBJECT2=$MIRROR2_DIR.sync
+
 
 if [ `find /tmp -maxdepth 1 -name 'base.*.lmo' | wc -l` -eq 0 ]; then
 	return 1
@@ -23,28 +34,28 @@ fi
 
 if [ $CLEAN_INSTALL = 1 ]; then
 	NEED_RESTORE_MNT=0
-	if mount | grep -q ' on /usr/lib/lua/luci' ; then
-		umount -l /usr/lib/lua/luci
+	if mount | grep -q " on $TARGET1_DIR" ; then
+		umount -l $TARGET1_DIR
 		NEED_RESTORE_MNT=1
 	fi
-	if [ -f /usr/lib/lua/luci/i18n/base.en.lmo ]; then
-		# INT firmware may contain a file "base.en.lmo"
-		echo "1" > $DIR_BACKUP/skip_base_en
+	if grep -q "option CHANNEL 'stable'" $TARGET1_DIR/xiaoqiang_version ; then
+		echo '1' > $DIR_BACKUP/fw_stable
 	fi
-	cp -f /usr/lib/lua/luci/view/web/inc/sysinfo.htm $DIR_BACKUP/
-	cp -f /usr/lib/lua/luci/i18n/base.*.lmo $DIR_BACKUP/
-	[ $NEED_RESTORE_MNT = 1 ] && mount --bind /tmp/_usr_lib_lua_luci /usr/lib/lua/luci
+	[ $NEED_RESTORE_MNT = 1 ] && mount --bind $MIRROR1_DIR $TARGET1_DIR
 fi
 if [ $CLEAN_INSTALL = 1 ]; then
 	NEED_RESTORE_MNT=0
-	if mount | grep -q ' on /usr/share/xiaoqiang' ; then
-		umount -l /usr/share/xiaoqiang
+	if mount | grep -q " on $TARGET2_DIR" ; then
+		umount -l $TARGET2_DIR
 		NEED_RESTORE_MNT=1
 	fi
-	if grep -q "option CHANNEL 'stable'" /usr/share/xiaoqiang/xiaoqiang_version ; then
-		echo '1' > $DIR_BACKUP/fw_stable
+	if [ -f $TARGET2_DIR/i18n/base.en.lmo ]; then
+		# INT firmware may contain a file "base.en.lmo"
+		echo "1" > $DIR_BACKUP/skip_base_en
 	fi
-	[ $NEED_RESTORE_MNT = 1 ] && mount --bind /tmp/_usr_share_xiaoqiang /usr/share/xiaoqiang
+	cp -f $TARGET2_DIR/view/web/inc/sysinfo.htm $DIR_BACKUP/
+	cp -f $TARGET2_DIR/i18n/base.*.lmo $DIR_BACKUP/
+	[ $NEED_RESTORE_MNT = 1 ] && mount --bind $MIRROR2_DIR $TARGET2_DIR
 fi
 
 if [ -f $DIR_BACKUP/skip_base_en ]; then
@@ -105,6 +116,7 @@ fi
 uci set luci.main.lang=en
 #uci commit luci
 
-# run patch
+# forced run patch
+rm -f $INST_FLAG_FN
 $DIR_PATCH/lang_patch.sh
 

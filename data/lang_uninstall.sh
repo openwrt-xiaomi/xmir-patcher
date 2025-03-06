@@ -1,7 +1,17 @@
 #!/bin/sh
 
+INST_FLAG_FN=/tmp/lang_patch.log
+
 DIR_PATCH=/etc/crontabs/patches
 DIR_BACKUP=$DIR_PATCH/lang_backup
+
+TARGET1_DIR=/usr/share/xiaoqiang
+MIRROR1_DIR=/tmp/_usr_share_xiaoqiang
+SYNCOBJECT1=$MIRROR1_DIR.sync
+
+TARGET2_DIR=/usr/lib/lua/luci
+MIRROR2_DIR=/tmp/_usr_lib_lua_luci
+SYNCOBJECT2=$MIRROR2_DIR.sync
 
 if [ -d $DIR_BACKUP ]; then
 	if [ -f $DIR_BACKUP/fw_stable ]; then
@@ -28,7 +38,9 @@ uci commit firewall
 rm -rf $DIR_BACKUP
 rm -f $DIR_PATCH/lang_patch.sh
 rm -f $DIR_PATCH/base.*.lmo
-rm -f /tmp/lang_patch.log
+rm -f $INST_FLAG_FN
+rm -f $SYNCOBJECT1
+rm -f $SYNCOBJECT2
 
 luci-reload
 rm -f /tmp/luci-indexcache
