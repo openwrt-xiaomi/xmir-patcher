@@ -117,6 +117,9 @@ mi(104,"RP01")
 mi(0,  "RP02")
 mi(106,"RP03")          # https://home.miot-spec.com/s/rp03
 
+
+mi(109,"RD03V2")        # Xiaomi AX3000T 2025 (CN)  (ipq5018)
+
 # https://wikidevi.wi-cat.ru/List_of_Xiaomi_Wireless_Devices
 # routers with unknown device number
 
