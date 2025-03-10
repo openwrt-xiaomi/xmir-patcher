@@ -245,6 +245,7 @@ class DevInfo():
     cmd += f"  cat {mtd_dev}/mtdblock$i/ro  {dn} | {trim} | {a2f} ; {delim} ;"
     cmd += f"  cat {mtd_dev}/dev    {dn} | {trim} | {a2f} ; {delim} ;"
     cmd += f"  readlink -f {mtd_dev}/device {dn} | {trim} | {a2f} ; {delim} ;"
+    cmd += f"  mtd -l 1 dump /dev/mtd$i {dn} | wc -c | {trim} | {a2f} ; {delim} ;"
     cmd += f'done'
     out_text = self.run_command(cmd, fn)
     if not out_text:
@@ -259,7 +260,7 @@ class DevInfo():
         info[mtd_num]["addr"]   = int(mtd_info[0], 0) if len(mtd_info[0]) > 0 else None
         info[mtd_num]["type"]   = mtd_info[1].strip()
         info[mtd_num]["flags"]  = int(mtd_info[2], 0) if len(mtd_info[2]) > 0 else None
-        info[mtd_num]["ro"]     = int(mtd_info[3], 0) if len(mtd_info[3]) > 0 else None 
+        info[mtd_num]["ro"]     = 0 if mtd_info[6] == '1' else 1
         info[mtd_num]["dev"]    = mtd_info[4].strip()
         info[mtd_num]["device"] = mtd_info[5].strip()
     return info    
