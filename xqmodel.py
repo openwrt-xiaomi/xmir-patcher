@@ -35,9 +35,9 @@ mi(27, "R2350",   "", "aiot-ac2350")
 mi(28, "IR1200G")
 mi(29, "RM1800")
 mi(30, "R2100D")
-mi(31, "RA67")
+mi(31, "RA67")          # RM1800C
 mi(32, "RA69",    "", "ax6")
-mi(33, "RA71")
+mi(33, "RA71")          # Redmi AX1800
 mi(34, "CR6006",  "", "mi-router-cr6606")
 mi(35, "CR6008",  "", "mi-router-cr6608")
 mi(36, "CR6009",  "", "mi-router-cr6609")
@@ -45,16 +45,15 @@ mi(37, "RA70",    "", "ax9000")  # AX9000
 mi(38, "RA75",    "", "mi-ra75")
 mi(39, "RA72")          # Mi Router AX6000  Certification: 2021-05-20
 
-mi(0,  "RA50")          # Certification: 2022-13063
-mi(0,  "RB02", "R4AV2", "mi-router-4a-gigabit-v2") # Xiaomi AC1200 (INT)
-mi(0,  "R4AV2", "RB02", "mi-router-4a-gigabit-v2") # Xiaomi AC1200 (CN)
 
+mi(42, "RA50")          # RA50 (ipq6018) # Certification: 2022-13063
 mi(43, "RA80", "RA82")  # AX3000 (CN)         Certification: 2022-2908
 mi(44, "RA81")          # Redmi AX3000
 mi(45, "RA82", "RA80")  # AX3000 (INT)
 mi(46, "RA83")
 mi(47, "RA74")          # AX5400
-
+mi(0,  "RB02", "R4AV2", "mi-router-4a-gigabit-v2") # Xiaomi AC1200 (INT)
+mi(0,  "R4AV2", "RB02", "mi-router-4a-gigabit-v2") # Xiaomi AC1200 (CN)   (HDR2)
 mi(49, "YY01")
 mi(50, "RB01", "RB03", "redmi-router-ax6s")  # AX3200 (INT)
 mi(51, "RB03", "RB01", "redmi-router-ax6s")  # AX6S    # CR8806 (China Mobile)
@@ -70,18 +69,19 @@ mi(0,  "RB05")          # Redmi Router AX5700 # Certification: 2022-3478
 mi(61, "RB06", "", "redmi-router-ax6000")   # Redmi AX6000
 mi(62, "RB07")          # mediatek_mt7981
 
-mi(64, "CB04")
-mi(65, "CB0401")        # Xiaomi 5G CPE Pro, Magenta Internet 5G Box AX5400
+mi(64, "CB04")          # ???? (CN) [1.0.1]
+mi(65, "CB0401")        # Xiaomi 5G CPE Pro, Magenta Internet 5G Box AX5400 (INT)
 mi(66, "RC01")          # AX10000    (WanGiga)   (BE10000)
 mi(0,  "RC04")          # RA75 analog
-mi(68, "CB0401V2")      # Xiaomi 5G CPE Pro
+mi(68, "CB0401V2")      # Xiaomi 5G CPE Pro (INT)  [3.0.59]
 
 mi(70, "RC06")          # Xiaomi Router 7000 (BE7000)
 mi(71, "RD01")          # Xiaomi Whole-Home Router Combo AX3000  # https://www.mi.com/xiaomi-routers/whole-room
-mi(72, "WR30", "WR30U", "mi-router-wr30u")  # Xiaomi AX3000NE   WR30U/WR30T/WR30M
+mi(72, "WR30", "WR30U", "mi-router-wr30u")  # Xiaomi AX3000NE   WR30U/WR30T/WR30M  (HDR2)
 mi(0,  "WR30U", "WR30", "mi-router-wr30u")  # China Unicom
 mi(0,  "WR30T", "WR30", "mi-router-wr30u")  # China Telecom  # Certification: 2022-3536
-mi(0,  "WR30M", "WR30", "mi-router-wr30u")  # China Mobile   # Certification: 2022-3202   6.0.49
+mi(0,  "WR30M", "WR30", "mi-router-wr30u")  # China Mobile   # Certification: 2022-3202   [6.0.48]
+mi(0,  "RC02",  "WR30", "mi-router-wr30u")  # Xiaomi AX3000NE (INT)  # https://home.miot-spec.com/s/xiaomi.router.rc02
 mi(73, "RD02")          # Xiaomi Whole-Home Router Combo AX3000 (sub-routing) # ipq5018 # Certification: 2023-11107
 mi(74, "CR8818")
 mi(75, "RD03", "RD23", "mi-router-ax3000t") # Xiaomi AX3000T (CN)
@@ -107,21 +107,30 @@ mi(94, "NR50")          # (INT)
 mi(95, "RN02")          # Xiaomi BE6500 (ipq5312)
 mi(96, "BE36M")
 mi(97, "RN07")          # Xiaomi AX3000E (CN)
-mi(98, "RN04")          # Xiaomi Whole House Router WiFi7 (CN)
-mi(99, "RN01")          # BE3600 Pro (CN)
+mi(98, "RN04")          # Xiaomi Whole House BE3600 Pro MASTER (CN)
+mi(99, "RN01")          # Xiaomi Whole House BE3600 Pro (CN)
 mi(100,"RN06", "RD15")  # Xiaomi Router BE3600 2.5G (INT)
 
-
+mi(102,"RD04V2")        # Xiaomi Router AX1500 (CN) (rtl8197)
 mi(103,"RN09")          # Xiaomi Mesh System BE3600 Pro (INT)
-mi(104,"RP01")
-mi(0,  "RP02")
-mi(106,"RP03")          # https://home.miot-spec.com/s/rp03
+mi(104,"RP01")          # Xiaomi Whole House BE3600 Pro Network Cable Version (CN)
+mi(0,  "RP02")          # same as RP01
+mi(106,"RP03")          # Xiaomi Whole House BE3600 Pro Network Cable Version (CN)
 
 
 mi(109,"RD03V2")        # Xiaomi AX3000T 2025 (CN)  (ipq5018)
 
 # https://wikidevi.wi-cat.ru/List_of_Xiaomi_Wireless_Devices
-# routers with unknown device number
+
+# routers with unknown device number:
+mi(0,  "R03")           # Xiaomi Mi Wi-Fi Amplifier Pro (07/05/2017)
+mi(0,  "R3GV2N")
+mi(0,  "R4ACV2")
+mi(0,  "RA72V2")
+mi(0,  "TR606")         # AX1800
+mi(0,  "TR608")
+mi(0,  "TR609")
+mi(0,  "RD01H")
 
 
 def get_modelid_by_name(name):
