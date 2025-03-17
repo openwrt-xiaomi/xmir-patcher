@@ -981,7 +981,7 @@ class Gateway():
     if not rc:
         return -5
     os.remove(md5_local_fn) if os.path.exists(md5_local_fn) else None
-    self.download(md5_remote_fn, md5_local_fn)
+    self.download(md5_remote_fn, md5_local_fn, verbose = 0)
     self.run_cmd(f'rm -f "{md5_remote_fn}"', timeout = 3)
     if not os.path.exists(md5_local_fn):
         return -4
