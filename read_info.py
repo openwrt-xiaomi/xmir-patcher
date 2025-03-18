@@ -31,7 +31,9 @@ class Bootloader():
   spi_rom = False
 
 class BaseInfo():
+  linux_stamp = None
   linux_ver = None
+  linux_arch = None
   cpu_arch = None
   cpu_name = None
   spi_rom = False
@@ -432,6 +434,12 @@ class DevInfo():
       x = re.search(r'Linux version (.*?) ', self.dmesg)
       if x:
         ret.linux_ver = x.group(1).strip()
+    kernel_version = self.get_kernel_version(verbose = verbose)
+    if not ret.linux_ver:
+      if kernel_version:
+        ret.linux_ver = kernel_version
+    ret.linux_stamp = self.kernel_ver_stamp
+    ret.linux_arch = self.kernel_arch
     if verbose:
       print('  Linux version: {}'.format(ret.linux_ver))
     fn_local  = 'outdir/openwrt_release.txt'
@@ -544,6 +552,34 @@ class DevInfo():
     self.kcmdline = env.var
     #self.kcmdline = type("Names", [object], self.kcmdline)
     return self.kcmdline
+
+  def get_kernel_version(self, verbose = None):
+    verbose = verbose if verbose is not None else self.verbose
+    self.kernel_ver_stamp = None
+    self.kernel_version = None
+    self.kernel_buildver = None
+    self.kernel_arch = None
+    fn = 'kver.txt'
+    cmd  = f'uname -a  > /tmp/{fn} ; '   # Linux XiaoQiang 5.4.213 #0 SMP PREEMPT Tue Feb 18 11:11:56 2025 armv7l GNU/Linux
+    cmd += f'uname -r >> /tmp/{fn} ; '   # 5.4.213
+    cmd += f'uname -v >> /tmp/{fn} ; '   # #0 SMP PREEMPT Tue Feb 18 11:11:56 2025
+    cmd += f'uname -m >> /tmp/{fn} ; '   # armv7l
+    cmd += f'uname -p >> /tmp/{fn} ; '   # <Processor type>
+    out_text = self.run_command(cmd, fn)
+    if not out_text:
+        return None
+    #if 'Linux' not in out_text:
+    #    return None
+    out_lines = out_text.split('\n')
+    if len(out_lines) < 4:
+        return None
+    self.kernel_ver_stamp = out_lines[0].strip()
+    self.kernel_version = out_lines[1].strip()
+    self.kernel_buildver = out_lines[2].strip()
+    self.kernel_arch = out_lines[3].strip()
+    if verbose:
+        print(f"  Kernel version: {self.kernel_ver_stamp}")
+    return self.kernel_version
 
   def get_nvram(self, verbose = None, retdict = True):
     verbose = verbose if verbose is not None else self.verbose
@@ -1110,6 +1146,7 @@ if __name__ == "__main__":
     file.write(f'  {"%2d" % i} > addr: {addr}  size: {size}  ro: {ro}  name: "{name}" \n')
   file.write("\n")  
   file.write("_Base_info_:\n")
+  file.write('  Linux stamp: {}\n'.format(info.info.linux_stamp))
   file.write('  Linux version: {}\n'.format(info.info.linux_ver))
   file.write('  CPU arch: {}\n'.format(info.info.cpu_arch))
   file.write('  CPU name: {}\n'.format(info.info.cpu_name))
