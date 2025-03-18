@@ -227,6 +227,8 @@ class XqFlash():
             if img_name:
                 self.img_stock_names[img_name] = len(image)
             #self.save_all_images(req_cmd = False, prefix = "_ubi_")
+        if image[:4] == b'cs6c':
+            print(f'Images "cs6c" not supported!')
         return hr
         
     def parse_stock_image(self, image):
