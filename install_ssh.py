@@ -125,6 +125,7 @@ with open(FN_uninstall, 'w', newline = '\n') as file:
 
 # ---------------------------------------------------------------------------
 
+FN_bdata_log = None
 dev = read_info.DevInfo(gw, verbose = 0, infolevel = 1)
 dev.get_env_list()
 bdata = dev.env.bdata
