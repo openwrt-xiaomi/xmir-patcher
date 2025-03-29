@@ -119,6 +119,8 @@ mi(106,"RP03")          # Xiaomi Whole House BE3600 Pro Network Cable Version (C
 
 
 mi(109,"RD03V2")        # Xiaomi AX3000T 2025 (CN)  (ipq5018)
+mi(0,  "RP04")
+mi(0,  "RP08")          # (INT)
 
 # https://wikidevi.wi-cat.ru/List_of_Xiaomi_Wireless_Devices
 
@@ -131,6 +133,7 @@ mi(0,  "TR606")         # AX1800
 mi(0,  "TR608")
 mi(0,  "TR609")
 mi(0,  "RD01H")
+mi(0,  "RD16V2")
 
 
 def get_modelid_by_name(name):
