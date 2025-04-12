@@ -37,7 +37,7 @@ if [ "$SSH2_PKG" = "0" ]; then
 	# install
 	python3 -m pip install -r requirements.txt
 	# check
-	SSH2_PKG=`find ./venv -type d -wholename '*/site-packages/ssh2_python*' | wc -l`
+	SSH2_PKG=`find ./venv -type d -wholename '*/site-packages/ssh2_python*' | wc -l | tr -d ' '`
 	if [ "$SSH2_PKG" = "0" ]; then
 		echo "ERROR: XMiR: python3 package 'ssh2-python' not installed!"
 		deactivate
