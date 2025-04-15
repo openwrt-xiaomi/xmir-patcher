@@ -1026,6 +1026,48 @@ class Gateway():
             hasher.update(b'\0' * tail_size)
     return hasher.hexdigest()
 
+  def post_connect(self, exec_cmd, contimeout = 20, passw = 'root'):
+    self.use_ssh = True
+    if passw is not None:
+        self.passw = passw
+    ssh_en = self.ping(verbose = 0, contimeout = contimeout)  # RSA host key generate slowly!
+    if ssh_en:
+        print('#### SSH server are activated! ####')
+    else:
+        print(f"WARNING: SSH server not responding (IP: {self.ip_addr})")
+
+    if not ssh_en:
+        print("")
+        print('Unlock TelNet server ...')
+        exec_cmd("bdata set telnet_en=1 ; bdata commit")
+        print('Run TelNet server on port 23 ...')
+        exec_cmd("/etc/init.d/telnet enable ; /etc/init.d/telnet restart")
+        time.sleep(0.5)
+        self.use_ssh = False
+        telnet_en = self.ping(verbose = 2)
+        if not telnet_en:
+            print(f"ERROR: TelNet server not responding (IP: {self.ip_addr})")
+            return -2
+        print("")
+        print('#### TelNet server are activated! ####')
+        #print("")
+        #print('Run FTP server on port 21 ...')
+        self.run_cmd(r"rm -f /etc/inetd.conf")
+        self.run_cmd(r"sed -i 's/\\tftpd\\t/\\tftpd -w\\t/g' /etc/init.d/inetd")
+        self.run_cmd('/etc/init.d/inetd enable')
+        self.run_cmd('/etc/init.d/inetd restart')
+        self.use_ftp = True
+        ftp_en = self.ping(verbose = 0)
+        if ftp_en:
+            print('#### FTP server are activated! ####')
+        else:
+            print(f"WARNING: FTP server not responding (IP: {self.ip_addr})")
+
+    if ssh_en or telnet_en:
+        self.run_cmd('nvram set uart_en=1; nvram set boot_wait=on; nvram commit')
+        self.run_cmd('nvram set bootdelay=3; nvram set bootmenu_delay=5; nvram commit')
+        return 0
+
 
 #===============================================================================
 

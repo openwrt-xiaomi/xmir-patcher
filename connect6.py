@@ -79,42 +79,5 @@ exec_cmd(r"/etc/init.d/dropbear restart")
 exec_cmd(r"logger -t XMiR ___completed___")
 
 time.sleep(0.5)
-gw.use_ssh = True
-gw.passw = 'root'
-ssh_en = gw.ping(verbose = 0, contimeout = 11)   # RSA host key generate slowly!
-if ssh_en:
-    print('#### SSH server are activated! ####')
-else:
-    print(f"WARNING: SSH server not responding (IP: {gw.ip_addr})")
 
-if not ssh_en:
-    print("")
-    print('Unlock TelNet server ...')
-    exec_cmd("bdata set telnet_en=1 ; bdata commit")
-    print('Run TelNet server on port 23 ...')
-    exec_cmd("/etc/init.d/telnet enable ; /etc/init.d/telnet restart")
-    time.sleep(0.5)
-    gw.use_ssh = False
-    telnet_en = gw.ping(verbose = 2)
-    if not telnet_en:
-        print(f"ERROR: TelNet server not responding (IP: {gw.ip_addr})")
-        sys.exit(1)
-    print("")
-    print('#### TelNet server are activated! ####')
-    #print("")
-    #print('Run FTP server on port 21 ...')
-    gw.run_cmd(r"rm -f /etc/inetd.conf")
-    gw.run_cmd(r"sed -i 's/\\tftpd\\t/\\tftpd -w\\t/g' /etc/init.d/inetd")
-    gw.run_cmd('/etc/init.d/inetd enable')
-    gw.run_cmd('/etc/init.d/inetd restart')
-    gw.use_ftp = True
-    ftp_en = gw.ping(verbose = 0)
-    if ftp_en:
-        print('#### FTP server are activated! ####')
-    else:
-        print(f"WARNING: FTP server not responding (IP: {gw.ip_addr})")
-
-if ssh_en or telnet_en:
-    gw.run_cmd('nvram set uart_en=1; nvram set boot_wait=on; nvram commit')
-    gw.run_cmd('nvram set bootdelay=3; nvram set bootmenu_delay=5; nvram commit')
-
+gw.post_connect(exec_cmd)
