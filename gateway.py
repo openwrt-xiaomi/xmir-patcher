@@ -726,7 +726,8 @@ class Gateway():
     self.passw = passw
     ftp_en = self.check_tcp_connect(self.ip_addr, 21, contimeout = 1)
     if ftp_en:
-      self.use_ftp = True
+      if self.check_ftp() == 0:
+        self.use_ftp = True
     return 23
 
   def ssh_close(self):
@@ -829,6 +830,33 @@ class Gateway():
       if verbose:
         die("Can't login to TELNET (IP: {})".format(self.ip_addr))
     return None
+
+  def check_ftp(self, timeout = None):
+    ret = -1
+    if not timeout:
+        timeout = self.timeout
+    ftp = None
+    try:
+        ftp = ftplib.FTP(self.ip_addr, user=self.login, passwd=self.passw, timeout=timeout)
+        ftp.voidcmd("NOOP")
+        ret = 0
+    except ftplib.error_proto as e:
+        ret = -2
+        if 'unrecognized option: w' in str(e):
+            ret = -10
+    except Exception:
+        ret = -1
+    finally:
+        if ftp:
+            try:
+                ftp.quit()
+            except Exception:
+                pass
+            try:
+                ftp.close()
+            except Exception:
+                pass        
+    return ret
 
   def get_ftp(self, verbose = 0):
     if self.ftp and self.ftp.sock:
@@ -1052,16 +1080,32 @@ class Gateway():
         print('#### TelNet server are activated! ####')
         #print("")
         #print('Run FTP server on port 21 ...')
-        self.run_cmd(r"rm -f /etc/inetd.conf")
-        self.run_cmd(r"sed -i 's/\\tftpd\\t/\\tftpd -w\\t/g' /etc/init.d/inetd")
-        self.run_cmd('/etc/init.d/inetd enable')
-        self.run_cmd('/etc/init.d/inetd restart')
-        self.use_ftp = True
-        ftp_en = self.ping(verbose = 0)
-        if ftp_en:
-            print('#### FTP server are activated! ####')
-        else:
+        cmd = r'''#!/bin/sh /etc/rc.common
+SERVICE_DAEMONIZE=1
+SERVICE_WRITE_PID=1
+start() {
+        service_start /usr/sbin/inetd -f
+}
+stop() {
+        service_stop /usr/sbin/inetd
+}
+'''
+        cmd = cmd.replace('\r\n', ';')
+        cmd = cmd.replace('\n', ';')
+        cfg = r'ftp\tstream\ttcp\tnowait\troot\t/usr/sbin/ftpd\tftpd -w\t/'
+        self.run_cmd(r"echo -e '" + cfg + "' > /etc/inetd.conf")
+        self.run_cmd(r"echo '" + cmd + "' | tr ';' '\n' > /etc/init.d/inetd")
+        self.run_cmd(r"chmod +x /etc/init.d/inetd")
+        self.run_cmd(r'/etc/init.d/inetd enable')
+        self.run_cmd(r'/etc/init.d/inetd restart')
+        ftp_en = self.check_ftp(timeout = 5)
+        if ftp_en == -10:
+            print(f'WARNING: FTP server is running, but upload mode is blocked!')
+        elif ftp_en != 0:
             print(f"WARNING: FTP server not responding (IP: {self.ip_addr})")
+        else:
+            self.use_ftp = True
+            print('#### FTP server are activated! ####')
 
     if ssh_en or telnet_en:
         self.run_cmd('nvram set uart_en=1; nvram set boot_wait=on; nvram commit')
