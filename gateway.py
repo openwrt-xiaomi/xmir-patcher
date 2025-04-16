@@ -726,7 +726,7 @@ class Gateway():
     self.passw = passw
     ftp_en = self.check_tcp_connect(self.ip_addr, 21, contimeout = 1)
     if ftp_en:
-      if self.check_ftp() == 0:
+      if self.check_ftp(check_upload = True) == 0:
         self.use_ftp = True
     return 23
 
@@ -831,7 +831,7 @@ class Gateway():
         die("Can't login to TELNET (IP: {})".format(self.ip_addr))
     return None
 
-  def check_ftp(self, timeout = None):
+  def check_ftp(self, check_upload = False, timeout = None):
     ret = -1
     if not timeout:
         timeout = self.timeout
@@ -839,12 +839,22 @@ class Gateway():
     try:
         ftp = ftplib.FTP(self.ip_addr, user=self.login, passwd=self.passw, timeout=timeout)
         ftp.voidcmd("NOOP")
+        if check_upload:
+            import io
+            fp = io.BytesIO(b"HELLO_123")
+            remote_fn = '/tmp/_test_payload.bin'
+            ftp.storbinary(f'STOR {remote_fn}', fp)
+            ftp.delete(remote_fn)
         ret = 0
+    except ftplib.error_perm as e:
+        ret = -3
+        if '500 Unknown command' in str(e):
+            ret = -11
     except ftplib.error_proto as e:
         ret = -2
         if 'unrecognized option: w' in str(e):
             ret = -10
-    except Exception:
+    except Exception as e:
         ret = -1
     finally:
         if ftp:
@@ -1099,7 +1109,7 @@ stop() {
         self.run_cmd(r'/etc/init.d/inetd enable')
         self.run_cmd(r'/etc/init.d/inetd restart')
         ftp_en = self.check_ftp(timeout = 5)
-        if ftp_en == -10:
+        if ftp_en <= -10:
             print(f'WARNING: FTP server is running, but upload mode is blocked!')
         elif ftp_en != 0:
             print(f"WARNING: FTP server not responding (IP: {self.ip_addr})")
@@ -1136,7 +1146,11 @@ def create_gateway(timeout = 4, die_if_sshOk = True, die_if_ftpOk = True, web_lo
     if ret == 23:
         if gw.use_ftp and die_if_ftpOk:
             die("Telnet and FTP servers already running!")
-        print("Telnet server already running, but FTP server not respond")
+        ftp_err = gw.check_ftp(check_upload = True)
+        if ftp_err <= -10:
+            print("Telnet server already running, but upload mode on FTP server is blocked")
+        else:
+            print("Telnet server already running, but FTP server not respond")
     elif ret > 0:
         if die_if_sshOk:
             die(0, "SSH server already installed and running")
