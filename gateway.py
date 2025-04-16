@@ -474,10 +474,6 @@ class Gateway():
   def shutdown(self):
     self.ssh_close()
     try:
-      self.ftp.quit()
-    except Exception:
-      pass
-    try:
       self.ftp.close()
     except Exception:
       pass
@@ -858,10 +854,6 @@ class Gateway():
         ret = -1
     finally:
         if ftp:
-            try:
-                ftp.quit()
-            except Exception:
-                pass
             try:
                 ftp.close()
             except Exception:
