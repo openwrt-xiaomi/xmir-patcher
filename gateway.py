@@ -9,6 +9,8 @@ import datetime
 import random
 import hashlib
 import subprocess
+import gzip
+import base64
 import re
 import requests
 import atexit
@@ -75,6 +77,7 @@ class Gateway():
     self.nonce_key = None
     self.stok = None    # HTTP session token
     self.status = -2
+    self.errcode = -1
     self.ftp = None
     self.socket = None  # TCP socket for SSH 
     self.ssh = None     # SSH session
@@ -898,6 +901,8 @@ class Gateway():
 
   def run_cmd(self, command, msg = None, timeout = None, die_on_error = True):
     error = 0
+    reslist = [ ]
+    self.errcode = -1
     if self.use_ssh:
         ssh = self.get_ssh(self.verbose)
     else:
@@ -911,6 +916,8 @@ class Gateway():
         cmdlist = command
     if not cmdlist:
         raise ValueError('Incorrect command list')
+    if '\n' in ';'.join(cmdlist):
+        raise ValueError('Incorrect command format (1)')
     for idx, cmd in enumerate(cmdlist):
         if self.use_ssh:
             channel = ssh.open_session()
@@ -935,16 +942,41 @@ class Gateway():
             except Exception:
                 pass
             #status = channel.get_exit_status()
+            self.errcode = 0
+            reslist.append('')
         else: # telnet
-            cmd += '\n'
-            tn.write(cmd.encode('ascii'))
-            tn.read_until(tn.prompt, timeout = 4 if timeout is None else timeout)
+            end = b'echo -e "\\xA6$?\\xA7\\xB8_END"'
+            try:
+                tn.write(cmd.encode('latin1') + b'\n' + end + b'\n')
+                res = tn.read_until(b'\xA7\xB8_END\r\n' + tn.prompt, timeout = 4 if timeout is None else timeout)
+                p1 = res.find(b'\r\n')
+                p2 = res.rfind(b'\r\n' + tn.prompt + end)
+                p3 = res.rfind(b'\r\n\xA6')
+                p4 = res.rfind(b'\xA7\xB8_END')
+                if p1 < 0 or p2 < 0 or p3 < 0 or p4 < 0 or p3 >= p4:
+                    if die_on_error:
+                        die('TELNET: execute command: incorrect response (1)')
+                    reslist.append(None)
+                    self.errcode = -2
+                else:
+                    self.errcode = int(res[p3+3:p4].decode(), 10)
+                    reslist.append(res[p1+2:p2].decode().replace('\r\n', '\n'))
+            except Exception as e:
+                error = -4
+                if die_on_error:
+                    die(f'TELNET: execute command error: "{e}"')
         if error != 0:
             break
-    if not self.use_ssh:
-        tn.write(b"exit\n")
-        tn.close()
-    return True if error == 0 else None
+    if not self.use_ssh: # telnet
+        try:
+            tn.write(b"exit\n")
+            tn.close()
+        except Exception:
+            pass
+    if error == 0:
+        return reslist if isinstance(command, list) else reslist[0]
+    else:
+        return None
 
   def download(self, fn_remote, fn_local, verbose = 1):
     if verbose and self.verbose:
@@ -965,11 +997,44 @@ class Gateway():
                     read_size += size
     elif self.use_ftp:
         ftp = self.get_ftp(self.verbose)
-        file = open(fn_local, 'wb')
-        ftp.retrbinary('RETR ' + fn_remote, file.write)
-        file.close()
-    else:
-        raise RuntimeError('FIXME')
+        with open(fn_local, 'wb') as file:
+            ftp.retrbinary('RETR ' + fn_remote, file.write)
+    else: # telnet
+        os.remove(fn_local) if os.path.exists(fn_local) else None
+        size = self.get_remote_file_size(fn_remote)
+        if size < 0:
+            return False
+        if size == 0:
+            with open(fn_local, 'wb') as file:
+                pass
+            return True
+        tn = self.get_telnet(self.verbose)
+        fin = b" ; echo 'X''_FIN_''X'"
+        blksize = 64*1000
+        filesize = 0
+        with open(fn_local, 'wb') as file:
+            while filesize < size:
+                count = blksize
+                if filesize + count > size:
+                    count = size - filesize
+                cmd = f"dd if='{fn_remote}' iflag=skip_bytes,count_bytes skip={filesize} count={count} 2>/dev/null | base64"
+                tn.write(cmd.encode('latin1') + fin + b'\n')
+                res = tn.read_until(b'X_FIN_X\r\n' + tn.prompt, timeout = 4)
+                p1 = res.find(b'\r\n')
+                p2 = res.rfind(b'X_FIN_X\r\n')
+                if p1 < 0 or p2 < 0 or p1 >= p2:
+                    break
+                data = base64.standard_b64decode(res[p1+2:p2].replace(b'\r\n', b''))
+                filesize += len(data)
+                file.write(data)
+        try:
+            tn.write(b"exit\n")
+            tn.close()
+        except Exception:
+            pass
+        if filesize != size:
+            os.remove(fn_local) if os.path.exists(fn_local) else None
+            return False
     return True
 
   def upload(self, fn_local, fn_remote, md5chk = True, verbose = 1):
@@ -977,7 +1042,6 @@ class Gateway():
         die(f'File "{fn_local}" not found.')
     if md5chk:
         md5_local = self.get_md5_for_local_file(fn_local)
-    file = open(fn_local, 'rb')
     if verbose and self.verbose:
         print(f'Upload file: "{fn_local}" ....')
     if self.use_ssh:
@@ -985,17 +1049,48 @@ class Gateway():
         finfo = os.stat(fn_local)
         channel = ssh.scp_send64(fn_remote, finfo.st_mode & 0o777, finfo.st_size, finfo.st_mtime, finfo.st_atime)
         size = 0
-        if True:
+        with open(fn_local, 'rb') as file:
             for data in file:
                 channel.write(data)
                 size = size + len(data)
         #except ssh2.exceptions.SCPProtocolError as e:
     elif self.use_ftp:
         ftp = self.get_ftp(self.verbose)
-        ftp.storbinary('STOR ' + fn_remote, file)
-    else:
-        raise RuntimeError('FIXME')
-    file.close()
+        with open(fn_local, 'rb') as file:
+            ftp.storbinary('STOR ' + fn_remote, file)
+    else: # telnet
+        with open(fn_local, 'rb') as file:
+            data = file.read()
+        data = gzip.compress(data, compresslevel = 9)
+        data = base64.standard_b64encode(data)
+        fn_remote_tmp = '/tmp/_T_' + os.path.basename(fn_remote)
+        if len(fn_remote_tmp) > 80:
+            raise ValueError('Incorrect length of filename')
+        self.run_cmd(f"rm -f '{fn_remote_tmp}'")
+        tn = self.get_telnet(self.verbose)
+        filesize = 0
+        while filesize < len(data):
+            chunk = data[filesize:filesize+400]
+            if len(chunk) > 0:
+                fopt = b'>' if filesize == 0 else b'>>'
+                cmd = b"echo -n " + chunk + fopt + fn_remote_tmp.encode()
+                tn.write(cmd + b'\n')
+                res = tn.read_until(b'\r\n' + tn.prompt, timeout = 4)
+                p1 = res.find(b'echo -n ')
+                p2 = res.rfind(b'\r\n' + tn.prompt)
+                if p1 < 0 or p2 < 0 or p1 >= p2 or p2 - p1 != len(cmd):
+                    break
+            filesize += len(chunk)
+        try:
+            tn.write(b"exit\n")
+            tn.close()
+        except Exception:
+            pass
+        if filesize != len(data):
+            self.run_cmd(f"rm -f '{fn_remote_tmp}'")
+            return False
+        self.run_cmd(f"rm -f '{fn_remote}' ; cat '{fn_remote_tmp}' | base64 -d | gzip -d > '{fn_remote}'")
+        self.run_cmd(f"rm -f '{fn_remote_tmp}'")
     if md5chk:
         md5_remote = self.get_md5_for_remote_file(fn_remote)
         if md5_remote != md5_local:
@@ -1005,6 +1100,12 @@ class Gateway():
             print(f'ERROR: File "{fn_local}" uploaded, but MD5 incorrect!')
             return False
     return True
+
+  def get_remote_file_size(self, fn_remote):
+    size = self.run_cmd(f"wc -c '{fn_remote}' 2>/dev/null" + " | awk '{print $1}'")
+    if not size:
+        return -1
+    return int(size, 10)
 
   def get_md5_for_remote_file(self, fn_remote, timeout = 8):
     fname = os.path.basename(fn_remote)
