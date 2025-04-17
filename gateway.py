@@ -921,29 +921,42 @@ class Gateway():
     for idx, cmd in enumerate(cmdlist):
         if self.use_ssh:
             channel = ssh.open_session()
+            saved_timeout = ssh.get_timeout()
             if timeout is not None:
-                saved_timeout = ssh.get_timeout()
                 ssh.set_timeout(int(timeout * 1000))
             #channel.pty('xterm')
             #print("exec = '{}'".format(cmd))
-            channel.execute(cmd)
             try:
+                rc = channel.execute(cmd)
+                if rc != 0:
+                    raise RuntimeError('') 
                 channel.wait_eof()
             except ssh2.exceptions.Timeout:
-                ssh.set_timeout(100)
                 error = -4
-                if die_on_error:
-                    die(f'SSH execute command timed out! CMD: "{cmd}"')
-            if timeout is not None:
-                ssh.set_timeout(saved_timeout)
-            try:
-                channel.close()
-                channel.wait_closed()
             except Exception:
-                pass
-            #status = channel.get_exit_status()
-            self.errcode = 0
-            reslist.append('')
+                error = -5
+            finally:
+                ssh.set_timeout(100)
+                try:
+                    channel.close()
+                    channel.wait_closed()
+                except Exception:
+                    error = -6 if error == 0 else 0
+            if error != 0 and die_on_error:
+                die(f'SSH: execute command ERR={error}, CMD: "{cmd}"')
+            if error == 0:
+                self.errcode = channel.get_exit_status()
+                res = b''
+                size = 1
+                while size > 0:
+                    size, data = channel.read()
+                    if data:
+                        res += data
+                reslist.append(res.decode('latin1'))
+            else:
+                self.errcode = -2
+                reslist.append(None)
+            ssh.set_timeout(saved_timeout)
         else: # telnet
             end = b'echo -e "\\xA6$?\\xA7\\xB8_END"'
             try:
