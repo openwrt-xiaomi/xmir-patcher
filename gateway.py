@@ -1118,36 +1118,27 @@ class Gateway():
     return True
 
   def get_remote_file_size(self, fn_remote):
-    size = self.run_cmd(f"wc -c '{fn_remote}' 2>/dev/null" + " | awk '{print $1}'")
+    size = self.run_cmd(f"wc -c '{fn_remote}' 2>&1")
     if not size:
         return -1
+    size = size.strip()
+    if size.startswith('wc:'):
+        return -2  # file not found
+    if len(size) < 3 or ' ' not in size:
+        return -3
+    size = size.split(' ')[0]
     return int(size, 10)
 
   def get_md5_for_remote_file(self, fn_remote, timeout = 8):
-    fname = os.path.basename(fn_remote)
-    num = str(random.randint(10000, 1000000))
-    md5_local_fn = f"tmp/{fname}.{num}.md5"
-    md5_remote_fn = f"/tmp/{fname}.{num}.md5"
-    cmd = f'md5sum "{fn_remote}" > "{md5_remote_fn}" 2>&1'
-    rc = self.run_cmd(cmd, timeout = timeout)
-    if rc is None:
-        return -5
-    os.remove(md5_local_fn) if os.path.exists(md5_local_fn) else None
-    self.download(md5_remote_fn, md5_local_fn, verbose = 0)
-    self.run_cmd(f'rm -f "{md5_remote_fn}"', timeout = 3)
-    if not os.path.exists(md5_local_fn):
-        return -4
-    with open(md5_local_fn, 'r', encoding = 'latin1') as file:
-        md5 = file.read()
-    os.remove(md5_local_fn)
+    md5 = self.run_cmd(f"md5sum '{fn_remote}' 2>&1", timeout = timeout)
     if not md5:
-        return -3
-    if md5.startswith('md5sum:'):
-        return -2
-    md5 = md5.split(' ')[0]
-    md5 = md5.strip()
-    if len(md5) != 32:
         return -1
+    md5 = md5.strip()
+    if md5.startswith('md5sum:'):
+        return -2  # file not found
+    if len(md5) < 32:
+        return -3
+    md5 = md5[:32]
     return md5.lower()
   
   def get_md5_for_local_file(self, fn_local, size = None):
