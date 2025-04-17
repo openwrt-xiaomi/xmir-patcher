@@ -899,51 +899,51 @@ class Gateway():
   def run_cmd(self, command, msg = None, timeout = None, die_on_error = True):
     error = 0
     if self.use_ssh:
-      ssh = self.get_ssh(self.verbose)
+        ssh = self.get_ssh(self.verbose)
     else:
-      tn = self.get_telnet(self.verbose)
-    if (msg):
-      print(msg)
+        tn = self.get_telnet(self.verbose)
+    if msg:
+        print(msg)
     cmdlist = [ ]
     if isinstance(command, str):      
-      cmdlist.append(command)
+        cmdlist.append(command)
     else:
-      cmdlist = command
+        cmdlist = command
     if not cmdlist:
-      raise ValueError('Incorrect command list')
+        raise ValueError('Incorrect command list')
     for idx, cmd in enumerate(cmdlist):
-      if self.use_ssh:
-        channel = ssh.open_session()
-        if timeout is not None:
-          saved_timeout = ssh.get_timeout()
-          ssh.set_timeout(int(timeout * 1000))
-        #channel.pty('xterm')
-        #print("exec = '{}'".format(cmd))
-        channel.execute(cmd)
-        try:
-          channel.wait_eof()
-        except ssh2.exceptions.Timeout:
-          ssh.set_timeout(100)
-          error = -4
-          if die_on_error:
-            die(f'SSH execute command timed out! CMD: "{cmd}"')
-        if timeout is not None:
-          ssh.set_timeout(saved_timeout)
-        try:
-          channel.close()
-          channel.wait_closed()
-        except Exception:
-          pass
-        #status = channel.get_exit_status()
-      else: # telnet
-        cmd += '\n'
-        tn.write(cmd.encode('ascii'))
-        tn.read_until(tn.prompt, timeout = 4 if timeout is None else timeout)
-      if error != 0:
-        break
+        if self.use_ssh:
+            channel = ssh.open_session()
+            if timeout is not None:
+                saved_timeout = ssh.get_timeout()
+                ssh.set_timeout(int(timeout * 1000))
+            #channel.pty('xterm')
+            #print("exec = '{}'".format(cmd))
+            channel.execute(cmd)
+            try:
+                channel.wait_eof()
+            except ssh2.exceptions.Timeout:
+                ssh.set_timeout(100)
+                error = -4
+                if die_on_error:
+                    die(f'SSH execute command timed out! CMD: "{cmd}"')
+            if timeout is not None:
+                ssh.set_timeout(saved_timeout)
+            try:
+                channel.close()
+                channel.wait_closed()
+            except Exception:
+                pass
+            #status = channel.get_exit_status()
+        else: # telnet
+            cmd += '\n'
+            tn.write(cmd.encode('ascii'))
+            tn.read_until(tn.prompt, timeout = 4 if timeout is None else timeout)
+        if error != 0:
+            break
     if not self.use_ssh:
-      tn.write(b"exit\n")
-      tn.close()
+        tn.write(b"exit\n")
+        tn.close()
     return True if error == 0 else None
 
   def download(self, fn_remote, fn_local, verbose = 1):
