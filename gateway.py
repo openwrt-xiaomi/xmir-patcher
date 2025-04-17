@@ -798,7 +798,7 @@ class Gateway():
       tn = telnetlib.Telnet(self.ip_addr, timeout=4)
     except Exception as e:
       if verbose:
-        die("TELNET not responding (IP: {self.ip_addr})")
+        die(f"TELNET not responding (IP: {self.ip_addr})")
       return None
     try:
       p_login = b'login: '
