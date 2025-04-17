@@ -952,7 +952,8 @@ class Gateway():
                     size, data = channel.read()
                     if data:
                         res += data
-                reslist.append(res.decode('latin1'))
+                res = res.decode('latin1')
+                reslist.append(res if res != '\n' else '')
             else:
                 self.errcode = -2
                 reslist.append(None)
@@ -973,7 +974,9 @@ class Gateway():
                     self.errcode = -2
                 else:
                     self.errcode = int(res[p3+3:p4].decode(), 10)
-                    reslist.append(res[p1+2:p2].decode().replace('\r\n', '\n'))
+                    res = res[p1+2:p2].decode('latin1')
+                    res = res.replace('\r\n', '\n')
+                    reslist.append(res if res != '\n' else '')
             except Exception as e:
                 error = -4
                 if die_on_error:
