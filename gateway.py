@@ -786,7 +786,7 @@ class Gateway():
       return True
     except Exception as e:
       if verbose:
-        die("TELNET not responding (IP: {})".format(self.ip_addr))
+        die(f"TELNET not responding (IP: {self.ip_addr})")
     return False
 
   def get_telnet(self, verbose = 0, password = None):
@@ -794,37 +794,37 @@ class Gateway():
       tn = telnetlib.Telnet(self.ip_addr, timeout=4)
     except Exception as e:
       if verbose:
-        die("TELNET not responding (IP: {})".format(self.ip_addr))
+        die("TELNET not responding (IP: {self.ip_addr})")
       return None
     try:
       p_login = b'login: '
       p_passw = b'Password: '
-      prompt = "{}@XiaoQiang:(.*?)#".format(self.login).encode('ascii')
+      prompt = f"{self.login}@XiaoQiang:(.*?)#".encode('ascii')
       idx, obj, output = tn.expect([p_login, prompt], timeout=2)
       if idx < 0:
-        raise Exception('')
+        raise Exception('TELNET auth error (1)')
       if idx > 0:
         tn.prompt = obj.group()
         return tn
-      tn.write("{}\n".format(self.login).encode('ascii'))
+      tn.write(f"{self.login}\n".encode('ascii'))
       idx, obj, output = tn.expect([p_passw, prompt], timeout=2)
       if idx < 0:
-        raise Exception('')
+        raise Exception('TELNET auth error (2)')
       if idx > 0:
         tn.prompt = obj.group()
         return tn
       if password is None:
         password = self.passw
-      tn.write("{}\n".format(password).encode('ascii'))
+      tn.write(f"{password}\n".encode('ascii'))
       idx, obj, output = tn.expect([prompt], timeout=2)
       if idx < 0:
-        raise Exception('')
+        raise Exception('TELNET auth error (3)')
       tn.prompt = obj.group()
       return tn
     except Exception as e:
       #print(e)
       if verbose:
-        die("Can't login to TELNET (IP: {})".format(self.ip_addr))
+        die(f"Can't login to TELNET (IP: {self.ip_addr})")
     return None
 
   def check_ftp(self, check_upload = False, timeout = None):
@@ -924,7 +924,7 @@ class Gateway():
           ssh.set_timeout(100)
           error = -4
           if die_on_error:
-            die("SSH execute command timed out! CMD: \"{}\"".format(cmd))
+            die(f'SSH execute command timed out! CMD: "{cmd}"')
         if timeout is not None:
           ssh.set_timeout(saved_timeout)
         try:
@@ -946,61 +946,62 @@ class Gateway():
 
   def download(self, fn_remote, fn_local, verbose = 1):
     if verbose and self.verbose:
-      print('Download file: "{}" ....'.format(fn_remote))
+        print(f'Download file: "{fn_remote}" ....')
     if self.use_ssh:
-      ssh = self.get_ssh(self.verbose)
-      channel, fileinfo = ssh.scp_recv2(fn_remote)
-      total_size = fileinfo.st_size
-      read_size = 0
-      with open(fn_local, 'wb') as file:
-        while read_size < total_size:
-          size, data = channel.read()
-          if size > 0:
-            if read_size + len(data) > total_size:
-              file.write(data[:total_size - read_size])
-            else:
-              file.write(data)
-            read_size += size
+        ssh = self.get_ssh(self.verbose)
+        channel, fileinfo = ssh.scp_recv2(fn_remote)
+        total_size = fileinfo.st_size
+        read_size = 0
+        with open(fn_local, 'wb') as file:
+            while read_size < total_size:
+                size, data = channel.read()
+                if size > 0:
+                    if read_size + len(data) > total_size:
+                        file.write(data[:total_size - read_size])
+                    else:
+                        file.write(data)
+                    read_size += size
     elif self.use_ftp:
-      ftp = self.get_ftp(self.verbose)
-      file = open(fn_local, 'wb')
-      ftp.retrbinary('RETR ' + fn_remote, file.write)
-      file.close()
+        ftp = self.get_ftp(self.verbose)
+        file = open(fn_local, 'wb')
+        ftp.retrbinary('RETR ' + fn_remote, file.write)
+        file.close()
     else:
-      raise RuntimeError('FIXME')
+        raise RuntimeError('FIXME')
     return True
 
   def upload(self, fn_local, fn_remote, md5chk = True, verbose = 1):
     if not os.path.exists(fn_local):
-      die(f'File "{fn_local}" not found.')
+        die(f'File "{fn_local}" not found.')
     if md5chk:
-      md5_local = self.get_md5_for_local_file(fn_local)
+        md5_local = self.get_md5_for_local_file(fn_local)
     file = open(fn_local, 'rb')
     if verbose and self.verbose:
-      print('Upload file: "{}" ....'.format(fn_local))
+        print(f'Upload file: "{fn_local}" ....')
     if self.use_ssh:
-      ssh = self.get_ssh(self.verbose)
-      finfo = os.stat(fn_local)
-      channel = ssh.scp_send64(fn_remote, finfo.st_mode & 0o777, finfo.st_size, finfo.st_mtime, finfo.st_atime)
-      size = 0
-      for data in file:
-        channel.write(data)
-        size = size + len(data)
-      #except ssh2.exceptions.SCPProtocolError as e:
+        ssh = self.get_ssh(self.verbose)
+        finfo = os.stat(fn_local)
+        channel = ssh.scp_send64(fn_remote, finfo.st_mode & 0o777, finfo.st_size, finfo.st_mtime, finfo.st_atime)
+        size = 0
+        if True:
+            for data in file:
+                channel.write(data)
+                size = size + len(data)
+        #except ssh2.exceptions.SCPProtocolError as e:
     elif self.use_ftp:
-      ftp = self.get_ftp(self.verbose)
-      ftp.storbinary('STOR ' + fn_remote, file)
+        ftp = self.get_ftp(self.verbose)
+        ftp.storbinary('STOR ' + fn_remote, file)
     else:
-      raise RuntimeError('FIXME')
+        raise RuntimeError('FIXME')
     file.close()
     if md5chk:
-      md5_remote = self.get_md5_for_remote_file(fn_remote)
-      if md5_remote != md5_local:
-        if md5chk == 2:
-          die(f'File "{fn_local}" uploaded, but MD5 incorrect!')
-        #if verbose:
-        print(f'ERROR: File "{fn_local}" uploaded, but MD5 incorrect!')
-        return False
+        md5_remote = self.get_md5_for_remote_file(fn_remote)
+        if md5_remote != md5_local:
+            if md5chk == 2:
+                die(f'File "{fn_local}" uploaded, but MD5 incorrect!')
+            #if verbose:
+            print(f'ERROR: File "{fn_local}" uploaded, but MD5 incorrect!')
+            return False
     return True
 
   def get_md5_for_remote_file(self, fn_remote, timeout = 8):
