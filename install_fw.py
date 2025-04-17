@@ -1079,7 +1079,7 @@ class XqFlash():
             cmd.append("nvram set uart_en=1")
             cmd.append("nvram commit")
             rc = gw.run_cmd(';'.join(cmd), timeout = 8)
-            if not rc:
+            if rc is None:
                 die(f'Cannot change nvram parameters!')
 
         if fw_img.cmd:
@@ -1133,7 +1133,7 @@ class XqFlash():
         if not self.img_write:
             return True
         rc = self.gw.run_cmd(img.cmd, timeout = timeout, die_on_error = True)
-        if not rc:
+        if rc is None:
             print(f'  ERROR: cannot flash data to partition "{partname}"')
             return False
         if check:

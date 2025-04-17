@@ -77,7 +77,7 @@ def backup_and_download(pid, filename, chunk_size = 0, die_on_error = True):
             count = max_blocks
         cmd = f"rm -f {fn_remote} ; dd if=/dev/mtd{pid} of={fn_remote} bs={blk_size} skip={skip} count={count}"
         ret = gw.run_cmd(cmd, timeout = 25, die_on_error = False)
-        if not ret:
+        if ret is None:
             print(f'ERROR on execute command: "{cmd}"')
             if die_on_error:
                 sys.exit(1)

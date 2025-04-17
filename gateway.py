@@ -894,19 +894,21 @@ class Gateway():
           return False
     return True
 
-  def run_cmd(self, cmd, msg = None, timeout = None, die_on_error = True):
-    ret = True
+  def run_cmd(self, command, msg = None, timeout = None, die_on_error = True):
+    error = 0
     if self.use_ssh:
       ssh = self.get_ssh(self.verbose)
     else:
       tn = self.get_telnet(self.verbose)
     if (msg):
       print(msg)
-    cmdlist = []
-    if isinstance(cmd, str):      
-      cmdlist.append(cmd)
+    cmdlist = [ ]
+    if isinstance(command, str):      
+      cmdlist.append(command)
     else:
-      cmdlist = cmd
+      cmdlist = command
+    if not cmdlist:
+      raise ValueError('Incorrect command list')
     for idx, cmd in enumerate(cmdlist):
       if self.use_ssh:
         channel = ssh.open_session()
@@ -920,7 +922,7 @@ class Gateway():
           channel.wait_eof()
         except ssh2.exceptions.Timeout:
           ssh.set_timeout(100)
-          ret = False
+          error = -4
           if die_on_error:
             die("SSH execute command timed out! CMD: \"{}\"".format(cmd))
         if timeout is not None:
@@ -931,16 +933,16 @@ class Gateway():
         except Exception:
           pass
         #status = channel.get_exit_status()
-        if not ret:
-          break
-      else:
+      else: # telnet
         cmd += '\n'
         tn.write(cmd.encode('ascii'))
         tn.read_until(tn.prompt, timeout = 4 if timeout is None else timeout)
+      if error != 0:
+        break
     if not self.use_ssh:
       tn.write(b"exit\n")
-      ret = True
-    return ret
+      tn.close()
+    return True if error == 0 else None
 
   def download(self, fn_remote, fn_local, verbose = 1):
     if verbose and self.verbose:
@@ -1008,7 +1010,7 @@ class Gateway():
     md5_remote_fn = f"/tmp/{fname}.{num}.md5"
     cmd = f'md5sum "{fn_remote}" > "{md5_remote_fn}" 2>&1'
     rc = self.run_cmd(cmd, timeout = timeout)
-    if not rc:
+    if rc is None:
         return -5
     os.remove(md5_local_fn) if os.path.exists(md5_local_fn) else None
     self.download(md5_remote_fn, md5_local_fn, verbose = 0)
