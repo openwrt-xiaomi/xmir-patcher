@@ -1170,6 +1170,7 @@ class Gateway():
     return hasher.hexdigest()
 
   def post_connect(self, exec_cmd, contimeout = 20, passw = 'root'):
+    telnet_en = False
     self.use_ssh = True
     if passw is not None:
         self.passw = passw
@@ -1181,7 +1182,6 @@ class Gateway():
 
     if not ssh_en:
         print("")
-        print('Unlock TelNet server ...')
         exec_cmd("bdata set telnet_en=1 ; bdata commit")
         print('Run TelNet server on port 23 ...')
         exec_cmd("/etc/init.d/telnet enable ; /etc/init.d/telnet restart")
@@ -1189,43 +1189,105 @@ class Gateway():
         self.use_ssh = False
         telnet_en = self.ping(verbose = 2)
         if not telnet_en:
+            # FIXME
             print(f"ERROR: TelNet server not responding (IP: {self.ip_addr})")
             return -2
-        print("")
         print('#### TelNet server are activated! ####')
-        #print("")
-        #print('Run FTP server on port 21 ...')
-        cmd = r'''#!/bin/sh /etc/rc.common
-SERVICE_DAEMONIZE=1
-SERVICE_WRITE_PID=1
-start() {
-        service_start /usr/sbin/inetd -f
-}
-stop() {
-        service_stop /usr/sbin/inetd
-}
-'''
-        cmd = cmd.replace('\r\n', ';')
-        cmd = cmd.replace('\n', ';')
-        cfg = r'ftp\tstream\ttcp\tnowait\troot\t/usr/sbin/ftpd\tftpd -w\t/'
-        self.run_cmd(r"echo -e '" + cfg + "' > /etc/inetd.conf")
-        self.run_cmd(r"echo '" + cmd + "' | tr ';' '\n' > /etc/init.d/inetd")
-        self.run_cmd(r"chmod +x /etc/init.d/inetd")
-        self.run_cmd(r'/etc/init.d/inetd enable')
-        self.run_cmd(r'/etc/init.d/inetd restart')
-        ftp_en = self.check_ftp(timeout = 5)
-        if ftp_en <= -10:
-            print(f'WARNING: FTP server is running, but upload mode is blocked!')
-        elif ftp_en != 0:
-            print(f"WARNING: FTP server not responding (IP: {self.ip_addr})")
-        else:
-            self.use_ftp = True
-            print('#### FTP server are activated! ####')
 
     if ssh_en or telnet_en:
         self.run_cmd('nvram set uart_en=1; nvram set boot_wait=on; nvram commit')
         self.run_cmd('nvram set bootdelay=3; nvram set bootmenu_delay=5; nvram commit')
-        return 0
+
+    if ssh_en:
+        return True
+
+    if telnet_en:
+        arch = self.run_cmd("cat /etc/openwrt_release | grep DISTRIB_ARCH=")
+        if not arch:
+            die('TELNET: Cannot read remote file /etc/openwrt_release')
+        pos = arch.find("DISTRIB_ARCH='")
+        if pos < 0:
+            die('TELNET: Cannot detect arch for remote device')
+        arch = arch[pos+1:].split("'")[1]
+        print(f'ARCH = {arch}')
+        arch_suffix = None
+        if arch.startswith('arm_'):
+            arch_suffix = '_armv7a'
+        if arch.startswith('aarch64'):
+            arch_suffix = '_arm64'
+        if arch.startswith('mips'):
+            arch_suffix = '_mips'
+        if not arch_suffix:
+            die(f'TELNET: Unknown arch = "{arch}"')
+        self.run_cmd(r'echo -e "root\nroot" | passwd root')
+        self.run_cmd(r'kill -9 `pgrep dropbearmulti` &>/dev/null')
+        fn_local = f'data/payload_ssh/dropbearmulti{arch_suffix}'
+        fn_remote = '/tmp/dropbearmulti'
+        md5_local = self.get_md5_for_local_file(fn_local)
+        if not(md5_local) or isinstance(md5_local, int) or len(md5_local) != 32:
+            die(f'File "{fn_local}" not found')
+        md5 = self.get_md5_for_remote_file(fn_remote)
+        if md5 != md5_local:
+            if not self.upload(fn_local, fn_remote):
+                die(f'TELNET: Cannot upload file "{fn_local}" to device')
+        self.run_cmd('chmod +x /tmp/dropbearmulti')
+        self.run_cmd('[ -d /etc/dropbear ] || { mkdir -p /etc/dropbear ; chown root /etc/dropbear ; chmod 0755 /etc/dropbear; }')
+        if False:
+            # generate host keys
+            fn = '/etc/dropbear/dropbear_ed25519_host_key'
+            fsize = self.get_remote_file_size(fn)
+            if not fsize or fsize <= 0:
+                self.run_cmd(f'rm -f {fn} ; /tmp/dropbearmulti dropbearkey -t ed25519 -f {fn} 2>&- >&-', timeout = 11)
+            fn = '/etc/dropbear/dropbear_ecdsa_host_key'
+            fsize = self.get_remote_file_size(fn)
+            if not fsize or fsize <= 0:
+                self.run_cmd(f'rm -f {fn} ; /tmp/dropbearmulti dropbearkey -t ecdsa -f {fn} 2>&- >&-', timeout = 11)
+            # run dropbearmulti
+            self.run_cmd('/tmp/dropbearmulti -p 122')
+            pass
+        print(f'Install XMiR-SSH ...')
+        xdir = '/etc/crontabs/dropbearmulti'
+        fn_bin = '/usr/sbin/dropbear'
+        fn_BIN = f'{xdir}/dropbear'
+        fn_conf = '/etc/config/dropbear'
+        fn_CONF = f'{xdir}/uci.cfg'
+        fn_initd = '/etc/init.d/dropbear'
+        fn_INITD = f'{xdir}/init.d.sh'
+        fn_INSTALL = f'{xdir}/install.sh'
+        fsize_bin = self.get_remote_file_size(fn_bin)
+        fsize_initd = self.get_remote_file_size(fn_initd)
+        if fsize_bin and fsize_initd and fsize_bin > 0 and fsize_initd > 0:
+            die('SSH: dropbear is found, but it cannot run!')
+        # install XMiR dropbear
+        self.run_cmd(f'kill -9 `pgrep dropbear` &>/dev/null')
+        #self.run_cmd(f'rm -f {fn_bin} &>/dev/null')
+        self.run_cmd(f'rm -f {fn_conf} &>/dev/null')
+        self.run_cmd(f'mkdir -p {xdir}')
+        self.run_cmd(f'cp -f /tmp/dropbearmulti {fn_BIN}')
+        self.run_cmd(f'chmod +x {fn_BIN}')
+        if not self.upload('data/payload_ssh/dropbear.uci.cfg', fn_CONF):
+            die(f'TELNET: Cannot upload file "{fn_CONF}" to device')
+        if not self.upload('data/payload_ssh/dropbear2.init.d.sh', fn_INITD):
+            die(f'TELNET: Cannot upload file "{fn_INITD}" to device')
+        if not self.upload('data/payload_ssh/dropbear2.install.sh', fn_INSTALL):
+            die(f'TELNET: Cannot upload file "{fn_INSTALL}" to device')
+        uci = [ "uci set firewall.dropbearmulti=include",
+                "uci set firewall.dropbearmulti.type='script'",
+               f"uci set firewall.dropbearmulti.path='{fn_INSTALL}'",
+                "uci set firewall.dropbearmulti.enabled='1'",
+                "uci commit firewall",
+              ]
+        self.run_cmd(';'.join(uci))
+        self.run_cmd(f'chmod +x {fn_INITD} ; chmod +x {fn_INSTALL}')
+        print(f'Run XMiR-SSH ...')
+        self.run_cmd(f'{fn_INSTALL}', timeout = 20)
+        self.use_ssh = True
+        ssh_en = self.ping(verbose = 0, contimeout = 8)
+        if ssh_en:
+            print('#### XMiR-SSH server are activated! ####')
+            return True
+        print(f"ERROR: installed XMiR-SSH server not responding (IP: {self.ip_addr})")
+    return False
 
 
 #===============================================================================
