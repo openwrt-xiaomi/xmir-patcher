@@ -790,6 +790,7 @@ class Gateway():
     return False
 
   def get_telnet(self, verbose = 0, password = None):
+    from telnetlib import NOP, IAC, SB, NAWS, SE
     try:
       tn = telnetlib.Telnet(self.ip_addr, timeout=4)
     except Exception as e:
@@ -799,10 +800,11 @@ class Gateway():
     try:
       p_login = b'login: '
       p_passw = b'Password: '
-      prompt = f"{self.login}@XiaoQiang:(.*?)#".encode('ascii')
+      prompt = f"{self.login}@XiaoQiang:(.*?)# ".encode('ascii')
       idx, obj, output = tn.expect([p_login, prompt], timeout=2)
       if idx < 0:
         raise Exception('TELNET auth error (1)')
+      tn.sock.sendall(IAC + SB + NAWS + b'\x03\xE8\x00\x20' + IAC + SE)
       if idx > 0:
         tn.prompt = obj.group()
         return tn

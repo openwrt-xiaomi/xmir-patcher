@@ -38,8 +38,6 @@ import socket
 import selectors
 from time import monotonic as _time
 
-__all__ = ["Telnet"]
-
 # Tunable parameters
 DEBUGLEVEL = 0
 
