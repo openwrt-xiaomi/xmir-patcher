@@ -927,21 +927,17 @@ class Gateway():
             #channel.pty('xterm')
             #print("exec = '{}'".format(cmd))
             try:
-                rc = channel.execute(cmd)
-                if rc != 0:
-                    raise RuntimeError('') 
+                channel.execute(cmd)
                 channel.wait_eof()
             except ssh2.exceptions.Timeout:
                 error = -4
-            except Exception:
+            except ssh2.exceptions.SocketRecvError as e:
                 error = -5
+            except Exception as e:
+                error = -10
             finally:
-                ssh.set_timeout(100)
-                try:
-                    channel.close()
-                    channel.wait_closed()
-                except Exception:
-                    error = -6 if error == 0 else 0
+                channel.close()
+                channel.wait_closed()
             if error != 0 and die_on_error:
                 die(f'SSH: execute command ERR={error}, CMD: "{cmd}"')
             if error == 0:
@@ -1011,6 +1007,9 @@ class Gateway():
                     else:
                         file.write(data)
                     read_size += size
+        channel.send_eof()
+        channel.wait_eof()
+        channel.wait_closed()
     elif self.use_ftp:
         ftp = self.get_ftp(self.verbose)
         with open(fn_local, 'wb') as file:
@@ -1069,6 +1068,9 @@ class Gateway():
             for data in file:
                 channel.write(data)
                 size = size + len(data)
+        channel.send_eof()
+        channel.wait_eof()
+        channel.wait_closed()
         #except ssh2.exceptions.SCPProtocolError as e:
     elif self.use_ftp:
         ftp = self.get_ftp(self.verbose)
