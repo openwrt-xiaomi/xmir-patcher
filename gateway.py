@@ -1201,15 +1201,28 @@ class Gateway():
         self.run_cmd('nvram set bootdelay=3; nvram set bootmenu_delay=5; nvram commit')
 
     if ssh_en:
-        return True
+        return 0
 
     if telnet_en:
+        self.install_dropbearmulti(force = False, die_on_error = True)
+        return 0
+
+    return -1
+   
+  def install_dropbearmulti(self, force = True, die_on_error = False):
+    rc, msg = self._install_dropbearmulti(force = force)
+    if rc and die_on_error:
+        die(msg)
+    return rc, msg
+    
+  def _install_dropbearmulti(self, force = True):
+    if True:
         arch = self.run_cmd("cat /etc/openwrt_release | grep DISTRIB_ARCH=")
         if not arch:
-            die('TELNET: Cannot read remote file /etc/openwrt_release')
+            return 10, 'TELNET: Cannot read remote file /etc/openwrt_release'
         pos = arch.find("DISTRIB_ARCH='")
         if pos < 0:
-            die('TELNET: Cannot detect arch for remote device')
+            return 20, 'TELNET: Cannot detect arch for remote device'
         arch = arch[pos+1:].split("'")[1]
         print(f'ARCH = {arch}')
         arch_suffix = None
@@ -1220,18 +1233,18 @@ class Gateway():
         if arch.startswith('mips'):
             arch_suffix = '_mips'
         if not arch_suffix:
-            die(f'TELNET: Unknown arch = "{arch}"')
+            return 30, f'TELNET: Unknown arch = "{arch}"'
         self.run_cmd(r'echo -e "root\nroot" | passwd root')
         self.run_cmd(r'kill -9 `pgrep dropbearmulti` &>/dev/null')
         fn_local = f'data/payload_ssh/dropbearmulti{arch_suffix}'
         fn_remote = '/tmp/dropbearmulti'
         md5_local = self.get_md5_for_local_file(fn_local)
         if not(md5_local) or isinstance(md5_local, int) or len(md5_local) != 32:
-            die(f'File "{fn_local}" not found')
+            return 40, f'File "{fn_local}" not found'
         md5 = self.get_md5_for_remote_file(fn_remote)
         if md5 != md5_local:
             if not self.upload(fn_local, fn_remote):
-                die(f'TELNET: Cannot upload file "{fn_local}" to device')
+                return 50, f'TELNET: Cannot upload file "{fn_local}" to device'
         self.run_cmd('chmod +x /tmp/dropbearmulti')
         self.run_cmd('[ -d /etc/dropbear ] || { mkdir -p /etc/dropbear ; chown root /etc/dropbear ; chmod 0755 /etc/dropbear; }')
         if False:
@@ -1259,7 +1272,9 @@ class Gateway():
         fsize_bin = self.get_remote_file_size(fn_bin)
         fsize_initd = self.get_remote_file_size(fn_initd)
         if fsize_bin and fsize_initd and fsize_bin > 0 and fsize_initd > 0:
-            die('SSH: dropbear is found, but it cannot run!')
+            msg = 'SSH: dropbear is found, but it cannot run!'
+            if not force:
+                return 60, msg
         # install XMiR dropbear
         self.run_cmd(f'kill -9 `pgrep dropbear` &>/dev/null')
         #self.run_cmd(f'rm -f {fn_bin} &>/dev/null')
@@ -1268,11 +1283,11 @@ class Gateway():
         self.run_cmd(f'cp -f /tmp/dropbearmulti {fn_BIN}')
         self.run_cmd(f'chmod +x {fn_BIN}')
         if not self.upload('data/payload_ssh/dropbear.uci.cfg', fn_CONF):
-            die(f'TELNET: Cannot upload file "{fn_CONF}" to device')
+            return 70, f'TELNET: Cannot upload file "{fn_CONF}" to device'
         if not self.upload('data/payload_ssh/dropbear2.init.d.sh', fn_INITD):
-            die(f'TELNET: Cannot upload file "{fn_INITD}" to device')
+            return 73, f'TELNET: Cannot upload file "{fn_INITD}" to device'
         if not self.upload('data/payload_ssh/dropbear2.install.sh', fn_INSTALL):
-            die(f'TELNET: Cannot upload file "{fn_INSTALL}" to device')
+            return 76, f'TELNET: Cannot upload file "{fn_INSTALL}" to device'
         uci = [ "uci set firewall.dropbearmulti=include",
                 "uci set firewall.dropbearmulti.type='script'",
                f"uci set firewall.dropbearmulti.path='{fn_INSTALL}'",
@@ -1287,9 +1302,9 @@ class Gateway():
         ssh_en = self.ping(verbose = 0, contimeout = 8)
         if ssh_en:
             print('#### XMiR-SSH server are activated! ####')
-            return True
-        print(f"ERROR: installed XMiR-SSH server not responding (IP: {self.ip_addr})")
-    return False
+            return 0, ''
+        return 90, f"installed XMiR-SSH server not responding (IP: {self.ip_addr})"
+    return 1, 'unknown error'
 
 
 #===============================================================================
@@ -1312,17 +1327,46 @@ def create_gateway(timeout = 4, die_if_sshOk = True, die_if_ftpOk = True, web_lo
     print(f"mac_address = {gw.mac_address}")
     gw.ssh_port = ssh_port if ssh_port else 22
     ret = gw.detect_ssh(verbose = 1, interactive = True)
-    if ret == 23:
-        if gw.use_ftp and die_if_ftpOk:
-            die("Telnet and FTP servers already running!")
-        ftp_err = gw.check_ftp(check_upload = True)
-        if ftp_err <= -10:
-            print("Telnet server already running, but upload mode on FTP server is blocked")
-        else:
-            print("Telnet server already running, but FTP server not respond")
-    elif ret > 0:
+    while ret == 23:
+        ret = 0
+        print(f'Detected running TELNET server. Try to start SSH server...')
+        if gw.passw and gw.passw != 'root':
+            print('Default TELNET password =', gw.passw)
+        gw.shutdown()
+        tn = gw.get_telnet(verbose = 0, password = gw.passw)
+        if not tn:
+            print(f'WARNING: Cannot connect to TELNET server')
+            break
+        gw.use_ssh = False
+        gw.run_cmd(r"sed -i 's/release/XXXXXX/g' /etc/init.d/dropbear")
+        gw.run_cmd(r"nvram set ssh_en=1 ; nvram set boot_wait=on ; nvram set bootdelay=3 ; nvram commit")
+        gw.run_cmd(r"echo -e 'root\nroot' | passwd root", die_on_error = False)
+        gw.shutdown()
+        time.sleep(1)
+        gw.passw = 'root'
+        print(f'Use new password for root user = "{gw.passw}"')
+        tn = gw.get_telnet(verbose = 0, password = gw.passw)
+        if not tn:
+            print(f'WARNING: Cannot connect to TelNet server')
+            break
+        gw.shutdown()
+        gw.run_cmd(r"/etc/init.d/dropbear enable; /etc/init.d/dropbear restart")
+        time.sleep(1)
+        ret = gw._detect_ssh(verbose = 1, interactive = True)
+        if ret > 0:
+            break # Ok
+        print(f'Cannot start stock SSH server. Try to start XMiR-SSH server...')
+        rc, msg = gw.install_dropbearmulti(force = True)
+        if rc != 0:
+            print('ERROR:', msg)
+            break
+        ret = gw._detect_ssh(verbose = 1, interactive = True)
+        if ret <= 0:
+            print('ERROR: installed XMiR-SSH server not responding!')
+        break
+    if ret > 0:
         if die_if_sshOk:
-            die(0, "SSH server already installed and running")
+            die(0, f"SSH server already installed and running (port = {ret})")
     ccode = gw.device_info["countrycode"]
     print(f'CountryCode = {ccode}')
     if web_login:
