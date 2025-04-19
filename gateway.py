@@ -1318,7 +1318,7 @@ def import_module(mod_name, gw):
         mod_object.inited_gw = gw
     mod_spec.loader.exec_module(mod_object)
 
-def create_gateway(timeout = 4, die_if_sshOk = True, die_if_ftpOk = True, web_login = True, ssh_port = 22):
+def create_gateway(timeout = 4, die_if_sshOk = True, die_if_ftpOk = True, web_login = True, ssh_port = 22, try_telnet = False):
     gw = Gateway(timeout = timeout, detect_ssh = False)
     if gw.status < 1:
         die(f"Xiaomi Mi Wi-Fi device not found (IP: {gw.ip_addr})")
@@ -1329,6 +1329,8 @@ def create_gateway(timeout = 4, die_if_sshOk = True, die_if_ftpOk = True, web_lo
     ret = gw.detect_ssh(verbose = 1, interactive = True)
     while ret == 23:
         ret = 0
+        if not try_telnet:
+            break
         print(f'Detected running TELNET server. Try to start SSH server...')
         if gw.passw and gw.passw != 'root':
             print('Default TELNET password =', gw.passw)

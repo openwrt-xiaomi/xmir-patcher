@@ -50,7 +50,7 @@ if gw.model_id > 0 and gw.model_id < gw.get_modelid_by_name('R2100'):
 
 if True:
     # init gw and check ssh
-    gw = create_gateway(timeout = 4, die_if_sshOk = True, die_if_ftpOk = True, web_login = True)
+    gw = create_gateway(timeout = 4, die_if_sshOk = True, die_if_ftpOk = True, web_login = True, try_telnet = True)
     
     hackCheck = gw.detect_hackCheck(update = True)
     if hackCheck:
