@@ -810,6 +810,8 @@ class Gateway():
       tn.sock.sendall(IAC + SB + NAWS + b'\x03\xE8\x00\x20' + IAC + SE)
       if idx > 0:
         tn.prompt = obj.group()
+        tn.write(b"echo 123 >/dev/null\n")
+        tn.read_until(b'\r\n' + tn.prompt, timeout = 2)
         return tn
       tn.write(f"{self.login}\n".encode('ascii'))
       idx, obj, output = tn.expect([p_passw, prompt], timeout=2)
