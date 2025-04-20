@@ -132,12 +132,14 @@ start_service()
 {
 	#[ -s /etc/dropbear/dropbear_rsa_host_key ] || keygen
 	rm -f /etc/dropbear/dropbear_rsa_host_key
+	
+	[ ! -e $PROG ] && return 1
 
 	if [ ! -e /etc/dropbear/dropbear_ed25519_host_key ]; then
-		$XDIR/dropbear dropbearkey -t ed25519 -f /etc/dropbear/dropbear_ed25519_host_key 0<&- 2>&- >&-
+		$PROG dropbearkey -t ed25519 -f /etc/dropbear/dropbear_ed25519_host_key 0<&- 2>&- >&-
 	fi
 	if [ ! -e /etc/dropbear/dropbear_ecdsa_host_key ]; then
-		$XDIR/dropbear dropbearkey -t ecdsa -f /etc/dropbear/dropbear_ecdsa_host_key 0<&- 2>&- >&-
+		$PROG dropbearkey -t ecdsa -f /etc/dropbear/dropbear_ecdsa_host_key 0<&- 2>&- >&-
 	fi
 
 	. /lib/functions.sh

@@ -8,6 +8,8 @@ if [ ! -d /etc/dropbear ]; then
 	chmod 0700 /etc/dropbear
 fi
 
+[ ! -e $XDIR/dropbear ] && return 1
+
 kill -9 `pgrep dropbear` &>/dev/null
 rm -f /etc/dropbear/dropbear_rsa_host_key
 rm -f /etc/init.d/dropbear

@@ -1229,7 +1229,7 @@ class Gateway():
         print(f'ARCH = {arch}')
         arch_suffix = None
         if arch.startswith('arm_'):
-            arch_suffix = '_armv7a'
+            arch_suffix = '_armv7a' if 'neon-vfp' in arch else '_armv5'
         if arch.startswith('aarch64'):
             arch_suffix = '_arm64'
         if arch.startswith('mips'):
