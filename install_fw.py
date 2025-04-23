@@ -1116,12 +1116,8 @@ class XqFlash():
         else:
             import ssh2
             print('Send command "reboot" via SSH/Telnet ...')
-            try:
-                gw.run_cmd("reboot -f", die_on_error = False)
-                print("Forced REBOOT activated!")
-            except ssh2.exceptions.SocketRecvError as e:
-                print("Forced REBOOT Activated!")
-                pass 
+            gw.run_cmd("reboot -f", die_on_error = False, reboot = True)
+            print("Forced REBOOT activated!")
 
     def flash_data_to_mtd(self, img_name, img: Image, timeout, check = True):
         print(f'Writing {img_name} image to addr 0x{img.addr:08X} ...')

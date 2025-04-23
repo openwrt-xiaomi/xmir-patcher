@@ -901,7 +901,7 @@ class Gateway():
           return False
     return True
 
-  def run_cmd(self, command, msg = None, timeout = None, die_on_error = True):
+  def run_cmd(self, command, msg = None, timeout = None, die_on_error = True, reboot = False):
     error = 0
     reslist = [ ]
     self.errcode = -1
@@ -938,6 +938,10 @@ class Gateway():
             except Exception as e:
                 error = -10
             finally:
+                if reboot:
+                    self.shutdown()
+                    self.errcode = 0
+                    return ''
                 channel.close()
                 channel.wait_closed()
             if error != 0 and die_on_error:
