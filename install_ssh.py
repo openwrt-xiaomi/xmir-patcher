@@ -137,7 +137,8 @@ if bdata and bdata.var:
     if telnet_en != '1' or ssh_en != '1' or uart_en != '1':
         print(f'CPU arch: {dev.info.cpu_arch}')
         print(f'Kernel: {dev.info.linux_stamp}')
-        krn_ver = dev.info.linux_ver.split('.')
+        krn_version = dev.info.linux_ver.strip()
+        krn_ver = krn_version.split('.')
         kver = krn_ver[0] + '.' + krn_ver[1]
         arch = dev.info.cpu_arch
         if kver in [ '4.4', '5.4' ] and arch in [ 'armv7', 'arm64' ]:
@@ -146,6 +147,30 @@ if bdata and bdata.var:
             FN_kmod = FN_kmod.format(kver = kver, arch = arch, preempt = preempt)
             if not os.path.exists(FN_kmod):
                 die(f'File "{FN_kmod}" not found!')
+            with open(FN_kmod, 'rb') as file:
+                kmod = file.read()
+            modmagic_pos = kmod.find(b'\x00vermagic=' + kver.encode())
+            if modmagic_pos <= 0:
+                die(f'Cannot found vermagic into file "{FN_kmod}"')
+            modmagic_pos = kmod.find(kver.encode(), modmagic_pos)
+            modmagic_end = kmod.find(b'\x00', modmagic_pos)
+            if modmagic_end <= 0 or modmagic_end - modmagic_pos > 200:
+                die(f'File "{FN_kmod}" contain incorrect vermagic (1)')
+            modmagic = kmod[modmagic_pos:modmagic_end]
+            fsp = modmagic.find(b' ')
+            if fsp <= 0:
+                die(f'File "{FN_kmod}" contain incorrect vermagic (2)')
+            modmagic_ver = modmagic[0:fsp]
+            modmagic_opt = modmagic[fsp:]
+            if b'-XMiR-Patcher' not in modmagic_ver:
+                die(f'File "{FN_kmod}" contain incorrect vermagic (3)')
+            new_modmagic = krn_version.encode('latin1') + modmagic_opt
+            xx = len(modmagic) - len(new_modmagic)
+            new_modmagic += b'\x00' * xx
+            kmod = kmod.replace(modmagic, new_modmagic)
+            FN_kmod = 'tmp/xmir_patcher.ko'
+            with open(FN_kmod, 'wb') as file:
+                file.write(kmod)
             ssh_install = ssh_install.replace('### bdata_patch ###', bdata_patch)
             with open(FN_install, 'w', newline = '\n') as file:
                 file.write(ssh_install)
