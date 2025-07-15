@@ -65,16 +65,16 @@ mi(56, "CR5506")
 mi(57, "CR5509")
 mi(58, "RB08")          # HomeWiFi
 
-mi(0,  "RB05")          # Redmi Router AX5700 # Certification: 2022-3478
+mi(0,  "RB05")          # Redmi AX3000  (mt7981) (HDR2) # Certification: 2022-3478
 mi(61, "RB06", "", "redmi-router-ax6000")   # Redmi AX6000
 mi(62, "RB07")          # mediatek_mt7981
 
 mi(64, "CB04")          # ???? (CN) [1.0.1]
 mi(65, "CB0401")        # Xiaomi 5G CPE Pro, Magenta Internet 5G Box AX5400 (INT)
 mi(66, "RC01")          # AX10000    (WanGiga)   (BE10000)
-mi(0,  "RC04")          # RA75 analog
+mi(0,  "CB0501")        # Xiaomi 4G CPE AX3000, Magenta Internet Flex Box AX3000 (INT)
 mi(68, "CB0401V2")      # Xiaomi 5G CPE Pro (INT)  [3.0.59]
-
+mi(0,  "RC04")          # RA75 analog
 mi(70, "RC06")          # Xiaomi Router 7000 (BE7000)
 mi(71, "RD01")          # Xiaomi Whole-Home Router Combo AX3000  # https://www.mi.com/xiaomi-routers/whole-room
 mi(72, "WR30", "WR30U", "mi-router-wr30u")  # Xiaomi AX3000NE   WR30U/WR30T/WR30M  (HDR2)
@@ -113,13 +113,17 @@ mi(100,"RN06", "RD15")  # Xiaomi Router BE3600 2.5G (INT)
 
 mi(102,"RD04V2")        # Xiaomi Router AX1500 (CN) (rtl8197)
 mi(103,"RN09")          # Xiaomi Mesh System BE3600 Pro (INT)
-mi(104,"RP01")          # Xiaomi Whole House BE3600 Pro Network Cable Version (CN)
-mi(0,  "RP02")          # same as RP01
-mi(106,"RP03")          # Xiaomi Whole House BE3600 Pro Network Cable Version (CN)
+mi(104,"RP01")          # Xiaomi Whole House BE3600 Pro Network Cable Version (CN) product=ac supportWifi=0
+mi(105,"RP02")          # Xiaomi Whole House BE3600 Pro Network Cable Version (CN) product=ac supportWifi=0 aimesh_support=1
+mi(106,"RP03")          # Xiaomi Whole House BE3600 Pro Network Cable Version (CN) product=ap
 
-
+mi(108,"YY03")
 mi(109,"RD03V2")        # Xiaomi AX3000T 2025 (CN)  (ipq5018)
-mi(0,  "RP04")
+mi(110,"RN12")          # Range Extender AX1500 (INT)  (rtl8197)
+mi(111,"RP04")          # Xiaomi Router BE10000 Pro
+mi(112,"RD16B")
+mi(0,  "RD16BB", "RD16B")
+mi(0,  "RD16BW", "RD16B")
 mi(0,  "RP08")          # (INT)
 
 # https://wikidevi.wi-cat.ru/List_of_Xiaomi_Wireless_Devices
