@@ -59,6 +59,7 @@ if True:
     exp_modules = [
         'connect6',  # arn_switch/start_binding
         'connect5',  # smartcontroller
+        'connect7',  # get_icon
     ]
     for mod_name in exp_modules:
         try:
