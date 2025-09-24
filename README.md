@@ -2,8 +2,6 @@
 
 [![Download latest](https://img.shields.io/badge/🡇-下载最新版本-green)](https://github.com/longzheng268/Xiaomi-Router-patcher/archive/refs/heads/main.zip)
 [![ViewCount](https://views.whatilearened.today/views/github/openwrt-xiaomi/xmir-patcher.svg)](https://github.com/longzheng268/Xiaomi-Router-patcher/archive/refs/heads/main.zip)
-[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fopenwrt-xiaomi%2Fxmir-patcher&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://github.com/longzheng268/Xiaomi-Router-patcher/archive/refs/heads/main.zip)
-[![Donations Page](https://github.com/andry81-cache/gh-content-static-cache/raw/master/common/badges/donate/donate.svg)](https://github.com/remittor/donate)
 
 一个功能强大的小米路由器固件破解工具，支持多种小米路由器型号的漏洞利用、SSH启用、语言包安装、固件刷写等功能。
 
