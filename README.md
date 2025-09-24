@@ -685,8 +685,9 @@ git push origin feature/new-feature
 ## 🖼️ 界面展示 / Interface Preview
 
 ![成功执行界面](image/display-successful.png)
-
 *工具成功执行后的界面展示 / Interface after successful execution*
+![成功连接ssh界面](image/display-ssh.png)
+*ssh成功执行后的界面展示 / Interface after ssh connetct successful execution*
 
 ---
 
