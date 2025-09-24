@@ -131,8 +131,12 @@ def get_translation(lang, key, *args):
             return text.format(*args)
         return text
     else:
-        # fallback to English
-        return get_translation('en', key, *args)
+        # fallback to English only if we're not already using English
+        if lang != 'en':
+            return get_translation('en', key, *args)
+        else:
+            # If key not found even in English, return a default message
+            return f"[Missing translation: {key}]"
 
 def get_supported_languages():
     """Get list of supported language codes"""
