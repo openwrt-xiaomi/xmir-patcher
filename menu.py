@@ -16,7 +16,7 @@ gw = gateway.Gateway(detect_device = False, detect_ssh = False)
 
 # Check for language preference or show language menu
 current_lang = lang_config.get_language()
-if current_lang not in i18n.get_supported_languages():
+if current_lang is None or current_lang not in i18n.get_supported_languages():
     current_lang = lang_config.show_language_menu()
 
 def get_header(delim, suffix = ''):
@@ -35,7 +35,7 @@ def menu1_show():
     if i == 1:  # IP address item needs formatting
       print(' {} - {}'.format(i, item.format(gw.ip_addr)))
     else:
-      print(' {} - {}'.format(i if i <= 9 else 0, item))
+      print(' {} - {}'.format(i if i <= 10 else 0, item))
 
 def menu1_process(id):
   if id == 1: 
@@ -49,7 +49,8 @@ def menu1_process(id):
   if id == 6: return "install_ssh.py"
   if id == 7: return "install_fw.py"
   if id == 8: return "__menu2"
-  if id == 9: return "reboot.py"
+  if id == 9: return "__change_language"
+  if id == 10: return "reboot.py"
   if id == 0: sys.exit(0)
   return None
 
@@ -126,6 +127,12 @@ def menu():
       continue
     if cmd == '__menu2':
       level = 2
+      continue
+    if cmd == '__change_language':
+      # Show language menu and restart with new language
+      global current_lang
+      current_lang = lang_config.show_language_menu()
+      level = 1
       continue
     #print("cmd2 =", cmd)
     if isinstance(cmd, str):

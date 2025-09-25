@@ -28,6 +28,10 @@ def save_config(config):
 def get_language():
     """Get current language setting"""
     config = load_config()
+    # Return None if no config file exists or no language is set
+    # This will trigger the language selection menu
+    if not os.path.exists(CONFIG_FILE) or 'language' not in config:
+        return None
     return config.get('language', 'en')
 
 def set_language(lang):

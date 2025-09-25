@@ -16,6 +16,7 @@ TRANSLATIONS = {
             'Install permanent SSH',
             'Install firmware (from directory "firmware")',
             '{{{ Other functions }}}',
+            'Change language',
             '[[ Reboot device ]]',
             'Exit'
         ],
@@ -52,6 +53,7 @@ TRANSLATIONS = {
             '安装永久SSH',
             '安装固件 (从 "firmware" 目录)',
             '{{{ 其他功能 }}}',
+            '更改语言',
             '[[ 重启设备 ]]',
             '退出'
         ],
@@ -88,6 +90,7 @@ TRANSLATIONS = {
             'Установить постоянный SSH',
             'Установить прошивку (из папки "firmware")',
             '{{{ Другие функции }}}',
+            'Изменить язык',
             '[[ Перезагрузить устройство ]]',
             'Выход'
         ],
