@@ -26,9 +26,12 @@ fn_remote = '/tmp/bootloader.bin'
 fn_local  = None
 
 if bl_name == 'breed':
-  if dn != 'R3G' and dn != 'R3P' and dn != 'RM2100':
+  if dn != 'R3G' and dn != 'R3P' and dn != 'RM2100' and dn != 'RA71' and dn != 'CR6006' and dn != 'CR6008' and dn != 'CR6009' and dn != 'TR609' and dn !='TR608':
     die("Breed bootloader cannot be installed on this device!")
-  fn_local = fn_dir + 'breed_r3g_eng.bin'
+  if dn in ['CR6006', 'CR6008', 'CR6009', 'TR609', 'TR608']:
+    fn_local = fn_dir + 'pb-boot-cr660x.img'
+  else:
+    fn_local = fn_dir + 'breed_r3g_eng.bin'
 
 if bl_name == 'uboot':
   fn_local = fn_dir + 'uboot_{}.bin'.format(gw.device_name)

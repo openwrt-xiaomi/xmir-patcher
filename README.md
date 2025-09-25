@@ -67,6 +67,10 @@
 - **CR6008** (mi-router-cr6608) - 小米企业路由器 CR6608  
 - **CR6009** (mi-router-cr6609) - 小米企业路由器 CR6609
 
+#### TR系列
+- **TR608** - 小米路由器 TR608
+- **TR609** - 小米路由器 TR609
+
 #### 其他型号
 - **P01** - 小米随身路由器
 - **D01** - 小米路由器 HD
@@ -384,8 +388,9 @@ Select language [1-English, 2-中文, 3-Русский]:
   - 支持Web界面固件刷写
   - 不怕刷坏（变砖保护）
 - **支持型号**: 
-  - R3G: `breed_r3g_eng.bin`
-  - 其他型号需要对应的Breed固件
+  - R3G, R3P, RM2100, RA71: `breed_r3g_eng.bin`
+  - CR6606, CR6608, CR6609, TR608, TR609: `pb-boot-cr660x.img`
+- **安装命令**: `python3 install_bl.py breed`
 
 #### 8. 测试功能
 开发和调试用途的测试功能。
@@ -698,7 +703,7 @@ git push origin feature/new-feature
 - **Permanent SSH access** with customizable credentials  
 - **Full firmware backup** and selective partition backup
 - **Custom firmware installation** including OpenWrt support
-- **Bootloader replacement** (Breed support)
+- **Bootloader replacement** (Breed support for R3G/R3P/RM2100/RA71/CR660x/TR60x series)
 - **Multi-language support** (EN/RU/ZH language packs with Chinese menu interface)
 - **Advanced features** like password change, log reading, feature unlocking
 
