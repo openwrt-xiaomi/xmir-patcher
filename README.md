@@ -392,6 +392,17 @@ Select language [1-English, 2-中文, 3-Русский]:
   - CR6606, CR6608, CR6609, TR608, TR609: `pb-boot-cr660x.img`
 - **安装命令**: `python3 install_bl.py breed`
 
+#### 7a. 安装原厂U-Boot引导加载器
+- **U-Boot特点**:
+  - 设备原厂Bootloader
+  - 设备特定的引导程序
+  - 用于恢复原厂引导环境
+- **支持型号**: 
+  - R3G: `uboot_r3g.bin`
+  - R3P: `uboot_r3p.bin`
+  - RM2100: `uboot_rm2100.bin`
+- **安装命令**: `python3 install_bl.py uboot`
+
 #### 8. 测试功能
 开发和调试用途的测试功能。
 
@@ -703,7 +714,7 @@ git push origin feature/new-feature
 - **Permanent SSH access** with customizable credentials  
 - **Full firmware backup** and selective partition backup
 - **Custom firmware installation** including OpenWrt support
-- **Bootloader replacement** (Breed support for R3G/R3P/RM2100/RA71/CR660x/TR60x series)
+- **Bootloader replacement** (Breed support for R3G/R3P/RM2100/RA71/CR660x/TR60x series, U-Boot support for R3G/R3P/RM2100)
 - **Multi-language support** (EN/RU/ZH language packs with Chinese menu interface)
 - **Advanced features** like password change, log reading, feature unlocking
 
