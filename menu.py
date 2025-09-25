@@ -73,7 +73,16 @@ def menu2_process(id):
   if id == 4: return [ "create_backup.py", "part" ]
   if id == 5: return [ "install_lang.py", "uninstall" ]
   if id == 6: return "activate_boot.py"
-  if id == 7: return [ "install_bl.py", "breed" ]
+  if id == 7: 
+    # Bootloader selection submenu
+    bootloader_prompt = i18n.get_translation(current_lang, 'bootloader_choice')
+    bootloader_choice = input(bootloader_prompt)
+    if bootloader_choice == '1':
+      return [ "install_bl.py", "breed" ]
+    elif bootloader_choice == '2':
+      return [ "install_bl.py", "uboot" ]
+    else:
+      return None
   if id == 8: return "test.py"
   if id == 9: return "reboot.py"
   if id == 0: return "__menu1" 

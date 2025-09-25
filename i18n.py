@@ -26,7 +26,7 @@ TRANSLATIONS = {
             'Create a backup of the specified partition',
             'Uninstall EN/RU/ZH languages',
             'Set kernel boot address',
-            'Install Breed bootloader',
+            'Install bootloader (Breed/U-Boot)',
             '__test__',
             '[[ Reboot device ]]',
             'Return to main menu'
@@ -37,7 +37,8 @@ TRANSLATIONS = {
             'enter_ip': 'Enter device IP-address: ',
             'extended_functions': '(extended functions)',
             'language_menu': 'Language / 语言 / Язык',
-            'language_prompt': 'Select language [1-English, 2-中文, 3-Русский]: '
+            'language_prompt': 'Select language [1-English, 2-中文, 3-Русский]: ',
+            'bootloader_choice': 'Select bootloader [1-Breed, 2-U-Boot]: '
         }
     },
     'zh': {
@@ -61,7 +62,7 @@ TRANSLATIONS = {
             '创建指定分区备份',
             '卸载 英文/俄文/中文 语言包',
             '设置内核启动地址',
-            '安装Breed引导程序',
+            '安装引导程序 (Breed/U-Boot)',
             '__测试__',
             '[[ 重启设备 ]]',
             '返回主菜单'
@@ -72,7 +73,8 @@ TRANSLATIONS = {
             'enter_ip': '请输入设备IP地址: ',
             'extended_functions': '(扩展功能)',
             'language_menu': 'Language / 语言 / Язык',
-            'language_prompt': '选择语言 [1-English, 2-中文, 3-Русский]: '
+            'language_prompt': '选择语言 [1-English, 2-中文, 3-Русский]: ',
+            'bootloader_choice': '选择引导程序 [1-Breed, 2-U-Boot]: '
         }
     },
     'ru': {
@@ -96,7 +98,7 @@ TRANSLATIONS = {
             'Создать резервную копию указанного раздела',
             'Удалить языки EN/RU/ZH',
             'Установить адрес загрузки ядра',
-            'Установить загрузчик Breed',
+            'Установить загрузчик (Breed/U-Boot)',
             '__тест__',
             '[[ Перезагрузить устройство ]]',
             'Вернуться в главное меню'
@@ -107,7 +109,8 @@ TRANSLATIONS = {
             'enter_ip': 'Введите IP-адрес устройства: ',
             'extended_functions': '(расширенные функции)',
             'language_menu': 'Language / 语言 / Язык',
-            'language_prompt': 'Выберите язык [1-English, 2-中文, 3-Русский]: '
+            'language_prompt': 'Выберите язык [1-English, 2-中文, 3-Русский]: ',
+            'bootloader_choice': 'Выберите загрузчик [1-Breed, 2-U-Boot]: '
         }
     }
 }
