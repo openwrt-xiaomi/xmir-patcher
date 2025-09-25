@@ -35,7 +35,11 @@ if bl_name == 'breed':
     fn_local = fn_dir + 'breed_r3g_eng.bin'
 
 if bl_name == 'uboot':
-  fn_local = fn_dir + 'uboot_{}.bin'.format(dn)
+  # Check if device has a specific uboot file available
+  supported_uboot_devices = ['R3G', 'R3P', 'RM2100']
+  if dn not in supported_uboot_devices:
+    die("U-Boot bootloader is not available for this device! Supported devices: {}".format(', '.join(supported_uboot_devices)))
+  fn_local = fn_dir + 'uboot_{}.bin'.format(dn.lower())
 
 if not fn_local:
   die('Incorrect bootloader name!')
