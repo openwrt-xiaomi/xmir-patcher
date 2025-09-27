@@ -267,37 +267,41 @@ if bdata and bdata.var:
         print(f'Applying bdata partition patch for enhanced persistence!')
         preempt = '-preempt' if 'PREEMPT' in dev.info.linux_stamp else ''
         FN_kmod = FN_kmod.format(kver = kver, arch = arch, preempt = preempt)
-            if not os.path.exists(FN_kmod):
-                die(f'File "{FN_kmod}" not found!')
-            with open(FN_kmod, 'rb') as file:
-                kmod = file.read()
-            modmagic_pos = kmod.find(b'\x00vermagic=' + kver.encode())
-            if modmagic_pos <= 0:
-                die(f'Cannot found vermagic into file "{FN_kmod}"')
-            modmagic_pos = kmod.find(kver.encode(), modmagic_pos)
-            modmagic_end = kmod.find(b'\x00', modmagic_pos)
-            if modmagic_end <= 0 or modmagic_end - modmagic_pos > 200:
-                die(f'File "{FN_kmod}" contain incorrect vermagic (1)')
-            modmagic = kmod[modmagic_pos:modmagic_end]
-            fsp = modmagic.find(b' ')
-            if fsp <= 0:
-                die(f'File "{FN_kmod}" contain incorrect vermagic (2)')
-            modmagic_ver = modmagic[0:fsp]
-            modmagic_opt = modmagic[fsp:]
-            if b'-XMiR-Patcher' not in modmagic_ver:
-                die(f'File "{FN_kmod}" contain incorrect vermagic (3)')
-            new_modmagic = krn_version.encode('latin1') + modmagic_opt
-            xx = len(modmagic) - len(new_modmagic)
-            new_modmagic += b'\x00' * xx
-            kmod = kmod.replace(modmagic, new_modmagic)
-            FN_kmod = 'tmp/xmir_patcher.ko'
-            with open(FN_kmod, 'wb') as file:
-                file.write(kmod)
-            ssh_install = ssh_install.replace('### bdata_patch ###', bdata_patch)
-            with open(FN_install, 'w', newline = '\n') as file:
-                file.write(ssh_install)
-            FN_bdata_log = f'tmp/bdata_patch.log'
-            fn_bdata_log = '/tmp/bdata_patch.log'
+        if not os.path.exists(FN_kmod):
+            die(f'File "{FN_kmod}" not found!')
+        with open(FN_kmod, 'rb') as file:
+            kmod = file.read()
+        modmagic_pos = kmod.find(b'\x00vermagic=' + kver.encode())
+        if modmagic_pos <= 0:
+            die(f'Cannot found vermagic into file "{FN_kmod}"')
+        modmagic_pos = kmod.find(kver.encode(), modmagic_pos)
+        modmagic_end = kmod.find(b'\x00', modmagic_pos)
+        if modmagic_end <= 0 or modmagic_end - modmagic_pos > 200:
+            die(f'File "{FN_kmod}" contain incorrect vermagic (1)')
+        modmagic = kmod[modmagic_pos:modmagic_end]
+        fsp = modmagic.find(b' ')
+        if fsp <= 0:
+            die(f'File "{FN_kmod}" contain incorrect vermagic (2)')
+        modmagic_ver = modmagic[0:fsp]
+        modmagic_opt = modmagic[fsp:]
+        if b'-XMiR-Patcher' not in modmagic_ver:
+            die(f'File "{FN_kmod}" contain incorrect vermagic (3)')
+        new_modmagic = krn_version.encode('latin1') + modmagic_opt
+        xx = len(modmagic) - len(new_modmagic)
+        new_modmagic += b'\x00' * xx
+        kmod = kmod.replace(modmagic, new_modmagic)
+        FN_kmod = 'tmp/xmir_patcher.ko'
+        with open(FN_kmod, 'wb') as file:
+            file.write(kmod)
+        ssh_install = ssh_install.replace('### bdata_patch ###', bdata_patch)
+        with open(FN_install, 'w', newline = '\n') as file:
+            file.write(ssh_install)
+        FN_bdata_log = f'tmp/bdata_patch.log'
+        fn_bdata_log = '/tmp/bdata_patch.log'
+    else:
+        print(f'bdata patch not supported for kernel {kver} / arch {arch}')
+else:
+    print('No bdata information available - skipping bdata patch')
 
 # ---------------------------------------------------------------------------
 
