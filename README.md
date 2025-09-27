@@ -702,6 +702,8 @@ git push origin feature/new-feature
 *工具成功执行后的界面展示 / Interface after successful execution*
 ![成功连接ssh界面](image/display-ssh.png)
 *ssh成功执行后的界面展示 / Interface after ssh connetct successful execution*
+![成功持久化ssh界面](image/display-permanent-ssh.png)
+*ssh成功执行后的界面展示 / Interface after ssh permanent execution*
 
 ---
 
