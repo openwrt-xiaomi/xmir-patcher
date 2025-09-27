@@ -1210,7 +1210,7 @@ class Gateway():
         return 0
 
     if telnet_en:
-        self.install_dropbearmulti(force = False, die_on_error = True)
+        self.install_dropbearmulti(force = True, die_on_error = True)
         return 0
 
     return -1
