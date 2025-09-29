@@ -7,6 +7,8 @@ import time
 
 import xmir_base
 from gateway import *
+import i18n
+import lang_config
 
 
 gw = Gateway(detect_device = False, detect_ssh = False)
@@ -61,15 +63,64 @@ if True:
         'connect5',  # smartcontroller
         'connect7',  # get_icon
     ]
+    
+    exploit_worked = False
+    exploit_warnings = []
+    
     for mod_name in exp_modules:
         try:
             import_module(mod_name, gw)
+            exploit_worked = True
             break  # Ok
         except ExploitFixed as e:
             print('WARN:', str(e))
+            exploit_warnings.append(str(e))
             continue  # try next module
         except ExploitNotWorked as e:
             print('WARN:', str(e))
+            exploit_warnings.append(str(e))
             continue  # try next module
         except Exception:
             raise
+    
+    # Show firmware downgrade suggestion if all exploits failed
+    if not exploit_worked and gw.device_name in ['RD15', 'RN06']:  # BE3600 variants
+        current_lang = lang_config.get_language() or 'en'
+        
+        print()
+        print("=" * 60)
+        print(i18n.get_translation(current_lang, 'messages', 'firmware_downgrade_title'))
+        print()
+        print(i18n.get_translation(current_lang, 'messages', 'firmware_downgrade_be3600'))
+        print()
+        
+        # Show current firmware version if available
+        if gw.rom_version:
+            if current_lang == 'zh':
+                print(f"当前固件版本: {gw.rom_version}")
+                print("建议降级到: 1.0.68 或更旧版本")
+            elif current_lang == 'ru':
+                print(f"Текущая версия прошивки: {gw.rom_version}")
+                print("Рекомендуемое понижение до: 1.0.68 или старше")
+            else:
+                print(f"Current firmware version: {gw.rom_version}")
+                print("Recommended downgrade to: 1.0.68 or older")
+            print()
+        
+        print(i18n.get_translation(current_lang, 'messages', 'firmware_downgrade_tutorial'))
+        print()
+        print(i18n.get_translation(current_lang, 'messages', 'firmware_downgrade_tool'))
+        print("=" * 60)
+        print()
+    elif not exploit_worked:
+        current_lang = lang_config.get_language() or 'en'
+        
+        print()
+        print("=" * 60)
+        print(i18n.get_translation(current_lang, 'messages', 'exploit_failed_title'))
+        print()
+        print(i18n.get_translation(current_lang, 'messages', 'exploit_failed_message'))
+        print()
+        print(i18n.get_translation(current_lang, 'messages', 'exploit_failed_suggestion'))
+        print("=" * 60)
+        print()

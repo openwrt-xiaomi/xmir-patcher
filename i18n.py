@@ -40,6 +40,15 @@ TRANSLATIONS = {
             'language_menu': 'Language / 语言 / Язык',
             'language_prompt': 'Select language [1-English, 2-中文, 3-Русский]: ',
             'bootloader_choice': 'Select bootloader [1-Breed, 2-U-Boot]: '
+        },
+        'messages': {
+            'firmware_downgrade_title': 'FIRMWARE DOWNGRADE SUGGESTION:',
+            'firmware_downgrade_be3600': 'If exploits are not working on your BE3600 router, please\ndowngrade to firmware version 1.0.68 or older.',
+            'firmware_downgrade_tutorial': 'Firmware downgrade tutorial:\nhttps://github.com/uyez/lyq/releases/tag/be3600',
+            'firmware_downgrade_tool': 'You can use the Xiaomi Router Repair Tool for downgrade.',
+            'exploit_failed_title': 'EXPLOIT FAILED:',
+            'exploit_failed_message': 'All available exploits failed to work on this device.\nThis may be due to newer firmware versions that have\npatched the vulnerabilities.',
+            'exploit_failed_suggestion': 'Consider checking for alternative firmware versions\nor contact the community for device-specific solutions.'
         }
     },
     'zh': {
@@ -77,6 +86,15 @@ TRANSLATIONS = {
             'language_menu': 'Language / 语言 / Язык',
             'language_prompt': '选择语言 [1-English, 2-中文, 3-Русский]: ',
             'bootloader_choice': '选择引导程序 [1-Breed, 2-U-Boot]: '
+        },
+        'messages': {
+            'firmware_downgrade_title': '固件降级建议：',
+            'firmware_downgrade_be3600': '如果漏洞利用在您的BE3600路由器上不工作，请\n降级到固件版本1.0.68或更旧版本。',
+            'firmware_downgrade_tutorial': '固件降级教程：\nhttps://github.com/uyez/lyq/releases/tag/be3600',
+            'firmware_downgrade_tool': '您可以使用小米路由器修复工具进行降级。',
+            'exploit_failed_title': '漏洞利用失败：',
+            'exploit_failed_message': '所有可用的漏洞利用都无法在此设备上工作。\n这可能是由于较新的固件版本已修补了\n这些漏洞。',
+            'exploit_failed_suggestion': '请考虑检查替代固件版本\n或联系社区获取设备特定解决方案。'
         }
     },
     'ru': {
@@ -114,16 +132,43 @@ TRANSLATIONS = {
             'language_menu': 'Language / 语言 / Язык',
             'language_prompt': 'Выберите язык [1-English, 2-中文, 3-Русский]: ',
             'bootloader_choice': 'Выберите загрузчик [1-Breed, 2-U-Boot]: '
+        },
+        'messages': {
+            'firmware_downgrade_title': 'ПРЕДЛОЖЕНИЕ ПОНИЖЕНИЯ ВЕРСИИ ПРОШИВКИ:',
+            'firmware_downgrade_be3600': 'Если эксплойты не работают на вашем роутере BE3600, пожалуйста\nпонизьте версию прошивки до 1.0.68 или старше.',
+            'firmware_downgrade_tutorial': 'Руководство по понижению версии прошивки:\nhttps://github.com/uyez/lyq/releases/tag/be3600',
+            'firmware_downgrade_tool': 'Вы можете использовать инструмент восстановления роутера Xiaomi для понижения версии.',
+            'exploit_failed_title': 'ЭКСПЛОЙТ НЕ СРАБОТАЛ:',
+            'exploit_failed_message': 'Все доступные эксплойты не смогли работать на этом устройстве.\nЭто может быть связано с более новыми версиями прошивки,\nкоторые исправили уязвимости.',
+            'exploit_failed_suggestion': 'Рассмотрите возможность проверки альтернативных версий прошивки\nили обратитесь к сообществу за решениями для конкретного устройства.'
         }
     }
 }
 
-def get_translation(lang, key, *args):
+def get_translation(lang, key, subkey=None, *args):
     """Get translated text for given language and key"""
     if lang not in TRANSLATIONS:
         lang = 'en'  # fallback to English
     
     trans = TRANSLATIONS[lang]
+    
+    # Handle nested dictionary lookup
+    if subkey:
+        if key in trans and isinstance(trans[key], dict) and subkey in trans[key]:
+            text = trans[key][subkey]
+            if args:
+                return text.format(*args)
+            return text
+        # fallback to English
+        elif lang != 'en' and key in TRANSLATIONS['en'] and isinstance(TRANSLATIONS['en'][key], dict) and subkey in TRANSLATIONS['en'][key]:
+            text = TRANSLATIONS['en'][key][subkey]
+            if args:
+                return text.format(*args)
+            return text
+        else:
+            return f"{key}.{subkey}"  # fallback key
+    
+    # Handle normal key lookup
     if key in trans:
         if isinstance(trans[key], list):
             return trans[key]
@@ -139,10 +184,13 @@ def get_translation(lang, key, *args):
     else:
         # fallback to English only if we're not already using English
         if lang != 'en':
-            return get_translation('en', key, *args)
+            return get_translation('en', key, subkey, *args)
         else:
             # If key not found even in English, return a default message
-            return f"[Missing translation: {key}]"
+            if subkey:
+                return f"[Missing translation: {key}.{subkey}]"
+            else:
+                return f"[Missing translation: {key}]"
 
 def get_supported_languages():
     """Get list of supported language codes"""
