@@ -1,7 +1,7 @@
 # 小米路由器破解工具 (XMiR-Patcher)
 
 [![Download latest](https://img.shields.io/badge/🡇-下载最新版本-green)](https://github.com/longzheng268/Xiaomi-Router-patcher/archive/refs/heads/main.zip)
-[![ViewCount](https://views.whatilearened.today/views/github/openwrt-xiaomi/xmir-patcher.svg)](https://github.com/longzheng268/Xiaomi-Router-patcher/archive/refs/heads/main.zip)
+![ViewCount](https://views.whatilearened.today/views/github/longzheng268/Xiaomi-Router-patcher.svg)
 [![官方老固件下载](https://img.shields.io/badge/📦-官方老固件下载-blue)](https://mirom.ezbox.idv.tw/en/miwifi)
 一个功能强大的小米路由器固件破解工具，支持多种小米路由器型号的漏洞利用、SSH启用、语言包安装、固件刷写等功能。
 
