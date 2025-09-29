@@ -9,7 +9,7 @@ IMPORTANT: If you encounter exploit warnings like:
 For Xiaomi BE3600 (RD15) routers, please downgrade to firmware version 1.0.68 or older.
 You can use the Xiaomi Router Repair Tool for firmware downgrade.
 
-Firmware downgrade tutorial: https://github.com/uyez/lyq/releases/tag/be3600
+Firmware downgrade tutorial: https://mirom.ezbox.idv.tw/en/miwifi/
 
 中文:
 此文件夹中应放置用于刷写的固件。
@@ -22,8 +22,7 @@ Firmware downgrade tutorial: https://github.com/uyez/lyq/releases/tag/be3600
 对于小米BE3600 (RD15)路由器，请降级到固件版本1.0.68或更旧版本。
 您可以使用小米路由器修复工具进行固件降级。
 
-固件降级教程：https://github.com/uyez/lyq/releases/tag/be3600
-
+固件降级教程：https://mirom.ezbox.idv.tw/en/miwifi/
 Русский:
 В эту папку следует помещать прошивки для прошивки.
 
@@ -35,4 +34,4 @@ Firmware downgrade tutorial: https://github.com/uyez/lyq/releases/tag/be3600
 Для роутеров Xiaomi BE3600 (RD15), пожалуйста, понизьте версию прошивки до 1.0.68 или старше.
 Вы можете использовать инструмент восстановления роутера Xiaomi для понижения версии прошивки.
 
-Руководство по понижению версии прошивки: https://github.com/uyez/lyq/releases/tag/be3600
+Руководство по понижению версии прошивки: https://mirom.ezbox.idv.tw/en/miwifi/
