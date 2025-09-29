@@ -50,6 +50,12 @@ if gw.model_id > 0 and gw.model_id < gw.get_modelid_by_name('R2100'):
 #  import connect4
 #  sys.exit(0)
 
+# Route BE3600 variants (RD15, RD16, RN06) to connect6
+if dn in ['RD15', 'RD16', 'RN06']:
+    inited_gw = create_gateway(timeout = 4, die_if_sshOk = True, die_if_ftpOk = True, web_login = True, try_telnet = True)
+    import connect6
+    sys.exit(0)
+
 if True:
     # init gw and check ssh
     gw = create_gateway(timeout = 4, die_if_sshOk = True, die_if_ftpOk = True, web_login = True, try_telnet = True)
@@ -83,36 +89,8 @@ if True:
         except Exception:
             raise
     
-    # Show firmware downgrade suggestion if all exploits failed
-    if not exploit_worked and gw.device_name in ['RD15', 'RN06']:  # BE3600 variants
-        current_lang = lang_config.get_language() or 'en'
-        
-        print()
-        print("=" * 60)
-        print(i18n.get_translation(current_lang, 'messages', 'firmware_downgrade_title'))
-        print()
-        print(i18n.get_translation(current_lang, 'messages', 'firmware_downgrade_be3600'))
-        print()
-        
-        # Show current firmware version if available
-        if gw.rom_version:
-            if current_lang == 'zh':
-                print(f"当前固件版本: {gw.rom_version}")
-                print("建议降级到: 1.0.68 或更旧版本")
-            elif current_lang == 'ru':
-                print(f"Текущая версия прошивки: {gw.rom_version}")
-                print("Рекомендуемое понижение до: 1.0.68 или старше")
-            else:
-                print(f"Current firmware version: {gw.rom_version}")
-                print("Recommended downgrade to: 1.0.68 or older")
-            print()
-        
-        print(i18n.get_translation(current_lang, 'messages', 'firmware_downgrade_tutorial'))
-        print()
-        print(i18n.get_translation(current_lang, 'messages', 'firmware_downgrade_tool'))
-        print("=" * 60)
-        print()
-    elif not exploit_worked:
+    # Show general exploit failure message if all exploits failed
+    if not exploit_worked:
         current_lang = lang_config.get_language() or 'en'
         
         print()
