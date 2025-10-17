@@ -162,6 +162,7 @@ class DevInfo():
     verbose = verbose if verbose is not None else self.verbose
     self.partlist = [ ]
     self.allpartnum = -1
+    self.partlist_num = 0
     mtd_list = self.run_command('cat /proc/mtd', 'mtd_list.txt')
     if not mtd_list or len(mtd_list) <= 1:
       return [ ]
@@ -194,7 +195,6 @@ class DevInfo():
     fdt_info = self.get_part_from_fdt(partlist, verbose)
     if self.verbose:
       print("MTD partitions:")
-    err_addr = -1
     for i, part in enumerate(partlist):
       size = part['size']
       name = part['name']
@@ -220,12 +220,10 @@ class DevInfo():
         if 'ro' in part:
           ro = '0' if part['ro'] == False else '1'
         print('  %2d > addr: %s  size: 0x%08X  ro:%s  name: "%s"' % (i, xaddr, size, ro, name))
-      if addr < 0:
-        err_addr = mtdid
+      if addr >= 0 and addr != 0xFFFFFFFF:
+        self.partlist_num += 1
     if verbose:
       print(" ")
-    if err_addr >= 0:
-      return [ ]
     self.partlist = partlist
     return self.partlist
 
