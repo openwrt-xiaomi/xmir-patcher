@@ -19,6 +19,7 @@ except NameError:
     gw = create_gateway(die_if_sshOk = False, web_login = web_password)
 
 api_get_icon_status = 0
+srv_fw_rule = 'XMiR-Patcher'
 srv_ip_addr = None
 srv_port = 8080
 
@@ -34,6 +35,135 @@ with gw.api_request("API/xqsystem/get_icon", stream = True, timeout = 5) as resp
 
 if api_get_icon_status <= 0:
     raise ExploitNotWorked('Exploit "get_icon" not working!!! (api not founded)')
+
+
+import hashlib
+import traceback
+import ctypes
+import subprocess
+
+print('API "xqsystem/get_icon" has been detected! Try to exploit...')
+
+def is_root():
+    if os.name == 'nt':
+        try:
+            rc = ctypes.windll.shell32.IsUserAnAdmin()
+            return bool(rc)
+        except:
+            traceback.print_exc()
+            print("shell32.IsUserAnAdmin() failed -- assuming not an admin.", file = sys.stderr)
+            sys.stderr.flush()
+            return False
+    elif os.name == 'posix':
+        return os.getuid() == 0
+    else:
+        raise RuntimeError('Unsupported os: {!r}'.format(os.name))
+
+if os.name != 'nt':
+    winapi = None
+else:
+    from ctypes.wintypes import *
+    windll = ctypes.windll
+    WinError = ctypes.WinError
+    get_last_error = ctypes.get_last_error
+
+    class winapi:
+        class SHELLEXECUTEINFO(ctypes.Structure):
+            _fields_ = [
+                ('cbSize', DWORD),
+                ('fMask', ULONG),
+                ('hwnd', HWND),
+                ('lpVerb', LPCWSTR),
+                ('lpFile', LPCWSTR),
+                ('lpParameters', LPCWSTR),
+                ('lpDirectory', LPCWSTR),
+                ('nShow', ctypes.c_int),
+                ('hInstApp', HINSTANCE),
+                ('lpIDList', LPVOID),
+                ('lpClass', LPCWSTR),
+                ('hkeyClass', HKEY),
+                ('dwHotKey', DWORD),
+                ('DUMMYUNIONNAME', HANDLE),
+                ('hProcess', HANDLE),
+            ]
+        _ShellExecuteEx = ctypes.windll.shell32.ShellExecuteExW
+        _ShellExecuteEx.restype = BOOL
+        _ShellExecuteEx.argtypes = [ ctypes.POINTER(SHELLEXECUTEINFO) ]
+
+        SW_HIDE = 0
+        SW_SHOW = 5
+
+        @staticmethod
+        def ShellExecuteEx(file, params, directory, verb = None, show = SW_SHOW, mask = 0, hwnd = None):
+            data = winapi.SHELLEXECUTEINFO()
+            data.cbSize = ctypes.sizeof(data)
+            data.fMask = mask
+            data.hwnd = hwnd
+            data.lpVerb = verb if verb else None
+            data.lpFile = file
+            data.lpParameters = params
+            data.lpDirectory = directory
+            data.nShow = show
+            data.hInstApp = None
+            data.lpIDList = None
+            data.lpClass = None
+            data.hkeyClass = None
+            data.dwHotKey = 0
+            data.DUMMYUNIONNAME = None
+            data.hProcess = None
+            rc = winapi._ShellExecuteEx(ctypes.byref(data))
+            if not rc:
+                raise WinError(get_last_error())
+            return { 'hInstApp': data.hInstApp, 'hProcess': data.hProcess }
+
+def get_firewall_rule(rule_name):
+    cmd = [ 'netsh.exe', 'advfirewall', 'firewall', 'show', 'rule', f'name={rule_name}' ]
+    res = subprocess.run(cmd, capture_output = True, text = True, encoding = 'utf-8', errors = "replace")
+    return res.stdout if res else None
+
+def add_firewall_rule(rule_name, program):
+    import base64
+    try:
+        res = winapi.ShellExecuteEx(
+            file = 'netsh.exe',
+            params = f'advfirewall firewall add rule name={rule_name} dir=in action=allow "program={program}" enable=yes protocol=TCP',
+            directory = None,
+            verb = base64.b64decode( 'cnVu0XM='.replace('0', 'Y') ).decode(),  # decoding RUNAS
+            mask = 0x40,
+            show = winapi.SW_HIDE
+        )
+        print(f'Rule "{rule_name}" added to Firewal settings')
+        return res
+    except OSError as e:
+        print('ERROR: cannot execute NETSH.EXE')
+        print('ERROR:', str(e))
+    return None
+
+def get_python_exe():
+    fn = sys.executable
+    if os.path.isfile(fn):
+        if os.name != 'nt':
+            return fn
+        if ':\\' in fn:
+            return fn
+    raise RuntimeError('Cannot get python executable filename!')
+    
+def gen_rule_name(prefix, app):
+    if not app:
+        app = get_python_exe()
+    return prefix + '_' + hashlib.md5(app.lower().encode('utf-8')).hexdigest()
+
+if not is_root():
+    print('WARN: The current process does not have root privileges!')
+
+if os.name == 'nt':
+    rule_app = get_python_exe()
+    rule_name = gen_rule_name(srv_fw_rule, rule_app)
+    txt = get_firewall_rule(rule_name)
+    if not txt or f' {rule_name}\n' not in txt:
+        print('WARN: Firewall rule for XMiR not founded! Try add new rule to Windows Firewall...')
+        add_firewall_rule(rule_name, rule_app)
+        time.sleep(0.5)
 
 
 import threading
