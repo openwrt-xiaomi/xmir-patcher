@@ -59,80 +59,18 @@ def is_root():
     else:
         raise RuntimeError('Unsupported os: {!r}'.format(os.name))
 
-if os.name != 'nt':
-    winapi = None
-else:
-    from ctypes.wintypes import *
-    windll = ctypes.windll
-    WinError = ctypes.WinError
-    get_last_error = ctypes.get_last_error
-
-    class winapi:
-        class SHELLEXECUTEINFO(ctypes.Structure):
-            _fields_ = [
-                ('cbSize', DWORD),
-                ('fMask', ULONG),
-                ('hwnd', HWND),
-                ('lpVerb', LPCWSTR),
-                ('lpFile', LPCWSTR),
-                ('lpParameters', LPCWSTR),
-                ('lpDirectory', LPCWSTR),
-                ('nShow', ctypes.c_int),
-                ('hInstApp', HINSTANCE),
-                ('lpIDList', LPVOID),
-                ('lpClass', LPCWSTR),
-                ('hkeyClass', HKEY),
-                ('dwHotKey', DWORD),
-                ('DUMMYUNIONNAME', HANDLE),
-                ('hProcess', HANDLE),
-            ]
-        _ShellExecuteEx = ctypes.windll.shell32.ShellExecuteExW
-        _ShellExecuteEx.restype = BOOL
-        _ShellExecuteEx.argtypes = [ ctypes.POINTER(SHELLEXECUTEINFO) ]
-
-        SW_HIDE = 0
-        SW_SHOW = 5
-
-        @staticmethod
-        def ShellExecuteEx(file, params, directory, verb = None, show = SW_SHOW, mask = 0, hwnd = None):
-            data = winapi.SHELLEXECUTEINFO()
-            data.cbSize = ctypes.sizeof(data)
-            data.fMask = mask
-            data.hwnd = hwnd
-            data.lpVerb = verb if verb else None
-            data.lpFile = file
-            data.lpParameters = params
-            data.lpDirectory = directory
-            data.nShow = show
-            data.hInstApp = None
-            data.lpIDList = None
-            data.lpClass = None
-            data.hkeyClass = None
-            data.dwHotKey = 0
-            data.DUMMYUNIONNAME = None
-            data.hProcess = None
-            rc = winapi._ShellExecuteEx(ctypes.byref(data))
-            if not rc:
-                raise WinError(get_last_error())
-            return { 'hInstApp': data.hInstApp, 'hProcess': data.hProcess }
-
 def get_firewall_rule(rule_name):
     cmd = [ 'netsh.exe', 'advfirewall', 'firewall', 'show', 'rule', f'name={rule_name}' ]
     res = subprocess.run(cmd, capture_output = True, text = True, encoding = 'utf-8', errors = "replace")
     return res.stdout if res else None
 
 def add_firewall_rule(rule_name, program):
-    import base64
+    import shexec
+    exename = 'netsh.exe'
+    params = f'advfirewall firewall add rule name={rule_name} dir=in action=allow "program={program}" enable=yes protocol=TCP'
     try:
-        res = winapi.ShellExecuteEx(
-            file = 'netsh.exe',
-            params = f'advfirewall firewall add rule name={rule_name} dir=in action=allow "program={program}" enable=yes protocol=TCP',
-            directory = None,
-            verb = base64.b64decode( 'cnVu0XM='.replace('0', 'Y') ).decode(),  # decoding RUNAS
-            mask = 0x40,
-            show = winapi.SW_HIDE
-        )
-        print(f'Rule "{rule_name}" added to Firewal settings')
+        res = shexec.run(exename, params, directory = None)
+        print(f'Rule "{rule_name}" added to Firewall settings')
         return res
     except OSError as e:
         print('ERROR: cannot execute NETSH.EXE')
@@ -161,7 +99,8 @@ if os.name == 'nt':
     rule_name = gen_rule_name(srv_fw_rule, rule_app)
     txt = get_firewall_rule(rule_name)
     if not txt or f' {rule_name}\n' not in txt:
-        print('WARN: Firewall rule for XMiR not founded! Try add new rule to Windows Firewall...')
+        print('WARN: Firewall rule for XMiR-Patcher not founded!')
+        print('INFO: Try add new rule to Windows Firewall...')
         add_firewall_rule(rule_name, rule_app)
         time.sleep(0.5)
 
