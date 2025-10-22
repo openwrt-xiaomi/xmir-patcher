@@ -1,4 +1,3 @@
-```text
+name=.gitattributes
 # ensure shell scripts use LF
 *.sh text eol=lf
-```
