@@ -8,6 +8,8 @@ import requests
 
 import xmir_base
 from gateway import *
+import i18n
+import lang_config
 
 web_password = True
 if len(sys.argv) > 1 and sys.argv[0].endswith('connect6.py'):
@@ -81,6 +83,61 @@ for idx, exp_func in enumerate(exp_list):
 gw.set_diag_iperf_test_thr(20)
 
 if not exec_cmd:
+    current_lang = lang_config.get_language() or 'en'
+    
+    # Show device-specific firmware downgrade suggestions
+    if gw.device_name in ['RD15', 'RN06']:  # BE3600 2.5G variants
+        print()
+        print("=" * 60)
+        print(i18n.get_translation(current_lang, 'messages', 'firmware_downgrade_title'))
+        print()
+        print(i18n.get_translation(current_lang, 'messages', 'firmware_downgrade_rd15'))
+        print()
+        
+        if gw.rom_version:
+            if current_lang == 'zh':
+                print(f"当前固件版本: {gw.rom_version}")
+                print("建议降级到: v1.0.65 或更旧版本")
+            elif current_lang == 'ru':
+                print(f"Текущая версия прошивки: {gw.rom_version}")
+                print("Рекомендуемое понижение до: v1.0.65 или старше")
+            else:
+                print(f"Current firmware version: {gw.rom_version}")
+                print("Recommended downgrade to: v1.0.65 or older")
+            print()
+            
+        print(i18n.get_translation(current_lang, 'messages', 'firmware_downgrade_tutorial'))
+        print()
+        print(i18n.get_translation(current_lang, 'messages', 'firmware_downgrade_tool'))
+        print("=" * 60)
+        print()
+        
+    elif gw.device_name == 'RD16':  # BE3600 1G variant
+        print()
+        print("=" * 60)
+        print(i18n.get_translation(current_lang, 'messages', 'firmware_downgrade_title'))
+        print()
+        print(i18n.get_translation(current_lang, 'messages', 'firmware_downgrade_rd16'))
+        print()
+        
+        if gw.rom_version:
+            if current_lang == 'zh':
+                print(f"当前固件版本: {gw.rom_version}")
+                print("建议降级到: v1.0.34 或更旧版本")
+            elif current_lang == 'ru':
+                print(f"Текущая версия прошивки: {gw.rom_version}")
+                print("Рекомендуемое понижение до: v1.0.34 или старше")
+            else:
+                print(f"Current firmware version: {gw.rom_version}")
+                print("Recommended downgrade to: v1.0.34 or older")
+            print()
+            
+        print(i18n.get_translation(current_lang, 'messages', 'firmware_downgrade_tutorial'))
+        print()
+        print(i18n.get_translation(current_lang, 'messages', 'firmware_downgrade_tool'))
+        print("=" * 60)
+        print()
+    
     raise ExploitNotWorked('Exploits "arn_switch/start_binding/set_mac_filter" not working!!!')
 
 if exec_cmd == exploit_1:

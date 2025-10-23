@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+
 set -e
 
 if [ ! -f "./xmir_base/xmir_init.py" ]; then
