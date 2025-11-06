@@ -388,6 +388,7 @@ Select language [1-English, 2-中文, 3-Русский]:
   - 支持Web界面固件刷写
   - 不怕刷坏（变砖保护）
 - **支持型号**: 
+  - R3: `pb-boot-xiaomi3-20190317-61b6d33.img`
   - R3G, R3P, RM2100, RA71: `breed_r3g_eng.bin`
   - CR6606, CR6608, CR6609, TR608, TR609: `pb-boot-cr660x.img`
 - **安装命令**: `python3 install_bl.py breed`
@@ -716,7 +717,7 @@ git push origin feature/new-feature
 - **Permanent SSH access** with customizable credentials  
 - **Full firmware backup** and selective partition backup
 - **Custom firmware installation** including OpenWrt support
-- **Bootloader replacement** (Breed support for R3G/R3P/RM2100/RA71/CR660x/TR60x series, U-Boot support for R3G/R3P/RM2100)
+- **Bootloader replacement** (Breed support for R3/R3G/R3P/RM2100/RA71/CR660x/TR60x series, U-Boot support for R3G/R3P/RM2100)
 - **Multi-language support** (EN/RU/ZH language packs with Chinese menu interface)
 - **Advanced features** like password change, log reading, feature unlocking
 

@@ -26,11 +26,13 @@ fn_remote = '/tmp/bootloader.bin'
 fn_local  = None
 
 if bl_name == 'breed':
-  supported_devices = ['R3G', 'R3P', 'RM2100', 'RA71', 'CR6606', 'CR6608', 'CR6609', 'TR609', 'TR608']
+  supported_devices = ['R3', 'R3G', 'R3P', 'RM2100', 'RA71', 'CR6606', 'CR6608', 'CR6609', 'TR609', 'TR608']
   if dn not in supported_devices:
     die("Breed bootloader cannot be installed on this device!")
   if dn in ['CR6606', 'CR6608', 'CR6609', 'TR609', 'TR608']:
     fn_local = fn_dir + 'pb-boot-cr660x.img'
+  elif dn == 'R3':
+    fn_local = fn_dir + 'pb-boot-xiaomi3-20190317-61b6d33.img'
   else:
     fn_local = fn_dir + 'breed_r3g_eng.bin'
 
