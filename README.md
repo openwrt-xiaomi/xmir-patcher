@@ -717,7 +717,7 @@ git push origin feature/new-feature
 - **Permanent SSH access** with customizable credentials  
 - **Full firmware backup** and selective partition backup
 - **Custom firmware installation** including OpenWrt support
-- **Bootloader replacement** (Breed support for R3G/R3P/RM2100/RA71/CR660x/TR60x series, U-Boot support for R3G/R3P/RM2100)
+- **Bootloader replacement** (Breed support for R3/R3G/R3P/RM2100/RA71/CR660x/TR60x series, U-Boot support for R3G/R3P/RM2100)
 - **Multi-language support** (EN/RU/ZH language packs with Chinese menu interface)
 - **Advanced features** like password change, log reading, feature unlocking
 
