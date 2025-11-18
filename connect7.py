@@ -24,7 +24,10 @@ srv_ip_addr = None
 srv_port = 8080
 
 with gw.api_request("API/xqsystem/get_icon", stream = True, timeout = 5) as resp:
-    srv_ip_addr, _ = resp.raw._connection.sock.getsockname()
+    try:
+        srv_ip_addr, _ = resp.raw._connection.sock.getsockname()
+    except Exception:
+        raise ExploitNotWorked('Exploit "get_icon" not working!!! (cannot get srv_ip_addr)')
     try:
         resp.raise_for_status()
     except:
