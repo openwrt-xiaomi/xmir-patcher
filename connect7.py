@@ -114,6 +114,8 @@ from http.server import BaseHTTPRequestHandler
 from http import HTTPStatus
 from http import server as http_server
 
+from pathlib import Path
+
 srvInitEvent = threading.Event()
 
 class XmirHttpServer(HTTPServer):
@@ -122,9 +124,9 @@ class XmirHttpServer(HTTPServer):
     
     def server_bind(self):
         import ssl
-        root_dir = os.path.dirname(os.path.abspath(__file__))
-        certfile = f'{root_dir}\\data\\https\\cert.crt'
-        keyfile  = f'{root_dir}\\data\\https\\cert.key'
+        https_dir = Path(__file__).resolve().parent / 'data' / 'https'
+        certfile = https_dir / 'cert.crt'
+        keyfile  = https_dir / 'cert.key'
         ctx = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
         ctx.check_hostname = False
         ctx.verify_mode = ssl.CERT_OPTIONAL
