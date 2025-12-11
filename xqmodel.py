@@ -116,16 +116,16 @@ mi(103,"RN09")          # Xiaomi Mesh System BE3600 Pro (INT)
 mi(104,"RP01")          # Xiaomi Whole House BE3600 Pro Network Cable Version (CN) [5 ports] product=ac supportWifi=0
 mi(105,"RP02")          # Xiaomi Whole House BE3600 Pro Network Cable Version (CN) [8 ports] product=ac supportWifi=0 aimesh_support=1
 mi(106,"RP03")          # Xiaomi Whole House BE3600 Pro Network Cable Version (CN) [adv dev] product=ap
-
+mi(107,"RN07BW")
 mi(108,"YY03")
 mi(109,"RD03V2")        # Xiaomi AX3000T 2025 (CN)  (ipq5018)
 mi(110,"RN12")          # Range Extender AX1500 (INT)  (rtl8197)
-mi(111,"RP04")          # Xiaomi Router BE10000 Pro
+mi(111,"RP04", "RP08")  # Xiaomi Router BE10000 Pro (CN)  [ipq5424, RAM 2GB]
 mi(112,"RD16B")         # Xiaomi Router BE3600  (Airoha en7563)
 mi(0,  "RD16BB", "RD16B")       # black BE3600
 mi(0,  "RD16BW", "RD16B")       # white BE3600
-mi(0,  "RP08")          # (INT)
-mi(0,  "RP09")
+mi(113,"RP08", "RP04")  # Xiaomi Router BE19000 Pro (INT) [ipq5424, RAM 2GB, WiFi 6G]
+mi(114,"RP09")
 
 # https://wikidevi.wi-cat.ru/List_of_Xiaomi_Wireless_Devices
 
