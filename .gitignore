@@ -5,4 +5,5 @@ data/
 tmp/
 outdir/
 config.txt
+config.json
 full_info.txt
