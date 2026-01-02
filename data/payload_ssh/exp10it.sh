@@ -9,11 +9,18 @@ echo -e "root\nroot" | (passwd root)
 
 kill -9 `pgrep dropbearmulti` &>/dev/null
 
-cd /tmp
-rm -f dropbearmulti
-cat dropbearmulti_01 dropbearmulti_02 dropbearmulti_03 > dropbearmulti
-chmod +x dropbearmulti
-rm -f dropbearmulti_*
+[ ! -e /tmp/dropbearmulti_0 ] && return 1
+[ ! -e /tmp/dropbearmulti_1 ] && return 1
+[ ! -e /tmp/dropbear.init.d.sh ] && return 1
+
+rm -f /tmp/dropbearmulti
+rm -f /tmp/dropbearmulti.gz
+cat /tmp/dropbearmulti_* >> /tmp/dropbearmulti.gz
+gzip -c -d /tmp/dropbearmulti.gz > /tmp/dropbearmulti
+[ "$?" = "0" ] || return 1
+chmod +x /tmp/dropbearmulti
+rm -f /tmp/dropbearmulti_*
+rm -f /tmp/dropbearmulti.gz
 
 if [ ! -d /etc/dropbear ]; then
 	mkdir /etc/dropbear
@@ -33,7 +40,7 @@ if [ ! -s /etc/dropbear/dropbear_ecdsa_host_key ]; then
 fi
 
 # start SSH server
-./dropbearmulti -p 122
+/tmp/dropbearmulti -p 122
 
 #kill -9 `pgrep taskmonitor` &>/dev/null
 
@@ -76,6 +83,6 @@ if [ ! -f /usr/sbin/dropbear -o ! -f /etc/init.d/dropbear ]; then
 	# restart dropbear
 	/etc/init.d/dropbear restart
 fi
-#rm -f dropbear.uci.cfg
-#rm -f dropbear.init.d.sh
+#rm -f /tmp/dropbear.uci.cfg
+#rm -f /tmp/dropbear.init.d.sh
 

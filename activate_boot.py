@@ -80,8 +80,8 @@ def uboot_boot_change(gw, fw_num):
   cmd.append("nvram set flag_try_sys2_failed=0")
   cmd.append("nvram set flag_boot_rootfs={}".format(fw_num))
   cmd.append("nvram commit")
-  gw.run_cmd(cmd)
-  return True
+  out = gw.run_cmd(';'.join(cmd))
+  return False if out is None else True
 
 
 if __name__ == "__main__":

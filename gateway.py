@@ -9,6 +9,8 @@ import datetime
 import random
 import hashlib
 import subprocess
+import gzip
+import base64
 import re
 import requests
 import atexit
@@ -31,6 +33,13 @@ from multiprocessing import shared_memory
 import xqmodel
 
 
+class ExploitFixed(Exception): pass
+
+class ExploitError(Exception): pass
+
+class ExploitNotWorked(Exception): pass
+
+
 def die(*args):
   err = 1
   prefix = "ERROR: "
@@ -49,18 +58,13 @@ def die(*args):
   print(" ")
   sys.exit(err)
 
-def get_http_headers():
-  headers = {}
-  headers["Content-Type"] = "application/x-www-form-urlencoded; charset=UTF-8"
-  headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:65.0) Gecko/20100101 Firefox/65.0"
-  return headers
-
 
 class Gateway():
   def __init_fields(self):
     self.use_ssh = True
     self.use_ftp = False
     self.verbose = 2
+    self.con_timeout = 2
     self.timeout = 4
     self.memcfg = None  # shared memory "XMiR_12345"
     self.model_id = -2
@@ -71,14 +75,20 @@ class Gateway():
     self.mac_address = None
     self.encryptmode = 0     # 0: sha1, 1: sha256
     self.nonce_key = None
+    self.web_scheme = 'http'
     self.stok = None    # HTTP session token
     self.status = -2
+    self.errcode = -1
     self.ftp = None
     self.socket = None  # TCP socket for SSH 
     self.ssh = None     # SSH session
     self.login = 'root' # default username
+    self.user_agent = "curl/8.4.0"
+    self.last_resp_text = None
+    self.hackCheck = None
   
   def __init__(self, timeout = 4, verbose = 2, detect_device = True, detect_ssh = True, load_cfg = True):
+    random.seed()
     self.__init_fields()
     self.verbose = verbose
     self.timeout = timeout
@@ -102,6 +112,52 @@ class Gateway():
       if port <= 0:
         die("Can't found valid SSH server on IP {}".format(self.ip_addr))
 
+  def api_request(self, path, params = None, resp = 'json', post = '', timeout = 4, stream = False, scheme = None):
+    self.last_resp_code = 0
+    self.last_resp_text = None
+    headers = { }
+    if post == 'raw' or post == 'bin':
+        headers["Content-Type"] = "application/octet-stream"
+    elif post == 'json':
+        headers["Content-Type"] = "application/json"
+    elif post:
+        headers["Content-Type"] = "application/x-www-form-urlencoded; charset=UTF-8"
+    headers["User-Agent"] = self.user_agent
+    web_scheme = scheme if scheme else self.web_scheme
+    url = f"{web_scheme}://{self.ip_addr}/cgi-bin/luci/"
+    if path.startswith('API/'):
+        url += f';stok={self.stok}/api' + path[3:]
+    else:
+        url += path
+    t_timeout = (self.con_timeout, timeout) if timeout is not None else (self.con_timeout, self.timeout)
+    #print(f'{t_timeout=}')
+    if post:
+        response = requests.post(url,  data = params, stream = stream, headers = headers, timeout = t_timeout, verify = False)
+    else:
+        response = requests.get(url, params = params, stream = stream, headers = headers, timeout = t_timeout, verify = False)
+    self.last_resp_code = response.status_code
+    if resp and not stream:
+        try:
+            self.last_resp_text = response.text
+        except Exception:
+            pass
+        if resp == 'text':
+            return response.text
+        if resp == 'TEXT':
+            response.raise_for_status()
+            return response.text
+        if resp.lower() == 'json':
+            if response.status_code == 500:  # Internal Server Error
+                return None
+            response.raise_for_status()
+            try:
+                dres = json.loads(response.text)
+            except Exception:
+                raise RuntimeError(f'Received incorrect JSON from "{path}" => {response.text}')
+            return dres
+    return response
+    #return response.status_code, response.content
+
   def detect_device(self):
     self.model_id = -2
     self.device_name = None
@@ -112,45 +168,58 @@ class Gateway():
     self.encryptmode = 0
     self.nonce_key = None
     self.status = -2
+    web_scheme = None
+    page = ''
+    for scheme in [ 'http', 'https' ]:
+        page = ''
+        try:
+            page = self.api_request('web', scheme = scheme, resp = 'TEXT', timeout = self.timeout)
+            #with open("r0.txt", "wb") as file:
+            #  file.write(page.encode("utf-8"))
+        except requests.exceptions.ConnectionError as e:
+            continue  # try other scheme
+        except requests.exceptions.ConnectTimeout as e:
+            continue  # try other scheme
+        except requests.exceptions.HTTPError as e:
+            print("Initial Request Http Error:", e)
+        except requests.exceptions.Timeout as e:
+            print("Initial Request Timeout Error:", e)
+        except requests.exceptions.RequestException as e:
+            print("Initial Request exception:", e)
+        except Exception as e:      
+            print("Initial Request Exception:", e)
+        web_scheme = scheme
+        break
+    if not page:
+        return -2
+    if web_scheme:
+        if web_scheme == 'https' and self.web_scheme != web_scheme:
+            print('Switch to using Secure HTTP (HTTPS)')
+        self.web_scheme = scheme
     try:
-      r0 = requests.get("http://{ip_addr}/cgi-bin/luci/web".format(ip_addr = self.ip_addr), timeout = self.timeout)
-      r0.raise_for_status()
-      #with open("r0.txt", "wb") as file:
-      #  file.write(r0.text.encode("utf-8"))
-      hardware = re.findall(r'hardware = \'(.*?)\'', r0.text)
+      hardware = re.findall(r'hardware = \'(.*?)\'', page)
       if hardware and len(hardware) > 0:
         self.device_name = hardware[0]
       else:
-        hardware = re.findall(r'hardwareVersion: \'(.*?)\'', r0.text)
+        hardware = re.findall(r'hardwareVersion: \'(.*?)\'', page)
         if hardware and len(hardware) > 0:
           self.device_name = hardware[0]
       self.device_name = self.device_name.upper()
-      romver = re.search(r'romVersion: \'(.*?)\'', r0.text)
+      romver = re.search(r'romVersion: \'(.*?)\'', page)
       self.rom_version = romver.group(1).strip() if romver else None
-      romchan = re.search(r'romChannel: \'(.*?)\'', r0.text)
+      romchan = re.search(r'romChannel: \'(.*?)\'', page)
       self.rom_channel = romchan.group(1).strip().lower() if romchan else None
-      mac_address = re.search(r'var deviceId = \'(.*?)\'', r0.text)
+      mac_address = re.search(r'var deviceId = \'(.*?)\'', page)
       self.mac_address = mac_address.group(1) if mac_address else None
-      nonce_key = re.search(r'key: \'(.*)\',', r0.text)
+      nonce_key = re.search(r'key: \'(.*)\',', page)
       self.nonce_key = nonce_key.group(1) if nonce_key else None
-    except requests.exceptions.HTTPError as e:
-      print("Http Error:", e)
-    except requests.exceptions.ConnectionError as e:
-      #print("Error Connecting:", e)
-      return self.status
-    except requests.exceptions.ConnectTimeout as e:
-      print ("ConnectTimeout Error:", e)
-    except requests.exceptions.Timeout as e:
-      print ("Timeout Error:", e)
-    except requests.exceptions.RequestException as e:
-      print("Request Exception:", e)
-    except Exception:      
+    except Exception:
       pass
     if not self.device_name:
       die("You need to make the initial configuration in the WEB of the device!")
     self.model_id = self.get_modelid_by_name(self.device_name)
     self.status = -1
-    x = r0.text.find('a href="/cgi-bin/luci/web/init/hello')
+    x = page.find('a href="/cgi-bin/luci/web/init/hello')
     if (x > 10):
       die("You need to make the initial configuration in the WEB of the device!")
     self.status = 1
@@ -172,15 +241,14 @@ class Gateway():
     self.xqpassword = self.get_xqpassword()
     return self.status
 
-  def web_ping(self, timeout, wait_timeout = 0):
+  def web_ping(self, con_timeout, wait_timeout = 0):
     ret = True
     start_time = datetime.datetime.now()
     try:
-      res = requests.get("http://{ip_addr}/cgi-bin/luci/web".format(ip_addr = self.ip_addr), timeout = timeout)
-      res.raise_for_status()
-      mac_address = re.search(r'var deviceId = \'(.*?)\'', res.text)
+      page = self.api_request('web', resp = 'TEXT', timeout = (con_timeout, 4))
+      mac_address = re.search(r'var deviceId = \'(.*?)\'', page)
       self.mac_address = mac_address.group(1) if mac_address else None
-      nonce_key = re.search(r'key: \'(.*)\',', res.text)
+      nonce_key = re.search(r'key: \'(.*)\',', page)
       self.nonce_key = nonce_key.group(1) if nonce_key else None
     except Exception:      
       ret = False
@@ -209,7 +277,7 @@ class Gateway():
     else:
       return hashlib.sha256(string).hexdigest()
 
-  def web_login(self):
+  def web_login(self, timeout = 4):
     self.stok = None
     if not self.nonce_key or not self.mac_address:
       die("Xiaomi Mi Wi-Fi device is wrong model or not the stock firmware in it.")
@@ -224,14 +292,40 @@ class Gateway():
     password = (nonce + account_str).encode('utf-8')
     password = self.xqhash(password)
     username = 'admin'
-    data = "username={username}&password={password}&logtype=2&nonce={nonce}".format(username = username, password = password, nonce = nonce)
-    requrl = "http://{ip_addr}/cgi-bin/luci/api/xqsystem/login".format(ip_addr = self.ip_addr)
-    res = requests.post(requrl, data = data, headers = get_http_headers())
+    data = f"username={username}&password={password}&logtype=2&nonce={nonce}"
+    web_scheme = None
+    code = None
+    text = None
+    for scheme in [ 'http', 'https' ]:
+        text = None
+        if scheme == 'http' and self.web_scheme == 'https':
+            continue
+        try:
+            text = self.api_request('api/xqsystem/login', data, scheme = scheme, post = 'x-www-form', resp = 'text', timeout = timeout)
+            if text and text.startswith('{'):
+                dresp = json.loads(text)
+                if 'code' in dresp:
+                    code = int(dresp['code']) 
+                    if code == 401:  # Invalid token
+                        continue
+        except requests.exceptions.ConnectionError as e:
+            continue  # try other scheme
+        except requests.exceptions.ConnectTimeout as e:
+            continue  # try other scheme
+        web_scheme = scheme
+        break
+    if not text:
+        self.webpassword = ""
+        die(f"Cannot get response for api/xqsystem/login! (encryptmode = {self.encryptmode})")
+    if web_scheme:
+        if web_scheme == 'https' and self.web_scheme != web_scheme:
+            print('Switch to using Secure HTTP (HTTPS)')
+        self.web_scheme = scheme
     try:
-      stok = re.findall(r'"token":"(.*?)"', res.text)[0]
+        stok = re.findall(r'"token":"(.*?)"', text)[0]
     except Exception:
-      self.webpassword = ""
-      die("WEB password is not correct! (encryptmode = {})".format(self.encryptmode))
+        self.webpassword = ""
+        die(f"WEB password is not correct! ERR={code} (encryptmode = {self.encryptmode})")
     self.webpassword = web_pass
     self.stok = stok
     return stok
@@ -241,16 +335,13 @@ class Gateway():
     return "http://{ip_addr}/cgi-bin/luci/;stok={stok}/api/".format(ip_addr = self.ip_addr, stok = self.stok)
 
   def get_pub_info(self, api_name, timeout = 5):
-    subsys = 'xqsystem'
-    if api_name == 'router_info' or api_name == 'topo_graph':
-      subsys = 'misystem'
-    try:
-      url = "http://{ip_addr}/cgi-bin/luci/api/{subsys}/{api_name}".format(ip_addr = self.ip_addr, subsys = subsys, api_name = api_name)
-      res = requests.get(url, timeout = timeout)
-      res.raise_for_status()
-    except Exception:      
-      return {}
-    return json.loads(res.text)
+    if '/' in api_name:
+        path = api_name
+    elif api_name in [ 'router_info', 'topo_graph' ]:
+        path = f'api/misystem/{api_name}'
+    else:
+        path = f'api/xqsystem/{api_name}'
+    return self.api_request(path, timeout = timeout)
 
   def get_init_info(self, timeout = 5):
     return self.get_pub_info('init_info', timeout = timeout)
@@ -273,6 +364,104 @@ class Gateway():
 
   def get_topo_graph_info(self, timeout = 5):
     return self.get_pub_info('topo_graph', timeout = timeout)
+
+  def get_device_systime(self, fix_tz = True):
+    # http://192.168.31.1/cgi-bin/luci/;stok=14b996378966455753104d187c1150b4/api/misystem/sys_time
+    # response: {"time":{"min":32,"day":4,"index":0,"month":10,"year":2023,"sec":7,"hour":6,"timezone":"XXX"},"code":0}
+    dres = self.api_request('API/misystem/sys_time')
+    if not dres or dres['code'] != 0:
+        raise RuntimeError(f'Error on get sys_time => {dres}')
+    dst = dres['time']
+    if fix_tz and 'timezone' in dst:
+        if "'" in dst['timezone'] or ";" in dst['timezone']:
+            dst['timezone'] = "GMT0"
+    return dst
+
+  def set_device_systime(self, dst, year = 0, month = 0, day = 0, hour = 0, min = 0, sec = 0, timezone = "", wait = True):
+    if dst:
+        year     = dst['year']
+        month    = dst['month']
+        day      = dst['day']
+        hour     = dst['hour']
+        min      = dst['min']
+        sec      = dst['sec']
+        timezone = dst['timezone']
+    params = { 'time': f"{year}-{month}-{day} {hour}:{min}:{sec}", 'timezone': timezone }
+    dres = self.api_request('API/misystem/set_sys_time', params, timeout = self.timeout)
+    if not dres or dres['code'] != 0:
+        raise RuntimeError(f'Error on exec command "set_sys_time" => {dres}')
+    if wait:
+        time.sleep(3.1) # because internal code exec: "echo 'ok,xiaoqiang' > /tmp/ntp.status; sleep 3; date -s \""..time.."\""
+    return True
+
+  def get_diag_paras(self, timeout = None):
+    # http://192.168.31.1/cgi-bin/luci/;stok=14b996378966455753104d187c1150b4/api/xqnetwork/diag_get_paras
+    # response: {"code":0,"signal_thr":"-60","usb_read_thr":0,"disk_write_thr":0,"disk_read_thr":0,"iperf_test_thr":"25","usb_write_thr":0}
+    dres = self.api_request('API/xqnetwork/diag_get_paras', timeout = timeout)
+    if not dres or dres['code'] != 0:
+        raise RuntimeError(f'Error on get diag_get_paras => {dres}')
+    return dres
+
+  def get_diag_iperf_test_thr(self, timeout = None):
+    resp = self.get_diag_paras(timeout = timeout)
+    return str(resp['iperf_test_thr'])
+
+  def set_diag_paras(self, iperf_test_thr=20, usb_read_thr=0, usb_write_thr=0, disk_read_thr=0, disk_write_thr=0, timeout=None):
+    params = {
+                'iperf_test_thr': str(iperf_test_thr),
+                'usb_read_thr':   str(usb_read_thr),
+                'usb_write_thr':  str(usb_write_thr),
+                'disk_read_thr':  str(disk_read_thr),
+                'disk_write_thr': str(disk_write_thr),
+             }
+    dres = self.api_request('API/xqnetwork/diag_set_paras', params, timeout = timeout)
+    if not dres:
+        err = f'Error on exec command "diag_set_paras" => {dres} (status:{self.last_resp_code})'
+        if self.last_resp_code == 500:  # Internal Server Error
+            raise EOFError(err)
+        raise RuntimeError(err)
+    return dres['code']  # 0 if OK
+
+  def set_diag_iperf_test_thr(self, value, timeout = None):
+    code = self.set_diag_paras(iperf_test_thr = value, timeout = timeout)
+    return True if code == 0 else False
+
+  hackCheck_skipKeys_v1 = [ "ssid", "pwd", "password", "username" ]
+
+  hackCheck_skipKeys_v2 = [
+    "name", "password", "password5g", "password5g2", "npassword", "pppoeName",
+    "pppoePwd", "pwd", "pwd1", "pwd2", "pwd3", "newPwd", "service", "ssid", "ssid1", "ssid2", "ssid3",
+    "ssid5g", "ssid5g2", "nssid", "nssid5G", "nssid5G2", "username", "apn", "pdp", "user", "passwd",
+    "contact_phone", "phoneList", "msgtext", "acs_username", "acs_password", "conn_username", "conn_password",
+  ]
+
+  def detect_hackCheck(self, update = False):
+    if not update and self.hackCheck is not None:
+        return self.hackCheck
+    self.hackCheck = 0
+    self.set_diag_paras(iperf_test_thr = 25, usb_write_thr = 0, usb_read_thr = 0)
+    try:
+        code = self.set_diag_paras(iperf_test_thr = 25, usb_write_thr = 'simple_payload\n')
+    except EOFError:  # Internal Server Error
+        self.hackCheck = 3  # XQSecureUtil.filterChars = "[=[\n[`;|$&\n]]=]" ; return nil
+        return self.hackCheck
+    try:
+        code = self.set_diag_paras(iperf_test_thr = 25, usb_write_thr = 'simple_payload;', usb_read_thr = 0)
+    except EOFError:  # Internal Server Error
+        self.hackCheck = 2  # XQSecureUtil.filterChars = "[`;|$&]" ; return nil
+        return self.hackCheck
+    code = self.set_diag_paras(iperf_test_thr = 'simple_payload;', usb_write_thr = 11, usb_read_thr = 22)
+    if code != 0:
+        raise RuntimeError(f'Error on exec command "diag_set_paras" => code:{code} (status:{self.last_resp_code})')
+    diag_paras = self.get_diag_paras()
+    #print(f'diag_paras: {diag_paras}')
+    # restore def values
+    self.set_diag_paras(iperf_test_thr = 25, usb_write_thr = 0, usb_read_thr = 0)
+    if isinstance(diag_paras['iperf_test_thr'], int) and diag_paras['iperf_test_thr'] == 25:
+        self.hackCheck = 1  # XQSecureUtil.filterChars = "[`;|$&]" ; return ''
+        return self.hackCheck
+    # hackCheck not detected
+    return self.hackCheck
 
   def wait_shutdown(self, timeout, verbose = 1):
     if verbose:
@@ -315,10 +504,10 @@ class Gateway():
     return False    
 
   def reboot_device(self, wait_timeout = None):
+    api = 'API/xqsystem/reboot'
     try:
-      params = { 'client': 'web' }
-      res = requests.post(self.apiurl + "xqsystem/reboot", params = params, timeout=self.timeout)
-      if res.text.find('"code":0') < 0:
+      text = self.api_request(api, { 'client': 'web' }, post = 'json', resp = 'text')
+      if '"code":0' not in text:
         return False
       if wait_timeout:
         if not self.wait_shutdown(wait_timeout):
@@ -331,10 +520,6 @@ class Gateway():
   def shutdown(self):
     self.ssh_close()
     try:
-      self.ftp.quit()
-    except Exception:
-      pass
-    try:
       self.ftp.close()
     except Exception:
       pass
@@ -343,6 +528,11 @@ class Gateway():
   #===============================================================================
   def free_memcfg(self):
     if self.memcfg:
+      if os.name != "nt":
+        try:
+          self.memcfg.unlink()
+        except Exception:
+          pass
       try:
         self.memcfg.close() # https://docs.python.org/3/library/multiprocessing.shared_memory.html
       except Exception:
@@ -425,7 +615,7 @@ class Gateway():
   #===============================================================================
   @property
   def ip_addr(self):
-    return self.get_config_param('device_ip_addr', '192.168.1.1').strip()
+    return self.get_config_param('device_ip_addr', '192.168.31.1').strip()
 
   @ip_addr.setter
   def ip_addr(self, value):
@@ -578,7 +768,8 @@ class Gateway():
     self.passw = passw
     ftp_en = self.check_tcp_connect(self.ip_addr, 21, contimeout = 1)
     if ftp_en:
-      self.use_ftp = True
+      if self.check_ftp(check_upload = True) == 0:
+        self.use_ftp = True
     return 23
 
   def ssh_close(self):
@@ -641,46 +832,83 @@ class Gateway():
       return True
     except Exception as e:
       if verbose:
-        die("TELNET not responding (IP: {})".format(self.ip_addr))
+        die(f"TELNET not responding (IP: {self.ip_addr})")
     return False
 
   def get_telnet(self, verbose = 0, password = None):
+    from telnetlib import NOP, IAC, SB, NAWS, SE
     try:
       tn = telnetlib.Telnet(self.ip_addr, timeout=4)
     except Exception as e:
       if verbose:
-        die("TELNET not responding (IP: {})".format(self.ip_addr))
+        die(f"TELNET not responding (IP: {self.ip_addr})")
       return None
     try:
       p_login = b'login: '
       p_passw = b'Password: '
-      prompt = "{}@XiaoQiang:(.*?)#".format(self.login).encode('ascii')
+      prompt = f"{self.login}@XiaoQiang:(.*?)# ".encode('ascii')
       idx, obj, output = tn.expect([p_login, prompt], timeout=2)
       if idx < 0:
-        raise Exception('')
+        raise Exception('TELNET auth error (1)')
+      tn.sock.sendall(IAC + SB + NAWS + b'\x03\xE8\x00\x20' + IAC + SE)
       if idx > 0:
         tn.prompt = obj.group()
+        tn.write(b"echo 123 >/dev/null\n")
+        tn.read_until(b'\r\n' + tn.prompt, timeout = 2)
         return tn
-      tn.write("{}\n".format(self.login).encode('ascii'))
+      tn.write(f"{self.login}\n".encode('ascii'))
       idx, obj, output = tn.expect([p_passw, prompt], timeout=2)
       if idx < 0:
-        raise Exception('')
+        raise Exception('TELNET auth error (2)')
       if idx > 0:
         tn.prompt = obj.group()
         return tn
       if password is None:
         password = self.passw
-      tn.write("{}\n".format(password).encode('ascii'))
+      tn.write(f"{password}\n".encode('ascii'))
       idx, obj, output = tn.expect([prompt], timeout=2)
       if idx < 0:
-        raise Exception('')
+        raise Exception('TELNET auth error (3)')
       tn.prompt = obj.group()
       return tn
     except Exception as e:
       #print(e)
       if verbose:
-        die("Can't login to TELNET (IP: {})".format(self.ip_addr))
+        die(f"Can't login to TELNET (IP: {self.ip_addr})")
     return None
+
+  def check_ftp(self, check_upload = False, timeout = None):
+    ret = -1
+    if not timeout:
+        timeout = self.timeout
+    ftp = None
+    try:
+        ftp = ftplib.FTP(self.ip_addr, user=self.login, passwd=self.passw, timeout=timeout)
+        ftp.voidcmd("NOOP")
+        if check_upload:
+            import io
+            fp = io.BytesIO(b"HELLO_123")
+            remote_fn = '/tmp/_test_payload.bin'
+            ftp.storbinary(f'STOR {remote_fn}', fp)
+            ftp.delete(remote_fn)
+        ret = 0
+    except ftplib.error_perm as e:
+        ret = -3
+        if '500 Unknown command' in str(e):
+            ret = -11
+    except ftplib.error_proto as e:
+        ret = -2
+        if 'unrecognized option: w' in str(e):
+            ret = -10
+    except Exception as e:
+        ret = -1
+    finally:
+        if ftp:
+            try:
+                ftp.close()
+            except Exception:
+                pass        
+    return ret
 
   def get_ftp(self, verbose = 0):
     if self.ftp and self.ftp.sock:
@@ -716,103 +944,487 @@ class Gateway():
           return False
     return True
 
-  def run_cmd(self, cmd, msg = None, timeout = None, die_on_error = True):
-    ret = True
+  def run_cmd(self, command, msg = None, timeout = None, die_on_error = True, reboot = False):
+    error = 0
+    reslist = [ ]
+    self.errcode = -1
     if self.use_ssh:
-      ssh = self.get_ssh(self.verbose)
+        ssh = self.get_ssh(self.verbose)
     else:
-      tn = self.get_telnet(self.verbose)
-    if (msg):
-      print(msg)
-    cmdlist = []
-    if isinstance(cmd, str):      
-      cmdlist.append(cmd)
+        tn = self.get_telnet(self.verbose)
+    if msg:
+        print(msg)
+    cmdlist = [ ]
+    if isinstance(command, str):      
+        cmdlist.append(command)
     else:
-      cmdlist = cmd
+        cmdlist = command
+    if not cmdlist:
+        raise ValueError('Incorrect command list')
+    if '\n' in ';'.join(cmdlist):
+        raise ValueError('Incorrect command format (1)')
     for idx, cmd in enumerate(cmdlist):
-      if self.use_ssh:
-        channel = ssh.open_session()
-        if timeout is not None:
-          saved_timeout = ssh.get_timeout()
-          ssh.set_timeout(int(timeout * 1000))
-        #channel.pty('xterm')
-        #print("exec = '{}'".format(cmd))
-        channel.execute(cmd)
+        if self.use_ssh:
+            channel = ssh.open_session()
+            saved_timeout = ssh.get_timeout()
+            if timeout is not None:
+                ssh.set_timeout(int(timeout * 1000))
+            #channel.pty('xterm')
+            #print("exec = '{}'".format(cmd))
+            try:
+                channel.execute(cmd)
+                channel.wait_eof()
+            except ssh2.exceptions.Timeout:
+                error = -4
+            except ssh2.exceptions.SocketRecvError as e:
+                error = -5
+            except Exception as e:
+                error = -10
+            finally:
+                if reboot:
+                    self.shutdown()
+                    self.errcode = 0
+                    return ''
+                channel.close()
+                channel.wait_closed()
+            if error != 0 and die_on_error:
+                die(f'SSH: execute command ERR={error}, CMD: "{cmd}"')
+            if error == 0:
+                self.errcode = channel.get_exit_status()
+                res = b''
+                size = 1
+                while size > 0:
+                    size, data = channel.read()
+                    if data:
+                        res += data
+                res = res.decode('latin1')
+                reslist.append(res if res != '\n' else '')
+            else:
+                self.errcode = -2
+                reslist.append(None)
+            ssh.set_timeout(saved_timeout)
+        else: # telnet
+            end = b'echo -e "\\xA6$?\\xA7\\xB8_END"'
+            try:
+                tn.write(cmd.encode('latin1') + b'\n' + end + b'\n')
+                res = tn.read_until(b'\xA7\xB8_END\r\n' + tn.prompt, timeout = 4 if timeout is None else timeout)
+                p1 = res.find(b'\r\n')
+                p2 = res.rfind(b'\r\n' + tn.prompt + end)
+                p3 = res.rfind(b'\r\n\xA6')
+                p4 = res.rfind(b'\xA7\xB8_END')
+                if p1 < 0 or p2 < 0 or p3 < 0 or p4 < 0 or p3 >= p4:
+                    if die_on_error:
+                        die('TELNET: execute command: incorrect response (1)')
+                    reslist.append(None)
+                    self.errcode = -2
+                else:
+                    self.errcode = int(res[p3+3:p4].decode(), 10)
+                    res = res[p1+2:p2].decode('latin1')
+                    res = res.replace('\r\n', '\n')
+                    reslist.append(res if res != '\n' else '')
+            except Exception as e:
+                error = -4
+                if die_on_error:
+                    die(f'TELNET: execute command error: "{e}"')
+        if error != 0:
+            break
+    if not self.use_ssh: # telnet
         try:
-          channel.wait_eof()
-        except ssh2.exceptions.Timeout:
-          ssh.set_timeout(100)
-          ret = False
-          if die_on_error:
-            die("SSH execute command timed out! CMD: \"{}\"".format(cmd))
-        if timeout is not None:
-          ssh.set_timeout(saved_timeout)
-        try:
-          channel.close()
-          channel.wait_closed()
+            tn.write(b"exit\n")
+            tn.close()
         except Exception:
-          pass
-        #status = channel.get_exit_status()
-        if not ret:
-          break
-      else:
-        cmd += '\n'
-        tn.write(cmd.encode('ascii'))
-        tn.read_until(tn.prompt, timeout = 4 if timeout is None else timeout)
-    if not self.use_ssh:
-      tn.write(b"exit\n")
-    return ret
+            pass
+    if error == 0:
+        return reslist if isinstance(command, list) else reslist[0]
+    else:
+        return None
 
   def download(self, fn_remote, fn_local, verbose = 1):
     if verbose and self.verbose:
-      print('Download file: "{}" ....'.format(fn_remote))
+        print(f'Download file: "{fn_remote}" ....')
     if self.use_ssh:
-      ssh = self.get_ssh(self.verbose)
-      channel, fileinfo = ssh.scp_recv2(fn_remote)
-      total_size = fileinfo.st_size
-      read_size = 0
-      with open(fn_local, 'wb') as file:
-        while read_size < total_size:
-          size, data = channel.read()
-          if size > 0:
-            if read_size + len(data) > total_size:
-              file.write(data[:total_size - read_size])
-            else:
-              file.write(data)
-            read_size += size
+        ssh = self.get_ssh(self.verbose)
+        channel, fileinfo = ssh.scp_recv2(fn_remote)
+        total_size = fileinfo.st_size
+        read_size = 0
+        with open(fn_local, 'wb') as file:
+            while read_size < total_size:
+                size, data = channel.read()
+                if size > 0:
+                    if read_size + len(data) > total_size:
+                        file.write(data[:total_size - read_size])
+                    else:
+                        file.write(data)
+                    read_size += size
+        channel.send_eof()
+        channel.wait_eof()
+        channel.wait_closed()
     elif self.use_ftp:
-      ftp = self.get_ftp(self.verbose)
-      file = open(fn_local, 'wb')
-      ftp.retrbinary('RETR ' + fn_remote, file.write)
-      file.close()
-    else:
-      raise RuntimeError('FIXME')
+        ftp = self.get_ftp(self.verbose)
+        with open(fn_local, 'wb') as file:
+            ftp.retrbinary('RETR ' + fn_remote, file.write)
+    else: # telnet
+        os.remove(fn_local) if os.path.exists(fn_local) else None
+        size = self.get_remote_file_size(fn_remote)
+        if size < 0:
+            return False
+        if size == 0:
+            with open(fn_local, 'wb') as file:
+                pass
+            return True
+        tn = self.get_telnet(self.verbose)
+        fin = b" ; echo 'X''_FIN_''X'"
+        blksize = 64*1000
+        filesize = 0
+        with open(fn_local, 'wb') as file:
+            while filesize < size:
+                count = blksize
+                if filesize + count > size:
+                    count = size - filesize
+                cmd = f"dd if='{fn_remote}' iflag=skip_bytes,count_bytes skip={filesize} count={count} 2>/dev/null | base64"
+                tn.write(cmd.encode('latin1') + fin + b'\n')
+                res = tn.read_until(b'X_FIN_X\r\n' + tn.prompt, timeout = 4)
+                p1 = res.find(b'\r\n')
+                p2 = res.rfind(b'X_FIN_X\r\n')
+                if p1 < 0 or p2 < 0 or p1 >= p2:
+                    break
+                data = base64.standard_b64decode(res[p1+2:p2].replace(b'\r\n', b''))
+                filesize += len(data)
+                file.write(data)
+        try:
+            tn.write(b"exit\n")
+            tn.close()
+        except Exception:
+            pass
+        if filesize != size:
+            os.remove(fn_local) if os.path.exists(fn_local) else None
+            return False
     return True
 
-  def upload(self, fn_local, fn_remote, verbose = 1):
-    try:
-      file = open(fn_local, 'rb')
-    except Exception:
-      die('File "{}" not found.'.format(fn_local))
+  def upload(self, fn_local, fn_remote, md5chk = True, verbose = 1):
+    if not os.path.exists(fn_local):
+        die(f'File "{fn_local}" not found.')
+    if md5chk:
+        md5_local = self.get_md5_for_local_file(fn_local)
     if verbose and self.verbose:
-      print('Upload file: "{}" ....'.format(fn_local))
+        print(f'Upload file: "{fn_local}" ....')
     if self.use_ssh:
-      ssh = self.get_ssh(self.verbose)
-      finfo = os.stat(fn_local)
-      channel = ssh.scp_send64(fn_remote, finfo.st_mode & 0o777, finfo.st_size, finfo.st_mtime, finfo.st_atime)
-      size = 0
-      for data in file:
-        channel.write(data)
-        size = size + len(data)
-      #except ssh2.exceptions.SCPProtocolError as e:
+        ssh = self.get_ssh(self.verbose)
+        finfo = os.stat(fn_local)
+        channel = ssh.scp_send64(fn_remote, finfo.st_mode & 0o777, finfo.st_size, finfo.st_mtime, finfo.st_atime)
+        size = 0
+        with open(fn_local, 'rb') as file:
+            for data in file:
+                channel.write(data)
+                size = size + len(data)
+        channel.send_eof()
+        channel.wait_eof()
+        channel.wait_closed()
+        #except ssh2.exceptions.SCPProtocolError as e:
     elif self.use_ftp:
-      ftp = self.get_ftp(self.verbose)
-      ftp.storbinary('STOR ' + fn_remote, file)
-    else:
-      raise RuntimeError('FIXME')
-    file.close()
+        ftp = self.get_ftp(self.verbose)
+        with open(fn_local, 'rb') as file:
+            ftp.storbinary('STOR ' + fn_remote, file)
+    else: # telnet
+        with open(fn_local, 'rb') as file:
+            data = file.read()
+        data = gzip.compress(data, compresslevel = 9)
+        data = base64.standard_b64encode(data)
+        fn_remote_tmp = '/tmp/_T_' + os.path.basename(fn_remote)
+        if len(fn_remote_tmp) > 80:
+            raise ValueError('Incorrect length of filename')
+        self.run_cmd(f"rm -f '{fn_remote_tmp}'")
+        tn = self.get_telnet(self.verbose)
+        filesize = 0
+        while filesize < len(data):
+            chunk = data[filesize:filesize+400]
+            if len(chunk) > 0:
+                fopt = b'>' if filesize == 0 else b'>>'
+                cmd = b"echo -n " + chunk + fopt + fn_remote_tmp.encode()
+                tn.write(cmd + b'\n')
+                res = tn.read_until(b'\r\n' + tn.prompt, timeout = 4)
+                p1 = res.find(b'echo -n ')
+                p2 = res.rfind(b'\r\n' + tn.prompt)
+                if p1 < 0 or p2 < 0 or p1 >= p2 or p2 - p1 != len(cmd):
+                    break
+            filesize += len(chunk)
+        try:
+            tn.write(b"exit\n")
+            tn.close()
+        except Exception:
+            pass
+        if filesize != len(data):
+            self.run_cmd(f"rm -f '{fn_remote_tmp}'")
+            return False
+        self.run_cmd(f"rm -f '{fn_remote}' ; cat '{fn_remote_tmp}' | base64 -d | gzip -d > '{fn_remote}'")
+        self.run_cmd(f"rm -f '{fn_remote_tmp}'")
+    if md5chk:
+        md5_remote = self.get_md5_for_remote_file(fn_remote)
+        if md5_remote != md5_local:
+            if md5chk == 2:
+                die(f'File "{fn_local}" uploaded, but MD5 incorrect!')
+            #if verbose:
+            print(f'ERROR: File "{fn_local}" uploaded, but MD5 incorrect!')
+            return False
     return True
 
+  def get_remote_file_size(self, fn_remote):
+    size = self.run_cmd(f"wc -c '{fn_remote}' 2>&1")
+    if not size:
+        return -1
+    size = size.strip()
+    if size.startswith('wc:'):
+        return -2  # file not found
+    if len(size) < 3 or ' ' not in size:
+        return -3
+    size = size.split(' ')[0]
+    return int(size, 10)
+
+  def get_md5_for_remote_file(self, fn_remote, timeout = 8):
+    md5 = self.run_cmd(f"md5sum '{fn_remote}' 2>&1", timeout = timeout)
+    if not md5:
+        return -1
+    md5 = md5.strip()
+    if md5.startswith('md5sum:'):
+        return -2  # file not found
+    if len(md5) < 32:
+        return -3
+    md5 = md5[:32]
+    return md5.lower()
+  
+  def get_md5_for_local_file(self, fn_local, size = None):
+    hasher = hashlib.md5()
+    bs = 512*1024
+    if size is None:
+        with open(fn_local, 'rb') as file:
+            for chunk in iter(lambda: file.read(bs), b''):
+                hasher.update(chunk)
+    elif size > 0:
+        tail_size = 0
+        nsize = size
+        filesize = os.path.getsize(fn_local)
+        if size > filesize:
+            tail_size = size - filesize
+            nsize = filesize
+        readed = 0
+        with open(fn_local, 'rb') as file:
+            while True:
+                if readed + bs > nsize:
+                    bs = nsize - readed
+                chunk = file.read(bs)
+                hasher.update(chunk)
+                readed += bs
+                if readed >= nsize:
+                    break
+        if tail_size:
+            hasher.update(b'\0' * tail_size)
+    return hasher.hexdigest()
+
+  def post_connect(self, exec_cmd, contimeout = 20, passw = 'root'):
+    telnet_en = False
+    self.use_ssh = True
+    if passw is not None:
+        self.passw = passw
+    ssh_en = self.ping(verbose = 0, contimeout = contimeout)  # RSA host key generate slowly!
+    if ssh_en:
+        print('#### SSH server are activated! ####')
+    else:
+        print(f"WARNING: SSH server not responding (IP: {self.ip_addr})")
+
+    if not ssh_en:
+        print("")
+        exec_cmd("bdata set telnet_en=1 ; bdata commit")
+        print('Run TelNet server on port 23 ...')
+        exec_cmd("/etc/init.d/telnet enable ; /etc/init.d/telnet restart")
+        time.sleep(0.5)
+        self.use_ssh = False
+        telnet_en = self.ping(verbose = 2)
+        if not telnet_en:
+            # FIXME
+            print(f"ERROR: TelNet server not responding (IP: {self.ip_addr})")
+            return -2
+        print('#### TelNet server are activated! ####')
+
+    if ssh_en or telnet_en:
+        self.run_cmd('nvram set uart_en=1; nvram set boot_wait=on; nvram commit')
+        self.run_cmd('nvram set bootdelay=3; nvram set bootmenu_delay=5; nvram commit')
+
+    if ssh_en:
+        return 0
+
+    if telnet_en:
+        self.install_dropbearmulti(force = False, die_on_error = True)
+        return 0
+
+    return -1
+   
+  def install_dropbearmulti(self, force = True, die_on_error = False):
+    rc, msg = self._install_dropbearmulti(force = force)
+    if rc and die_on_error:
+        die(msg)
+    return rc, msg
+    
+  def _install_dropbearmulti(self, force = True):
+    if True:
+        arch = self.run_cmd("cat /etc/openwrt_release | grep DISTRIB_ARCH=")
+        if not arch:
+            return 10, 'TELNET: Cannot read remote file /etc/openwrt_release'
+        pos = arch.find("DISTRIB_ARCH='")
+        if pos < 0:
+            return 20, 'TELNET: Cannot detect arch for remote device'
+        arch = arch[pos+1:].split("'")[1]
+        print(f'ARCH = {arch}')
+        arch_suffix = None
+        if arch.startswith('arm_'):
+            arch_suffix = '_armv7a'
+        if arch.startswith('aarch64'):
+            arch_suffix = '_arm64'
+        if arch.startswith('mips'):
+            arch_suffix = '_mips'
+        if not arch_suffix:
+            return 30, f'TELNET: Unknown arch = "{arch}"'
+        self.run_cmd(r'echo -e "root\nroot" | passwd root')
+        self.run_cmd(r'kill -9 `pgrep dropbearmulti` &>/dev/null')
+        fn_local = f'data/payload_ssh/dropbearmulti{arch_suffix}'
+        fn_remote = '/tmp/dropbearmulti'
+        md5_local = self.get_md5_for_local_file(fn_local)
+        if not(md5_local) or isinstance(md5_local, int) or len(md5_local) != 32:
+            return 40, f'File "{fn_local}" not found'
+        md5 = self.get_md5_for_remote_file(fn_remote)
+        if md5 != md5_local:
+            if not self.upload(fn_local, fn_remote):
+                return 50, f'TELNET: Cannot upload file "{fn_local}" to device'
+        self.run_cmd('chmod +x /tmp/dropbearmulti')
+        self.run_cmd('[ -d /etc/dropbear ] || { mkdir -p /etc/dropbear ; chown root /etc/dropbear ; chmod 0755 /etc/dropbear; }')
+        if False:
+            # generate host keys
+            fn = '/etc/dropbear/dropbear_ed25519_host_key'
+            fsize = self.get_remote_file_size(fn)
+            if not fsize or fsize <= 0:
+                self.run_cmd(f'rm -f {fn} ; /tmp/dropbearmulti dropbearkey -t ed25519 -f {fn} 2>&- >&-', timeout = 11)
+            fn = '/etc/dropbear/dropbear_ecdsa_host_key'
+            fsize = self.get_remote_file_size(fn)
+            if not fsize or fsize <= 0:
+                self.run_cmd(f'rm -f {fn} ; /tmp/dropbearmulti dropbearkey -t ecdsa -f {fn} 2>&- >&-', timeout = 11)
+            # run dropbearmulti
+            self.run_cmd('/tmp/dropbearmulti -p 122')
+            pass
+        print(f'Install XMiR-SSH ...')
+        xdir = '/etc/crontabs/dropbearmulti'
+        fn_bin = '/usr/sbin/dropbear'
+        fn_BIN = f'{xdir}/dropbear'
+        fn_conf = '/etc/config/dropbear'
+        fn_CONF = f'{xdir}/uci.cfg'
+        fn_initd = '/etc/init.d/dropbear'
+        fn_INITD = f'{xdir}/init.d.sh'
+        fn_INSTALL = f'{xdir}/install.sh'
+        fsize_bin = self.get_remote_file_size(fn_bin)
+        fsize_initd = self.get_remote_file_size(fn_initd)
+        if fsize_bin and fsize_initd and fsize_bin > 0 and fsize_initd > 0:
+            msg = 'SSH: dropbear is found, but it cannot run!'
+            if not force:
+                return 60, msg
+        # install XMiR dropbear
+        self.run_cmd(f'kill -9 `pgrep dropbear` &>/dev/null')
+        #self.run_cmd(f'rm -f {fn_bin} &>/dev/null')
+        self.run_cmd(f'rm -f {fn_conf} &>/dev/null')
+        self.run_cmd(f'mkdir -p {xdir}')
+        self.run_cmd(f'cp -f /tmp/dropbearmulti {fn_BIN}')
+        self.run_cmd(f'chmod +x {fn_BIN}')
+        if not self.upload('data/payload_ssh/dropbear.uci.cfg', fn_CONF):
+            return 70, f'TELNET: Cannot upload file "{fn_CONF}" to device'
+        if not self.upload('data/payload_ssh/dropbear2.init.d.sh', fn_INITD):
+            return 73, f'TELNET: Cannot upload file "{fn_INITD}" to device'
+        if not self.upload('data/payload_ssh/dropbear2.install.sh', fn_INSTALL):
+            return 76, f'TELNET: Cannot upload file "{fn_INSTALL}" to device'
+        uci = [ "uci set firewall.dropbearmulti=include",
+                "uci set firewall.dropbearmulti.type='script'",
+               f"uci set firewall.dropbearmulti.path='{fn_INSTALL}'",
+                "uci set firewall.dropbearmulti.enabled='1'",
+                "uci commit firewall",
+              ]
+        self.run_cmd(';'.join(uci))
+        self.run_cmd(f'chmod +x {fn_INITD} ; chmod +x {fn_INSTALL}')
+        print(f'Run XMiR-SSH ...')
+        self.run_cmd(f'{fn_INSTALL}', timeout = 20)
+        self.use_ssh = True
+        ssh_en = self.ping(verbose = 0, contimeout = 8)
+        if ssh_en:
+            print('#### XMiR-SSH server are activated! ####')
+            return 0, ''
+        return 90, f"installed XMiR-SSH server not responding (IP: {self.ip_addr})"
+    return 1, 'unknown error'
+
+
+#===============================================================================
+
+def import_module(mod_name, gw):
+    import importlib.util
+    mod_spec = importlib.util.spec_from_file_location(mod_name, f"{mod_name}.py")
+    mod_object = importlib.util.module_from_spec(mod_spec)
+    sys.modules[mod_name] = mod_object
+    if gw is not None:
+        mod_object.inited_gw = gw
+    mod_spec.loader.exec_module(mod_object)
+
+def create_gateway(timeout = 4, die_if_sshOk = True, die_if_ftpOk = True, web_login = True, ssh_port = 22, try_telnet = False):
+    gw = Gateway(timeout = timeout, detect_ssh = False)
+    if gw.status < 1:
+        die(f"Xiaomi Mi Wi-Fi device not found (IP: {gw.ip_addr})")
+    print(f"device_name = {gw.device_name}")
+    print(f"rom_version = {gw.rom_version} {gw.rom_channel}")
+    print(f"mac_address = {gw.mac_address}")
+    gw.ssh_port = ssh_port if ssh_port else 22
+    ret = gw.detect_ssh(verbose = 1, interactive = True)
+    while ret == 23:
+        ret = 0
+        if not try_telnet:
+            break
+        print(f'Detected running TELNET server. Try to start SSH server...')
+        if gw.passw and gw.passw != 'root':
+            print('Default TELNET password =', gw.passw)
+        gw.shutdown()
+        tn = gw.get_telnet(verbose = 0, password = gw.passw)
+        if not tn:
+            print(f'WARNING: Cannot connect to TELNET server')
+            break
+        gw.use_ssh = False
+        gw.run_cmd(r"sed -i 's/release/XXXXXX/g' /etc/init.d/dropbear")
+        gw.run_cmd(r"nvram set ssh_en=1 ; nvram set boot_wait=on ; nvram set bootdelay=3 ; nvram commit")
+        gw.run_cmd(r"echo -e 'root\nroot' | passwd root", die_on_error = False)
+        gw.shutdown()
+        time.sleep(1)
+        gw.passw = 'root'
+        print(f'Use new password for root user = "{gw.passw}"')
+        tn = gw.get_telnet(verbose = 0, password = gw.passw)
+        if not tn:
+            print(f'WARNING: Cannot connect to TelNet server')
+            break
+        gw.shutdown()
+        gw.run_cmd(r"/etc/init.d/dropbear enable; /etc/init.d/dropbear restart")
+        time.sleep(1)
+        ret = gw._detect_ssh(verbose = 1, interactive = True)
+        if ret > 0:
+            break # Ok
+        print(f'Cannot start stock SSH server. Try to start XMiR-SSH server...')
+        rc, msg = gw.install_dropbearmulti(force = True)
+        if rc != 0:
+            print('ERROR:', msg)
+            break
+        ret = gw._detect_ssh(verbose = 1, interactive = True)
+        if ret <= 0:
+            print('ERROR: installed XMiR-SSH server not responding!')
+        break
+    if ret > 0:
+        if die_if_sshOk:
+            die(0, f"SSH server already installed and running (port = {ret})")
+    ccode = gw.device_info["countrycode"]
+    print(f'CountryCode = {ccode}')
+    if web_login:
+        if isinstance(web_login, str):
+            gw.webpassword = web_login
+        gw.web_login()
+    return gw
 
 #===============================================================================
 if __name__ == "__main__":

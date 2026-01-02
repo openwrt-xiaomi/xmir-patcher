@@ -31,7 +31,9 @@ class Bootloader():
   spi_rom = False
 
 class BaseInfo():
+  linux_stamp = None
   linux_ver = None
+  linux_arch = None
   cpu_arch = None
   cpu_name = None
   spi_rom = False
@@ -160,6 +162,7 @@ class DevInfo():
     verbose = verbose if verbose is not None else self.verbose
     self.partlist = [ ]
     self.allpartnum = -1
+    self.partlist_num = 0
     mtd_list = self.run_command('cat /proc/mtd', 'mtd_list.txt')
     if not mtd_list or len(mtd_list) <= 1:
       return [ ]
@@ -192,7 +195,6 @@ class DevInfo():
     fdt_info = self.get_part_from_fdt(partlist, verbose)
     if self.verbose:
       print("MTD partitions:")
-    err_addr = -1
     for i, part in enumerate(partlist):
       size = part['size']
       name = part['name']
@@ -218,12 +220,10 @@ class DevInfo():
         if 'ro' in part:
           ro = '0' if part['ro'] == False else '1'
         print('  %2d > addr: %s  size: 0x%08X  ro:%s  name: "%s"' % (i, xaddr, size, ro, name))
-      if addr < 0:
-        err_addr = mtdid
+      if addr >= 0 and addr != 0xFFFFFFFF:
+        self.partlist_num += 1
     if verbose:
       print(" ")
-    if err_addr >= 0:
-      return [ ]
     self.partlist = partlist
     return self.partlist
 
@@ -245,6 +245,7 @@ class DevInfo():
     cmd += f"  cat {mtd_dev}/mtdblock$i/ro  {dn} | {trim} | {a2f} ; {delim} ;"
     cmd += f"  cat {mtd_dev}/dev    {dn} | {trim} | {a2f} ; {delim} ;"
     cmd += f"  readlink -f {mtd_dev}/device {dn} | {trim} | {a2f} ; {delim} ;"
+    cmd += f"  mtd -l 1 dump /dev/mtd$i {dn} | wc -c | {trim} | {a2f} ; {delim} ;"
     cmd += f'done'
     out_text = self.run_command(cmd, fn)
     if not out_text:
@@ -259,7 +260,7 @@ class DevInfo():
         info[mtd_num]["addr"]   = int(mtd_info[0], 0) if len(mtd_info[0]) > 0 else None
         info[mtd_num]["type"]   = mtd_info[1].strip()
         info[mtd_num]["flags"]  = int(mtd_info[2], 0) if len(mtd_info[2]) > 0 else None
-        info[mtd_num]["ro"]     = int(mtd_info[3], 0) if len(mtd_info[3]) > 0 else None 
+        info[mtd_num]["ro"]     = 0 if mtd_info[6] == '1' else 1
         info[mtd_num]["dev"]    = mtd_info[4].strip()
         info[mtd_num]["device"] = mtd_info[5].strip()
     return info    
@@ -431,6 +432,12 @@ class DevInfo():
       x = re.search(r'Linux version (.*?) ', self.dmesg)
       if x:
         ret.linux_ver = x.group(1).strip()
+    kernel_version = self.get_kernel_version(verbose = verbose)
+    if not ret.linux_ver:
+      if kernel_version:
+        ret.linux_ver = kernel_version
+    ret.linux_stamp = self.kernel_ver_stamp
+    ret.linux_arch = self.kernel_arch
     if verbose:
       print('  Linux version: {}'.format(ret.linux_ver))
     fn_local  = 'outdir/openwrt_release.txt'
@@ -543,6 +550,34 @@ class DevInfo():
     self.kcmdline = env.var
     #self.kcmdline = type("Names", [object], self.kcmdline)
     return self.kcmdline
+
+  def get_kernel_version(self, verbose = None):
+    verbose = verbose if verbose is not None else self.verbose
+    self.kernel_ver_stamp = None
+    self.kernel_version = None
+    self.kernel_buildver = None
+    self.kernel_arch = None
+    fn = 'kver.txt'
+    cmd  = f'uname -a  > /tmp/{fn} ; '   # Linux XiaoQiang 5.4.213 #0 SMP PREEMPT Tue Feb 18 11:11:56 2025 armv7l GNU/Linux
+    cmd += f'uname -r >> /tmp/{fn} ; '   # 5.4.213
+    cmd += f'uname -v >> /tmp/{fn} ; '   # #0 SMP PREEMPT Tue Feb 18 11:11:56 2025
+    cmd += f'uname -m >> /tmp/{fn} ; '   # armv7l
+    cmd += f'uname -p >> /tmp/{fn} ; '   # <Processor type>
+    out_text = self.run_command(cmd, fn)
+    if not out_text:
+        return None
+    #if 'Linux' not in out_text:
+    #    return None
+    out_lines = out_text.split('\n')
+    if len(out_lines) < 4:
+        return None
+    self.kernel_ver_stamp = out_lines[0].strip()
+    self.kernel_version = out_lines[1].strip()
+    self.kernel_buildver = out_lines[2].strip()
+    self.kernel_arch = out_lines[3].strip()
+    if verbose:
+        print(f"  Kernel version: {self.kernel_ver_stamp}")
+    return self.kernel_version
 
   def get_nvram(self, verbose = None, retdict = True):
     verbose = verbose if verbose is not None else self.verbose
@@ -667,6 +702,48 @@ class DevInfo():
       print("  UBoot(2): {}".format(self.ver.uboot2))
       print("")
     return self.ver
+
+  def get_md5_for_mtd_data(self, partname, offset = 0, size = None):
+    if not self.partlist:
+        return -10
+    mtd_num = self.get_part_num(partname)
+    if mtd_num < 0:
+        return -9 
+    mtd_part = self.partlist[mtd_num]
+    bs = 4096
+    if not size:
+        size = mtd_part['size']
+    if size > mtd_part['size']:
+        return -8
+    if size % bs != 0:
+        return -7
+    if offset % bs != 0:
+        return -6
+    skip = f'skip={offset // bs}' if offset else ''
+    num = str(random.randint(10000, 1000000))
+    md5_local_fn = f"tmp/mtd{mtd_num}_{offset}_{size}_{num}.md5"
+    md5_remote_fn = f"/tmp/mtd{mtd_num}_{offset}_{size}_{num}.md5"
+    count = size // bs
+    cmd = f'dd if=/dev/mtd{mtd_num} bs={bs} count={count} {skip} | md5sum > "{md5_remote_fn}" '
+    try:
+        self.gw.run_cmd(cmd)
+        self.gw.download(md5_remote_fn, md5_local_fn)
+    except Exception:
+        return -5
+    if not os.path.exists(md5_local_fn):
+        return -4
+    with open(md5_local_fn, 'r', encoding = 'latin1') as file:
+        md5 = file.read()
+    os.remove(md5_local_fn)
+    if not md5:
+        return -3
+    if md5.startswith('md5sum:'):
+        return -2
+    md5 = md5.split(' ')[0]
+    md5 = md5.strip()
+    if len(md5) != 32:
+        return -1
+    return md5.lower()
 
   def get_bootloader(self, verbose = None):
     verbose = verbose if verbose is not None else self.verbose
@@ -921,11 +998,11 @@ class SysLog():
       die("Xiaomi Mi Wi-Fi device not found (IP: {})".format(gw.ip_addr))
     if self.verbose > 0:
       print("Start generating syslog...")
-    r2 = requests.get(gw.apiurl + "misystem/sys_log", timeout = timeout)
-    if r2.text.find('"code":0') < 0:
+    r2 = gw.api_request("API/misystem/sys_log", resp = 'text', timeout = timeout)
+    if '"code":0' not in r2:
       die("SysLog not generated!")
     try:
-      path = re.search(r'"path":"(.*?)"', r2.text)
+      path = re.search(r'"path":"(.*?)"', r2)
       path = path.group(1).strip()
     except Exception:
       die("SysLog not generated! (2)")
@@ -1067,6 +1144,7 @@ if __name__ == "__main__":
     file.write(f'  {"%2d" % i} > addr: {addr}  size: {size}  ro: {ro}  name: "{name}" \n')
   file.write("\n")  
   file.write("_Base_info_:\n")
+  file.write('  Linux stamp: {}\n'.format(info.info.linux_stamp))
   file.write('  Linux version: {}\n'.format(info.info.linux_ver))
   file.write('  CPU arch: {}\n'.format(info.info.cpu_arch))
   file.write('  CPU name: {}\n'.format(info.info.cpu_name))

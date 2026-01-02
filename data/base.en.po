@@ -625,11 +625,9 @@ msgstr "No usable Mesh node found"
 msgid 0x0080FE49
 msgstr "Configuration error"
 
-# DUP
 msgid 0x008C7438
 msgstr "MAC address clone settings"
 
-# DUP
 msgid 0x00A49E33
 msgstr "IP conflict detected, try switching to"
 
@@ -650,7 +648,6 @@ msgstr "Can't connect"
 msgid 0x00C2A2ED
 msgstr "Used"
 
-# DUP
 msgid 0x00DBF314
 msgstr "These settings can be adjusted in \"Router settings\""
 
@@ -710,15 +707,12 @@ msgid 0x01DD0857
 msgstr ""
 "Region selected during router configuration, changes are not supported"
 
-# DUP
 msgid 0x01F04B43
 msgstr "Adjust speed automatically"
 
-# DUP
 msgid 0x01F8071E
 msgstr "month"
 
-# DUP
 msgid 0x01FF65AE
 msgstr "You can choose which services or devices can use VPN traffic"
 
@@ -739,7 +733,6 @@ msgstr "Guam,Saipan"
 msgid 0x0257C5C1
 msgstr "Hard drive condition is excellent!"
 
-# DUP
 msgid 0x026CDDE7
 msgstr "{$day}/{$month}/{$year} {$hour}:{$min}:{$sec}"
 
@@ -749,10 +742,14 @@ msgstr "Bangui,Brazzaville,Douala,Kinshasa,Lagos"
 msgid 0x029A30B5
 msgstr "Name"
 
-# DUP
 msgid 0x02AA05D5
 msgstr ""
 "2. If you're not sure about VPN protocol type, choose automatically."
+
+msgid 0x02B06026
+msgstr ""
+"*If you need to modify the time zone, please switch to the main Mesh route"
+" to modify, it will be automatically synchronized to the sub-Mesh route"
 
 msgid 0x02F12573
 msgstr "Check router's connection settings"
@@ -784,7 +781,6 @@ msgstr "Mi Router doesn't support Internet Explorer 6 anymore"
 msgid 0x0343328C
 msgstr "Empty"
 
-# DUP
 msgid 0x0367704B
 msgstr "Amman"
 
@@ -817,6 +813,9 @@ msgstr "Start port"
 
 msgid 0x03DF6E8A
 msgstr "Couldn't get admin info"
+
+msgid 0x03FCC83A
+msgstr "Please select WAN port"
 
 msgid 0x04028365
 msgstr ""
@@ -861,7 +860,6 @@ msgstr "Slovakia"
 msgid 0x05204083
 msgstr "Strong (WPA2-personal)"
 
-# DUP
 msgid 0x0539AB56
 msgstr ""
 "When session {$pname} ends, related features won't work. If you want to use"
@@ -899,14 +897,12 @@ msgstr ""
 "2. An error occurred during the file system check, try to fix that with hard"
 " drive health check"
 
-# DUP
 msgid 0x06D35FF8
 msgstr "Middle East Time Zone A"
 
 msgid 0x06FBBB00
 msgstr "Select mode"
 
-# DUP
 msgid 0x0706A106
 msgstr "Broad Netcom customer service"
 
@@ -924,14 +920,12 @@ msgstr ""
 msgid 0x073D729B
 msgstr "Step 3: Connect ethernet cable to Mi Router."
 
-# DUP
 msgid 0x076AC0D9
 msgstr "Routers can communicate when connected to the same network"
 
 msgid 0x076E2F6B
 msgstr "Invalid value"
 
-# DUP
 msgid 0x076F66D6
 msgstr ""
 "Wrong password entered multiple times. Future attempts will be blocked."
@@ -964,7 +958,6 @@ msgstr "The range you entered is invalid"
 msgid 0x08801C60
 msgstr "Adak"
 
-# DUP
 msgid 0x08839A2B
 msgstr "Couldn't update. An error occurred or router storage is full."
 
@@ -1033,7 +1026,6 @@ msgstr "Removal failed"
 msgid 0x0A307AD6
 msgstr "Password can't be empty"
 
-# DUP
 msgid 0x0A3F1076
 msgstr "Damascus"
 
@@ -1084,7 +1076,6 @@ msgstr "Networks are completely independent from each other."
 msgid 0x0D4C45E5
 msgstr "2500 M/1000 M/100 M autonegotiation (recommended)"
 
-# DUP
 msgid 0x0D502411
 msgstr "Fiji"
 
@@ -1093,6 +1084,15 @@ msgstr "Check the area code you entered"
 
 msgid 0x0D953C3E
 msgstr "Switch repeaters"
+
+msgid 0x0DBB1237
+msgstr ""
+"2. Make sure that the sub-route to be added is in the unconfigured state"
+" (press and hold the Reset button for 5 seconds to restore the unconfigured"
+" state);"
+
+msgid 0x0DCF73A9
+msgstr "Confirm whether to turn off the IPTV function"
 
 msgid 0x0DEBCC5B
 msgstr "Seoul"
@@ -1148,7 +1148,6 @@ msgstr "Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna"
 msgid 0x1095F0F3
 msgstr "Krasnoyarsk"
 
-# DUP
 msgid 0x10B62C77
 msgstr "Afghanistan Time"
 
@@ -1164,7 +1163,6 @@ msgstr "Jakarta,Pontianak"
 msgid 0x10F03C02
 msgstr "Name"
 
-# DUP
 msgid 0x10F6D6B6
 msgstr "Bandwidth limit settings"
 
@@ -1207,11 +1205,9 @@ msgstr "Mi Router 3C"
 msgid 0x11F2ED3A
 msgstr "Brisbane,Lindeman"
 
-# DUP
 msgid 0x11FF007E
 msgstr "Mi Wi-Fi Amplifier"
 
-# DUP
 msgid 0x12074F95
 msgstr "Start speed test"
 
@@ -1227,7 +1223,6 @@ msgstr "United Arab Emirates "
 msgid 0x128F648A
 msgstr "No fix required"
 
-# DUP
 msgid 0x12AFAB80
 msgstr "Connection error"
 
@@ -1240,7 +1235,6 @@ msgstr "Hard drive issue fixed"
 msgid 0x12FCBE3B
 msgstr "Upload speed: "
 
-# DUP
 msgid 0x1318FB46
 msgstr "Mi Wi-Fi technical support"
 
@@ -1250,7 +1244,6 @@ msgstr "Update available"
 msgid 0x13495001
 msgstr "Restore routing using OTA update"
 
-# DUP
 msgid 0x136A1A16
 msgstr "Connect automatically when the device is on"
 
@@ -1278,10 +1271,12 @@ msgstr "Unknown error"
 msgid 0x1430B053
 msgstr "Couldn't operate unknown hard drive"
 
+msgid 0x14400DAE
+msgstr "Number of connected devices: "
+
 msgid 0x145A2311
 msgstr "Target IP"
 
-# DUP
 msgid 0x14636B01
 msgstr "MAC is a multicast address, enter again"
 
@@ -1300,7 +1295,6 @@ msgstr "Backup your hard drive now"
 msgid 0x154A6FC0
 msgstr "Taipei"
 
-# DUP
 msgid 0x159CC2DE
 msgstr "Invalid parameter"
 
@@ -1316,14 +1310,12 @@ msgstr "Couldn't back up router settings"
 msgid 0x160983FD
 msgstr "DNS: "
 
-# DUP
 msgid 0x16193337
 msgstr "This feature can only be used with active VPN connection"
 
 msgid 0x1626D90C
 msgstr "Can't use DMZ while port forwarding is on"
 
-# DUP
 msgid 0x164D1956
 msgstr "Click to test spped"
 
@@ -1336,15 +1328,12 @@ msgstr "Enter"
 msgid 0x1769F5C8
 msgstr "Connection time"
 
-# DUP
 msgid 0x176B94B7
 msgstr "2.4G options"
 
-# DUP
 msgid 0x177D9D52
 msgstr "Pacific Standard Time D"
 
-# DUP
 msgid 0x17AB0E40
 msgstr "Download files"
 
@@ -1384,11 +1373,9 @@ msgstr "Cairo"
 msgid 0x19C81794
 msgstr "Test internet bandwidth"
 
-# DUP
 msgid 0x1A1CD6A1
 msgstr "day"
 
-# DUP
 msgid 0x1A1F9884
 msgstr "Upload speed limit"
 
@@ -1409,13 +1396,11 @@ msgstr ""
 msgid 0x1B14D956
 msgstr "Couldn't set router name"
 
-# DUP
 msgid 0x1B1C99F7
 msgstr ""
 "Solution 2: Connect using a PC or the old router, and then choose"
 " \"Disconnect\". Try connecting with Mi Wi-Fi after this."
 
-# DUP
 msgid 0x1B700BFB
 msgstr "Download speed limit"
 
@@ -1434,7 +1419,6 @@ msgstr "Manage router settings"
 msgid 0x1BBCFAF7
 msgstr "Auto configure"
 
-# DUP
 msgid 0x1BFB0BD5
 msgstr "Malaysia Standard Time"
 
@@ -1515,7 +1499,6 @@ msgstr "Couldn't request"
 msgid 0x1ECFCACD
 msgstr "Couldn't verify file"
 
-# DUP
 msgid 0x1EDAE9B4
 msgstr ""
 "Notice: If the superior router isn't a Mi Wi-Fi, the IP address may changed"
@@ -1524,7 +1507,6 @@ msgstr ""
 msgid 0x1EFC6CCA
 msgstr "Pitcairn"
 
-# DUP
 msgid 0x1F16CA2E
 msgstr "Mexico"
 
@@ -1554,18 +1536,15 @@ msgstr ""
 "The Mesh extension function will be unavailable when 2.4 GHz Wi-Fi is turned"
 " off. Do you still want to continue?"
 
-# DUP
 msgid 0x203EE00A
 msgstr "Mi Router 4A Giga Version"
 
-# DUP
 msgid 0x20D1029E
 msgstr "Access and share files"
 
 msgid 0x20F2DD39
 msgstr "Chisinau"
 
-# DUP
 msgid 0x214E8672
 msgstr "hr"
 
@@ -1582,11 +1561,9 @@ msgstr ""
 msgid 0x218CAC06
 msgstr "DHCP recommended (get IP address automatically)"
 
-# DUP
 msgid 0x218EB9F9
 msgstr "Switched to broadband"
 
-# DUP
 msgid 0x21938C25
 msgstr ""
 "Contact your network provider to find out if there are any problems with"
@@ -1612,7 +1589,6 @@ msgstr "Wi-Fi password must be 5-13 characters long"
 msgid 0x22760CBB
 msgstr "Dining room"
 
-# DUP
 msgid 0x2290339C
 msgstr ""
 "Turn the white list on, it'll deny all access for other devices. Every time"
@@ -1636,6 +1612,9 @@ msgstr "Port forwarding rules: "
 msgid 0x22C3D4F1
 msgstr "You can change MAC addresses for these devices manually"
 
+msgid 0x22F83390
+msgstr "Please select a network port as IPTV port"
+
 msgid 0x238F8820
 msgstr "Connected"
 
@@ -1645,6 +1624,9 @@ msgstr "Default gateway"
 msgid 0x23A2D122
 msgstr ""
 "Contact your Internet Service Provider to reset username and password"
+
+msgid 0x2406B809
+msgstr "Smart selection of WAN port (recommended)"
 
 msgid 0x240C760E
 msgstr "You don't have permissions for this action."
@@ -1686,7 +1668,6 @@ msgstr "Yakutsk"
 msgid 0x25728368
 msgstr "Taiwan"
 
-# DUP
 msgid 0x2575A610
 msgstr "Use Mi Wi-Fi app to manage"
 
@@ -1713,11 +1694,9 @@ msgstr "Protocol"
 msgid 0x2610406E
 msgstr "File to be uploaded can't exceed 128MB"
 
-# DUP
 msgid 0x2613A81C
 msgstr "Jerusalem"
 
-# DUP
 msgid 0x261C7AC3
 msgstr "3. Check if router's WAN port is damaged"
 
@@ -1741,6 +1720,9 @@ msgstr "Turn on QoS bandwidth first"
 msgid 0x26C6ADEB
 msgstr "Device name"
 
+msgid 0x26CFD986
+msgstr "” as WAN port"
+
 msgid 0x271CE623
 msgstr "Mi Router HD"
 
@@ -1749,6 +1731,13 @@ msgstr "Country code is invalid, select again"
 
 msgid 0x277B5D4E
 msgstr "Couldn't start router. Try restoring to factory settings."
+
+msgid 0x278EAFF6
+msgstr ""
+"After it is turned on, 2.4G and 5G will be combined and displayed as the"
+" same name, and the router will preferentially select the 5G network for the"
+" terminal. After the names are merged, some terminals may be offline and"
+" need to be reconnected."
 
 msgid 0x27B094BD
 msgstr "Brisbane"
@@ -1781,20 +1770,21 @@ msgstr "Change manually"
 msgid 0x2882BA27
 msgstr "3. Click to start searching"
 
+msgid 0x28A2D339
+msgstr "Wi-Fi password: not set"
+
 msgid 0x28D3B364
 msgstr "Internet access"
 
 msgid 0x29075228
 msgstr "On/off"
 
-# DUP
 msgid 0x29489009
 msgstr "Darwin"
 
 msgid 0x29E55111
 msgstr "This port doesn't allow WAN access"
 
-# DUP
 msgid 0x2A5065C8
 msgstr "Beirut"
 
@@ -1842,7 +1832,6 @@ msgstr "Wi-Fi password"
 msgid 0x2B175998
 msgstr "Extending the Mesh network (approximately 1 minute)"
 
-# DUP
 msgid 0x2B270898
 msgstr "OK"
 
@@ -1862,15 +1851,12 @@ msgstr "Error code: "
 msgid 0x2C29177C
 msgstr "Couldn't get info"
 
-# DUP
 msgid 0x2CD07C92
 msgstr "No files selected"
 
-# DUP
 msgid 0x2D2ED539
 msgstr "Unlimited speed threshold, please set speed limit first"
 
-# DUP
 msgid 0x2D3253E3
 msgstr "Give priority to ensuring the speed of playing games"
 
@@ -1886,7 +1872,6 @@ msgstr "Change network relay settings"
 msgid 0x2DBA0D84
 msgstr "Current MAC address"
 
-# DUP
 msgid 0x2DFE24B7
 msgstr "Thailand"
 
@@ -1914,7 +1899,6 @@ msgstr "Cape Verde"
 msgid 0x2ED72127
 msgstr "Novosibirsk"
 
-# DUP
 msgid 0x2ED79D65
 msgstr "International date line"
 
@@ -1924,11 +1908,9 @@ msgstr "3. Check if router's WAN port is damaged"
 msgid 0x2F7189BA
 msgstr "Sweden"
 
-# DUP
 msgid 0x2F7932AE
 msgstr "Traffic by device"
 
-# DUP
 msgid 0x2F8C0603
 msgstr ""
 "Point-to-Point Tunneling Protocol (PPTP) and Layer 2 Tunneling Protocol"
@@ -1941,7 +1923,6 @@ msgstr "Jayapura"
 msgid 0x2F95FDBF
 msgstr "Godthab"
 
-# DUP
 msgid 0x2FA38979
 msgstr "Connect to Wi-Fi first"
 
@@ -1972,11 +1953,9 @@ msgstr "Edit"
 msgid 0x30C9B4D6
 msgstr "Oversize file"
 
-# DUP
 msgid 0x30D030F1
 msgstr "Backup files"
 
-# DUP
 msgid 0x31439F2B
 msgstr "Mi Wi-Fi couldn't connect to the network"
 
@@ -2033,6 +2012,9 @@ msgstr "Dialed successfully"
 msgid 0x33E7EB3E
 msgstr "Extending the Mesh network"
 
+msgid 0x34011096
+msgstr "5G network is turned on at this time"
+
 msgid 0x342907A1
 msgstr "Download"
 
@@ -2048,7 +2030,6 @@ msgstr "Baku"
 msgid 0x34D85C00
 msgstr "Chile"
 
-# DUP
 msgid 0x3520293A
 msgstr "What is VPN"
 
@@ -2058,15 +2039,12 @@ msgstr ""
 " support Wi-Fi 6, but may cause compatibility issues on some old devices,"
 " such as failure to detect or connect Wi-Fi."
 
-# DUP
 msgid 0x356C25C5
 msgstr "No task running"
 
-# DUP
 msgid 0x358F7D50
 msgstr "DHCP server and local IP settings"
 
-# DUP
 msgid 0x35D53655
 msgstr "Change time"
 
@@ -2102,17 +2080,14 @@ msgstr "Read"
 msgid 0x36C8AD32
 msgstr "Download app"
 
-# DUP
 msgid 0x36F421B1
 msgstr ""
 "After this feature is on, you'll have to reconnect to the VPN. QoS will be"
 " turned off. Turn this feature off in case the app misbehaves."
 
-# DUP
 msgid 0x3707FB83
 msgstr "Better performance, especially for devices nearby"
 
-# DUP
 msgid 0x373B130B
 msgstr "Memory"
 
@@ -2184,7 +2159,6 @@ msgstr ""
 msgid 0x391933D1
 msgstr "Can't connect to server"
 
-# DUP
 msgid 0x392AABE7
 msgstr "A registered dynamic domain name is required."
 
@@ -2194,6 +2168,9 @@ msgstr "Latvia"
 msgid 0x3961CD2B
 msgstr "Study"
 
+msgid 0x39632C1F
+msgstr "Current system time zone:"
+
 msgid 0x3A173E33
 msgstr "Something went wrong. Refresh the page and try again."
 
@@ -2202,6 +2179,9 @@ msgstr "Static IP address"
 
 msgid 0x3A7FE5C4
 msgstr "Router is up to date."
+
+msgid 0x3A9A6E52
+msgstr "Aggregate port"
 
 msgid 0x3AB86895
 msgstr ""
@@ -2229,7 +2209,6 @@ msgstr "No IP conflicts found"
 msgid 0x3B4D2CBB
 msgstr "Fix"
 
-# DUP
 msgid 0x3B605D7A
 msgstr "Settings applied. Wait a minute or two and refresh"
 
@@ -2258,7 +2237,6 @@ msgstr "Wi-Fi repeater settings"
 msgid 0x3C29D0A2
 msgstr "DNS server error, try to set custom DNS as 8.8.8.8 8.8.4.4 instead."
 
-# DUP
 msgid 0x3C39D363
 msgstr "Connect to network"
 
@@ -2294,7 +2272,6 @@ msgstr "Devices"
 msgid 0x3D6BBB65
 msgstr "HDD sleep mode will switch hard drive to sleep for its health"
 
-# DUP
 msgid 0x3D79367C
 msgstr "Guest Wi-Fi bandwidth"
 
@@ -2313,7 +2290,6 @@ msgstr "Couldn't unzip, the file is corrupt"
 msgid 0x3DF594B0
 msgstr "Current time zone"
 
-# DUP
 msgid 0x3E492C35
 msgstr "Invalid ID"
 
@@ -2329,11 +2305,9 @@ msgstr ""
 " connection function (please contact the network provider to verify that it"
 " supports IPv6 before use)"
 
-# DUP
 msgid 0x3EA48055
 msgstr "Too many attempts, try again in 30 minutes"
 
-# DUP
 msgid 0x3F066C9D
 msgstr "Greenwich Mean Time"
 
@@ -2343,7 +2317,6 @@ msgstr "Couldn't apply Wi-Fi settings"
 msgid 0x3FA0FDB5
 msgstr "App speed limit status"
 
-# DUP
 msgid 0x3FE362DF
 msgstr "Device bandwidth"
 
@@ -2362,7 +2335,6 @@ msgstr "Switch modes"
 msgid 0x404BA981
 msgstr "Xunlei"
 
-# DUP
 msgid 0x405462D4
 msgstr "PPPoE disconnected (Error 250)"
 
@@ -2390,7 +2362,6 @@ msgstr "Off"
 msgid 0x41B90674
 msgstr "Signal strength"
 
-# DUP
 msgid 0x41C3B3B5
 msgstr "Couldn't turn on 5G Wi-Fi"
 
@@ -2464,12 +2435,10 @@ msgstr "Sign out"
 msgid 0x446353B6
 msgstr "Attention"
 
-# DUP
 msgid 0x446F1E72
 msgstr ""
 "You can add downloads through mobile app or desktop client anywhere, anytime"
 
-# DUP
 msgid 0x448BB755
 msgstr "Online"
 
@@ -2482,7 +2451,6 @@ msgstr "More contact info"
 msgid 0x44DCF27E
 msgstr "No response from server"
 
-# DUP
 msgid 0x45141F97
 msgstr "Current time"
 
@@ -2497,9 +2465,11 @@ msgstr "Devices"
 msgid 0x457395F4
 msgstr "Filter wireless MAC addresses"
 
-# DUP
 msgid 0x4580D3B7
 msgstr "Tehran"
+
+msgid 0x45F4D8A1
+msgstr "It is detected that the Mesh networks are all wired networks."
 
 msgid 0x45FAFDD4
 msgstr "Select Wi-Fi network to extend"
@@ -2510,6 +2480,14 @@ msgstr "Cuiaba"
 msgid 0x465011E4
 msgstr "Plug-in development environment"
 
+msgid 0x4685A84E
+msgstr ""
+"Some older devices do not support Wi-Fi 6 (802.11ax) properly and may not"
+" scan the signal or connect, etc. Once enabled, it will switch to Wi-Fi 5"
+" (802.11ac) mode to solve any compatibility issues. However, it will also"
+" disable Wi-Fi 6 (802.11ax) related functions, such as OFDMA, BSS coloring,"
+" etc."
+
 msgid 0x46B18DA4
 msgstr "Process"
 
@@ -2519,18 +2497,15 @@ msgstr "Update manually"
 msgid 0x46FCEC97
 msgstr "Cairo,Tripoli,Kaliningrad"
 
-# DUP
 msgid 0x4741F6D7
 msgstr "Fangzheng broadband"
 
 msgid 0x47542B27
 msgstr ", trying special dial mode…"
 
-# DUP
 msgid 0x47549B85
 msgstr "Far Eastern Standard Time"
 
-# DUP
 msgid 0x479BB0E5
 msgstr "Whitelisted MAC addresses"
 
@@ -2540,7 +2515,6 @@ msgstr "1 GbE port"
 msgid 0x48088E5B
 msgstr "Israel"
 
-# DUP
 msgid 0x4815EFDD
 msgstr "Coordinated Universal Time"
 
@@ -2559,11 +2533,9 @@ msgstr "Dialing…"
 msgid 0x48A1B9EB
 msgstr "Turn off"
 
-# DUP
 msgid 0x48A792BA
 msgstr "Indonesia"
 
-# DUP
 msgid 0x48BC661A
 msgstr "Wired amplifier mode"
 
@@ -2582,7 +2554,6 @@ msgstr "No hard drive connected"
 msgid 0x4A133872
 msgstr "1000 M"
 
-# DUP
 msgid 0x4A2BCD86
 msgstr "Solution 4: Adjust WAN port speed and reconnect"
 
@@ -2600,18 +2571,15 @@ msgstr "Official WeChat"
 msgid 0x4A9BDCAC
 msgstr "Turn on DMZ to relay a connected device's IP to WAN."
 
-# DUP
 msgid 0x4AB78532
 msgstr "WAN port speed settings"
 
-# DUP
 msgid 0x4AD4EA0C
 msgstr "Enter device's MAC address"
 
 msgid 0x4AEBDCFD
 msgstr "Wireless repeater mode (extend existing network)"
 
-# DUP
 msgid 0x4AF2D28E
 msgstr "min"
 
@@ -2626,14 +2594,12 @@ msgstr ""
 "2. During the health check, all the hard drive features will be turned off"
 " temporarily"
 
-# DUP
 msgid 0x4BAE1E06
 msgstr "On"
 
 msgid 0x4BBDB140
 msgstr "Super encryption (Strong hybrid encryption (WPA3/WPA2 Personal))"
 
-# DUP
 msgid 0x4BC3B589
 msgstr "Establishing Wi-Fi connection"
 
@@ -2661,7 +2627,6 @@ msgstr "Wi-Fi settings (network name and password)"
 msgid 0x4C91D58E
 msgstr "Upload"
 
-# DUP
 msgid 0x4C931D71
 msgstr "How to use your Mi Wi-Fi storage"
 
@@ -2701,7 +2666,6 @@ msgstr "Browser"
 msgid 0x4E912D85
 msgstr "Configure DNS automatically"
 
-# DUP
 msgid 0x4EABD1AD
 msgstr "Check if a different network is connected to WAN port"
 
@@ -2735,6 +2699,9 @@ msgstr "Switch"
 msgid 0x4F88BE52
 msgstr "Network info"
 
+msgid 0x4F986D91
+msgstr "Time settings"
+
 msgid 0x4FF0400E
 msgstr "Partition data migration count"
 
@@ -2743,6 +2710,9 @@ msgstr "Domain name exists, but doesn't belong to the user"
 
 msgid 0x5027C773
 msgstr "What is access protocol control?"
+
+msgid 0x502C362D
+msgstr "Synchronizing Mesh node configuration..."
 
 msgid 0x503A51B0
 msgstr "QoS service is off"
@@ -2761,7 +2731,6 @@ msgstr ""
 "Upgraded the South America server. Update the firmware and your app to the"
 " latest version."
 
-# DUP
 msgid 0x51093DB1
 msgstr "A server error occured"
 
@@ -2786,7 +2755,6 @@ msgstr "Interval"
 msgid 0x521DCB4F
 msgstr "Not applied"
 
-# DUP
 msgid 0x5220483F
 msgstr "Add using MAC address"
 
@@ -2795,6 +2763,10 @@ msgstr "System error. Wait a minute or two and try again."
 
 msgid 0x5267F82B
 msgstr "Disconnecting…"
+
+msgid 0x52A8742A
+msgstr ""
+"You can open up dedicated backhaul bands for a better Wi-Fi experience"
 
 msgid 0x52B789F3
 msgstr "Check input fields 0-7"
@@ -2811,7 +2783,6 @@ msgstr "Service provider"
 msgid 0x532C4CB4
 msgstr "Details and measures"
 
-# DUP
 msgid 0x53581477
 msgstr "Australian Eastern Standard Time"
 
@@ -2839,7 +2810,6 @@ msgstr "Mi Router 4A"
 msgid 0x54A6F461
 msgstr "Safely remove your hard drive"
 
-# DUP
 msgid 0x54C4A0FE
 msgstr "Video first"
 
@@ -2858,7 +2828,6 @@ msgstr ""
 "2. This node should be placed at a distance no farther than three meters"
 " from the central access point."
 
-# DUP
 msgid 0x5521AE59
 msgstr "Russia"
 
@@ -2941,7 +2910,6 @@ msgstr "Invalid app ID"
 msgid 0x5853E682
 msgstr "Language"
 
-# DUP
 msgid 0x588C44E5
 msgstr "Task Manager"
 
@@ -2951,14 +2919,12 @@ msgstr "Czech Republic"
 msgid 0x58C59257
 msgstr "This account doesn't have admin privileges for this router."
 
-# DUP
 msgid 0x58CD6F68
 msgstr ""
 "When you need VPN to connect to the Internet, turn this feature on to make"
 " sure Mi Wi-Fi app is able to connect to the router. In other cases turn"
 " this feature off."
 
-# DUP
 msgid 0x58F89278
 msgstr "Some devices may not support Chinese or other special characters"
 
@@ -2977,6 +2943,9 @@ msgstr "Hard drive check result"
 msgid 0x59A28AFC
 msgstr "Music"
 
+msgid 0x59A52F31
+msgstr "Fixed WAN port"
+
 msgid 0x5A7874EC
 msgstr "Can't set up port forwarding while DMZ is on"
 
@@ -2986,7 +2955,6 @@ msgstr "Contact network provider to reset password"
 msgid 0x5A8DE039
 msgstr "Wi-Fi Auto Reconnect"
 
-# DUP
 msgid 0x5A9D65D3
 msgstr "Bandwidth"
 
@@ -3013,6 +2981,11 @@ msgstr "3. To view router settings, go to miwifi.com"
 msgid 0x5B7D018C
 msgstr "Clear all data? This is an unrecoverable operation, continue?"
 
+msgid 0x5B994F9D
+msgstr ""
+"1. Confirm that both the main routeк and the sub-routeк to be added support"
+" the Xiaomi Mesh networking function:"
+
 msgid 0x5C40885F
 msgstr "Couldn't cancel. Update has already been installed."
 
@@ -3037,7 +3010,6 @@ msgstr "Security warning"
 msgid 0x5D200E44
 msgstr "Check your connection type"
 
-# DUP
 msgid 0x5D7AB352
 msgstr "Wi-Fi settings (network name and password)"
 
@@ -3050,24 +3022,26 @@ msgstr "Blocklist"
 msgid 0x5DBABE8A
 msgstr "Could reach network gateway. Check network connection and settings."
 
+msgid 0x5E0B9FEC
+msgstr ""
+"3. Upgrade the sub-route to be added to the latest firmware, reset it and"
+" try again (press and hold the Reset button for 5 seconds to reset)"
+
 msgid 0x5E0E05EF
 msgstr "Couldn't turn on router"
 
 msgid 0x5E22CACC
 msgstr "Set speed limit type manually"
 
-# DUP
 msgid 0x5EB34D43
 msgstr "Contact Xiaomi customer support"
 
-# DUP
 msgid 0x5EC7C3C0
 msgstr "Cable modem service"
 
 msgid 0x5EED2BBB
 msgstr "Internet speed"
 
-# DUP
 msgid 0x5F1106B1
 msgstr "Access permissions"
 
@@ -3077,19 +3051,20 @@ msgstr "Import"
 msgid 0x5F576F53
 msgstr "Gateway address"
 
-# DUP
 msgid 0x5FD8353F
 msgstr "Connected"
 
 msgid 0x5FFD2243
 msgstr "Can't extend network."
 
-# DUP
 msgid 0x5FFFA0B4
 msgstr "PPPoE couldn't dial (Error 678)"
 
 msgid 0x600D43CB
 msgstr "Netherlands"
+
+msgid 0x602D46E9
+msgstr "Current system time:"
 
 msgid 0x60D73076
 msgstr "Couldn't add device"
@@ -3100,17 +3075,14 @@ msgstr "Configure DNS manually"
 msgid 0x6124A047
 msgstr "Just a sec…"
 
-# DUP
 msgid 0x612BB91D
 msgstr ""
 "This setting will be applied after you connect again. VPN for Mi services"
 " will be turned off"
 
-# DUP
 msgid 0x614BB86C
 msgstr "Newfoundland Standard Time"
 
-# DUP
 msgid 0x6162B49E
 msgstr "Buy a 5G device at mi.com"
 
@@ -3145,7 +3117,6 @@ msgstr "Manual installation"
 msgid 0x62B51BA1
 msgstr "Internal port"
 
-# DUP
 msgid 0x62C9EDE3
 msgstr "Enable automatic syncing of Wi-Fi settings with smart gateway"
 
@@ -3157,6 +3128,11 @@ msgstr "Kolkata"
 
 msgid 0x63CBBA89
 msgstr "Fixed some bugs"
+
+msgid 0x63EA2194
+msgstr ""
+"4. Upgrade the sub-router to be added to the latest firmware, reset it and"
+" try again"
 
 msgid 0x64207D7E
 msgstr ""
@@ -3190,7 +3166,6 @@ msgstr "Can't add more than 32 devices"
 msgid 0x65E00BDD
 msgstr "Another device on the network is using your router's IP address"
 
-# DUP
 msgid 0x65F1543A
 msgstr "Norfolk Island Standard Time"
 
@@ -3203,7 +3178,6 @@ msgstr "Access router admin page"
 msgid 0x6676907E
 msgstr "Vladivostok"
 
-# DUP
 msgid 0x6692AED9
 msgstr "Request time out, too many requests or failed validation."
 
@@ -3248,7 +3222,6 @@ msgstr ""
 msgid 0x6819EBD5
 msgstr "Improved app configuration for new router models"
 
-# DUP
 msgid 0x68BA9320
 msgstr "Try switching to wired amplifier mode"
 
@@ -3261,7 +3234,6 @@ msgstr "Primary router"
 msgid 0x69363CFE
 msgstr "Couldn't apply password"
 
-# DUP
 msgid 0x694840EC
 msgstr "Central European Time"
 
@@ -3271,6 +3243,9 @@ msgstr ""
 
 msgid 0x6986CAC5
 msgstr "Status"
+
+msgid 0x69A2AD60
+msgstr "Please select a network port"
 
 msgid 0x69F066E5
 msgstr ""
@@ -3295,18 +3270,15 @@ msgstr "OK"
 msgid 0x6B03124B
 msgstr "Couldn't import ISP settings from existing router"
 
-# DUP
 msgid 0x6B1EEC8B
 msgstr "High"
 
-# DUP
 msgid 0x6B56FD95
 msgstr "Eastern Time Zone"
 
 msgid 0x6B595A04
 msgstr "Auto (recommended)"
 
-# DUP
 msgid 0x6B6A458D
 msgstr "Italy"
 
@@ -3347,7 +3319,6 @@ msgstr "Settings"
 msgid 0x6BBCF421
 msgstr "Kuala Lumpur,Singapore"
 
-# DUP
 msgid 0x6BDC62EC
 msgstr "To perform this action, your IP will be changed to"
 
@@ -3414,14 +3385,12 @@ msgstr "Continue anyway"
 msgid 0x6F83358C
 msgstr "Use the following format \"{$0}\""
 
-# DUP
 msgid 0x6FA0613C
 msgstr "Router's bandwidth"
 
 msgid 0x6FA63B21
 msgstr "Solomon Is.,New Caledonia"
 
-# DUP
 msgid 0x6FDE197C
 msgstr "Turn off"
 
@@ -3460,11 +3429,9 @@ msgstr "You're visiting "
 msgid 0x71B6F625
 msgstr "Service provider"
 
-# DUP
 msgid 0x71E96256
 msgstr "Offline"
 
-# DUP
 msgid 0x71F94738
 msgstr "Santiago"
 
@@ -3477,7 +3444,6 @@ msgstr "Status"
 msgid 0x725E7325
 msgstr "Accessing and Enabling"
 
-# DUP
 msgid 0x72B0C266
 msgstr "Real-time downstream speed"
 
@@ -3496,7 +3462,6 @@ msgstr "Username"
 msgid 0x730EDD35
 msgstr "Mi Router AX3000"
 
-# DUP
 msgid 0x73108AE7
 msgstr "1. Check if network cable is connected properly"
 
@@ -3510,7 +3475,6 @@ msgstr "Dialing…"
 msgid 0x7386F0FA
 msgstr "Dhaka"
 
-# DUP
 msgid 0x73A47D29
 msgstr "Can't add more than 5 items"
 
@@ -3547,14 +3511,12 @@ msgstr "Dedicated guest network to protect Intranet security"
 msgid 0x7541F5D6
 msgstr "Can't find info"
 
-# DUP
 msgid 0x76052A5D
 msgstr "Select devices to connect to VPN"
 
 msgid 0x76082B93
 msgstr "Country/Region"
 
-# DUP
 msgid 0x761B2AAB
 msgstr ""
 "2. Initialization process takes 2-3 minutes. You can sign in to the router"
@@ -3563,7 +3525,6 @@ msgstr ""
 msgid 0x7651D664
 msgstr "Couldn't apply permission settings"
 
-# DUP
 msgid 0x765F7F95
 msgstr "Myanmar Standard Time"
 
@@ -3579,7 +3540,6 @@ msgstr "Switch ethernet cables and try again."
 msgid 0x76CFA265
 msgstr "International Date Line West"
 
-# DUP
 msgid 0x76E58226
 msgstr ""
 "3. The DNS address can be a domain name or an IP address and will be"
@@ -3588,19 +3548,15 @@ msgstr ""
 msgid 0x76EF2A87
 msgstr "Local storage"
 
-# DUP
 msgid 0x76F0A787
 msgstr "Central Time Zone"
 
-# DUP
 msgid 0x770F1813
 msgstr "Connected devices(2.4G)"
 
-# DUP
 msgid 0x772BE619
 msgstr "Avoid IP conflicts"
 
-# DUP
 msgid 0x77724F08
 msgstr ""
 "1. Information including the VPN user name, password, DNS address, and"
@@ -3618,7 +3574,9 @@ msgstr "Version {$romVersion}, {$ret}"
 msgid 0x77B93183
 msgstr "Couldn't restore hard drive, you can"
 
-# DUP
+msgid 0x77E732D0
+msgstr "Search and add Mesh nodes"
+
 msgid 0x77EA9DE2
 msgstr ""
 "Using MiWiFi App eliminates the trouble of having to remember a password"
@@ -3626,7 +3584,6 @@ msgstr ""
 msgid 0x781CC230
 msgstr "Midway,Pago Pago"
 
-# DUP
 msgid 0x78213955
 msgstr "year"
 
@@ -3642,7 +3599,6 @@ msgstr "Introduction to access protocol control"
 msgid 0x788F6D6D
 msgstr "Update manually"
 
-# DUP
 msgid 0x78A29B02
 msgstr "Western European Time"
 
@@ -3696,7 +3652,6 @@ msgstr "China Mobile"
 msgid 0x7BE65E23
 msgstr "Check your network connection."
 
-# DUP
 msgid 0x7C1984FF
 msgstr "dd/MM/yyyy hh:mm:ss"
 
@@ -3728,7 +3683,6 @@ msgstr ""
 "All settings will be deleted. Create a backup before you restore factory"
 " settings"
 
-# DUP
 msgid 0x7D243A0A
 msgstr "Change time zone"
 
@@ -3774,7 +3728,6 @@ msgstr "Select a device"
 msgid 0x7E87EB7E
 msgstr "Dublin, Edinburgh, Lisbon, London"
 
-# DUP
 msgid 0x7EC5EC99
 msgstr "Spain"
 
@@ -3817,7 +3770,6 @@ msgstr "LAN IPv6 address"
 msgid 0x803B6868
 msgstr "Makassar"
 
-# DUP
 msgid 0x8047D07F
 msgstr "Use MiWiFi App to experience smart router functionality"
 
@@ -3840,7 +3792,6 @@ msgstr "Wi-Fi password must be 8-63 characters long"
 msgid 0x81B2CFA8
 msgstr "Edit service"
 
-# DUP
 msgid 0x81C1CE9D
 msgstr ""
 "If downloading slows down router's network speed, you can tap \"pause all"
@@ -3861,7 +3812,6 @@ msgstr "Can't set up wired repeater now"
 msgid 0x8251E4AE
 msgstr "Connecting the Mesh node"
 
-# DUP
 msgid 0x82D42929
 msgstr "Time settings"
 
@@ -3892,7 +3842,6 @@ msgstr "No response from the DHCP server"
 msgid 0x838C6732
 msgstr "File types"
 
-# DUP
 msgid 0x84553919
 msgstr "Only users with paid accounts can use offline features"
 
@@ -3939,7 +3888,6 @@ msgstr "Change password"
 msgid 0x863BEE65
 msgstr "Hard drive condition is excellent"
 
-# DUP
 msgid 0x864192C6
 msgstr "Eastern European Time"
 
@@ -3954,7 +3902,6 @@ msgstr ""
 "Invalid IP address. Your IP address should be within 1.0.0.0~126.0.0.0 or"
 " 128.0.0.0~223.255.255.255."
 
-# DUP
 msgid 0x8718B9C2
 msgstr ""
 "When the feature is on, 2.4G and 5G networks will share a name. The router"
@@ -3968,7 +3915,6 @@ msgstr "Welcome"
 msgid 0x87560B3C
 msgstr "Couldn't get info"
 
-# DUP
 msgid 0x875EEEE8
 msgstr "Solution 3: Create a clone of your Mac address and try to reconnect"
 
@@ -3983,7 +3929,6 @@ msgstr ""
 "PPPoE doesn't allow a single account to be signed in at multiple places at"
 " the same time."
 
-# DUP
 msgid 0x879CE485
 msgstr ""
 "Solution 1: Restart your modem and router and reconnect to PPPoE in 5"
@@ -4001,14 +3946,12 @@ msgstr "Wireless access controls"
 msgid 0x88CF1965
 msgstr "Wi-Fi strength"
 
-# DUP
 msgid 0x88DE8E3E
 msgstr "2. Check if network cable is damaged"
 
 msgid 0x89407AD9
 msgstr "Hasn't been tested"
 
-# DUP
 msgid 0x899FF045
 msgstr "Chatham Standard Time"
 
@@ -4018,22 +3961,18 @@ msgstr "Static IP disconnected"
 msgid 0x8A05046A
 msgstr "MAC address format is invalid"
 
-# DUP
 msgid 0x8A301FC7
 msgstr "Iran Standard Time"
 
-# DUP
 msgid 0x8A5AED33
 msgstr "Recommended settings"
 
 msgid 0x8A60DAA2
 msgstr "Couldn't get IP"
 
-# DUP
 msgid 0x8AA5B8EE
 msgstr "Germany"
 
-# DUP
 msgid 0x8AD5FD24
 msgstr "Pause all downloads"
 
@@ -4047,7 +3986,6 @@ msgstr ""
 msgid 0x8B4657E4
 msgstr "Chihuahua,Mazatlan"
 
-# DUP
 msgid 0x8B491AF6
 msgstr "End"
 
@@ -4097,7 +4035,6 @@ msgstr ""
 msgid 0x8E38860D
 msgstr "Network error"
 
-# DUP
 msgid 0x8E48ED3C
 msgstr "Add server address"
 
@@ -4113,7 +4050,9 @@ msgstr "Troll"
 msgid 0x8EB9E086
 msgstr "Internal IP address"
 
-# DUP
+msgid 0x8F09C395
+msgstr "Number of connected devices --"
+
 msgid 0x8F8AD2D0
 msgstr "South America Time Zone"
 
@@ -4127,7 +4066,6 @@ msgstr ""
 msgid 0x8FBE3105
 msgstr "Other exceptions (protocol mismatch, etc.)"
 
-# DUP
 msgid 0x8FD9803D
 msgstr ""
 "Solution: Reconnect manually from miwifi.com, or restart router and connect"
@@ -4154,7 +4092,6 @@ msgstr "Hard drive check score"
 msgid 0x910B11C3
 msgstr "This field can't be empty"
 
-# DUP
 msgid 0x91130E4E
 msgstr "LAN IP will be changed to"
 
@@ -4173,7 +4110,9 @@ msgstr "Encryption"
 msgid 0x91AFB03A
 msgstr "Dakar,Monrovia,Sao Tome,Danmarkshavn,Reykjavik"
 
-# DUP
+msgid 0x91F1F04C
+msgstr "understood"
+
 msgid 0x9204C1B8
 msgstr ""
 "A virtual private network (VPN) is a type of remote access technology which"
@@ -4192,7 +4131,6 @@ msgstr "Manila"
 msgid 0x929222B1
 msgstr "{$0} is invalid."
 
-# DUP
 msgid 0x92B5CFE1
 msgstr "2. Add required data and start using VPN"
 
@@ -4206,15 +4144,20 @@ msgstr ""
 msgid 0x93231C45
 msgstr "Super encryption (WPA3-Personal)"
 
-# DUP
 msgid 0x933A9235
 msgstr "End task"
+
+msgid 0x93616EE3
+msgstr "2. Upgrade the main router to the latest firmware version;"
 
 msgid 0x93756B73
 msgstr "Adelaide"
 
 msgid 0x9392696E
 msgstr "Discovering"
+
+msgid 0x93F9B492
+msgstr "Intelligent identification of network ports “"
 
 msgid 0x943C34FF
 msgstr ""
@@ -4235,9 +4178,14 @@ msgstr "View details"
 msgid 0x94AFB089
 msgstr "Colombo"
 
-# DUP
 msgid 0x94BA5A04
 msgstr "All set! Ready to go! What's new in this version"
+
+msgid 0x94C9E0B1
+msgstr ""
+"With this function enabled, the Redmi router will enable the IPv6 Internet"
+" connection function (please contact the network provider to verify that it"
+" supports IPv6 before use)"
 
 msgid 0x94DFAD3D
 msgstr "Brunei,Irkutsk,Kuala Lumpur,Singapore,Ulaanbaatar"
@@ -4282,7 +4230,6 @@ msgstr ""
 msgid 0x95B85A48
 msgstr "Couldn't find selected repeater network"
 
-# DUP
 msgid 0x95D77F4C
 msgstr "Wi-Fi name"
 
@@ -4332,11 +4279,9 @@ msgstr "Couldn't install update"
 msgid 0x9798F9AC
 msgstr "Start hard drive optimization"
 
-# DUP
 msgid 0x979C8E4D
 msgstr "Scan the QR code with your smartphone to install the app"
 
-# DUP
 msgid 0x97D11C65
 msgstr "Pacific Standard Time A"
 
@@ -4358,7 +4303,6 @@ msgstr ""
 "After turning it on, the router's USB interface will work in 3.0 mode."
 " (USB3.0 will have some impact on 2.4G Wi-Fi)"
 
-# DUP
 msgid 0x9913E38C
 msgstr "USB storage"
 
@@ -4371,7 +4315,6 @@ msgstr "Manage internet bandwidth manually"
 msgid 0x99F2D77B
 msgstr "Using a network cable:"
 
-# DUP
 msgid 0x99F3F00A
 msgstr "Pacific Standard Time B"
 
@@ -4382,7 +4325,6 @@ msgid 0x9A3C66C6
 msgstr ""
 "Viewing this site may put your device and connected devices at risk."
 
-# DUP
 msgid 0x9A4C1564
 msgstr "Flash drive access"
 
@@ -4416,7 +4358,6 @@ msgstr "Addis Ababa,Asmara,Dar es Salaam,Nairobi,Antananarivo"
 msgid 0x9AF67F90
 msgstr "Port conflict"
 
-# DUP
 msgid 0x9AFE8FE3
 msgstr "Add manually"
 
@@ -4441,14 +4382,15 @@ msgstr "Change mode?"
 msgid 0x9B537DE5
 msgstr "Router name and admin password"
 
+msgid 0x9B7BD06B
+msgstr "Search for Mesh sub-routes..."
+
 msgid 0x9BD38039
 msgstr "Couldn't format, try again."
 
-# DUP
 msgid 0x9BEBBE9C
 msgstr "PPPoE settings"
 
-# DUP
 msgid 0x9BEE9555
 msgstr "Low"
 
@@ -4460,14 +4402,12 @@ msgstr "Dual-band Wi-Fi"
 msgid 0x9C4084EF
 msgstr "Smart connect"
 
-# DUP
 msgid 0x9CA717BF
 msgstr ""
 "When your network speed reaches 80Mbps or higher, you can turn on Hardware"
 " NAT to boost speed. QoS, Speed limit, and Real-time speed won't work in"
 " this case. Make sure you need Hardware NAT before you turn it on."
 
-# DUP
 msgid 0x9CB68286
 msgstr ""
 "1. First, an account must be registered on the VPN service provider's"
@@ -4494,7 +4434,6 @@ msgstr "Turning 2.4G Wi-Fi off will turn Guest Wi-Fi off as well"
 msgid 0x9E017CE0
 msgstr "Hard drive fix result"
 
-# DUP
 msgid 0x9E1406B2
 msgstr "Check if the domain name is entered correctly"
 
@@ -4518,7 +4457,6 @@ msgstr "Router running in Safe mode"
 msgid 0x9F71ECCA
 msgstr "Not enough storage space"
 
-# DUP
 msgid 0x9FF2C1E2
 msgstr "Error 678: PPPoE username or password incorrect"
 
@@ -4528,7 +4466,6 @@ msgstr "Add"
 msgid 0xA000D240
 msgstr "Use {$0} characters or less"
 
-# DUP
 msgid 0xA012B123
 msgstr "MM/dd/yyyy hh:mm:ss"
 
@@ -4541,7 +4478,6 @@ msgstr "Rebooting router to apply settings. This takes about 30s."
 msgid 0xA05979FC
 msgstr "Magadan"
 
-# DUP
 msgid 0xA06B91C1
 msgstr "Maximum upload speed"
 
@@ -4560,11 +4496,9 @@ msgstr "Download speed"
 msgid 0xA1EADE4A
 msgstr "Remove this device?"
 
-# DUP
 msgid 0xA24AD91D
 msgstr "or"
 
-# DUP
 msgid 0xA2531011
 msgstr "Kabul"
 
@@ -4573,6 +4507,11 @@ msgstr "May be problems with account multicast."
 
 msgid 0xA37C165E
 msgstr "Last digit of IP address"
+
+msgid 0xA386BFE2
+msgstr ""
+"No broadband network cable access is detected, please connect the network"
+" cable to any network port"
 
 msgid 0xA3D81A24
 msgstr "Average speed"
@@ -4601,7 +4540,6 @@ msgstr "Testing connection speed…"
 msgid 0xA5E94313
 msgstr "Security"
 
-# DUP
 msgid 0xA6039B3B
 msgstr "Gehua cable modem service"
 
@@ -4623,7 +4561,6 @@ msgstr "Synchronizing the Mesh network configuration"
 msgid 0xA6CCFC30
 msgstr "New password and old password are identical"
 
-# DUP
 msgid 0xA6EBEA9F
 msgstr "Error 691: PPPoE username or password incorrect"
 
@@ -4636,6 +4573,11 @@ msgstr "Disconnect"
 msgid 0xA7212691
 msgstr "Location"
 
+msgid 0xA762DE57
+msgstr ""
+"3. Move the sub-route to be added close to the main route and try again"
+" (keep a distance of 1 meter away to avoid interference);"
+
 # DUP
 msgid 0xA7953DF9
 msgstr "Mi Router 4C"
@@ -4644,11 +4586,9 @@ msgstr "Mi Router 4C"
 msgid 0xA7953DF9
 msgstr "Mi Wi-Fi 4C"
 
-# DUP
 msgid 0xA7BF6A4F
 msgstr "Great Wall broadband network service"
 
-# DUP
 msgid 0xA7E5043D
 msgstr "Bangladesh Standard Time"
 
@@ -4666,7 +4606,6 @@ msgstr ""
 msgid 0xA82D2989
 msgstr "Check static IP address"
 
-# DUP
 msgid 0xA82DC1EB
 msgstr "Turning Wi-Fi off will turn Guest Wi-Fi off as well"
 
@@ -4678,7 +4617,6 @@ msgstr ""
 msgid 0xA84DAF51
 msgstr "No usable Mesh node found:"
 
-# DUP
 msgid 0xA852DE07
 msgstr "Wi-Fi network created, connect manually"
 
@@ -4705,7 +4643,6 @@ msgstr "Model"
 msgid 0xA96A8D59
 msgstr "Couldn't dial (Error"
 
-# DUP
 msgid 0xA96CDCFB
 msgstr "Vietnam"
 
@@ -4718,7 +4655,6 @@ msgstr "Couldn't apply VPN settings"
 msgid 0xA993BBB2
 msgstr "Invalid device ID"
 
-# DUP
 msgid 0xA9D24D37
 msgstr "Wired amplifier mode"
 
@@ -4748,7 +4684,6 @@ msgstr ""
 " changed, it will also be automatically synchronized with devices that"
 " support Xiaomi Easy Connect."
 
-# DUP
 msgid 0xAAA55A69
 msgstr "IP conflict detected"
 
@@ -4767,15 +4702,12 @@ msgstr "App speed limit"
 msgid 0xABA2F54F
 msgstr "Healthy check error: hard drive unmout fail"
 
-# DUP
 msgid 0xABABBA39
 msgstr "Network settings (connection type, network account and password)"
 
-# DUP
 msgid 0xABAE4260
 msgstr "No addresses added"
 
-# DUP
 msgid 0xABBE988B
 msgstr "2. The initialization process will"
 
@@ -4812,7 +4744,6 @@ msgstr "Macau,Shanghai,Taipei"
 msgid 0xADC86B1F
 msgstr "Speed"
 
-# DUP
 msgid 0xADDB9E7A
 msgstr "Couldn't connect to DNS server"
 
@@ -4834,7 +4765,6 @@ msgstr "Australia"
 msgid 0xAE8D9D71
 msgstr "Company"
 
-# DUP
 msgid 0xAEDED05B
 msgstr "Oray DDNS service hasn't been activated"
 
@@ -4844,14 +4774,12 @@ msgstr "Bridge"
 msgid 0xAF23C2EA
 msgstr "Mi Router 3"
 
-# DUP
 msgid 0xAF4C5C89
 msgstr "VPN access"
 
 msgid 0xAF4CDE2B
 msgstr "File doesn't exist or has been corrupted"
 
-# DUP
 msgid 0xAF696118
 msgstr "Real-time network status"
 
@@ -4897,11 +4825,9 @@ msgstr "No updates available"
 msgid 0xB0EAE75E
 msgstr "Wireless network"
 
-# DUP
 msgid 0xB10B5D0B
 msgstr "Devices connected to Wi-Fi"
 
-# DUP
 msgid 0xB1144EA4
 msgstr "Europe"
 
@@ -4913,7 +4839,6 @@ msgstr "Scanning storageпјЊ please wait"
 msgid 0xB11B6A6A
 msgstr "Scanning storage， please wait"
 
-# DUP
 msgid 0xB13B36AC
 msgstr "China Telecom broadband customer service"
 
@@ -4979,18 +4904,15 @@ msgstr "Moscow,Simferopol"
 msgid 0xB3ABF558
 msgstr "Mesh networking group"
 
-# DUP
 msgid 0xB3AE343F
 msgstr "Download the MiWiFi App to manage your router"
 
-# DUP
 msgid 0xB3B1EC91
 msgstr "Nepal Standard Time"
 
 msgid 0xB3BFCBEB
 msgstr "Repeater mode (extend existing Wi-Fi)"
 
-# DUP
 msgid 0xB3C13D4D
 msgstr "Add device to decide which device's traffic go through VPN"
 
@@ -5018,7 +4940,6 @@ msgstr "Chatham"
 msgid 0xB4CF91F9
 msgstr "West Central Africa"
 
-# DUP
 msgid 0xB4D50C08
 msgstr "Maximum download speed"
 
@@ -5059,6 +4980,9 @@ msgstr ""
 msgid 0xB72DB525
 msgstr "Can't dispatch"
 
+msgid 0xB73301CC
+msgstr "2. The screen is in a bright screen unlocked state"
+
 msgid 0xB7338E6F
 msgstr "Beijing,Chongqing,Hong Kong,Urumqi"
 
@@ -5093,14 +5017,12 @@ msgstr ""
 msgid 0xB8769AF0
 msgstr "Not limited"
 
-# DUP
 msgid 0xB8CBC134
 msgstr "Australian Western Standard Time"
 
 msgid 0xB8F93694
 msgstr "Romania"
 
-# DUP
 msgid 0xB93BE534
 msgstr "Add VPN server address"
 
@@ -5128,7 +5050,6 @@ msgstr "Make sure your have proper permission to use this build."
 msgid 0xBA051B5F
 msgstr "Couldn't switch to router mode"
 
-# DUP
 msgid 0xBA0FA3CE
 msgstr ""
 "Do not unplug the router while it is updating, as this may result in"
@@ -5137,14 +5058,12 @@ msgstr ""
 msgid 0xBA299E91
 msgstr "Repeater status"
 
-# DUP
 msgid 0xBA3D4826
 msgstr "Vanuatu Time"
 
 msgid 0xBA6BA7A7
 msgstr "Baja California"
 
-# DUP
 msgid 0xBA859BB1
 msgstr "How to donfigure a VPN"
 
@@ -5156,11 +5075,9 @@ msgstr ""
 msgid 0xBB058743
 msgstr "PPPoE couldn't dial (Error 691)"
 
-# DUP
 msgid 0xBB3F37C0
 msgstr "Pacific Standard Time C"
 
-# DUP
 msgid 0xBB68EA54
 msgstr "Use a MAC address to add a device"
 
@@ -5170,7 +5087,6 @@ msgstr "Max speed"
 msgid 0xBBACA77F
 msgstr "File storage location"
 
-# DUP
 msgid 0xBBB0ACC7
 msgstr ""
 "Using our mobile app is another cool way to browse your photos and videos"
@@ -5184,7 +5100,6 @@ msgstr "Paired devices"
 msgid 0xBC02413C
 msgstr "Available backups"
 
-# DUP
 msgid 0xBC3D9B64
 msgstr "Strong signal for greater penetration and wider coverage"
 
@@ -5199,11 +5114,9 @@ msgstr ""
 "2. Connect the power of the satellite node and wait for the System indicator"
 " to turn constant blue or white (the colour depends on the specific model)"
 
-# DUP
 msgid 0xBCDD4A54
 msgstr "Cape Verde Time"
 
-# DUP
 msgid 0xBD07243E
 msgstr "Turn on"
 
@@ -5220,6 +5133,11 @@ msgstr ""
 
 msgid 0xBE07C02D
 msgstr "Basement"
+
+msgid 0xBE08BCF7
+msgstr ""
+"To ensure user experience, switching to Relay mode is not supported in Mesh"
+" mode"
 
 msgid 0xBE621FEE
 msgstr "Enter {$0} characters or more"
@@ -5239,7 +5157,6 @@ msgstr "Existing router power source"
 msgid 0xBF57A3C1
 msgstr "Port Louis"
 
-# DUP
 msgid 0xBF6BF27C
 msgstr "Address"
 
@@ -5268,7 +5185,6 @@ msgstr "Saskatchewan"
 msgid 0xC029C8EF
 msgstr "Clone"
 
-# DUP
 msgid 0xC02E88B4
 msgstr "Kathmandu"
 
@@ -5377,7 +5293,6 @@ msgstr "Run health check"
 msgid 0xC5A66961
 msgstr "Datacenter error"
 
-# DUP
 msgid 0xC60BDBFB
 msgstr "Possible reasons"
 
@@ -5392,7 +5307,6 @@ msgstr ""
 msgid 0xC662C2D8
 msgstr "Mi AIoT Router AX3600"
 
-# DUP
 msgid 0xC6A04C8F
 msgstr "Korea Standard Time"
 
@@ -5417,7 +5331,6 @@ msgstr "There's a problem with the ethernet cable you've connected."
 msgid 0xC7B390E1
 msgstr "Checking for updates…"
 
-# DUP
 msgid 0xC7F671FB
 msgstr "Give priority to ensuring the speed of browsing the Webpages"
 
@@ -5442,7 +5355,6 @@ msgstr "Error occurred"
 msgid 0xC99C143A
 msgstr "Skip this step"
 
-# DUP
 msgid 0xC9C0AC7F
 msgstr ""
 "Install our client for PC or Mac and access Mi Wi-Fi's hard drive easily"
@@ -5473,7 +5385,6 @@ msgstr "File system error "
 msgid 0xCABA8AE6
 msgstr "Last health check"
 
-# DUP
 msgid 0xCAD17FE7
 msgstr "Download Mi Wi-Fi app"
 
@@ -5485,6 +5396,9 @@ msgstr "Router name"
 
 msgid 0xCB38E3DB
 msgstr "Couldn't complete setup"
+
+msgid 0xCB48B8E3
+msgstr "Wi-Fi name: "
 
 msgid 0xCB5CCC64
 msgstr "Aipu Broadband"
@@ -5529,18 +5443,15 @@ msgstr "Checking hard drive…"
 msgid 0xCE36E548
 msgstr "Router set up as a wireless repeater."
 
-# DUP
 msgid 0xCE38F72A
 msgstr "How to reset network password"
 
-# DUP
 msgid 0xCE545EB0
 msgstr "East Asian Standard Time"
 
 msgid 0xCEF7E036
 msgstr "1. Your hard drive works well."
 
-# DUP
 msgid 0xCF298202
 msgstr ""
 "Authentication error. Check if the username and password are entered"
@@ -5549,7 +5460,6 @@ msgstr ""
 msgid 0xCF35B59A
 msgstr "Dubai,Astrakhan,Saratov,Mahe,Mauritius"
 
-# DUP
 msgid 0xCF54D738
 msgstr "View full network"
 
@@ -5574,7 +5484,9 @@ msgstr "Harare,Pretoria"
 msgid 0xCFF21B82
 msgstr "Select country/region"
 
-# DUP
+msgid 0xD00B13F6
+msgstr "Scaling Mesh nodes (1-2 minutes)..."
+
 msgid 0xD00EE777
 msgstr "Brazil"
 
@@ -5626,7 +5538,6 @@ msgstr "Original password"
 msgid 0xD2AC5F8F
 msgstr "Checking interval"
 
-# DUP
 msgid 0xD2B56805
 msgstr "Samoa Time Zone"
 
@@ -5639,7 +5550,6 @@ msgstr "HTTPS switch"
 msgid 0xD2D4BACD
 msgstr "Home"
 
-# DUP
 msgid 0xD2E96560
 msgstr ""
 "Invalid IP address. Your IP address should be within 1.0.0.0~126.255.255.255"
@@ -5665,7 +5575,6 @@ msgstr "Standard"
 msgid 0xD386753A
 msgstr "Medium"
 
-# DUP
 msgid 0xD3ABA16A
 msgstr ""
 "When the feature is on, 2.4G and 5G networks will share a name. The router"
@@ -5685,7 +5594,6 @@ msgstr "Malta"
 msgid 0xD4133496
 msgstr "Factory data reset"
 
-# DUP
 msgid 0xD41680C8
 msgstr "Change network settings"
 
@@ -5707,7 +5615,6 @@ msgstr "Couldn't stop service plug-in or unmount hard drive"
 msgid 0xD5EC1657
 msgstr "2. Turn on DDNS, add a server, enter server settings and save."
 
-# DUP
 msgid 0xD61C3475
 msgstr "Test network"
 
@@ -5731,12 +5638,16 @@ msgstr ""
 "During this process, the wireless network will restart and a brief drop will"
 " occur."
 
-# DUP
 msgid 0xD6CD2E1A
 msgstr "India Standard Time"
 
 msgid 0xD6EA354A
 msgstr "Couldn't detect network type. Select type manually: "
+
+msgid 0xD712B61B
+msgstr ""
+"1. Move the sub-route to be added close to the main route and try again"
+" (keep a distance of 1 meter to avoid interference);"
 
 msgid 0xD71BA6EC
 msgstr "Checking for nearby devices…"
@@ -5744,7 +5655,6 @@ msgstr "Checking for nearby devices…"
 msgid 0xD71D26BA
 msgstr "UPnP status"
 
-# DUP
 msgid 0xD72A636D
 msgstr "Creating 2. 4G & 5G Wi-Fi"
 
@@ -5757,14 +5667,12 @@ msgstr "Switch between router mode and repeater mode"
 msgid 0xD7970ABA
 msgstr "Set up"
 
-# DUP
 msgid 0xD798E39D
 msgstr "Add devices from the device list"
 
 msgid 0xD79AF817
 msgstr "Hard drive model"
 
-# DUP
 msgid 0xD7C7130B
 msgstr "VPN for Mi services"
 
@@ -5774,7 +5682,6 @@ msgstr "Morocco"
 msgid 0xD7E4CEAA
 msgstr "Attention"
 
-# DUP
 msgid 0xD830F970
 msgstr "Add VPN devices using MAC address"
 
@@ -5797,7 +5704,6 @@ msgid 0xD8A709D9
 msgstr ""
 "Whoa there! You need to stay on this page until router finishes updating."
 
-# DUP
 msgid 0xD8D12D13
 msgstr "China Unicom customer service"
 
@@ -5816,7 +5722,6 @@ msgstr "Subnet mask is invalid"
 msgid 0xDA098C2D
 msgstr "Ekaterinburg"
 
-# DUP
 msgid 0xDA0BAAD5
 msgstr "Webpage first"
 
@@ -5840,14 +5745,12 @@ msgstr "Hard drive works well but it has some minor issues"
 msgid 0xDB33653A
 msgstr "Devices will be disconnected from network while router reboots."
 
-# DUP
 msgid 0xDB5FCFE2
 msgstr "Mountain Time Zone"
 
 msgid 0xDB80A367
 msgstr "Internet bandwidth"
 
-# DUP
 msgid 0xDB904CBF
 msgstr "Atlantic Standard Time"
 
@@ -5890,7 +5793,6 @@ msgstr ""
 " switch is completed (the connected devices will be disconnected, and are"
 " expected to be reconnected within 1 minute). Switch ports now?"
 
-# DUP
 msgid 0xDD12AE31
 msgstr "Maximum speed setting"
 
@@ -5906,7 +5808,6 @@ msgstr "Bandwidth"
 msgid 0xDD6ED210
 msgstr "Just a sec…"
 
-# DUP
 msgid 0xDD9885F2
 msgstr ""
 "The username was blocked due to the amount of outcoming spam traffic"
@@ -5914,7 +5815,6 @@ msgstr ""
 msgid 0xDDE1C543
 msgstr "Added"
 
-# DUP
 msgid 0xDDE5C0F4
 msgstr "Hardware NAT (HwNAT)"
 
@@ -5945,14 +5845,12 @@ msgstr ""
 "Smart connect off, 5G network name will be similar to that of 2.4G"
 " (example_5G). You can change that in Settings."
 
-# DUP
 msgid 0xDED1AF76
 msgstr "5G options"
 
 msgid 0xDEF300A8
 msgstr "No network cable found"
 
-# DUP
 msgid 0xDF0D5533
 msgstr "Give priority to ensuring the speed of watching videos"
 
@@ -5962,7 +5860,6 @@ msgstr "China Unicom"
 msgid 0xDFFE730B
 msgstr "Creston,Dawson Creek,Fort Nelson,Hermosillo,Phoenix"
 
-# DUP
 msgid 0xE02E6005
 msgstr "Turn on Guest Wi-Fi"
 
@@ -5995,7 +5892,6 @@ msgstr "Mi Wi-Fi Nano"
 msgid 0xE107B3E5
 msgstr "Norway"
 
-# DUP
 msgid 0xE165228B
 msgstr "Select the file"
 
@@ -6014,7 +5910,6 @@ msgstr "Give priority to selected devices"
 msgid 0xE2478464
 msgstr "Check status"
 
-# DUP
 msgid 0xE24DAF95
 msgstr "Domain name does not exist or Oray DDNS service is not active"
 
@@ -6030,7 +5925,6 @@ msgstr "Turning 2.4G Wi-Fi off will turn Guest Wi-Fi off as well"
 msgid 0xE314A512
 msgstr "Osaka,Sapporo,Tokyo"
 
-# DUP
 msgid 0xE3188805
 msgstr "ISP service error"
 
@@ -6040,7 +5934,6 @@ msgstr "Checking: "
 msgid 0xE3E18060
 msgstr "Test internet connection before turning this feature on: "
 
-# DUP
 msgid 0xE3E1EA0E
 msgstr "Solution"
 
@@ -6050,15 +5943,12 @@ msgstr "Belgrade, Bratislava, Budapest, Ljubljana, Prague"
 msgid 0xE4264CDF
 msgstr "None"
 
-# DUP
 msgid 0xE449EDE5
 msgstr "VPN disconnected. Connect again to apply settings."
 
-# DUP
 msgid 0xE4516BE3
 msgstr "Regular router mode"
 
-# DUP
 msgid 0xE489A4F3
 msgstr "Smart QoS bandwidth allocation"
 
@@ -6075,6 +5965,9 @@ msgstr "Subnet mask:"
 
 msgid 0xE5A33909
 msgstr "System update"
+
+msgid 0xE5AFB325
+msgstr "You can try the following methods: "
 
 msgid 0xE5E9D011
 msgstr "Live TV streaming over Internet protocol"
@@ -6101,6 +5994,9 @@ msgstr ""
 "Setup successful. The router is restarting. In compliance with national laws"
 " and regulations, the router is performing radar signal detection and"
 " avoidance. Wi-Fi connection will be activated in 10 minutes. Please wait..."
+
+msgid 0xE6817811
+msgstr "Wi-Fi password: "
 
 msgid 0xE6B7B7FB
 msgstr "Are you sure you want to remove the hard drive?"
@@ -6135,12 +6031,16 @@ msgstr "Cape Verde Is."
 msgid 0xE7F41CC8
 msgstr "Mode (set up Wi-Fi network)"
 
-# DUP
 msgid 0xE80F30C9
 msgstr "Real-time upstream speed"
 
 msgid 0xE81EBEC7
 msgstr "100 M"
+
+msgid 0xE8590A21
+msgstr ""
+"The network cable connected to the operator's broadband can be plugged into"
+" any network port"
 
 msgid 0xE85AB00C
 msgstr ""
@@ -6166,7 +6066,6 @@ msgstr "Agree to terms"
 msgid 0xE8B309DC
 msgstr "Not managed"
 
-# DUP
 msgid 0xE960E789
 msgstr "France"
 
@@ -6189,11 +6088,9 @@ msgid 0xEA2A3176
 msgstr ""
 "Restore router to its factory settings? You can't reverse this action."
 
-# DUP
 msgid 0xEA3321FE
 msgstr "China Mobile broadband customer service"
 
-# DUP
 msgid 0xEA3898A1
 msgstr "Devices not added"
 
@@ -6254,7 +6151,6 @@ msgstr "4.Power on the Mesh node you are adding;"
 msgid 0xECAD0E65
 msgstr "Oops! Make sure you haven't missed any required fields."
 
-# DUP
 msgid 0xECF710C7
 msgstr "Enter a complete {$0}"
 
@@ -6267,22 +6163,21 @@ msgstr "Chita,Dili,Khandyga,Yakutsk,Palau"
 msgid 0xED96A2D1
 msgstr "LAN IPv6 prefix"
 
-# DUP
 msgid 0xEDB3E4B9
 msgstr "Forgot password"
 
 msgid 0xEDBD1897
 msgstr "Can't use DMZ while port forwarding is on"
 
-# DUP
 msgid 0xEDF4204A
 msgstr "Traffic by service"
 
-# DUP
 msgid 0xEE098F2D
 msgstr "Settings"
 
-# DUP
+msgid 0xEE1B4A8B
+msgstr "Routers that support Xiaomi Mesh networking"
+
 msgid 0xEE525C5C
 msgstr ""
 "Backup photos from your mobile device to Mi Wi-Fi automatically and have no"
@@ -6311,7 +6206,6 @@ msgstr "Hard drive interface"
 msgid 0xEF3F4070
 msgstr "Apply"
 
-# DUP
 msgid 0xEFF506A5
 msgstr "Restrict access to administrator settings"
 
@@ -6350,26 +6244,32 @@ msgstr "2. Wait for the new router to appear in the admin list. "
 msgid 0xF1247D15
 msgstr "Pacific Time (US & Canada)"
 
-# DUP
+msgid 0xF1326B2C
+msgstr "Redmi router"
+
 msgid 0xF14A7E09
 msgstr "Change administrator password"
 
-# DUP
 msgid 0xF16DB83E
 msgstr "Singapore"
 
-# DUP
 msgid 0xF16EBF0E
 msgstr "Task name"
 
 msgid 0xF172ACA2
 msgstr "Can't get router setting info"
 
+msgid 0xF1807E93
+msgstr "Confirm whether to disable the LAN port aggregation function"
+
 msgid 0xF18A69F7
 msgstr "Connected devices bandwidth"
 
 msgid 0xF1A5F0CD
 msgstr "Required"
+
+msgid 0xF1B8FC7F
+msgstr "No Mesh nodes found available"
 
 msgid 0xF1C97E6D
 msgstr "Athens, Bucharest"
@@ -6380,7 +6280,6 @@ msgstr "DMZ status: "
 msgid 0xF2125269
 msgstr "Extension succeeded"
 
-# DUP
 msgid 0xF2350645
 msgstr "Enter address"
 
@@ -6397,14 +6296,12 @@ msgid 0xF2E57726
 msgstr ""
 "Signal is poor, please place the router near the central access point"
 
-# DUP
 msgid 0xF315E661
 msgstr "Couldn't find storage. Connect it to your Mi Wi-Fi via USB."
 
 msgid 0xF31A931D
 msgstr "Dublin"
 
-# DUP
 msgid 0xF32C1B7A
 msgstr "Alaska Time Zone"
 
@@ -6414,7 +6311,6 @@ msgstr "Modem couldn't dial successfully"
 msgid 0xF381B01D
 msgstr "Not encrypted (everyone can access)"
 
-# DUP
 msgid 0xF39199CB
 msgstr "Game first"
 
@@ -6427,7 +6323,6 @@ msgstr "Rarotonga,Tahiti"
 msgid 0xF4265420
 msgstr "Mixed (WPA/WPA2-personal)"
 
-# DUP
 msgid 0xF4602F9D
 msgstr "Turkey"
 
@@ -6448,6 +6343,11 @@ msgstr "System error. Wait a minute or two and try again."
 
 msgid 0xF529CB04
 msgstr "Couldn't dial"
+
+msgid 0xF52AD490
+msgstr ""
+"The current Wi-Fi encryption method is super encryption (WPA3), and some"
+" models of mobile phones may have compatibility problems in this mode"
 
 msgid 0xF532D56D
 msgstr "OSX"
@@ -6475,7 +6375,6 @@ msgstr "Tunnel interface"
 msgid 0xF5CB65B1
 msgstr "Set network bandwidth manually"
 
-# DUP
 msgid 0xF60900E1
 msgstr "Australian Central Standard Time"
 
@@ -6493,9 +6392,11 @@ msgstr "Check account name and password"
 msgid 0xF670A799
 msgstr "Update manually"
 
-# DUP
 msgid 0xF683D95E
 msgstr "Download client"
+
+msgid 0xF68D282B
+msgstr "1. NFC function on"
 
 msgid 0xF68D995D
 msgstr "Please select the plug-in installation package:"
@@ -6514,11 +6415,9 @@ msgstr ""
 msgid 0xF76275D6
 msgstr "Hard drive access"
 
-# DUP
 msgid 0xF76A76DC
 msgstr "Wi-Fi Blocklist"
 
-# DUP
 msgid 0xF77797C1
 msgstr "Router name and admin password"
 
@@ -6534,7 +6433,6 @@ msgstr "Connection error"
 msgid 0xF804DDEF
 msgstr "Extension failed"
 
-# DUP
 msgid 0xF81B88E8
 msgstr "The router will connect to network after reboot"
 
@@ -6547,6 +6445,9 @@ msgstr "Not found"
 msgid 0xF84143E2
 msgstr "Couldn't sign in"
 
+msgid 0xF8499002
+msgstr "5G network is turned off at this time"
+
 msgid 0xF8953D2F
 msgstr "Couldn't get plug-in info"
 
@@ -6556,7 +6457,6 @@ msgstr "Devices"
 msgid 0xF96D6230
 msgstr "Waiting to reboot…"
 
-# DUP
 msgid 0xF9942387
 msgstr "Asuncion"
 
@@ -6566,7 +6466,6 @@ msgstr "Japan"
 msgid 0xF9D9A570
 msgstr "Mountain Time(US & Canada)"
 
-# DUP
 msgid 0xF9EB94CF
 msgstr "Venezuelan Standard Time"
 
@@ -6596,7 +6495,6 @@ msgstr "Istanbul"
 msgid 0xFB398EA3
 msgstr "Search Again"
 
-# DUP
 msgid 0xFB621BD0
 msgstr "Malaysia"
 
@@ -6621,7 +6519,6 @@ msgstr "Create range forwarding rules"
 msgid 0xFC7297B8
 msgstr "DHCP server isn't responding"
 
-# DUP
 msgid 0xFC77CEE2
 msgstr "Middle East Time Zone B"
 
@@ -6645,7 +6542,6 @@ msgstr "Thread"
 msgid 0xFD5E5AE5
 msgstr "Adding Mesh Nodes"
 
-# DUP
 msgid 0xFD72664B
 msgstr "This feature can only be used by users with paid accounts"
 
@@ -6664,7 +6560,6 @@ msgstr "Nigeria"
 msgid 0xFE7EB4A9
 msgstr "Wireless networking:"
 
-# DUP
 msgid 0xFE7EDFD0
 msgstr ""
 "1 G network port currently operating as LAN port. You can connect a LAN"
@@ -6698,11 +6593,9 @@ msgstr "Bogota, Lima, Quito"
 msgid 0xFEC6FD06
 msgstr "Turning on Guest Wi-Fi will turn on 2.4G Wi-Fi as well"
 
-# DUP
 msgid 0xFF556106
 msgstr "Add service address to decide which address' traffic go through VPN"
 
-# DUP
 msgid 0xFF89F359
 msgstr "Smart VPN"
 
@@ -6715,7 +6608,6 @@ msgstr "Router settings conflict"
 msgid 0xFFDB9B06
 msgstr "Miquelon"
 
-# DUP
 msgid 0xFFEC254B
 msgstr "s"
 

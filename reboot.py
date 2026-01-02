@@ -3,6 +3,7 @@
 
 import os
 import sys
+import time
 import platform
 
 import xmir_base
@@ -15,7 +16,8 @@ gw = gateway.Gateway(detect_ssh = False)
 ssh = gw.detect_ssh(verbose = 1, interactive = True)
 if ssh > 0:
   print('Send command "reboot" via SSH ...')
-  gw.run_cmd("reboot")
+  gw.run_cmd("reboot", reboot = True)
+  time.sleep(1)
 else:
   if not gw.stok:
     gw.web_login()

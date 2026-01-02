@@ -27,7 +27,7 @@ def menu1_show():
   print(' 3 - Read full device info')
   print(' 4 - Create full backup')
   print(' 5 - Install EN/RU languages')
-  print(' 6 - Install Breed bootloader')
+  print(' 6 - Install permanent SSH')
   print(' 7 - Install firmware (from directory "firmware")')
   print(' 8 - {{{ Other functions }}}')
   print(' 9 - [[ Reboot device ]]')
@@ -41,7 +41,7 @@ def menu1_process(id):
   if id == 3: return "read_info.py"
   if id == 4: return "create_backup.py"
   if id == 5: return "install_lang.py"
-  if id == 6: return [ "install_bl.py", "breed" ]
+  if id == 6: return "install_ssh.py"
   if id == 7: return "install_fw.py"
   if id == 8: return "__menu2"
   if id == 9: return "reboot.py"
@@ -50,25 +50,27 @@ def menu1_process(id):
 
 def menu2_show():
   print(get_header('-', '(extended functions)'))
-  print(' 1 - Set default device IP-address')
+  print(' 1 - Set IP-address (current value: {})'.format(gw.ip_addr))
   print(' 2 - Change root password')
   print(' 3 - Read dmesg and syslog')
   print(' 4 - Create a backup of the specified partition')
   print(' 5 - Uninstall EN/RU languages')
   print(' 6 - Set kernel boot address')
-  print(' 7 - Install permanent SSH')
+  print(' 7 - Install Breed bootloader')
   print(' 8 - __test__')
   print(' 9 - [[ Reboot device ]]')
   print(' 0 - Return to main menu')
 
 def menu2_process(id):
-  if id == 1: return "set_def_ipaddr.by"
+  if id == 1:
+    ip_addr = input("Enter device IP-address: ")
+    return [ "gateway.py", ip_addr ]
   if id == 2: return "passw.py"
   if id == 3: return "read_dmesg.py"
   if id == 4: return [ "create_backup.py", "part" ]
   if id == 5: return [ "install_lang.py", "uninstall" ]
   if id == 6: return "activate_boot.py"
-  if id == 7: return "install_ssh.py"
+  if id == 7: return [ "install_bl.py", "breed" ]
   if id == 8: return "test.py"
   if id == 9: return "reboot.py"
   if id == 0: return "__menu1" 

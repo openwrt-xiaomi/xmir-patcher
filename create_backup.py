@@ -50,15 +50,65 @@ if len(sys.argv) > 1:
 
 os.makedirs(fn_dir, exist_ok = True)
 
-if pid is None and a_part != 'a':
-  for p, part in enumerate(dev.partlist):
-    if part['addr'] == 0 and part['size'] > 0x00800000:  # 8MiB
-      pid = p
-      name = dev.partlist[p]['name']  # "ALL"
-      name = ''.join(e for e in name if e.isalnum())
-      addr = dev.partlist[p]['addr']
-      size = dev.partlist[p]['size']
-      break
+
+def backup_and_download(pid, filename, chunk_size = 0, die_on_error = True):
+    global fn_dir
+    os.remove(filename) if os.path.exists(filename) else None
+    with open(filename, 'wb') as file:
+        pass
+    part_size = dev.partlist[pid]["size"]
+    blk_size = 128*1024
+    if not chunk_size:
+        chunk_size = 20*1024*1024
+    if chunk_size % blk_size != 0:
+        die(f'Incorrect value of chunk_size = {chunk_size}')
+    max_blocks = chunk_size // blk_size
+    dump_size = 0
+    while dump_size < part_size:
+        if dump_size % blk_size != 0:
+            die(f'Internal error on backup_and_download (dump_size = {dump_size})')
+        skip = dump_size // blk_size
+        fn_local = fn_dir + f'dump_mtd{pid}_{skip}.bin'
+        os.remove(fn_local) if os.path.exists(fn_local) else None
+        count = (part_size - dump_size) // blk_size
+        if count == 0:
+            count = 1
+        if count > max_blocks:
+            count = max_blocks
+        cmd = f"rm -f {fn_remote} ; dd if=/dev/mtd{pid} of={fn_remote} bs={blk_size} skip={skip} count={count}"
+        ret = gw.run_cmd(cmd, timeout = 25, die_on_error = False)
+        if ret is None:
+            print(f'ERROR on execute command: "{cmd}"')
+            if die_on_error:
+                sys.exit(1)
+            return False
+        print(f'Download file "./{fn_local}"...')
+        try:
+            ret = gw.download(fn_remote, fn_local, verbose = 0)
+        except Exception:
+            print(f'ERROR: Remote file "{fn_remote}" not found!')
+            if die_on_error:
+                sys.exit(1)
+            return False
+        if not os.path.exists(fn_local) or os.path.getsize(fn_local) == 0:
+            print(f'ERROR: File "{fn_local}" not found!')
+            if die_on_error:
+                sys.exit(1)
+            gw.run_cmd("rm -f " + fn_remote)
+            return False
+        chunk_size = os.path.getsize(fn_local)
+        if chunk_size:
+            with open(fn_local, 'rb') as file:
+                data = file.read()
+            with open(filename, 'ab+') as file:
+                file.write(data)
+        dump_size += chunk_size
+        os.remove(fn_local)
+        pass
+    gw.run_cmd("rm -f " + fn_remote)
+    print(f'File "{filename}" created!"')
+    return True
+
 
 if pid is not None:
   if os.path.exists(fn_dir): 
@@ -66,47 +116,27 @@ if pid is not None:
       if os.path.exists(fn_old):
         os.remove(fn_old)
       os.rename(fn_local, fn_old)
-  if a_part is None:
-    print("Full backup creating...")
-  gw.run_cmd("dd if=/dev/mtd{id} of={o}".format(id=pid, o=fn_remote))
-  print('Dump of partition "{}" created!'.format(name))
-  print('Download dump to file "./{}"...'.format(fn_local))
-  gw.download(fn_remote, fn_local, verbose = 0)
-  print("Completed!")
-  gw.run_cmd("rm -f " + fn_remote)
+  backup_and_download(pid, fn_local)
   print(" ")
-  if a_part is None:
-    print('Full backup saved to file "./{}"'.format(fn_local))
-  else:
-    print('Backup of "{}" saved to file "./{}"'.format(name, fn_local))
+  print('Backup of "{}" saved to file "./{}"'.format(name, fn_local))
 else:
   print("Full backup creating...")
   for p, part in enumerate(dev.partlist):
     if part['addr'] == 0 and part['size'] > 0x00800000:  # 8MiB
-      continue  # skip "ALL" part
-    name = dev.partlist[p]['name']
-    name = ''.join(e for e in name if e.isalnum())
+      name = "FULL_DUMP"
+    else:
+      name = dev.partlist[p]['name']
+      name = ''.join(e for e in name if e.isalnum())
     addr = dev.partlist[p]['addr']
     size = dev.partlist[p]['size']
     fn_old    = fn_dir + 'mtd{id}_{name}.old'.format(id=p, name=name)
-    fn_local  = fn_dir + 'mtd{id}_{name}.bin'.format(id=p, name=name)    
+    fn_local  = fn_dir + 'mtd{id}_{name}.bin'.format(id=p, name=name)
     if os.path.exists(fn_dir): 
       if os.path.exists(fn_local): 
         if os.path.exists(fn_old):
           os.remove(fn_old)
         os.rename(fn_local, fn_old)
-    cmd = "dd if=/dev/mtd{id} of={o}".format(id=p, o=fn_remote)
-    ret = gw.run_cmd(cmd, timeout=30, die_on_error = False)
-    if not ret:
-      print('ERROR on execute command: "{}"'.format(cmd))
-    else:
-      print('Download dump to file "./{}"...'.format(fn_local))
-      try:
-        gw.download(fn_remote, fn_local, verbose = 0)
-      except Exception:
-        print('Remote file "{}" not found!'.format(fn_remote))
-        continue
-    gw.run_cmd("rm -f " + fn_remote)
+    ret = backup_and_download(p, fn_local, die_on_error = False)
     if ret:
       print('Backup of "{}" saved to file "./{}"'.format(name, fn_local))
   print(" ")
