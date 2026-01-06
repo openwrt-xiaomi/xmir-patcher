@@ -141,7 +141,7 @@ if bdata and bdata.var:
         krn_ver = krn_version.split('.')
         kver = krn_ver[0] + '.' + krn_ver[1]
         arch = dev.info.cpu_arch
-        if kver in [ '4.4', '5.4' ] and arch in [ 'armv7', 'arm64', 'mips' ]:
+        if kver in [ '4.4', '5.4', '6.6' ] and arch in [ 'armv7', 'arm64', 'mips' ]:
             print(f'Insert patch for bdata partition!')
             preempt = '-preempt' if 'PREEMPT' in dev.info.linux_stamp.upper() else ''
             FN_kmod = FN_kmod.format(kver = kver, arch = arch, preempt = preempt)
