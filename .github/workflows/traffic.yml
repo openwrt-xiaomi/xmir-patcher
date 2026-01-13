@@ -1,0 +1,80 @@
+name: Collect GitHub Traffic
+
+on:
+  schedule:
+    - cron: "0 2 * * *"
+  workflow_dispatch:
+    inputs:
+      date:
+        description: "Date (YYYY-MM-DD), default today (UTC)"
+        required: false
+      dry_run:
+        description: "Only show result (w/o commit)"
+        required: false
+        default: "false"
+
+permissions:
+  contents: write
+
+jobs:
+  traffic:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout gh-pages
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name: Fetch traffic data
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          INPUT_DATE: ${{ github.event.inputs.date }}
+          DRY_RUN: ${{ github.event.inputs.dry_run }}
+        run: |
+          set -e
+          OWNER="${{ github.repository_owner }}"
+          REPO="$(basename ${{ github.repository }})"
+          if [ -n "$INPUT_DATE" ]; then
+              TODAY="$INPUT_DATE"
+          else
+              TODAY=$(date -u +%F)
+          fi
+          API="https://api.github.com/repos/$OWNER/$REPO/traffic/clones"
+          DATA=$( curl -s -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" "$API" )
+          COUNT=$( echo "$DATA" | jq '.clones[-1].count // 0' )
+          mkdir -p gh-pages/traffic
+          FILE="gh-pages/traffic/clones.json"
+          if [ ! -f "$FILE" ]; then
+              echo '{"total":0,"daily":{}}' > "$FILE"
+          fi
+          TOTAL=$( jq '.total' "$FILE" )
+          TOTAL_NEW=$((TOTAL + COUNT))
+          jq \
+              --arg date "$TODAY" \
+              --argjson count "$COUNT" \
+              --argjson total "$TOTAL_NEW" \
+              '
+              .total = $total
+              | .last_update = $date
+              | .daily[$date] = $count
+              ' "$FILE" > "$FILE.tmp"
+          mv "$FILE.tmp" "$FILE"
+          echo "Date: $TODAY"
+          echo "Clones per day: $COUNT"
+          echo "TOTAL_NEW: $TOTAL_NEW"
+          if [ "$DRY_RUN" = "true" ]; then
+              echo "DRY-RUN: changes not be saved!"
+              exit 0
+          fi
+
+      - name: Commit & push
+        if: github.event.inputs.dry_run != 'true'
+        run: |
+          cd gh-pages
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add traffic/clones.json
+          git commit -m "traffic: update clones stats" || exit 0
+          git push
