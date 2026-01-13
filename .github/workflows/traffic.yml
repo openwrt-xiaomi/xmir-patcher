@@ -12,6 +12,18 @@ on:
         description: "Only show result (w/o commit)"
         required: false
         default: "false"
+        type: choice
+        options:
+        - true
+        - false 
+      init_pages:
+        description: "Create gh-pages"
+        required: true
+        default: "false"
+        type: choice
+        options:
+        - true
+        - false 
 
 permissions:
   contents: write
@@ -21,6 +33,31 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Create gh-pages branch if missing
+        if: github.event.inputs.init_pages == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -e
+          git clone https://x-access-token:${GH_TOKEN}@github.com/${REPO}.git repo
+          cd repo
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          if git show-ref --verify --quiet refs/heads/gh-pages; then
+              echo "gh-pages already exists"
+              exit 0
+          fi
+          echo "Creating empty gh-pages branch"
+          git checkout --orphan gh-pages
+          git rm -rf .
+          mkdir -p traffic
+          echo '{"total":0,"daily":{}}' > traffic/clones.json
+          echo "# gh-pages" > README.md
+          git add traffic/clones.json README.md
+          git commit -m "init gh-pages"
+          git push origin gh-pages    
+    
       - name: Checkout gh-pages
         uses: actions/checkout@v4
         with:
