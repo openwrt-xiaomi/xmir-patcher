@@ -2,79 +2,207 @@ name: Collect GitHub Traffic
 
 on:
   schedule:
-    - cron: "0 2 * * *"
+    - cron: "0 4 * * *"  # 04:00 UTC
   workflow_dispatch:
     inputs:
-      date:
-        description: "Date (YYYY-MM-DD), default today (UTC)"
-        required: false
       dry_run:
         description: "Only show result (w/o commit)"
+        required: true
+        default: "false"
+        type: choice
+        options:
+        - true
+        - false 
+      init_pages:
+        description: "Create gh-pages branch"
+        required: true
+        default: "false"
+        type: choice
+        options:
+        - true
+        - false 
+      reset:
+        description: "Reset stat files (full clean)"
         required: false
         default: "false"
+        type: choice
+        options:
+        - true
+        - false 
 
 permissions:
   contents: write
+
+env:
+  GH_TOKEN: ${{ secrets.GH_PAT }}
+  API_CLONES: https://api.github.com/repos/${{ github.repository }}/traffic/clones
+  API_VIEWS:  https://api.github.com/repos/${{ github.repository }}/traffic/views
+  WORK_DIR: ./traffic
 
 jobs:
   traffic:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Create gh-pages branch if missing
+        if: github.event.inputs.init_pages == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -e
+          git clone https://x-access-token:${GH_TOKEN}@github.com/${REPO}.git repo
+          cd repo
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          if git show-ref --verify --quiet refs/heads/gh-pages; then
+              echo "gh-pages already exists"
+              exit 0
+          fi
+          echo "Creating empty gh-pages branch"
+          git checkout --orphan gh-pages
+          git rm -rf .
+          mkdir -p ${{ env.WORK_DIR }}
+          touch ${{ env.WORK_DIR }}/clones.svg
+          echo "# gh-pages" > README.md
+          git add README.md ${{ env.WORK_DIR }}/*
+          git commit -m "init gh-pages"
+          git push origin gh-pages    
+    
       - name: Checkout gh-pages
         uses: actions/checkout@v4
         with:
           ref: gh-pages
-          path: gh-pages
+          fetch-depth: 0
 
-      - name: Fetch traffic data
+      - name: Configure git
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          
+      - name: Reset traffic data (on demand)
+        if: github.event.inputs.reset == 'true'
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WORK_DIR: ${{ env.WORK_DIR }}
+        run: |
+          echo "Reset requested — clean traffic dir"
+          if [ -d $WORK_DIR ]; then
+              cd $WORK_DIR
+              rm -f ./*
+              git add -A
+              git commit -m "Reset traffic stats" || true
+              git push
+          fi
+
+      - name: Ensure traffic JSON files exist
+        env:
+          WORK_DIR: ${{ env.WORK_DIR }}
+        run: |
+          mkdir -p $WORK_DIR
+          cd $WORK_DIR
+          for FILE in clones.json clones_uniq.json views.json views_uniq.json; do
+              if [ ! -f "$FILE" ]; then
+                  echo '{"total":0,"last_update":"","daily":{}}' > "$FILE"
+              fi
+          done          
+
+      - name: Fetch traffic data (clones + views)
+        working-directory: ${{ env.WORK_DIR }}
+        env:
           INPUT_DATE: ${{ github.event.inputs.date }}
+        run: |
+          set -e
+          fetch_data () {
+              API="$1"
+              OUT="$2"
+              echo "API response ($OUT)"
+              HTTP=$( curl -s -w "%{http_code}" -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" "$API" -o "$OUT" )
+              if [ "$HTTP" != "200" ]; then
+                  echo "API error ($HTTP):"
+                  cat "$OUT"
+                  exit 11
+              fi
+              echo "::group::GitHub Traffic API raw response ($OUT)"
+              cat "$OUT" | jq .
+              echo "::endgroup::"
+          }
+          fetch_data "$API_CLONES" clones_api.json
+          fetch_data "$API_VIEWS"  views_api.json
+          UPDATED_AT=$( date -u +"%Y-%m-%dT%H:%M:%SZ" )
+          echo "UPDATED_AT=$UPDATED_AT" >> $GITHUB_ENV
+
+      - name: Update traffic JSON files
+        working-directory: ${{ env.WORK_DIR }}
+        env:
           DRY_RUN: ${{ github.event.inputs.dry_run }}
         run: |
           set -e
-          OWNER="${{ github.repository_owner }}"
-          REPO="$(basename ${{ github.repository }})"
-          if [ -n "$INPUT_DATE" ]; then
-              TODAY="$INPUT_DATE"
-          else
-              TODAY=$(date -u +%F)
-          fi
-          API="https://api.github.com/repos/$OWNER/$REPO/traffic/clones"
-          DATA=$( curl -s -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" "$API" )
-          COUNT=$( echo "$DATA" | jq '.clones[-1].count // 0' )
-          mkdir -p gh-pages/traffic
-          FILE="gh-pages/traffic/clones.json"
-          if [ ! -f "$FILE" ]; then
-              echo '{"total":0,"daily":{}}' > "$FILE"
-          fi
-          TOTAL=$( jq '.total' "$FILE" )
-          TOTAL_NEW=$((TOTAL + COUNT))
-          jq \
-              --arg date "$TODAY" \
-              --argjson count "$COUNT" \
-              --argjson total "$TOTAL_NEW" \
-              '
-              .total = $total
-              | .last_update = $date
-              | .daily[$date] = $count
-              ' "$FILE" > "$FILE.tmp"
-          mv "$FILE.tmp" "$FILE"
-          echo "Date: $TODAY"
-          echo "Clones per day: $COUNT"
-          echo "TOTAL_NEW: $TOTAL_NEW"
+          update_json() {
+              local UPDATES=$1
+              local KEY=$2
+              local FIELD=$3
+              local FILE=$4
+              echo "[$FILE] : TOTAL = $( jq -r '.total' $FILE ) (old)"
+              DAYS=$( jq ".${KEY} | length" "$UPDATES" )
+              echo "Updating $FILE ($DAYS days)"
+              jq \
+                  --arg key "$KEY" \
+                  --arg field "$FIELD" \
+                  --arg updated_at "$UPDATED_AT" \
+                  --argjson updates "$(cat $UPDATES)" '
+                  . // { daily: {} }
+                  | .daily as $old
+                  | .daily = (
+                      reduce $updates[$key][] as $date ($old;
+                        .[ ($date.timestamp | split("T")[0]) ] = $date[$field]
+                      )
+                    )
+                  | .total = ( .daily | to_entries | map(.value) | add // 0 )
+                  | .last_update = $updated_at
+                ' "$FILE" > "$FILE.tmp"
+              mv "$FILE.tmp" "$FILE"
+              echo "[$FILE] : TOTAL = $( jq -r '.total' $FILE ) (new)"
+              git add "$FILE"
+          }
+          update_json  clones_api.json  clones  count    clones.json
+          update_json  clones_api.json  clones  uniques  clones_uniq.json
+          update_json  views_api.json   views   count    views.json
+          update_json  views_api.json   views   uniques  views_uniq.json
           if [ "$DRY_RUN" = "true" ]; then
               echo "DRY-RUN: changes not be saved!"
-              exit 0
           fi
 
+      - name: Generate badge_clones.svg
+        if: github.event.inputs.dry_run != 'true'
+        working-directory: ${{ env.WORK_DIR }}
+        run: |
+          if git diff --cached --quiet; then
+              echo "No changes for update badges"
+              exit 0
+          fi
+          create_badge () {
+              FILE="$1"
+              FNAME="$2"
+              LABEL="$3"
+              COLOR="${4:-green}"
+              BTYPE="${5:-downloads}"
+              TOTAL=$( jq -r '.total' "$FILE" )
+              UPDATED_AT=$( jq -r '.last_update' "$FILE" )
+              curl -s "https://img.shields.io/badge/${BTYPE}-${TOTAL}-${COLOR}?label=${LABEL}&style=flat" -o "$FNAME"
+              git add "$FNAME"
+          }
+          create_badge  clones.json       clones.svg       downloads       green
+          create_badge  clones_uniq.json  clones_uniq.svg  downloads       blue
+          create_badge  views.json        views.svg        views           green
+          create_badge  views_uniq.json   views_uniq.svg   unique%20views  blue
+      
       - name: Commit & push
         if: github.event.inputs.dry_run != 'true'
+        working-directory: ${{ env.WORK_DIR }}
         run: |
-          cd gh-pages
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
-          git add traffic/clones.json
-          git commit -m "traffic: update clones stats" || exit 0
+          if git diff --cached --quiet; then
+              echo "No changes to commit"
+              exit 0
+          fi
+          git commit -m "traffic: update clones stats for $(date -u +%F)"
           git push
