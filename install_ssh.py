@@ -23,7 +23,9 @@ fn_uninstall = '/tmp/ssh_uninstall.sh'
 os.makedirs('tmp', exist_ok = True)
 
 ssh_patch = '''#!/bin/sh
-[ -e "/tmp/ssh_patch.log" ] && return 0
+LOG_FN=/tmp/ssh_patch.log
+[ -e $LOG_FN ] && return 0
+: > $LOG_FN
 
 SSH_EN=`nvram get ssh_en`
 if [ "$SSH_EN" != "1" ]; then
@@ -38,7 +40,7 @@ fi
 /etc/init.d/dropbear enable
 /etc/init.d/dropbear restart
 
-echo "ssh enabled" > /tmp/ssh_patch.log 
+echo "ssh enabled" > $LOG_FN
 '''
 with open(FN_patch, 'w', newline = '\n') as file:
     file.write(ssh_patch)
@@ -58,6 +60,12 @@ chmod +x $DIR_PATCH/ssh_patch.sh
 nvram set ssh_en=1
 nvram commit
 
+FILE_CRON=/etc/crontabs/root
+if [ -f "$FILE_CRON" ]; then
+    grep -v "/ssh_patch.sh" $FILE_CRON > $FILE_CRON.new || echo "" > $FILE_CRON.new
+    echo "*/1 * * * * $DIR_PATCH/ssh_patch.sh >/dev/null 2>&1" >> $FILE_CRON.new
+    mv $FILE_CRON.new $FILE_CRON
+fi
 uci set firewall.auto_ssh_patch=include
 uci set firewall.auto_ssh_patch.type='script'
 uci set firewall.auto_ssh_patch.path="$DIR_PATCH/ssh_patch.sh"
@@ -73,43 +81,50 @@ with open(FN_install, 'w', newline = '\n') as file:
     file.write(ssh_install)
     
 bdata_patch = '''
-rm -f /tmp/bdata_patch.log
+LOG_FN=/tmp/bdata_patch.log
+rm -f $LOG_FN
 TELNET_EN=`bdata get telnet_en`
 SSH_EN=`bdata get ssh_en`
 UART_EN=`bdata get uart_en`
-if [ "$TELNET_EN" != "1" -o "$SSH_EN" != "1" -o "$UART_EN" != "1" ]; then
-    KMOD_FN=/tmp/xmir_patcher.ko
-    if [ -f $KMOD_FN ]; then
-        insmod $KMOD_FN
-        if lsmod | grep -q xmir_patcher ; then
-            echo 'set_mtd_rw|bdata' > /sys/module/xmir_patcher/parameters/cmd
-            RESP=`cat /sys/module/xmir_patcher/parameters/cmd`
-            if [ "${RESP::2}" != "0|" ]; then
-                echo 'set_mtd_rw|Bdata' > /sys/module/xmir_patcher/parameters/cmd
-                RESP=`cat /sys/module/xmir_patcher/parameters/cmd`
-            fi
-            if [ "${RESP::2}" = "0|" ]; then
-                bdata set telnet_en=1
-                bdata set ssh_en=1
-                bdata set uart_en=1
-                bdata commit
-                echo OK > /tmp/bdata_patch.log
-            fi
-            [ ! -f /tmp/bdata_patch.log ] && echo error_3 > /tmp/bdata_patch.log
-        fi
-        [ ! -f /tmp/bdata_patch.log ] && echo error_2 > /tmp/bdata_patch.log
-    fi
-    [ ! -f /tmp/bdata_patch.log ] && echo error_1 > /tmp/bdata_patch.log
+BOOTWAIT=`bdata get boot_wait`
+if [ "$TELNET_EN" = 1 -a "$SSH_EN" = 1 -a "$UART_EN" = 1 -a "$BOOTWAIT" = on ]; then
+    echo ok > $LOG_FN
+    exit 0
 fi
+KMOD_FN=/tmp/xmir_patcher.ko
+if [ ! -f $KMOD_FN ]; then
+    echo "ERROR: file xmir_patcher.ko not found!" > $LOG_FN
+    exit 2
+fi
+RESP=`insmod $KMOD_FN`
+if ! lsmod | grep -q xmir_patcher ; then
+    echo "ERROR: cannot load xmir_patcher.ko!" > $LOG_FN
+    echo "$RESP" >> $LOG_FN
+    exit 3
+fi
+echo 'set_mtd_rw|bdata' > /sys/module/xmir_patcher/parameters/cmd
+RESP=`cat /sys/module/xmir_patcher/parameters/cmd`
+if [ "${RESP::2}" != "0|" ]; then
+    echo "ERROR: command set_mtd_rw|bdata failed!" > $LOG_FN
+    echo "$RESP" >> $LOG_FN
+    exit 4
+fi
+bdata set telnet_en=1
+bdata set ssh_en=1
+bdata set uart_en=1
+bdata set boot_wait=on
+bdata commit
+echo OK > $LOG_FN
+exit 0
 '''
 
 ssh_uninstall = '''#!/bin/sh
 DIR_PATCH=/etc/crontabs/patches
 
-if grep -q '/ssh_patch.sh' /etc/crontabs/root ; then
-    # remove older version of patch
-    grep -v "/ssh_patch.sh" /etc/crontabs/root > /etc/crontabs/root.new
-    mv /etc/crontabs/root.new /etc/crontabs/root
+FILE_CRON=/etc/crontabs/root
+if grep -q '/ssh_patch.sh' $FILE_CRON ; then
+    grep -v "/ssh_patch.sh" $FILE_CRON > $FILE_CRON.new
+    mv $FILE_CRON.new $FILE_CRON
     /etc/init.d/cron restart
 fi
 if uci -q get firewall.auto_ssh_patch ; then
