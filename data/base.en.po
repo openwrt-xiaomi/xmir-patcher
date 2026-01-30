@@ -1,4 +1,21 @@
 
+#: /usr/lib/lua/luci/view/web/inc/header.htm
+msgid "存储功能"
+msgstr "Storage"
+
+msgid "存储设置"
+msgstr "Storage settings"
+
+msgid "系统设置"
+msgstr "System settings"
+
+msgid "网口自定义"
+msgstr "Network port settings"
+
+msgid "添加Mesh子路由"
+msgstr "Add Mesh sub-route"
+
+
 #: /usr/lib/lua/luci/view/web/inc/store.htm
 msgid "开启后，路由器USB接口将工作在3.0模式下。（USB3.0使用时会对2.4G Wi-Fi有些影响）"
 msgstr ""
@@ -31,7 +48,7 @@ msgstr "Time settings"
 
 # msgid 0x602D46E9
 msgid "当前系统时间："
-msgstr "Current system time:"
+msgstr "Current system time: "
 
 msgid "启用此功能后，Redmi路由器将开启IPv6上网功能（使用前请咨询网络运营商是否支持IPv6）"
 msgstr ""
@@ -45,6 +62,348 @@ msgid "Mesh模式下不支持切换为中继模式。"
 
 msgid "Mesh模式下不支持切换为路由模式。"
 msgstr "To ensure user experience, switching to Relay mode is not supported in Mesh mode"
+
+msgid "Samba功能"
+msgstr "Samba"
+
+msgid "如何使用Samba功能？"
+msgstr "How to use Samba?"
+
+msgid "第一步：支持Samba协议的PC或电视连入此路由提供的网络；"
+msgstr "Step 1: Connect a PC or TV that supports the Samba protocol to the network provided by this router;"
+
+msgid "第二步：根据接入终端的情况进行文件访问"
+msgstr "Step 2: Access files based on access terminal conditions"
+
+msgid "，回车后即可访问此路由器外接存储器上的文件"
+msgstr ", and press Enter to access the files on the external storage of this router."
+
+msgid "电视：找到此电视上的Samba入口，根据电视操作提示进行访问此路由器外接存储器上的共享文件"
+msgstr "TV: Find the Samba entrance on this TV and follow the TV operation prompts to access the shared files on the external storage of this router."
+
+msgid "*注：部分设备在Samba访问时需要额外的网络凭据，请尝试在用户名输入栏处输入guest，密码输入栏留空尝试连接。如问题仍无法解决，请联系客服处理。"
+msgstr "*Note: Some devices require additional network credentials when accessing Samba. Please try entering guest in the username input field and leave the password input field blank to try to connect. If the problem still cannot be solved, please contact customer service."
+
+msgid "开启Samba功能后，可以让所有接入此路由器支持Samba协议的终端设备在局域网中访问路由器或其外接U盘/移动硬盘上的共享文件。"
+msgstr "After turning on the Samba, all terminal devices connected to the router that support the Samba protocol can access shared files on the router or its external USB flash drive/removable hard drive in the LAN."
+
+msgid "虚拟内存"
+msgstr "Virtual Memory"
+
+msgid "该路由器可通过创建虚拟内存来调用外部存储资源充当内存。"
+msgstr "The router can call external storage resources to act as memory by creating virtual memory."
+
+msgid "使用方法：将剩余空间大于2GB的U盘或者移动硬盘（推荐NTFS/FAT32/exFAT/EXT4等主流格式）插入此路由USB接口，路由器识别到此存储设备后，选择预扩展内存大小来创建虚拟内存。"
+msgstr "Instructions for use: Insert a USB flash drive or mobile hard disk with more than 2GB of remaining space (mainstream formats such as NTFS/FAT32/exFAT/EXT4 are recommended) into the USB interface of this router. After the router recognizes this storage device, select the pre-expanded memory size to create virtual memory."
+
+msgid "*注：在创建虚拟内存过程中若Docker服务正在运行，Docker服务将会被重启。在虚拟内存使用过程中，请勿直接拔出磁盘，如需拔出磁盘，请使用安全移除磁盘功能。"
+msgstr "*Note: If the Docker service is running during the creation of virtual memory, the Docker service will be restarted. When using virtual memory, do not pull out the disk directly. If you need to pull out the disk, please use the safe removal function."
+
+msgid "当前路由器内存状态"
+msgstr "Memory usage"
+
+msgid "路由器内存容量"
+msgstr "Memory total"
+
+msgid "当前虚拟内存状态"
+msgstr "Virtual memory usage"
+
+msgid "虚拟内存容量"
+msgstr "Virtual memory total"
+
+msgid "删除虚拟内存
+msgstr "Delete virtual memory"
+
+
+#: /usr/lib/lua/luci/view/web/inc/store.js.htm
+msgid "虚拟内存大小"
+msgstr "Virtual Memory Size"
+
+msgid "创建虚拟内存"
+msgstr "Create virtual memory"
+
+msgid "设置成功！请等待一段时间完成虚拟内存创建"
+msgstr "Setup successful! Please wait for a while to complete virtual memory creation"
+
+msgid "1.创建期间请勿断电或拔插存储设备;"
+msgstr "1. Do not power off or unplug or unplug storage devices during creation;"
+
+msgid "2.使用过程中，如需拔出磁盘请使用安全移除磁盘功能，强行拔出可能会导致路由器工作异常甚至重启;"
+msgstr "2. During use, if you need to pull out the disk, please use the safe disk removal function. Forcibly pulling it out may cause the router to work abnormally or even restart;"
+
+msgid "虚拟内存创建中"
+msgstr "Virtual memory is being created"
+
+msgid "执行此操作将删除与路由器直连的存储器中扩展的虚拟内存，如果此时Docker服务正在运行，Docker服务将会被重启"
+msgstr "Performing this operation will delete the extended virtual memory in the storage directly connected to the router. If the Docker service is running at this time, the Docker service will be restarted."
+
+msgid "虚拟内存删除成功！"
+msgstr "Virtual memory deleted successfully!"
+
+msgid "虚拟内存创建失败，未检测到可用的外接存储器"
+msgstr "Virtual memory creation failed, no available external storage detected"
+
+msgid "存储位置选择"
+msgstr "Select storage location"
+
+msgid "安全移除磁盘"
+msgstr "Safely remove the disk"
+
+msgid "设置成功，请等待"
+msgstr "Setup successful, please wait "
+
+msgid "s完成USB模式切换"
+msgstr "s to complete USB mode switching"
+
+msgid "分区名称"
+msgstr "Partition: "
+
+msgid "外接存储器格式"
+msgstr "Filesystem"
+
+
+#: /usr/lib/lua/luci/view/web/inc/docker.htm
+msgid "运行Docker"
+msgstr "Run Docker"
+
+msgid "如何使用Docker？"
+msgstr "How to use Docker?"
+
+msgid "Docker安装成功后，需要通过安装第三方管理来对它进行使用和管理。"
+msgstr "After Docker is successfully installed, you need to install a Container Manager to use and manage it."
+
+msgid "1.单击安装第三方管理按钮，此时会进行第三方管理工具的安装；"
+msgstr "1. Click the Install Container Manager button, and wait until the manager is installed;"
+
+msgid "2.管理工具安装成功后，单击管理Docker按钮，网页会跳转至第三方管理工具，此页面集成了容器、镜像的基本操作功能和信息展示、管理等功能。"
+msgstr "2. After the Container Manager is successfully installed, click the Manage Docker button, and the web page will jump to the manager's web interface. This page integrates the basic operating functions of containers and images, as well as information display, management and other functions."
+
+msgid "Docker安装"
+msgstr "Docker installation"
+
+msgid "安装成功！"
+msgstr "The installation was successful!"
+
+msgid "是否确认卸载？"
+msgstr "Do you want to confirm the uninstallation?"
+
+msgid "安装第三方管理"
+msgstr "Install Container Manager"
+
+msgid "管理Docker"
+msgstr "Manage Docker"
+
+msgid "卸载Docker"
+msgstr "Uninstall Docker"
+
+msgid "路由器外接存储器检测："
+msgstr "Router external storage:"
+
+msgid "第三方管理工具："
+msgstr "Container Manager: "
+
+msgid "不可用，请先运行docker并安装第三方管理"
+msgstr "Not available, please run Docker and install Container Manager first"
+
+
+#: /usr/lib/lua/luci/view/web/inc/wifi.htm
+msgid "Wi-Fi多频合一"
+msgstr "Wi-Fi multi-band in one"
+
+msgid "开启后，2.4GHz、5GHz和5GHz-Game将合并显示为同一个名称，路由器将优先为终端选择最佳Wi-Fi网络。合并名称后部分终端可能离线，需重新连接。"
+msgstr "After turning it on, 2.4GHz, 5GHz and 5GHz-Game will be combined and displayed as the same name, and the router will give priority to selecting the best Wi-Fi network for the terminal. After merging names, some terminals may be offline and need to be reconnected."
+
+msgid "Wi-Fi模式切换"
+msgstr "Wi-Fi mode switching"
+
+msgid "双频模式：具有更好的覆盖能力，适合大部分的应用场景。"
+msgstr "Dual-band mode: has better coverage capabilities and is suitable for most application scenarios."
+
+msgid "三频模式：覆盖弱于双频。可支持WiFi7手机双5G MLO并联，大幅提升带宽。同时可作为独立电竞频段，减少其他设备干扰。"
+msgstr "Tri-band mode: Coverage is weaker than dual-band. It can support dual 5G MLO parallel connection of WiFi 7 mobile phones, greatly increasing bandwidth. At the same time, it can be used as an independent e-sports frequency band to reduce interference from other devices."
+
+msgid "工作模式"
+msgstr "Operating mode"
+
+msgid "双频模式"
+msgstr "Dual-band mode"
+
+msgid "三频模式"
+msgstr "Tri-band mode"
+
+msgid "MLO设置"
+msgstr "MLO settings"
+
+msgid "多频合一情况下，此路由器会默认开启MLO多链路连接，由Wi-Fi7终端自主选择并发频段接入，提高速率降低延迟。"
+msgstr "In the case of multi-frequency integration, this router will enable MLO multi-link connection by default, and the Wi-Fi 7 terminal will independently select concurrent frequency band access to increase the speed and reduce latency."
+
+msgid "2.4GHz 选项"
+msgstr "2.4GHz options"
+
+msgid "5GHz 选项"
+msgstr "5GHz options"
+
+msgid "5GHz-Game 选项"
+msgstr "5GHz-Game options"
+
+msgid "Wi-Fi 5 兼容模式"
+msgstr "Wi-Fi 5 compatibility mode"
+
+msgid "某些老设备对Wi-Fi6协议支持不好，可能扫描不到信号或者连接不上等。开启此开关后，将会切换到Wi-Fi5模式，解决兼容问题。但同时会关闭Wi-Fi6的相关功能，如OFDMA、TWT、BSS Coloring等。"
+msgstr "Some old devices do not support the Wi-Fi6 protocol well, and may not be able to scan for signals or cannot connect properly, etc. After turning on this switch, it will switch to Wi-Fi5 mode to solve compatibility issues. But at the same time, Wi-Fi6 related functions, such as OFDMA, TWT, BSS Coloring, etc., will be turned off."
+
+msgid "TWT节能模式"
+msgstr "TWT energy saving mode"
+
+msgid "TWT节能模式兼容性问题解决办法"
+msgstr "Solution to TWT energy-saving mode compatibility issue"
+
+msgid "如果出现老旧终端在此路由开启TWT节能模式后出现兼容性问题，建议尝试以下方法："
+msgstr "If old terminals have compatibility issues after turning on TWT energy-saving mode on this route, it is recommended to try the following methods:"
+
+msgid "1. 到相应终端制造商官网下载更新驱动；"
+msgstr "1. Go to the official website of the corresponding terminal manufacturer to download the updated driver;"
+
+msgid "2. 若最新驱动仍无法解决兼容性问题，建议先关闭该功能。"
+msgstr "2. If the latest driver still cannot solve the compatibility problem, it is recommended to turn off this function first."
+
+msgid "开启TWT节能模式后，可通过TWT节能技术降低接入此路由器的Wi-Fi6终端设备功耗，部分老旧终端可能会有兼容性问题。"
+msgstr "After turning on TWT energy-saving mode, TWT energy-saving technology can be used to reduce the power consumption of Wi-Fi 6 terminal devices connected to this router. Some old terminals may have compatibility issues."
+
+
+#: /usr/lib/lua/luci/view/web/inc/wan.htm
+msgid "IPv4信息"
+msgstr "IPv4 information"
+
+msgid "IPv6信息"
+msgstr "IPv6 information"
+
+
+#: /usr/lib/lua/luci/view/web/inc/netmod.htm
+msgid "此功能与双WAN功能冲突，若想使用，请您先关闭双WAN功能"
+msgstr "This function conflicts with the Dual WAN function. If you want to use it, please turn off the Dual WAN function first."
+
+
+#: /usr/lib/lua/luci/view/web/inc/led-switch.htm
+msgid "灯效控制"
+msgstr "Lighting control"
+
+msgid "如何自定义及定时控制路由器灯效"
+msgstr "How to control lighting effects"
+
+msgid "此页面仅支持对路由器灯效进行简单管理，如需自定义或定时控制灯效请使用米家App绑定此路由器后进行管理"
+msgstr "This page only supports simple management of the router's lighting effects. If you need to customize or schedule the lighting effects, please use the Mijia App to bind this router and manage it."
+
+msgid "状态指示灯"
+msgstr "Status light"
+
+msgid "开启及关闭此路由器的网络/系统状态指示灯"
+msgstr "Turn on and off this router's network/system status indicator"
+
+msgid "网口灯"
+msgstr "WAN port light"
+
+msgid "开启及关闭此路由器的网口灯"
+msgstr "Turn on and off this router's network port light"
+
+
+#: /usr/lib/lua/luci/view/web/inc/sysinfo.js.htm
+msgid "路由器正常工作情况下建议使用系统升级检测进行升级。当系统无法升级时使用手动上传ROM包进行升级。"
+msgstr "When the router is working normally, it is recommended to use system upgrade detection to upgrade. When the system cannot be upgraded, manually upload the ROM package for upgrade."    
+
+msgid "1.恢复出厂设置操作会抹掉当前路由器的所有设置；"
+msgstr "1. Restoring the factory settings will erase all settings of the current router;"
+
+msgid "2.若此前已完成Mesh组网，子路由将会失去连接，待恢复出厂设置后需重新进行组网。"
+msgstr "2. If Mesh networking has been completed before, the sub-router will lose connection, and the network needs to be re-established after the factory settings are restored."
+
+msgid "当安装失败或需要降级到前一版本时使用手动安装插件。"
+msgstr "Use manual installation of plugins when installation fails or when you need to downgrade to a previous version."
+
+
+#: /usr/lib/lua/luci/view/web/inc/sysinfo.js.htm
+msgid "碰碰连"
+msgstr "NFC"
+
+msgid "该功能可为支持NFC的设备提供一碰入网服务。当前仅支持安卓手机，在使用前请确认："
+msgstr "This function can provide one-touch network access services for NFC-enabled devices. Currently only supports Android phones, please confirm before use:"
+
+
+#: /usr/lib/lua/luci/view/web/inc/dual-wan.htm
+msgid "双WAN设置"
+msgstr "Dual WAN setup"
+
+msgid "请选择网口作为WAN口，并在"
+msgstr "Please select the network port as the WAN port and configure the WAN port in "
+
+msgid "带宽聚合"
+msgstr "Bandwidth aggregation"
+
+msgid "WAN1优先"
+msgstr "WAN1 primary"
+
+msgid "WAN2优先"
+msgstr "WAN2 primary"
+
+msgid "WAN1优先，WAN2备份"
+msgstr "WAN1 primary, WAN2 backup"
+
+msgid "WAN2优先，WAN1备份"
+msgstr "WAN2 primary, WAN1 backup"
+
+msgid "WAN1口/WAN2口转发比例设置"
+msgstr "WAN1/WAN2 forwarding ratio setting"
+
+msgid "WAN口转发规则设置"
+msgstr "WAN port forwarding rule settings"
+
+msgid "WAN口转发规则列表："
+msgstr "WAN port forwarding rule list:"
+
+msgid "还没有策略加入"
+msgstr "No rule has been added yet"
+
+msgid "设备IP"
+msgstr "Device IP"
+
+
+#: /usr/lib/lua/luci/view/web/inc/lan_lag.htm
+msgid "LAN口聚合"
+msgstr "LAN port aggregation"
+
+msgid "LAN口聚合注意事项"
+msgstr "Precautions for LAN port aggregation"
+
+msgid "网口协商速率不同时，将无法聚合成功。对端网卡需开启LACP协议。"
+msgstr "When the network port negotiation rates are different, aggregation will not succeed. The peer network card needs to have the LACP protocol turned on."
+
+msgid "将两个LAN口聚合，实现网口速率叠加"
+msgstr "Aggregate two LAN ports to achieve network port speed superposition"
+
+
+#: /usr/lib/lua/luci/view/web/inc/game_port.htm
+msgid "游戏网口"
+msgstr "Game network port"
+
+msgid "游戏网口注意事项"
+msgstr "Precautions for game network port"
+
+msgid "请注意，开启以下功能后游戏网口的优先转发功能将会失效："
+msgstr "Please note that the priority forwarding function of the game network port will be disabled after the following functions are enabled:"
+
+msgid "1. Qos设置；"
+msgstr "1. Qos settings;"
+
+msgid "2. VPN服务与智能VPN分流。"
+msgstr "2. VPN service and smart VPN offloading."
+
+msgid "游戏网口传输的数据会被优先转发，使得延迟更低，更适用于游戏和语音场景"
+msgstr "Data transmitted through the game network port will be forwarded first, resulting in lower latency and more suitable for gaming and voice scenarios."
+
+
+#: /usr/lib/lua/luci/view/web/inc/index.htm
+msgid "双WAN模式下，不支持在此处设置外网带宽"
+msgstr "In Dual WAN mode, setting the external network bandwidth here is not supported."
 
 # ============= data from www files ==============
 
