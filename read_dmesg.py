@@ -30,9 +30,9 @@ gw.download(fn_remote, fn_local)
 
 gw.run_cmd("rm -f " + fn_remote)
 
-with open(fn_local, "r") as file:
+with open(fn_local, "r", encoding="utf-8", errors="replace") as file:
   data = file.read()
-with open(fn_local, "w") as file:
+with open(fn_local, "w", encoding="utf-8") as file:
   file.write(data)
 
 print("Kernel logs written to file {}".format(fn_local))
@@ -40,7 +40,7 @@ print("Kernel logs written to file {}".format(fn_local))
 fn_old    = 'outdir/syslog_old.txt'
 fn_local  = 'outdir/syslog.txt'
 fn_remote = '/tmp/syslog.txt'
-if os.path.exists(fn_local): 
+if os.path.exists(fn_local):
   if os.path.exists(fn_old):
     os.remove(fn_old)
   os.rename(fn_local, fn_old)
@@ -50,9 +50,9 @@ gw.run_cmd("cat /data/usr/log/messages /tmp/messages > " + fn_remote)
 gw.download(fn_remote, fn_local)
 gw.run_cmd("rm -f " + fn_remote)
 
-with open(fn_local, "r") as file:
+with open(fn_local, "r", encoding="utf-8", errors="replace") as file:
   data = file.read()
-with open(fn_local, "w") as file:
+with open(fn_local, "w", encoding="utf-8") as file:
   file.write(data)
 
 print("System logs are written to a file {}".format(fn_local))
