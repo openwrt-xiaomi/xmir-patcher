@@ -31,13 +31,13 @@ with gw.api_request("API/xqsystem/get_icon", stream = True, timeout = 5) as resp
     try:
         resp.raise_for_status()
     except:
-        raise ExploitNotWorked('Exploit "get_icon" not working!!! (API not founded)')
-    for chunk in resp.iter_content(chunk_size = 8192): 
+        raise ExploitNotWorked('Exploit "get_icon" not working!!! (API not found)')
+    for chunk in resp.iter_content(chunk_size = 8192):
         if chunk.startswith(b'\x89PNG'):
             api_get_icon_status = 1
 
 if api_get_icon_status <= 0:
-    raise ExploitNotWorked('Exploit "get_icon" not working!!! (api not founded)')
+    raise ExploitNotWorked('Exploit "get_icon" not working!!! (api not found)')
 
 
 import hashlib
@@ -88,7 +88,7 @@ def get_python_exe():
         if ':\\' in fn:
             return fn
     raise RuntimeError('Cannot get python executable filename!')
-    
+
 def gen_rule_name(prefix, app):
     if not app:
         app = get_python_exe()
@@ -102,7 +102,7 @@ if os.name == 'nt':
     rule_name = gen_rule_name(srv_fw_rule, rule_app)
     txt = get_firewall_rule(rule_name)
     if not txt or f' {rule_name}\n' not in txt:
-        print('WARN: Firewall rule for XMiR-Patcher not founded!')
+        print('WARN: Firewall rule for XMiR-Patcher not found!')
         print('INFO: Try add new rule to Windows Firewall...')
         add_firewall_rule(rule_name, rule_app)
         time.sleep(0.5)
@@ -119,7 +119,7 @@ srvInitEvent = threading.Event()
 class XmirHttpServer(HTTPServer):
     timeout = 3
     retcode = 0
-    
+
     def server_bind(self):
         import ssl
         root_dir = os.path.dirname(os.path.abspath(__file__))
@@ -131,17 +131,17 @@ class XmirHttpServer(HTTPServer):
         ctx.load_cert_chain(certfile = certfile, keyfile = keyfile)
         self.socket = ctx.wrap_socket(self.socket, server_side = True)
         super().server_bind()
-        
+
     def server_activate(self):
         global srvInitEvent
         super().server_activate()
         print(f'SERVER: start and wait request from client...')
         srvInitEvent.set()
-        
+
     def handle_timeout(self):
         print(f"SERVER: Timed out! (timeout = {self.timeout})")
         self.retcode = -1
-        
+
     def __del__(self):
         global srvInitEvent
         print(f'SERVER: destroy with retcode = {self.retcode}')
@@ -153,7 +153,7 @@ class HttpHandler(BaseHTTPRequestHandler):
 
     def __init__(self, *args, **kwargs):
         http_server.BaseHTTPRequestHandler.__init__(self, *args, **kwargs)
-        
+
     def do_GET(self):
         print(f'SERVER: get request = {self.path}')
         if self.server.action_path not in self.path:
@@ -239,7 +239,7 @@ def install_exploit(api = 'API/xqsystem/get_icon'):
     global gw, srv_ip_addr, srv_port, srvInitEvent
     from threading import Thread
     srv_timeout = 3
-    ret_code = [ None ]    
+    ret_code = [ None ]
     srvInitEvent.clear()
     server = Thread(target = wait_req_and_send_resp, args = [ payload_name, payload_body, srv_ip_addr, ret_code, srv_timeout ])
     server.start()
@@ -253,7 +253,7 @@ def install_exploit(api = 'API/xqsystem/get_icon'):
     except Exception:
         raise ExploitNotWorked(f'Exploit "get_icon" not working!!! Cannot transfer Payload to router!')
     resp_body = b''
-    for chunk in resp.iter_content(chunk_size = 8192): 
+    for chunk in resp.iter_content(chunk_size = 8192):
         resp_body += chunk
     print(f'Readed response size = {len(resp_body)} bytes')
     server.join(timeout = 10)

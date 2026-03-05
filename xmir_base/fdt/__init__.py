@@ -89,9 +89,9 @@ class FDT:
         return msg
 
     def get_node(self, path: str, create: bool = False) -> Node:
-        """ 
+        """
         Get node object from specified path
-        
+
         :param path: Path as string
         :param create: If True, not existing nodes will be created
         """
@@ -114,9 +114,9 @@ class FDT:
         return node
 
     def get_property(self, name: str, path: str = '') -> Property:
-        """ 
+        """
         Get property object by name from specified path
-        
+
         :param name: Property name
         :param path: Path to sub-node
         """
@@ -125,7 +125,7 @@ class FDT:
     def set_property(self, name: str, value, path: str = '', create: bool = True):
         """
         Set property object by name
-        
+
         :param name: Property name
         :param value: Property value
         :param path: Path to subnode
@@ -134,9 +134,9 @@ class FDT:
         self.get_node(path, create).set_property(name, value)
 
     def exist_node(self, path: str) -> bool:
-        """ 
+        """
         Check if <path>/node exist and return True
-        
+
         :param path: path/node name
         :return True if <path>/node exist else False
         """
@@ -148,36 +148,36 @@ class FDT:
             return True
 
     def exist_property(self, name: str, path: str = '') -> bool:
-        """ 
+        """
         Check if property exist
-        
+
         :param name: Property name
         :param path: The path
         """
         return self.get_node(path).exist_property(name) if self.exist_node(path) else False
 
     def remove_node(self, name: str, path: str = ''):
-        """ 
+        """
         Remove node obj by path/name. Raises ValueError if path/name doesn't exist
-        
+
         :param name: Node name
         :param path: Path to sub-node
         """
         self.get_node(path).remove_subnode(name)
 
     def remove_property(self, name: str, path: str = ''):
-        """ 
+        """
         Remove property obj by name. Raises ValueError if path/name doesn't exist
-        
+
         :param name: Property name
         :param path: Path to subnode
         """
         self.get_node(path).remove_property(name)
 
     def add_item(self, obj, path: str = '', create: bool = True):
-        """ 
+        """
         Add sub-node or property at specified path. Raises ValueError if path doesn't exist
-        
+
         :param obj: The node or property object
         :param path: The path to subnode
         :param create: If True, not existing nodes will be created
@@ -196,9 +196,9 @@ class FDT:
         return self.last_handle
 
     def search(self, name: str, itype: int = ItemType.ALL, path: str = '', recursive: bool = True) -> list:
-        """ 
-        Search properties and/or nodes with specified name. Return list of founded items
-        
+        """
+        Search properties and/or nodes with specified name. Return list of found items
+
         :param name: The Property or Node name. If empty "", all nodes or properties will selected
         :param itype: Item type - NODE, PROP, PROP_BASE, PROP_WORDS, PROP_BYTES, PROP_STRINGS or ALL
         :param path: Path to root node
@@ -234,9 +234,9 @@ class FDT:
         return items
 
     def walk(self, path: str = '', relative: bool = False) -> list:
-        """ 
+        """
         Walk trough nodes and return relative/absolute path with list of sub-nodes and properties
-        
+
         :param path: The path to root node
         :param relative: True for relative or False for absolute return path
         """
@@ -258,7 +258,7 @@ class FDT:
     def merge(self, fdt_obj, replace: bool = True):
         """
         Merge external FDT object into this object.
-        
+
         :param fdt_obj: The FDT object which will be merged into this
         :param replace: True for replace existing items or False for keep old items
         """
@@ -302,7 +302,7 @@ class FDT:
 
         for node in no_phandle_nodes:
             if node.name != '/':
-                if node.path == '/':   
+                if node.path == '/':
                     phandle_value = self.add_label(node.name)
                 else:
                     phandle_value = self.add_label(node.path)
@@ -402,7 +402,7 @@ def parse_dts(text: str, root_dir: str = '') -> FDT:
     Parse DTS text file and create FDT Object
 
     :param text:
-    :param root_dir: 
+    :param root_dir:
     """
     ver = get_version_info(text)
     text = strip_comments(text)
@@ -437,7 +437,7 @@ def parse_dts(text: str, root_dir: str = '') -> FDT:
                 new_node = Node(node_name)
                 new_node.set_label(label)
 
-                
+
             else:
                 node_name = line.split()[0]
                 new_node = Node(node_name)
@@ -470,7 +470,7 @@ def parse_dts(text: str, root_dir: str = '') -> FDT:
                     # just change ',' to ' ' -- to concatenate the values into single array
                     if ',' in prop_value:
                         prop_value = prop_value.replace(',', ' ')
-                    
+
                     # keep the orginal references for phandles as a phantom
                     # property
                     if "&" in prop_value:
@@ -545,7 +545,7 @@ def parse_dts(text: str, root_dir: str = '') -> FDT:
 def parse_dtb(data: bytes, offset: int = 0) -> FDT:
     """
     Parse FDT Binary Blob and create FDT Object
-    
+
     :param data: FDT Binary Blob in bytes
     :param offset: The offset of input data
     """
@@ -606,9 +606,9 @@ def parse_dtb(data: bytes, offset: int = 0) -> FDT:
 
 
 def diff(fdt1: FDT, fdt2: FDT) -> tuple:
-    """ 
+    """
     Compare two flattened device tree objects and return list of 3 objects (same in 1 and 2, specific for 1, specific for 2)
-    
+
     :param fdt1: The object 1 of FDT
     :param fdt2: The object 2 of FDT
     """

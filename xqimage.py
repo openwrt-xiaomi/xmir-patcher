@@ -22,7 +22,7 @@ class XQImgHdr(ctypes.Structure):
 
 class XQImgFile(ctypes.Structure):
   _fields_ = [("magic",   ctypes.c_ushort),    # BE BA
-              ("rsvd0",   ctypes.c_ushort), 
+              ("rsvd0",   ctypes.c_ushort),
               ("addr",    ctypes.c_uint),      # Flash Address
               ("size",    ctypes.c_uint),      # size of file
               ("mtd",     ctypes.c_short),     # mtd number for flashing
@@ -51,7 +51,7 @@ class XQImage():
   align = 128*1024
   padfill = b'\xFF'
   files = []  # list of files
-  
+
   def __init__(self, model, type = 0, testmode = False):
     self.testmode = testmode
     self.model = model.upper()
@@ -84,14 +84,14 @@ class XQImage():
         file.data = buf_align(data, align, padfill)
     file.header = XQImgFile()
     file.header.magic = int.from_bytes(b'\xBE\xBA', byteorder='little')
-    file.header.rsvd0 = 0 
+    file.header.rsvd0 = 0
     file.header.addr = 0xFFFFFFFF
     file.header.size = len(file.data)
     file.header.mtd = 0xFFFF if mtd is None else mtd
     file.header.dummy = 0
     file.header.name = name.encode('latin_1')
     self.files.append(file)
-  
+
   def build_image(self, sign = None):
     self.data = None
     buf = bytearray()
@@ -107,7 +107,7 @@ class XQImage():
       buf += bytes(f.header)
       buf += f.data
     self.header.sign = len(buf)
-    if sign:    
+    if sign:
       buf += sign
     else:
       buf += self.build_sign()
@@ -117,7 +117,7 @@ class XQImage():
     buf[:ctypes.sizeof(self.header)] = bytes(self.header)
     self.data = buf
     return buf
-  
+
   def save_image(self, filename, sign = None):
     self.outfilename = filename
     data = self.build_image(sign)
@@ -150,7 +150,7 @@ class XQImage():
       DIE('HDR1 Payload is not defined for device "{}".'.format(self.model))
     # add header of sign section (16 bytes)
     sign = i2b(poffset) + (b'\x00' * 12)
-    # add fake sign 
+    # add fake sign
     size = poffset - len(payload)
     if self.testmode:
       for i in range(0, size, 4):
@@ -189,15 +189,15 @@ def build_xq_openwrt(fwdir, model, outfilename):
   rootfs = None
   fit = None
   bl = None
-  fn_list = [f for f in os.listdir(fwdir) if os.path.isfile(os.path.join(fwdir, f))]  
+  fn_list = [f for f in os.listdir(fwdir) if os.path.isfile(os.path.join(fwdir, f))]
   for i, fname in enumerate(fn_list):
     fname = fwdir + fname
     fsize = os.path.getsize(fname)
     if fsize < 80*1024:
-      continue    
+      continue
     with open(fname, "rb") as file:
-      fdata = file.read()    
-    if fdata[:4] == b"\x27\x05\x19\x56":  # uImage 
+      fdata = file.read()
+    if fdata[:4] == b"\x27\x05\x19\x56":  # uImage
       print('Parse image file "{}" ...'.format(fname))
       pos = 0x0C
       kernel_size = int.from_bytes(fdata[pos:pos+4], byteorder='big')
@@ -205,7 +205,7 @@ def build_xq_openwrt(fwdir, model, outfilename):
       kernel_name = fdata[0x20:0x40]
       if kernel_name.find(b'Breed') == 0 or kernel_name.find(b'NAND Flash') == 0:
         if bl:
-          DIE('Second bootloader founded')
+          DIE('Second bootloader found')
         bl = types.SimpleNamespace()
         bl.data = fdata
         bl.type = 'breed' if kernel_name.find(b'Breed') == 0 else ''
@@ -213,12 +213,12 @@ def build_xq_openwrt(fwdir, model, outfilename):
           DIE('Bootloader size is too large! (size: {} KB)'.format(len(fdata) // 1024))
         continue
       if kernel:
-        DIE('Second kernel founded')
+        DIE('Second kernel found')
       if kernel_size < 0x100000:
         DIE('Kernel size is too small! (size: {} KB)'.format(kernel_size // 1024))
       kernel = types.SimpleNamespace()
       kernel.ostype = ''
-      kernel.data = fdata[:kernel_size]      
+      kernel.data = fdata[:kernel_size]
       if kernel_name[0:1] == b'\x03' or kernel_name[0:1] == b'\x04':    # padavan kernel version
         if kernel_name[2:3] == b'\x03':  # padavan fw version
           kernel.ostype = 'padavan'
@@ -232,7 +232,7 @@ def build_xq_openwrt(fwdir, model, outfilename):
           if fdata[x+28:x+32] != b'\x04\x00\x00\x00':
             DIE('Rootfs not found in padavan firmware')
           if rootfs:
-            DIE('Second rootfs founded')
+            DIE('Second rootfs found')
           kernel.data = fdata[:x]
           if x > MAX_KERNEL_SIZE:
             DIE('Padavan kernel size is too large! (size: {} KB)'.format(x // 1024))
@@ -246,13 +246,13 @@ def build_xq_openwrt(fwdir, model, outfilename):
         x = data.find(b'UBI#\x01\x00\x00\x00')
         if x >= 0:
           if rootfs:
-            DIE('Second rootfs founded')
+            DIE('Second rootfs found')
           rootfs = types.SimpleNamespace()
           rootfs.data = data[x:]
     if fdata[:8] == b'UBI#\x01\x00\x00\x00':
       print('Parse image file "{}" ...'.format(fname))
       if rootfs:
-        DIE('Second rootfs founded')
+        DIE('Second rootfs found')
       rootfs = types.SimpleNamespace()
       rootfs.data = fdata
   if bl and not kernel:
@@ -265,14 +265,14 @@ def build_xq_openwrt(fwdir, model, outfilename):
     x = rootfs.data.find(b'\x01\x00\x00\x06' + b'kernel' + b'\x00')
     if x > 0x800 and x <= 0x4000:
       if kernel:
-        DIE('Second kernel founded into FIT image')
+        DIE('Second kernel found into FIT image')
       fit = rootfs
       rootfs = None
     if not kernel and not fit:
       DIE('Cannot found kernel image')
     if kernel.ostype == 'padavan':
       if not bl or (bl and bl.type != 'breed'):
-        DIE('Padavan firmware supported only with Breed bootloader')      
+        DIE('Padavan firmware supported only with Breed bootloader')
   if bl:
     BREED_ENV_ADDR = 0x60000
     BREED_ENV_OFFSET = BREED_ENV_ADDR
@@ -282,9 +282,9 @@ def build_xq_openwrt(fwdir, model, outfilename):
         data = bl.data[:BREED_ENV_OFFSET]
       else:
         data = buf_align(bl.data, BREED_ENV_OFFSET, b'\xFF')
-      bl.data = data      
+      bl.data = data
       env_file = fwdir + 'breed_env.txt'
-      if os.path.exists(env_file): 
+      if os.path.exists(env_file):
         with open(env_file, 'r', encoding = 'latin_1') as file:
           env_data = file.read()
         print('Parse ENV file: "{}"'.format(env_file))
@@ -333,7 +333,7 @@ if __name__ == "__main__":
       size = 128*1024
     data = None
     if len(sys.argv[5]) > 0:
-      data = sys.argv[5]      
+      data = sys.argv[5]
       data = data.encode('latin_1').decode('unicode-escape').encode('latin_1')
     outfilename = sys.argv[6]
     create_xqimage(model, name, mtd, size, data, outfilename)
@@ -342,7 +342,7 @@ if __name__ == "__main__":
   if len(sys.argv) == 3:
     model = sys.argv[1]
     fn = sys.argv[2]
-    build_xq_openwrt('firmware/', model, fn)    
+    build_xq_openwrt('firmware/', model, fn)
 
   if fn:
     print("#### File '{}' created ####".format(fn))
