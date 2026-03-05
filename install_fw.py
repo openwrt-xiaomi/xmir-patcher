@@ -54,13 +54,13 @@ class Image():
     data2 = None     # unpacked kernel image
     dtb = None       # device-tree
     cmd = None
-    
+
     def __init__(self, type):
         self.type = type
-        
+
     def get_data_size(self, KB = False):
         return 0 if self.data is None else len(self.data)
-    
+
     data_size = property(get_data_size)
 
 def extract_str(data, offset = 0, maxlen = 256, encoding = 'UTF8'):
@@ -122,7 +122,7 @@ class XqFlash():
             img.type = None
             if data[:4] == b'HDR1' or data[:4] == b'HDR2':
                 img.type = 'stock'
-            if data[:4] == UIMAGE_MAGIC:    # uImage 
+            if data[:4] == UIMAGE_MAGIC:    # uImage
                 img.type = 'factory'
             if data[:4] == FDT_MAGIC:       # factory squashfs image
                 img.type = 'factory'
@@ -230,7 +230,7 @@ class XqFlash():
         if image[:4] == b'cs6c':
             print(f'Images "cs6c" not supported!')
         return hr
-        
+
     def parse_stock_image(self, image):
         data = image
         if data[:4] == b'HDR2':
@@ -270,15 +270,15 @@ class XqFlash():
             self.current_image_pos = img.offset + hdr_size
             #print('offset = {}  header = {}'.format("%08X" % (img.offset + hdr_size), img.data[:4]))
             imglst.append(img)
-        
+
         if not imglst:
             die('Incorrect stock image! (5)')
-        
+
         self.img_stock = True
         self.img_stock_names = { }
         for i, img in enumerate(imglst):
             self.img_stock_names[img.name] = img.size
-        
+
         print(f'Stock image list: {self.img_stock_names}')
         self.img_stock_names = { }
         for i, img in enumerate(imglst):
@@ -292,17 +292,17 @@ class XqFlash():
             if len(img.data) < 1*1024*1024:  # skip uboot and other files
                 continue
             hr = self.parse_image(img.data, img.name)
-        
+
         print(f'Stock image list: {self.img_stock_names}')
         if not self.fw_img.data:
             if not self.kernel.data:
                 if not self.rootfs.data:
                     die('Stock image is empty!')
-        
+
         if self.rootfs.data:
             if not self.fw_img.data and not self.kernel.data:
                 die('Stock image not contain kernel!')
-        
+
         if not self.kernel.data:
             die('Stock: Kernel section not found!')
 
@@ -398,8 +398,8 @@ class XqFlash():
             if hr >= 1:
                 return 2
         return 1
-    
-    def get_fdt_node(self, dt, path):        
+
+    def get_fdt_node(self, dt, path):
         plist = [ path ]
         if '*' in path:
             plist = [ ]
@@ -412,7 +412,7 @@ class XqFlash():
             except ValueError:
                 pass
         return None
-        
+
     def get_fdt_node_by_name(self, dt, name, compatible = None):
         res = [ ]
         for path, nodes, props in dt.walk():
@@ -427,7 +427,7 @@ class XqFlash():
                         continue  # go to next node
                 res.append(path)
         return res
-        
+
     def get_fdt_part_list(self, dt, partlist):
         res = [ ]
         if isinstance(partlist, str):
@@ -441,13 +441,13 @@ class XqFlash():
                 readonly = True
             res.append( { 'addr': addr, 'size': size, 'name': name, 'ro': readonly } )
         return res
-        
+
     def get_dtb_part_info(self, partlist, name):
         for i, part in enumerate(partlist):
             if part['name'] == name:
                 return part
         return None
-    
+
     def parse_fit(self, image, offset = 0, footer = True):
         kernel = self.kernel
         rootfs = self.rootfs
@@ -491,23 +491,23 @@ class XqFlash():
         def_cfg = fit_dt.get_node(f'/configurations/{def_cfg_name}')
         def_cfg_desc = def_cfg.get_property('description').value
         print(f'FIT: def_cfg desc = "{def_cfg_desc}"')
-        
+
         ubi_loader = False
         fit_model = ''
         if 'xiaomi_' in def_cfg_desc:
             x = def_cfg_desc.find('xiaomi_')
             fit_model = 'xiaomi,' + def_cfg_desc[x+7:]
             print(f'FIT: model = "{fit_model}"')
-        
+
         def_fdt = def_cfg.get_property('fdt')
-        
+
         if not def_fdt:
             krn1 = self.get_fdt_node(fit_dt, '/images/kernel*1')
             krn1desc = krn1.get_property('description').value
             print(f'KRN: desc = "{krn1desc}"')
             if 'Linux-u-boot' not in krn1desc:
                 die('FIT: Incorrect image (5)')
-            print(f'Linux-u-boot image founded! (detect ubi-loader)')
+            print(f'Linux-u-boot image found! (detect ubi-loader)')
             ubi_loader = True
             if not fit_model:
                 die('FIT: Incorrect image (5)(1) ')
@@ -545,21 +545,21 @@ class XqFlash():
             print('FDT:', dt_compat)
             dt_model = dt.get_property('model').value
             print(f'FDT: model = "{dt_model}"')
-          
+
         if ubi_loader:
             dt = None
             dt_compat = [ fit_model ]
             dt_model = None
-        
+
         if not self.img_stock:
             cm = self.check_model(dt_compat, dt_model)
             if cm < 0:
                 die(f'FIT: Loaded firmware not compatible with "{gw.device_name}" !!!')
-        
+
         if dt:
             dt_part = self.get_fdt_node_by_name(dt, 'partitions', 'fixed-partitions')
             print(f'FDT: dt_part: {dt_part}')
-        
+
         kernel.fit = True
         if self.img_stock:
             kernel.ostype = 'stock'
@@ -568,14 +568,14 @@ class XqFlash():
                 kernel.ostype = 'openwrt'
         if not kernel.ostype:
             die('FIT: Currently supported only OpenWrt FIT images!')
-        
+
         rootfs1 = self.get_fdt_node(fit_dt, '/images/rootfs*1')
         if rootfs1:
-            die('FIT: Founded "rootfs-1" node. Not supported!')
-        
+            die('FIT: Found "rootfs-1" node. Not supported!')
+
         initrd1 = self.get_fdt_node(fit_dt, '/images/initrd*1')
         if initrd1:
-            print('FIT: Founded "initrd-1" node')
+            print('FIT: Found "initrd-1" node')
             iname = initrd1.get_property('description').value
             print(f'FIT: initrd image name: "{iname}"')
             if self.img_stock:
@@ -587,7 +587,7 @@ class XqFlash():
             if kernel.into_ubi:
                 rootfs.into_ubi = True
             return 2
-            
+
         if not footer and krn_size > 6*1024*1024 and kernel.ostype == 'openwrt':
             print(f'FIT: detect initrd into kernel image')
             self.init_image(rootfs, b'0' * 1024, 'FIT: Found Second "rootfs" section! (InitRD)')
@@ -596,13 +596,13 @@ class XqFlash():
             if kernel.into_ubi:
                 rootfs.into_ubi = True
             return 2
-            
+
         if footer:
             hr = self.parse_footer(image, offset + fit_size)
             if hr >= 1:
                 return 2
         return 1
-        
+
     def parse_footer(self, image, offset, init = True):
         if len(image) - offset < 1*1024*1024:
             return 0
@@ -637,25 +637,25 @@ class XqFlash():
         from ubireader import settings
         from ubireader.ubi.defines import UBI_EC_HDR_MAGIC
         from ubireader.ubifs.defines import UBIFS_NODE_MAGIC
-        from ubireader.utils import guess_filetype, guess_start_offset, guess_leb_size, guess_peb_size 
+        from ubireader.utils import guess_filetype, guess_start_offset, guess_leb_size, guess_peb_size
 
         settings.logging_on = False
         settings.logging_on_verbose = False
         settings.warn_only_block_read_errors = False
         settings.ignore_block_header_errors = False
-        settings.uboot_fix = False 
+        settings.uboot_fix = False
         path = self.current_image_fn
         start_offset = self.current_image_pos
-        filetype = guess_filetype(path, start_offset) 
+        filetype = guess_filetype(path, start_offset)
         print('UBI: filetype:', filetype)
         if filetype != UBI_EC_HDR_MAGIC:
             die('UBI: File does not look like UBI data.')
         block_size = guess_peb_size(path)
         if not block_size:
-            die('UBI: Block size could not be determined.')  
+            die('UBI: Block size could not be determined.')
         ufile_obj = ubi_file(path, block_size, start_offset)
-        #ubi_obj = ubi_base(ufile_obj) 
-        ubi_obj = ubi(ufile_obj) 
+        #ubi_obj = ubi_base(ufile_obj)
+        ubi_obj = ubi(ufile_obj)
         print('UBI: Decoding UBIFS...')
         kernel_volume = None
         rootfs_volume = None
@@ -699,7 +699,7 @@ class XqFlash():
                     die("Can't unpack kernel image! (lzma loader)")
                 if k1 > 0 and k2 > 0:
                     k = min(k1, k2)
-                else: 
+                else:
                     k = k1 if k1 > 0 else k2
                 data2 = data2[k+1:]
                 img_comp = 3  #  IH_COMP_LZMA
@@ -851,16 +851,16 @@ class XqFlash():
         dev.get_bootloader()
         if not dev.bl.img:
             die("Can't dump current bootloader!")
-        
+
         dev.get_env_list()
         if not dev.env.fw.data or dev.env.fw.len <= 0:
             die("Can't dump current NVRAM params!")
-        
+
         print(f"current flag_boot_rootfs = {dev.rootfs.num}")
         self.install_fw_num = None
 
         self.install_method = 0
-        
+
         kernel_num  = dev.get_part_num("kernel")
         kernel0_num = dev.get_part_num("kernel0")
         kernel1_num = dev.get_part_num("kernel1")
@@ -927,7 +927,7 @@ class XqFlash():
         print(f'install_method = {self.install_method}')
         if self.install_method <= 0:
             die('Cannot detect install method')
-            
+
         if kernel.data[:4] == UIMAGE_MAGIC:
             self.unpack_kernel()
 
@@ -938,7 +938,7 @@ class XqFlash():
             self.prepare_for_stock()
         else:
             self.install_fw_num = 0
-            
+
             if kernel.ostype == 'padavan':
                 self.install_fw_num = None
                 self.prepare_for_padavan()
@@ -950,7 +950,7 @@ class XqFlash():
         self.save_all_images(req_cmd = False, prefix = "_")
 
         print("--------- prepare command lines -----------")
-        
+
         if self.install_method == 100:
             if self.img_stock:
                 kernel.partname = "kernel{}".format(self.install_fw_num)
@@ -1010,7 +1010,7 @@ class XqFlash():
                 die(f'Target partition "{fw_img.partname}" has readonly flag')
 
         self.save_all_images(req_cmd = True, prefix = "")
-    
+
     def save_image_to_disk(self, image, req_cmd = True, prefix = ""):
         if image.data:
             if req_cmd and not image.cmd:
@@ -1019,11 +1019,11 @@ class XqFlash():
             fname = os.path.basename(image.fn_local)
             with open(f'{dname}/{prefix}{fname}', "wb") as file:
                 file.write(image.data)
-                
+
     def save_all_images(self, req_cmd = True, prefix = ""):
         for i, (iname, img) in enumerate(self.imglst.items()):
             self.save_image_to_disk(img, req_cmd, prefix)
-    
+
     def process_bootloader_env(self, fw_num):
         global gw
         dev = self.dev
@@ -1044,7 +1044,7 @@ class XqFlash():
             elif self.img_write:
                 if fw_num is not None:
                     fw_addr = activate_boot.breed_boot_change(gw, dev, fw_num, None, None)
-                else: 
+                else:
                     fw_addr = activate_boot.breed_boot_change(gw, dev, None, kernel.addr, None)
                 pass
 
@@ -1059,7 +1059,7 @@ class XqFlash():
             die("Flashing recipe unknown!")
 
         print("------------- flash images -------------")
-        
+
         self.process_bootloader_env(self.install_fw_num)
 
         gw.set_timeout(12)
@@ -1084,7 +1084,7 @@ class XqFlash():
 
         if fw_img.cmd:
             self.flash_data_to_mtd('firmware', fw_img, timeout = 60)
-        
+
         if kernel.cmd:
             self.flash_data_to_mtd('kernel', kernel, timeout = 34)
 
