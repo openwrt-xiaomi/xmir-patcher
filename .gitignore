@@ -1,6 +1,7 @@
 venv/
 __pycache__/
 xmir_base/__pycache__/
+backups/
 data/
 tmp/
 outdir/
