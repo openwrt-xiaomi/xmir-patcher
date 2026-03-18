@@ -13,6 +13,21 @@ TARGET2_DIR=/usr/lib/lua/luci
 MIRROR2_DIR=/tmp/_usr_lib_lua_luci
 SYNCOBJECT2=$MIRROR2_DIR.sync
 
+TARGET2_I18N_DIR=$TARGET2_DIR/i18n
+TARGET2_SYSINFO_FN=$TARGET2_DIR/view/web/inc/sysinfo.htm
+
+DATA_LANG_ROOT=/data/lang/usr/lib/lua/luci
+DATA_I18N_DIR=$DATA_LANG_ROOT/i18n
+DATA_VIEW_INC_DIR=$DATA_LANG_ROOT/view/web/inc
+DATA_SYSINFO_FN=$DATA_VIEW_INC_DIR/sysinfo.htm
+
+if mount | grep -q " on $TARGET2_I18N_DIR" ; then
+	umount -l $TARGET2_I18N_DIR
+fi
+if mount | grep -q " on $TARGET2_SYSINFO_FN" ; then
+	umount -l $TARGET2_SYSINFO_FN
+fi
+
 if [ -d $DIR_BACKUP ]; then
 	if [ -f $DIR_BACKUP/fw_stable ]; then
 		sed -i "s/option CHANNEL 'release'/option CHANNEL 'stable'/g" /usr/share/xiaoqiang/xiaoqiang_version
@@ -41,6 +56,7 @@ rm -f $DIR_PATCH/base.*.lmo
 rm -f $INST_FLAG_FN
 rm -f $SYNCOBJECT1
 rm -f $SYNCOBJECT2
+rm -rf $DATA_LANG_ROOT
 
 luci-reload
 rm -f /tmp/luci-indexcache

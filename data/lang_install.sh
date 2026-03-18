@@ -13,9 +13,13 @@ TARGET2_DIR=/usr/lib/lua/luci
 MIRROR2_DIR=/tmp/_usr_lib_lua_luci
 SYNCOBJECT2=$MIRROR2_DIR.sync
 
+DATA_LANG_ROOT=/data/lang/usr/lib/lua/luci
+DATA_I18N_DIR=$DATA_LANG_ROOT/i18n
+DATA_VIEW_INC_DIR=$DATA_LANG_ROOT/view/web/inc
+
 
 if [ `find /tmp -maxdepth 1 -name 'base.*.lmo' | wc -l` -eq 0 ]; then
-	return 1
+	exit 1
 fi
 
 if [ ! -d $DIR_PATCH ]; then
@@ -65,6 +69,15 @@ fi
 mv -f /tmp/base.*.lmo $DIR_PATCH/
 mv -f /tmp/lang_patch.sh $DIR_PATCH/
 chmod +x $DIR_PATCH/lang_patch.sh
+
+mkdir -p $DATA_I18N_DIR
+cp -f $DIR_PATCH/base.*.lmo $DATA_I18N_DIR/
+
+mkdir -p $DATA_VIEW_INC_DIR
+cp -f $TARGET2_DIR/view/web/inc/sysinfo.htm $DATA_VIEW_INC_DIR/
+
+# unlock WEB lang menu in persistent copy
+sed -i 's/ and features\["system"\]\["i18n"\] == "1" //' $DATA_VIEW_INC_DIR/sysinfo.htm
 
 INSTALL_METHOD=2
 if [ ! -e "/usr/lib/os-release" ]; then
@@ -119,4 +132,5 @@ uci set luci.main.lang=en
 # forced run patch
 rm -f $INST_FLAG_FN
 $DIR_PATCH/lang_patch.sh
+exit $?
 

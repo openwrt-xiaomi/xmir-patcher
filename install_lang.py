@@ -221,6 +221,8 @@ print("All files uploaded!")
 print("Run scripts...")
 run_script = fn_remote_i if action == 'install' else fn_remote_u
 gw.run_cmd(f"chmod +x {run_script} ; {run_script}", timeout = 17)
+if gw.errcode != 0:
+  die(f'Cannot execute script "{run_script}" (exit code: {gw.errcode})')
 
 time.sleep(1.5)
 
@@ -229,4 +231,21 @@ if full_install:
     gw.run_cmd(f"rm -f {fn_www_remote}")
 
 prefix = '' if action == 'install' else 'un'
+if action == 'install':
+  patch_log = 'tmp/lang_patch.log'
+  if os.path.exists(patch_log):
+    os.remove(patch_log)
+  try:
+    gw.download('/tmp/lang_patch.log', patch_log, verbose = 0)
+  except ssh2.exceptions.SCPProtocolError:
+    die('Language install failed: cannot read /tmp/lang_patch.log')
+  txt = ''
+  if os.path.exists(patch_log):
+    with open(patch_log, 'r', encoding = 'utf-8', errors = 'ignore') as file:
+      txt = file.read().strip()
+  if 'lang patched' not in txt:
+    if not txt:
+      txt = '<empty log>'
+    die(f'Language install failed: {txt}')
+
 print(f"Ready! The language files are {prefix}installed.")
