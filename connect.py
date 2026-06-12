@@ -60,6 +60,7 @@ if True:
         'connect6',  # arn_switch/start_binding
         'connect5',  # smartcontroller
         'connect7',  # get_icon
+        'connect8',  # SimpleDocker cgroup escape (hackCheck=3, BE7000 1.1.38+)
     ]
     for mod_name in exp_modules:
         try:
