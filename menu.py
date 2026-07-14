@@ -24,6 +24,7 @@ def menu1_show():
   print(get_header('='))
   print(' 1 - Set IP-address (current value: {})'.format(gw.ip_addr))
   print(' 2 - Connect to device (install exploit)')
+  print(' 22- Check connection (SSH/Telnet/Web/SimpleDocker)')
   print(' 3 - Read full device info')
   print(' 4 - Create full backup')
   print(' 5 - Install EN/RU languages')
@@ -38,6 +39,7 @@ def menu1_process(id):
     ip_addr = input("Enter device IP-address: ")
     return [ "gateway.py", ip_addr ]
   if id == 2: return "connect.py"
+  if id == 22: return "check_connect.py"
   if id == 3: return "read_info.py"
   if id == 4: return "create_backup.py"
   if id == 5: return "install_lang.py"
