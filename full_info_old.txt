@@ -1,0 +1,222 @@
+_MTD_partitions_:
+   0 > addr: 00000000  size: 00100000  ro: 0  name: "0:SBL1" 
+   1 > addr: 00100000  size: 00100000  ro: 0  name: "0:SBL1_1" 
+   2 > addr: 00200000  size: 00100000  ro: 0  name: "0:MIBIB" 
+   3 > addr: 00300000  size: 00080000  ro: 0  name: "0:BOOTCONFIG" 
+   4 > addr: 00380000  size: 00080000  ro: 0  name: "0:BOOTCONFIG1" 
+   5 > addr: 00400000  size: 00200000  ro: 0  name: "0:QSEE" 
+   6 > addr: 00600000  size: 00200000  ro: 0  name: "0:QSEE_1" 
+   7 > addr: 00800000  size: 00080000  ro: 0  name: "0:DEVCFG" 
+   8 > addr: 00880000  size: 00080000  ro: 0  name: "0:DEVCFG_1" 
+   9 > addr: 00900000  size: 00080000  ro: 0  name: "0:APDP" 
+  10 > addr: 00980000  size: 00080000  ro: 0  name: "0:APDP_1" 
+  11 > addr: 00A00000  size: 00080000  ro: 0  name: "0:TME" 
+  12 > addr: 00A80000  size: 00080000  ro: 0  name: "0:TME_1" 
+  13 > addr: 00B00000  size: 00080000  ro: 0  name: "0:RPM" 
+  14 > addr: 00B80000  size: 00080000  ro: 0  name: "0:RPM_1" 
+  15 > addr: 00C00000  size: 00080000  ro: 0  name: "0:CDT" 
+  16 > addr: 00C80000  size: 00080000  ro: 0  name: "0:CDT_1" 
+  17 > addr: 00D00000  size: 00080000  ro: 0  name: "0:APPSBLENV" 
+  18 > addr: 00D80000  size: 00100000  ro: 0  name: "0:APPSBL" 
+  19 > addr: 00E80000  size: 00100000  ro: 0  name: "0:APPSBL_1" 
+  20 > addr: 00F80000  size: 00100000  ro: 1  name: "0:ART" 
+  21 > addr: 01080000  size: 00080000  ro: 0  name: "0:TRAINING" 
+  22 > addr: 01100000  size: 00040000  ro: 0  name: "0:LICENSE" 
+  23 > addr: 01140000  size: 02800000  ro: 0  name: "rootfs" 
+  24 > addr: 03940000  size: 02800000  ro: 0  name: "rootfs_1" 
+  25 > addr: 06140000  size: 00080000  ro: 1  name: "bdata" 
+  26 > addr: 061C0000  size: 00080000  ro: 0  name: "crash" 
+  27 > addr: 06240000  size: 00080000  ro: 0  name: "crash_syslog" 
+  28 > addr: 062C0000  size: 01C00000  ro: 0  name: "overlay" 
+  29 > addr: 07EC0000  size: 00040000  ro: 0  name: "KF" 
+  30 > addr: FFFFFFFF  size: 003AB914  ro: 0  name: "kernel" 
+  31 > addr: FFFFFFFF  size: 02017000  ro: 0  name: "ubi_rootfs" 
+  32 > addr: FFFFFFFF  size: 01838000  ro: 1  name: "cfg" 
+
+_Base_info_:
+  Linux stamp: Linux XiaoQiang 5.4.164 #0 SMP PREEMPT Tue Jan 27 03:33:27 2026 aarch64 GNU/Linux
+  Linux version: 5.4.164
+  CPU arch: arm64
+  CPU name: ipq95xx
+  SPI rom: False
+
+_Kernel_command_line_:
+  ubi.mtd=rootfs
+  root=mtd:ubi_rootfs
+  rootfstype=squashfs
+  cnss2.bdf_pci2=0x02
+  cnss2.enable_mlo_support=0
+  rootwait
+  uart_en=1
+
+_NVRam_params_:
+  CountryCode=CN
+  Router_unconfigured=0
+  SN=44594/14YE00117
+  boot_wait=on
+  bootargs=ubi.mtd=rootfs root=mtd:ubi_rootfs rootfstype=squashfs cnss2.bdf_pci2=0x02 cnss2.enable_mlo_support=0 rootwait
+  bootcmd=bootmiwifi
+  bootdelay=3
+  bootmenu_delay=5
+  color=100
+  crash_write_count=2
+  eth1addr=58:ea:1f:78:e1:ac
+  eth2addr=58:ea:1f:78:e1:ad
+  eth3addr=ee:31:75:9a:f3:b2
+  eth4addr=ee:31:75:9a:f3:b2
+  eth5addr=ee:31:75:9a:f3:b2
+  ethaddr=58:ea:1f:4a:2b:bc
+  ethprime=eth1
+  fdt_high=0x48500000
+  fdtcontroladdr=4a4e4004
+  flag_boot_rootfs=0
+  flag_boot_success=1
+  flag_boot_type=2
+  flag_flash_permission=1
+  flag_last_success=0
+  flag_ota_reboot=0
+  flag_show_upgrade_info=1
+  flag_try_sys1_failed=0
+  flag_try_sys2_failed=0
+  flash_type=11
+  fsbootargs=ubi.mtd=rootfs root=mtd:ubi_rootfs rootfstype=squashfs cnss2.bdf_pci2=0x02 cnss2.enable_mlo_support=0
+  ipaddr=192.168.31.1
+  machid=8050501
+  mode=Router
+  model=RC06
+  mtdids=nand0=nand0
+  netmask=255.255.255.0
+  no_wifi_dev_times=0
+  rand_key=1v83pS+jQk44UMaY3U8YWrSapXcvNpzz3a2ualPGkDJ1I27tx4Sq7w==
+  rand_nonce=webhbGM9UQcONmqKea3lK7u5gz1B9T6RZ8NlZDTOF5Tv+7+KXOFXYltnvH+H/3aaRNJZoXWhfvg4vmfukKEun1Ehou+nPbpG4scJiiouXd98TiuMXLrkGc8pQLVh4nQK1DqvDnuUx50S4mwQPYwUnd/eEbbMOrcdKP35mniDD9lgUC8ZTT7v5RSfrM2EkQ6E5GUGCLbR+WaKk4JxO+Cc2SWJLbIQGRZfmxPhajukXvldooly3M2Z1wvp7SyPXd4zl82shzDzHZ1zwO9NPGq7RGihrYt029OGfk35TyyV1JlT03e7UN8P8q4vMcJWFFCTQcm7GHxy85TW7JBsMuW3USZ26v7pCiVgI0u3Z1qVUxEVeGuax0sv2QUeHopiFQCFF7DjlzpwvAjmYXM+MXTBLmOdKG0bj0DARrI7vgDPsP8FHZDgxDZX4nimdWw1SkqLFsJ+jE5+r82/QkRXBkBv33epFSPycY0QVAyb8tcqF7/lhrJEeXWqSvp6u2vZqmaRD6YJMJ+r33Zc8Waj4955ATPCtTBTsa6Cz6IQ7EhOm0d77DuBrKmsvv07rsSL47h/dYRXr/phEsAWk7de4QMkVOGG/vL/NdS+7cLHE7udcjqKlujG6K1JmbWdcLG+5xmf0Qe47Ok6Utvpf5xG1ct41J88mvLR7OS5lxi92yMwJ3W/AAO+Qep6NMZjKJOzZTScT4eyqZiQYORv/36gP1L7hoUonULjMg5tFyndy5OTlwmXRWu7Kiln+kGGvm7CFZfhQkNUNoAH9sctGNug43l/APh+xbgCeGRCLFUerRjrSMbuiOJ8A0SOrLm9HVbfozY2X/rj6g/dShtaKx6ihP9TPO0alGfRTktpSZALOgvpNQst/8Wk95eOdRch4PChDxJQpLW4Jjl0X4QpV6y+pRTqQOT8O1t/PjQIbOiFZjjB6WWq6TSxndxsmi+XuAh4pP7xmCYqAu601o03mddyjZ09ONhwNuB4ksfKRjCykm7LwUDctNYnRtm8eM3HG+qfqzjZFLvr7ZF3/XFNRHKAegk2tRuL13val1AbRFzj0EOQL5HgY6UPAPyCqk6uwfWKQtXV01ODxthcRdghtDkIDWdpl5zke/uO3FIEYqJZI3em/Q9GcXILwqIMvCnthW9VqcxJypK7kmnvNziJG0Z2CvKrn5y4Cl9J3npTo6kjPjlQUx5D1bm6/UipamPRCklWsBDXgFpVkPZ8kiPD3uuEiG8E4TqPeL4ZTPkuGXGENn+vUatQ52Dog5iTfIG02vUh7bxDGHtFdCzxwp9oOvs9kodqW5dSLbQOvGsEjibm9iEYYTMW56CfnyNTehR4SzS3tZuOyn2wErBTiAGgpa16GUh8eQ==
+  restore_defaults=0
+  serverip=192.168.31.100
+  soc_version_major=1
+  soc_version_minor=1
+  ssh_en=1
+  stderr=serial@78B1000
+  stdin=serial@78B1000
+  stdout=serial@78B1000
+  telnet_en=0
+  uart_en=1
+  wl0_radio=1
+  wl0_ssid=Xiaomi_5G
+  wl1_radio=1
+  wl1_ssid=Xiaomi
+  wl2_radio=1
+  wl2_ssid=Xiaomi_5G-2
+
+_RootFS_current_:
+  num = 0
+  mtd_num = None
+  mtd_dev = "None"
+  partition = "rootfs"
+
+_Version_info_:
+  UBoot: None 
+  OpenWrt: unknown 
+  Firmware: 1.1.38 
+  Channel: release 
+  BuildTime: Tue, 27 Jan 2026 04:23:05 +0000 
+  Hardware: RC06 
+  UBoot(2): 1.0.0 
+
+_Bootloader_info_:
+  0:SBL1:
+    addr: 0x00000000 
+    size: 0x00100000 
+    image size: 12 bytes 
+    type: None 
+  0:APPSBL:
+    addr: 0x00D80000 
+    size: 0x00100000 
+    image size: 177 bytes 
+    type: None 
+
+_ENV_info_:
+  0:APPSBLENV:
+    addr: 0x00D00000 
+    size: 0x00010000 
+    len: 2638 bytes 
+    prefix: b'\x8e\xd7\x93\x1d' 
+      CountryCode=CN
+      Router_unconfigured=0
+      SN=44594/14YE00117
+      boot_wait=on
+      bootargs=ubi.mtd=rootfs root=mtd:ubi_rootfs rootfstype=squashfs cnss2.bdf_pci2=0x02 cnss2.enable_mlo_support=0 rootwait
+      bootcmd=bootmiwifi
+      bootdelay=3
+      bootmenu_delay=5
+      color=100
+      crash_write_count=2
+      eth1addr=58:ea:1f:78:e1:ac
+      eth2addr=58:ea:1f:78:e1:ad
+      eth3addr=ee:31:75:9a:f3:b2
+      eth4addr=ee:31:75:9a:f3:b2
+      eth5addr=ee:31:75:9a:f3:b2
+      ethaddr=58:ea:1f:4a:2b:bc
+      ethprime=eth1
+      fdt_high=0x48500000
+      fdtcontroladdr=4a4e4004
+      flag_boot_rootfs=0
+      flag_boot_success=1
+      flag_boot_type=2
+      flag_flash_permission=1
+      flag_last_success=0
+      flag_ota_reboot=0
+      flag_show_upgrade_info=1
+      flag_try_sys1_failed=0
+      flag_try_sys2_failed=0
+      flash_type=11
+      fsbootargs=ubi.mtd=rootfs root=mtd:ubi_rootfs rootfstype=squashfs cnss2.bdf_pci2=0x02 cnss2.enable_mlo_support=0
+      ipaddr=192.168.31.1
+      machid=8050501
+      mode=Router
+      model=RC06
+      mtdids=nand0=nand0
+      netmask=255.255.255.0
+      no_wifi_dev_times=0
+      rand_key=1v83pS+jQk44UMaY3U8YWrSapXcvNpzz3a2ualPGkDJ1I27tx4Sq7w==
+      rand_nonce=webhbGM9UQcONmqKea3lK7u5gz1B9T6RZ8NlZDTOF5Tv+7+KXOFXYltnvH+H/3aaRNJZoXWhfvg4vmfukKEun1Ehou+nPbpG4scJiiouXd98TiuMXLrkGc8pQLVh4nQK1DqvDnuUx50S4mwQPYwUnd/eEbbMOrcdKP35mniDD9lgUC8ZTT7v5RSfrM2EkQ6E5GUGCLbR+WaKk4JxO+Cc2SWJLbIQGRZfmxPhajukXvldooly3M2Z1wvp7SyPXd4zl82shzDzHZ1zwO9NPGq7RGihrYt029OGfk35TyyV1JlT03e7UN8P8q4vMcJWFFCTQcm7GHxy85TW7JBsMuW3USZ26v7pCiVgI0u3Z1qVUxEVeGuax0sv2QUeHopiFQCFF7DjlzpwvAjmYXM+MXTBLmOdKG0bj0DARrI7vgDPsP8FHZDgxDZX4nimdWw1SkqLFsJ+jE5+r82/QkRXBkBv33epFSPycY0QVAyb8tcqF7/lhrJEeXWqSvp6u2vZqmaRD6YJMJ+r33Zc8Waj4955ATPCtTBTsa6Cz6IQ7EhOm0d77DuBrKmsvv07rsSL47h/dYRXr/phEsAWk7de4QMkVOGG/vL/NdS+7cLHE7udcjqKlujG6K1JmbWdcLG+5xmf0Qe47Ok6Utvpf5xG1ct41J88mvLR7OS5lxi92yMwJ3W/AAO+Qep6NMZjKJOzZTScT4eyqZiQYORv/36gP1L7hoUonULjMg5tFyndy5OTlwmXRWu7Kiln+kGGvm7CFZfhQkNUNoAH9sctGNug43l/APh+xbgCeGRCLFUerRjrSMbuiOJ8A0SOrLm9HVbfozY2X/rj6g/dShtaKx6ihP9TPO0alGfRTktpSZALOgvpNQst/8Wk95eOdRch4PChDxJQpLW4Jjl0X4QpV6y+pRTqQOT8O1t/PjQIbOiFZjjB6WWq6TSxndxsmi+XuAh4pP7xmCYqAu601o03mddyjZ09ONhwNuB4ksfKRjCykm7LwUDctNYnRtm8eM3HG+qfqzjZFLvr7ZF3/XFNRHKAegk2tRuL13val1AbRFzj0EOQL5HgY6UPAPyCqk6uwfWKQtXV01ODxthcRdghtDkIDWdpl5zke/uO3FIEYqJZI3em/Q9GcXILwqIMvCnthW9VqcxJypK7kmnvNziJG0Z2CvKrn5y4Cl9J3npTo6kjPjlQUx5D1bm6/UipamPRCklWsBDXgFpVkPZ8kiPD3uuEiG8E4TqPeL4ZTPkuGXGENn+vUatQ52Dog5iTfIG02vUh7bxDGHtFdCzxwp9oOvs9kodqW5dSLbQOvGsEjibm9iEYYTMW56CfnyNTehR4SzS3tZuOyn2wErBTiAGgpa16GUh8eQ==
+      restore_defaults=0
+      serverip=192.168.31.100
+      soc_version_major=1
+      soc_version_minor=1
+      ssh_en=1
+      stderr=serial@78B1000
+      stdin=serial@78B1000
+      stdout=serial@78B1000
+      telnet_en=0
+      uart_en=1
+      wl0_radio=1
+      wl0_ssid=Xiaomi_5G
+      wl1_radio=1
+      wl1_ssid=Xiaomi
+      wl2_radio=1
+      wl2_ssid=Xiaomi_5G-2
+  bdata:
+    addr: 0x06140000 
+    size: 0x00010000 
+    len: 1688 bytes 
+    prefix: b'\xf5\x82\x90P' 
+      rand_key=1v83pS+jQk44UMaY3U8YWrSapXcvNpzz3a2ualPGkDJ1I27tx4Sq7w==
+      rand_nonce=webhbGM9UQcONmqKea3lK7u5gz1B9T6RZ8NlZDTOF5Tv+7+KXOFXYltnvH+H/3aaRNJZoXWhfvg4vmfukKEun1Ehou+nPbpG4scJiiouXd98TiuMXLrkGc8pQLVh4nQK1DqvDnuUx50S4mwQPYwUnd/eEbbMOrcdKP35mniDD9lgUC8ZTT7v5RSfrM2EkQ6E5GUGCLbR+WaKk4JxO+Cc2SWJLbIQGRZfmxPhajukXvldooly3M2Z1wvp7SyPXd4zl82shzDzHZ1zwO9NPGq7RGihrYt029OGfk35TyyV1JlT03e7UN8P8q4vMcJWFFCTQcm7GHxy85TW7JBsMuW3USZ26v7pCiVgI0u3Z1qVUxEVeGuax0sv2QUeHopiFQCFF7DjlzpwvAjmYXM+MXTBLmOdKG0bj0DARrI7vgDPsP8FHZDgxDZX4nimdWw1SkqLFsJ+jE5+r82/QkRXBkBv33epFSPycY0QVAyb8tcqF7/lhrJEeXWqSvp6u2vZqmaRD6YJMJ+r33Zc8Waj4955ATPCtTBTsa6Cz6IQ7EhOm0d77DuBrKmsvv07rsSL47h/dYRXr/phEsAWk7de4QMkVOGG/vL/NdS+7cLHE7udcjqKlujG6K1JmbWdcLG+5xmf0Qe47Ok6Utvpf5xG1ct41J88mvLR7OS5lxi92yMwJ3W/AAO+Qep6NMZjKJOzZTScT4eyqZiQYORv/36gP1L7hoUonULjMg5tFyndy5OTlwmXRWu7Kiln+kGGvm7CFZfhQkNUNoAH9sctGNug43l/APh+xbgCeGRCLFUerRjrSMbuiOJ8A0SOrLm9HVbfozY2X/rj6g/dShtaKx6ihP9TPO0alGfRTktpSZALOgvpNQst/8Wk95eOdRch4PChDxJQpLW4Jjl0X4QpV6y+pRTqQOT8O1t/PjQIbOiFZjjB6WWq6TSxndxsmi+XuAh4pP7xmCYqAu601o03mddyjZ09ONhwNuB4ksfKRjCykm7LwUDctNYnRtm8eM3HG+qfqzjZFLvr7ZF3/XFNRHKAegk2tRuL13val1AbRFzj0EOQL5HgY6UPAPyCqk6uwfWKQtXV01ODxthcRdghtDkIDWdpl5zke/uO3FIEYqJZI3em/Q9GcXILwqIMvCnthW9VqcxJypK7kmnvNziJG0Z2CvKrn5y4Cl9J3npTo6kjPjlQUx5D1bm6/UipamPRCklWsBDXgFpVkPZ8kiPD3uuEiG8E4TqPeL4ZTPkuGXGENn+vUatQ52Dog5iTfIG02vUh7bxDGHtFdCzxwp9oOvs9kodqW5dSLbQOvGsEjibm9iEYYTMW56CfnyNTehR4SzS3tZuOyn2wErBTiAGgpa16GUh8eQ==
+      SN=44594/14YE00117
+      color=100
+      CountryCode=CN
+      model=RC06
+      wl1_ssid=rc06_minet_2bbc
+      wl0_ssid=rc06_minet_2bbc
+      wl2_ssid=rc06_minet_2bbc
+      miot_did=7lwIXO/a946Op5P8NBvcoA==
+      miot_key=XtP5ihT1JyTEUg8kPT8QSw==
+      telnet_en=1
+      ssh_en=1
+      uart_en=1
+      boot_wait=on
+  0:SBL1:
+    addr: 0x00060000 
+    size: 0x000A0000 
+    len: 0 bytes 
+    prefix: b'\xd1\xdcK\x84' 
+
