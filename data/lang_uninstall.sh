@@ -37,8 +37,15 @@ uci commit firewall
 
 rm -rf $DIR_BACKUP
 rm -f $DIR_PATCH/lang_patch.sh
+rm -f $DIR_PATCH/lang_patch_www.sh
 rm -f $DIR_PATCH/base.*.lmo
 rm -f $INST_FLAG_FN
+rm -f /tmp/lang_patch_www.log
+# The <%: %> wrapping applied by lang_patch_www.sh is not undone here: the
+# templates under /usr/lib/lua/luci/view live in a tmpfs mirror that is rebuilt
+# from the read-only squashfs on every boot, so it disappears by itself. Until
+# then the wrapping is harmless - LuCI prints the original text when the
+# catalogue holds no translation for it.
 rm -f $SYNCOBJECT1
 rm -f $SYNCOBJECT2
 

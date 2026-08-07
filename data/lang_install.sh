@@ -65,6 +65,10 @@ fi
 mv -f /tmp/base.*.lmo $DIR_PATCH/
 mv -f /tmp/lang_patch.sh $DIR_PATCH/
 chmod +x $DIR_PATCH/lang_patch.sh
+if [ -f /tmp/lang_patch_www.sh ]; then
+	mv -f /tmp/lang_patch_www.sh $DIR_PATCH/
+	chmod +x $DIR_PATCH/lang_patch_www.sh
+fi
 
 INSTALL_METHOD=2
 if [ ! -e "/usr/lib/os-release" ]; then

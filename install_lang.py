@@ -242,8 +242,9 @@ gw.run_cmd(f"chmod +x {run_script} ; {run_script}", timeout = 17)
 time.sleep(1.5)
 
 gw.run_cmd(f"rm -f {fn_remote} ; rm -f {fn_remote_i} ; rm -f {fn_remote_u}")
-if full_install:
-    gw.run_cmd(f"rm -f {fn_www_remote}")
+# lang_patch_www.sh is deliberately not removed here: lang_install.sh moves it
+# into /etc/crontabs/patches, and should that move not have happened this is the
+# only copy left. It lives in tmpfs, so a stale one is gone after a reboot.
 
 prefix = '' if action == 'install' else 'un'
 print(f"Ready! The language files are {prefix}installed.")

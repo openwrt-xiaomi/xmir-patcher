@@ -70,6 +70,12 @@ sed -i 's/ and features\["system"\]\["i18n"\] == "1" //' /usr/lib/lua/luci/view/
 rm -rf $SYNCOBJECT2
 
 
+# Wrap the hardcoded Chinese of the www templates in <%: %> so the LMO can
+# translate it. The templates live in the tmpfs mirror mounted above, which is
+# rebuilt from the read-only squashfs on every boot, so this has to run here on
+# every boot - after the bind mount and before luci-reload.
+[ -x $DIR_PATCH/lang_patch_www.sh ] && sh $DIR_PATCH/lang_patch_www.sh > /tmp/lang_patch_www.log 2>&1
+
 echo "lang patched" > $INST_FLAG_FN
 
 MAIN_LANG=$( uci -q get luci.main.lang )
