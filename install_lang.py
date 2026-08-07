@@ -217,14 +217,49 @@ if action == 'install':
 if action == 'install' and full_install:
   dn_www = "tmp/www"
   os.makedirs(dn_www, exist_ok = True)
-  wwwlst = [ "/usr/lib/lua/luci/view/web/index.htm",
+  # Templates that carry hardcoded Chinese, i.e. text not already wrapped in
+  # <%: %>. Missing files are skipped with a warning, so listing entries that
+  # only exist on some models or firmware versions is safe.
+  # The legal texts (inc/agreement*.htm, inc/privacy*.htm) are deliberately left
+  # out: some 470 lines of EULA boilerplate in three variants, with nothing in
+  # the catalogue to translate them with.
+  wwwlst = [ "/usr/lib/lua/luci/view/index.htm",
+             "/usr/lib/lua/luci/view/url_fw/home.htm",
+             "/usr/lib/lua/luci/view/web/index.htm",
              "/usr/lib/lua/luci/view/web/apindex.htm",
+             "/usr/lib/lua/luci/view/web/sysauth.htm",
+             "/usr/lib/lua/luci/view/web/topograph.htm",
+             "/usr/lib/lua/luci/view/web/apsetting/roam.htm",
+             "/usr/lib/lua/luci/view/web/apsetting/wifi.htm",
+             "/usr/lib/lua/luci/view/web/inc/docker.htm",
+             "/usr/lib/lua/luci/view/web/inc/dual-wan.htm",
+             "/usr/lib/lua/luci/view/web/inc/dual-wan.js.htm",
              "/usr/lib/lua/luci/view/web/inc/g.js.htm",
              "/usr/lib/lua/luci/view/web/inc/header.htm",
+             "/usr/lib/lua/luci/view/web/inc/i18n.js.htm",
+             "/usr/lib/lua/luci/view/web/inc/ipv6.htm",
+             "/usr/lib/lua/luci/view/web/inc/lan_lag.htm",
+             "/usr/lib/lua/luci/view/web/inc/netmod.htm",
+             "/usr/lib/lua/luci/view/web/inc/netmod.js.htm",
+             "/usr/lib/lua/luci/view/web/inc/store.htm",
+             "/usr/lib/lua/luci/view/web/inc/store.js.htm",
              "/usr/lib/lua/luci/view/web/inc/sysinfo.htm",
+             "/usr/lib/lua/luci/view/web/inc/sysinfo_ap.htm",
+             "/usr/lib/lua/luci/view/web/inc/upgrade.js.htm",
+             "/usr/lib/lua/luci/view/web/inc/wanCheck.htm",
              "/usr/lib/lua/luci/view/web/inc/wanCheck.js.htm",
+             "/usr/lib/lua/luci/view/web/init/bind.htm",
+             "/usr/lib/lua/luci/view/web/init/guide.htm",
+             "/usr/lib/lua/luci/view/web/init/guidetoapp.htm",
+             "/usr/lib/lua/luci/view/web/init/guidetoapp_uninit.htm",
+             "/usr/lib/lua/luci/view/web/setting/dhcp_ip_mac.htm",
              "/usr/lib/lua/luci/view/web/setting/iptv.htm",
-           ]  
+             "/usr/lib/lua/luci/view/web/setting/safe.htm",
+             "/usr/lib/lua/luci/view/web/setting/upgrade_manual.htm",
+             "/usr/lib/lua/luci/view/web/setting/upnp.htm",
+             "/usr/lib/lua/luci/view/web/setting/wan.htm",
+             "/usr/lib/lua/luci/view/web/setting/wifi.htm",
+           ]
   www = []
   for i, www_remote in enumerate(wwwlst):
     www_local = dn_www + '/' + www_remote.replace('/', '_')
