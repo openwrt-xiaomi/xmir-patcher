@@ -189,15 +189,23 @@ if action == 'install':
     # Measured on a BE7000 (fw 1.1.38): 40400 bytes of sed rules on a clean run
     # against 3638 bytes on a rerun, with setting/wifi.htm losing 15 of its 198
     # wrapped literals and setting/wan.htm 6 of 189.
-    fn = 'tmp/lang_www_patched'
-    if os.path.exists(fn):
-      os.remove(fn)
-    try:
-      gw.download('/tmp/lang_www_patched', fn, verbose = 0)
-    except ssh2.exceptions.SCPProtocolError:
-      pass
-    if os.path.exists(fn):
-      die("The web templates are already patched. Reboot the device, then run this again.")
+    def remote_exists(fn_remote, fn_local):
+      if os.path.exists(fn_local):
+        os.remove(fn_local)
+      try:
+        gw.download(fn_remote, fn_local, verbose = 0)
+      except ssh2.exceptions.SCPProtocolError:
+        pass
+      return os.path.exists(fn_local)
+    # The mark is written on every boot, so its presence alone does not tell
+    # whether the patch is currently installed. Look at the patch script too and
+    # give the advice that actually helps.
+    if remote_exists('/tmp/lang_www_patched', 'tmp/lang_www_patched'):
+      if remote_exists('/etc/crontabs/patches/lang_patch_www.sh', 'tmp/lang_patch_www_installed.sh'):
+        die("Full lang patch is already installed. To reinstall it, run "
+            "'install_lang.py uninstall', reboot the device, then install again.")
+      die("The web templates are still patched from an earlier install. "
+          "Reboot the device, then run this again.")
   #if patch_installed:
   #  print("Uninstall lang_patch...")
   #  gw.run_cmd(f"chmod +x {fn_remote_u} ; {fn_remote_u}")
