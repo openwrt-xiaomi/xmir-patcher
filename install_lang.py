@@ -28,9 +28,19 @@ class www_lmo():
     with open(w.fn_local, "r", encoding="utf-8") as file:
       w.data = file.read()
   
+  def lua_spans(w):
+    # Regions of server-side template code: <% ... %> (also <%= %>, <%: %>).
+    # A literal wrapped INSIDE such a region becomes nested markup and the LuCI
+    # template parser dies -> every page that includes the file returns HTTP 500.
+    # The plain `txt.find('<%')` test below cannot see this: the opening <% is
+    # often several lines above the match (e.g. web/inc/footer.htm, where
+    # `luciI18n.translate("\u5f00\u53d1\u7248")` sits inside a multi-line <% ... %> block).
+    return [(m.start(), m.end()) for m in re.finditer(r'<%.*?%>', w.data, re.S)]
+
   def parse(w):
     if not w.data:
       w.load_file()
+    w.spans = w.lua_spans()
     p = re.compile(r'[^%][>]([^><]*?[\u4e00-\u9fff][^><]*?)[<][^%]')
     w.parse1(p)
     p = re.compile(r'[\']([^><\n\']*?[\u4e00-\u9fff][^><\n\']*?)[\']')
@@ -51,10 +61,17 @@ class www_lmo():
         continue
       if txt.find(' = ') > 0:  # skip code
         continue
+      # skip jQuery/JS expressions: wrapping them in <%: %> breaks the page
+      # (e.g. "option:contains('自动')" in setting/wifi.htm)
+      if any(k in txt for k in ('contains(', '$(', '==', '!=', '&&', '||')):
+        continue
       b = m.start()
       t1 = m.start(1)
       t2 = m.end(1)
       e = m.end()
+      # never touch anything inside a <% ... %> block (see lua_spans)
+      if any(s <= t1 < s2 for s, s2 in getattr(w, 'spans', [])):
+        continue
       #print(b, t1, t2, e)
       prefix = w.data[b:t1]
       string = w.data[t1:t2]
