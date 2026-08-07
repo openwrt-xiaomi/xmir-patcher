@@ -19,6 +19,20 @@ Firmware patcher for Xiaomi routers
 * Install python 3.8+ and openssl
 * Run `run.sh`
 
+## Language install
+
+Menu item "Install EN/RU languages" installs the translation catalogue only.
+Strings hardcoded in the web templates (menus, home page, Wi-Fi and WAN
+settings) are not covered by it and stay Chinese. To patch those as well, run:
+
+```
+python install_lang.py full
+```
+
+Uninstall with `python install_lang.py uninstall`. The template patch is
+re-applied on every boot, because the templates live in a tmpfs mirror that is
+rebuilt from the read-only squashfs each time.
+
 ## Donations
 
 [![Donations Page](https://github.com/andry81-cache/gh-content-static-cache/raw/master/common/badges/donate/donate.svg)](https://github.com/remittor/donate)

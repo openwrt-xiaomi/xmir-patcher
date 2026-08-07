@@ -28,9 +28,19 @@ class www_lmo():
     with open(w.fn_local, "r", encoding="utf-8") as file:
       w.data = file.read()
   
+  def lua_spans(w):
+    # Regions of server-side template code: <% ... %> (also <%= %>, <%: %>).
+    # A literal wrapped INSIDE such a region becomes nested markup and the LuCI
+    # template parser dies -> every page that includes the file returns HTTP 500.
+    # The plain `txt.find('<%')` test below cannot see this: the opening <% is
+    # often several lines above the match (e.g. web/inc/footer.htm, where
+    # `luciI18n.translate("\u5f00\u53d1\u7248")` sits inside a multi-line <% ... %> block).
+    return [(m.start(), m.end()) for m in re.finditer(r'<%.*?%>', w.data, re.S)]
+
   def parse(w):
     if not w.data:
       w.load_file()
+    w.spans = w.lua_spans()
     p = re.compile(r'[^%][>]([^><]*?[\u4e00-\u9fff][^><]*?)[<][^%]')
     w.parse1(p)
     p = re.compile(r'[\']([^><\n\']*?[\u4e00-\u9fff][^><\n\']*?)[\']')
@@ -51,10 +61,17 @@ class www_lmo():
         continue
       if txt.find(' = ') > 0:  # skip code
         continue
+      # skip jQuery/JS expressions: wrapping them in <%: %> breaks the page
+      # (e.g. "option:contains('自动')" in setting/wifi.htm)
+      if any(k in txt for k in ('contains(', '$(', '==', '!=', '&&', '||')):
+        continue
       b = m.start()
       t1 = m.start(1)
       t2 = m.end(1)
       e = m.end()
+      # never touch anything inside a <% ... %> block (see lua_spans)
+      if any(s <= t1 < s2 for s, s2 in getattr(w, 'spans', [])):
+        continue
       #print(b, t1, t2, e)
       prefix = w.data[b:t1]
       string = w.data[t1:t2]
@@ -164,6 +181,31 @@ if action == 'install':
     patch_installed = 2 if 'www_patch' in txt else 1
   if patch_installed >= 2:
     die("Full lang patch already installed!")
+  if full_install:
+    # Uninstalling does not undo the <%: %> wrapping - it only goes away when
+    # the tmpfs mirror is rebuilt from the squashfs at boot. Generating the
+    # patch from templates that are already wrapped covers the remainder only,
+    # and after the next reboot part of the translation is silently missing.
+    # Measured on a BE7000 (fw 1.1.38): 40400 bytes of sed rules on a clean run
+    # against 3638 bytes on a rerun, with setting/wifi.htm losing 15 of its 198
+    # wrapped literals and setting/wan.htm 6 of 189.
+    def remote_exists(fn_remote, fn_local):
+      if os.path.exists(fn_local):
+        os.remove(fn_local)
+      try:
+        gw.download(fn_remote, fn_local, verbose = 0)
+      except ssh2.exceptions.SCPProtocolError:
+        pass
+      return os.path.exists(fn_local)
+    # The mark is written on every boot, so its presence alone does not tell
+    # whether the patch is currently installed. Look at the patch script too and
+    # give the advice that actually helps.
+    if remote_exists('/tmp/lang_www_patched', 'tmp/lang_www_patched'):
+      if remote_exists('/etc/crontabs/patches/lang_patch_www.sh', 'tmp/lang_patch_www_installed.sh'):
+        die("Full lang patch is already installed. To reinstall it, run "
+            "'install_lang.py uninstall', reboot the device, then install again.")
+      die("The web templates are still patched from an earlier install. "
+          "Reboot the device, then run this again.")
   #if patch_installed:
   #  print("Uninstall lang_patch...")
   #  gw.run_cmd(f"chmod +x {fn_remote_u} ; {fn_remote_u}")
@@ -183,14 +225,49 @@ if action == 'install':
 if action == 'install' and full_install:
   dn_www = "tmp/www"
   os.makedirs(dn_www, exist_ok = True)
-  wwwlst = [ "/usr/lib/lua/luci/view/web/index.htm",
+  # Templates that carry hardcoded Chinese, i.e. text not already wrapped in
+  # <%: %>. Missing files are skipped with a warning, so listing entries that
+  # only exist on some models or firmware versions is safe.
+  # The legal texts (inc/agreement*.htm, inc/privacy*.htm) are deliberately left
+  # out: some 470 lines of EULA boilerplate in three variants, with nothing in
+  # the catalogue to translate them with.
+  wwwlst = [ "/usr/lib/lua/luci/view/index.htm",
+             "/usr/lib/lua/luci/view/url_fw/home.htm",
+             "/usr/lib/lua/luci/view/web/index.htm",
              "/usr/lib/lua/luci/view/web/apindex.htm",
+             "/usr/lib/lua/luci/view/web/sysauth.htm",
+             "/usr/lib/lua/luci/view/web/topograph.htm",
+             "/usr/lib/lua/luci/view/web/apsetting/roam.htm",
+             "/usr/lib/lua/luci/view/web/apsetting/wifi.htm",
+             "/usr/lib/lua/luci/view/web/inc/docker.htm",
+             "/usr/lib/lua/luci/view/web/inc/dual-wan.htm",
+             "/usr/lib/lua/luci/view/web/inc/dual-wan.js.htm",
              "/usr/lib/lua/luci/view/web/inc/g.js.htm",
              "/usr/lib/lua/luci/view/web/inc/header.htm",
+             "/usr/lib/lua/luci/view/web/inc/i18n.js.htm",
+             "/usr/lib/lua/luci/view/web/inc/ipv6.htm",
+             "/usr/lib/lua/luci/view/web/inc/lan_lag.htm",
+             "/usr/lib/lua/luci/view/web/inc/netmod.htm",
+             "/usr/lib/lua/luci/view/web/inc/netmod.js.htm",
+             "/usr/lib/lua/luci/view/web/inc/store.htm",
+             "/usr/lib/lua/luci/view/web/inc/store.js.htm",
              "/usr/lib/lua/luci/view/web/inc/sysinfo.htm",
+             "/usr/lib/lua/luci/view/web/inc/sysinfo_ap.htm",
+             "/usr/lib/lua/luci/view/web/inc/upgrade.js.htm",
+             "/usr/lib/lua/luci/view/web/inc/wanCheck.htm",
              "/usr/lib/lua/luci/view/web/inc/wanCheck.js.htm",
+             "/usr/lib/lua/luci/view/web/init/bind.htm",
+             "/usr/lib/lua/luci/view/web/init/guide.htm",
+             "/usr/lib/lua/luci/view/web/init/guidetoapp.htm",
+             "/usr/lib/lua/luci/view/web/init/guidetoapp_uninit.htm",
+             "/usr/lib/lua/luci/view/web/setting/dhcp_ip_mac.htm",
              "/usr/lib/lua/luci/view/web/setting/iptv.htm",
-           ]  
+             "/usr/lib/lua/luci/view/web/setting/safe.htm",
+             "/usr/lib/lua/luci/view/web/setting/upgrade_manual.htm",
+             "/usr/lib/lua/luci/view/web/setting/upnp.htm",
+             "/usr/lib/lua/luci/view/web/setting/wan.htm",
+             "/usr/lib/lua/luci/view/web/setting/wifi.htm",
+           ]
   www = []
   for i, www_remote in enumerate(wwwlst):
     www_local = dn_www + '/' + www_remote.replace('/', '_')
@@ -225,8 +302,9 @@ gw.run_cmd(f"chmod +x {run_script} ; {run_script}", timeout = 17)
 time.sleep(1.5)
 
 gw.run_cmd(f"rm -f {fn_remote} ; rm -f {fn_remote_i} ; rm -f {fn_remote_u}")
-if full_install:
-    gw.run_cmd(f"rm -f {fn_www_remote}")
+# lang_patch_www.sh is deliberately not removed here: lang_install.sh moves it
+# into /etc/crontabs/patches, and should that move not have happened this is the
+# only copy left. It lives in tmpfs, so a stale one is gone after a reboot.
 
 prefix = '' if action == 'install' else 'un'
 print(f"Ready! The language files are {prefix}installed.")

@@ -1,0 +1,6 @@
+# The files below are uploaded to the router byte for byte, so they have to keep
+# LF endings. With a CRLF checkout - the default of Git for Windows - busybox
+# cannot run them: the shebang reads as "/bin/sh\r", the install scripts never
+# execute and install_lang.py still reports success.
+*.sh    text eol=lf
+*.cfg   text eol=lf
