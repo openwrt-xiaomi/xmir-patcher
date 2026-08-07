@@ -181,6 +181,23 @@ if action == 'install':
     patch_installed = 2 if 'www_patch' in txt else 1
   if patch_installed >= 2:
     die("Full lang patch already installed!")
+  if full_install:
+    # Uninstalling does not undo the <%: %> wrapping - it only goes away when
+    # the tmpfs mirror is rebuilt from the squashfs at boot. Generating the
+    # patch from templates that are already wrapped covers the remainder only,
+    # and after the next reboot part of the translation is silently missing.
+    # Measured on a BE7000 (fw 1.1.38): 40400 bytes of sed rules on a clean run
+    # against 3638 bytes on a rerun, with setting/wifi.htm losing 15 of its 198
+    # wrapped literals and setting/wan.htm 6 of 189.
+    fn = 'tmp/lang_www_patched'
+    if os.path.exists(fn):
+      os.remove(fn)
+    try:
+      gw.download('/tmp/lang_www_patched', fn, verbose = 0)
+    except ssh2.exceptions.SCPProtocolError:
+      pass
+    if os.path.exists(fn):
+      die("The web templates are already patched. Reboot the device, then run this again.")
   #if patch_installed:
   #  print("Uninstall lang_patch...")
   #  gw.run_cmd(f"chmod +x {fn_remote_u} ; {fn_remote_u}")

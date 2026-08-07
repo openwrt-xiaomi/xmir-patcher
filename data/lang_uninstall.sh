@@ -46,6 +46,8 @@ rm -f /tmp/lang_patch_www.log
 # from the read-only squashfs on every boot, so it disappears by itself. Until
 # then the wrapping is harmless - LuCI prints the original text when the
 # catalogue holds no translation for it.
+# /tmp/lang_www_patched is deliberately kept for the same reason: the mirror is
+# still patched, and install_lang.py has to know that before regenerating.
 rm -f $SYNCOBJECT1
 rm -f $SYNCOBJECT2
 

@@ -74,7 +74,12 @@ rm -rf $SYNCOBJECT2
 # translate it. The templates live in the tmpfs mirror mounted above, which is
 # rebuilt from the read-only squashfs on every boot, so this has to run here on
 # every boot - after the bind mount and before luci-reload.
-[ -x $DIR_PATCH/lang_patch_www.sh ] && sh $DIR_PATCH/lang_patch_www.sh > /tmp/lang_patch_www.log 2>&1
+if [ -x $DIR_PATCH/lang_patch_www.sh ]; then
+	sh $DIR_PATCH/lang_patch_www.sh > /tmp/lang_patch_www.log 2>&1
+	# Tells install_lang.py that the mirror no longer holds pristine templates.
+	# Lives in tmpfs on purpose: it has to survive an uninstall and die on reboot.
+	touch /tmp/lang_www_patched
+fi
 
 echo "lang patched" > $INST_FLAG_FN
 
