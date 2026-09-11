@@ -50,8 +50,19 @@ if gw.model_id > 0 and gw.model_id < gw.get_modelid_by_name('R2100'):
 
 if True:
     # init gw and check ssh
-    gw = create_gateway(timeout = 4, die_if_sshOk = True, die_if_ftpOk = True, web_login = True, try_telnet = True)
-    
+    gw = create_gateway(timeout = 4, die_if_sshOk = True, die_if_ftpOk = True, web_login = False, try_telnet = True)
+
+    # Pre-auth path: when no WEB password is known, mint an admin session from the
+    # firmware-global mesh key instead of asking for one (see connect8). With a
+    # saved password this is skipped and the normal login below is unchanged.
+    if not gw.webpassword:
+        try:
+            import_module('connect8', gw)
+        except ExploitNotWorked as e:
+            print('WARN:', str(e))
+    if not gw.stok:
+        gw.web_login()
+
     hackCheck = gw.detect_hackCheck(update = True)
     if hackCheck:
         print(f'hackCheck version =', hackCheck)
@@ -60,6 +71,7 @@ if True:
         'connect6',  # arn_switch/start_binding
         'connect5',  # smartcontroller
         'connect7',  # get_icon
+        'connect9',  # cap_init -- the only vector that survives hackCheck v3
     ]
     for mod_name in exp_modules:
         try:
