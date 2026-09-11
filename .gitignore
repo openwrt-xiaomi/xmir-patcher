@@ -6,3 +6,9 @@ tmp/
 outdir/
 config.txt
 full_info.txt
+
+# Firmware images are supplied by the user, never committed (firmware/readme.txt stays)
+firmware/*.ubi
+firmware/*.bin
+firmware/*.itb
+firmware/sha256sums.txt

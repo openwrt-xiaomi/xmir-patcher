@@ -485,6 +485,21 @@ if not gw.stok:
     raise ExploitNotWorked('Exploit "cap_init" not working!!! '
                            '(no admin session -- a WEB password or connect8 is required)')
 
+# The trigger is ONE-SHOT, so check it is armed before touching anything.  The
+# first cap_init persists NETMODE=whc_cap, and do_cap_init skips its whole
+# payload block -- including the mimesh_init eval -- when NETMODE is already
+# whc_cap.  Firing a spent unit therefore looks exactly like a broken exploit:
+# the plant succeeds, the trigger is accepted, and nothing ever dials back.
+# Say which one it is instead of planting a payload that cannot run.
+netmode_resp = gw.api_request('API/xqnetwork/get_netmode')
+netmode = (netmode_resp or {}).get('netmode')
+if netmode == 4:
+    raise ExploitNotWorked(
+        'Exploit "cap_init" not working!!! (unit is DISARMED: NETMODE=whc_cap. '
+        'A previous cap_init consumed the one-shot and the sink stays gated '
+        'until the device is factory reset. Reset it to re-arm, then re-run.)')
+print(f'netmode = {netmode} (armed)')
+
 dn = gw.device_name
 print(f"device_name = {dn}")
 print(f"rom_version = {gw.rom_version} {gw.rom_channel}")
